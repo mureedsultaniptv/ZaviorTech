@@ -9,25 +9,22 @@ import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
 import { Analytics } from "@vercel/analytics/next";
 import "@/styles/globals.css";
-import Clarity from '@microsoft/clarity';
-
+import Clarity from "@microsoft/clarity";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const projectId = "uw1z4c2nr2";
 
-    const clarityId = process.env.NEXT_PUBLIC_MS_CLARITY_PROJECT_ID;
-    Clarity.init(clarityId || "");
+  Clarity.init(projectId);
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem
-    >
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <LanguageProvider>
         <Navigation />
-        <main className={`min-h-screen font-sans antialiased ${inter.className}`}>
+        <main
+          className={`min-h-screen font-sans antialiased ${inter.className}`}
+        >
           <Component {...pageProps} />
         </main>
         <Footer />

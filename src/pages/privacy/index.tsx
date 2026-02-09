@@ -66,7 +66,6 @@ const sections = [
 
 export default function PrivacyPage() {
   const { t, dir } = useLanguage();
-  console.log(dir)
 
   return (
     <main className="min-h-screen bg-background" dir={dir ? "ltr":"rtl"}>
