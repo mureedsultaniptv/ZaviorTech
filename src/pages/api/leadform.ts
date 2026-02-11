@@ -10,7 +10,10 @@ const sanity = createClient({
   useCdn: false,
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
@@ -18,7 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const data = req.body;
 
   // Respond to the user immediately (async background logic)
-  res.status(200).json({ success: true, message: "Form submitted successfully." });
+  res
+    .status(200)
+    .json({ success: true, message: "Form submitted successfully." });
 
   try {
     // 1️⃣ Save lead to Sanity
@@ -35,12 +40,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     // 2️⃣ Configure email transport
+    // const transporter = nodemailer.createTransport({
+    //   host: process.env.EMAIL_SERVER_HOST,
+    //   port: Number(process.env.EMAIL_SERVER_PORT),
+    //   auth: {
+    //     user: process.env.EMAIL_SERVER_USER,
+    //     pass: process.env.EMAIL_SERVER_PASSWORD,
+    //   },
+    // });
+
     const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_SERVER_HOST,
-      port: Number(process.env.EMAIL_SERVER_PORT),
+      service: "gmail",
       auth: {
-        user: process.env.EMAIL_SERVER_USER,
-        pass: process.env.EMAIL_SERVER_PASSWORD,
+        type: "OAuth2",
+        user: process.env.GMAIL_USER,
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
       },
     });
 
