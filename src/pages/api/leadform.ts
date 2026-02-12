@@ -10,98 +10,136 @@ const sanity = createClient({
   useCdn: false,
 });
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log("🟢 [API] Lead form endpoint hit");
+
   if (req.method !== "POST") {
+    console.warn("⚠️ [API] Method not allowed:", req.method);
     return res.status(405).json({ message: "Method not allowed" });
   }
 
   const data = req.body;
+  console.log("📥 [API] Incoming form data:", JSON.stringify(data, null, 2));
 
-  // Respond to the user immediately (async background logic)
-  res
-    .status(200)
-    .json({ success: true, message: "Form submitted successfully." });
+  // Respond immediately
+  res.status(200).json({ success: true, message: "Form submitted successfully." });
+  console.log("✅ [API] Immediate response sent to client");
 
   try {
-    // 1️⃣ Save lead to Sanity
-    await sanity.create({
+    // 1️⃣ Save to Sanity
+    console.log("🟡 [SANITY] Attempting to save lead...");
+    const savedLead = await sanity.create({
       _type: "leadzaviorForm",
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phone: data.phone,
-      company: data.company,
-      service: data.service,
-      message: data.message,
+      ...data,
       createdAt: new Date().toISOString(),
     });
+    console.log("✅ [SANITY] Lead saved successfully:", savedLead._id);
 
-    // 2️⃣ Configure email transport
-    // const transporter = nodemailer.createTransport({
-    //   host: process.env.EMAIL_SERVER_HOST,
-    //   port: Number(process.env.EMAIL_SERVER_PORT),
-    //   auth: {
-    //     user: process.env.EMAIL_SERVER_USER,
-    //     pass: process.env.EMAIL_SERVER_PASSWORD,
-    //   },
-    // });
-
+    // 2️⃣ Configure email
+    console.log("🟡 [EMAIL] Configuring transporter...");
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        type: "OAuth2",
-        user: process.env.GMAIL_USER,
-        clientId: process.env.GMAIL_CLIENT_ID,
-        clientSecret: process.env.GMAIL_CLIENT_SECRET,
-        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        user: process.env.EMAIL_SERVER_USER,
+        pass: process.env.EMAIL_SERVER_PASSWORD,
       },
     });
 
-    // 3️⃣ Email to admin
+    try {
+      await transporter.verify();
+      console.log("✅ [EMAIL] Transporter verified");
+    } catch (verifyErr) {
+      console.error("❌ [EMAIL] Verification failed:", verifyErr);
+    }
+
+    // Email styles
+    const emailStyle = `
+      <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
+        .container { background: #ffffff; max-width: 600px; margin: 30px auto; border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.05); overflow: hidden; }
+        .header { background: #0e4d92; color: #fff; text-align: center; padding: 20px 30px; }
+        .header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; }
+        .content { padding: 25px 30px; color: #333; line-height: 1.6; font-size: 15px; }
+        .content h2 { color: #0e4d92; font-size: 18px; margin-top: 0; }
+        .info { background: #f3f6fa; padding: 15px; border-radius: 6px; margin: 15px 0; }
+        .info p { margin: 5px 0; }
+        .footer { text-align: center; padding: 15px; font-size: 13px; color: #777; background: #fafafa; border-top: 1px solid #eee; }
+        a { color: #0e4d92; text-decoration: none; }
+      </style>
+    `;
+
+    // 3️⃣ Admin email (lead notification)
     const adminMail = {
       from: `"Zavior Website" <${process.env.EMAIL_FROM}>`,
       to: "mureedsultan11@gmail.com",
       subject: `📬 New Lead from ${data.firstName} ${data.lastName}`,
       html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Phone:</strong> ${data.phone}</p>
-        <p><strong>Company:</strong> ${data.company}</p>
-        <p><strong>Service:</strong> ${data.service}</p>
-        <p><strong>Message:</strong></p>
-        <p>${data.message}</p>
+        ${emailStyle}
+        <div class="container">
+          <div class="header">
+            <h1>New Lead Received</h1>
+          </div>
+          <div class="content">
+            <h2>Lead Details</h2>
+            <div class="info">
+              <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
+              <p><strong>Email:</strong> ${data.email}</p>
+              <p><strong>Phone:</strong> ${data.phone}</p>
+              <p><strong>Company:</strong> ${data.company}</p>
+              <p><strong>Service Interested:</strong> ${data.service}</p>
+            </div>
+            <h2>Message</h2>
+            <p>${data.message}</p>
+          </div>
+          <div class="footer">
+            <p>📩 Zavior Technologies – New Inquiry Notification</p>
+          </div>
+        </div>
       `,
     };
 
-    // 4️⃣ Thank-you email to user
+    // 4️⃣ User thank-you email
     const userMail = {
       from: `"Zavior Technologies" <${process.env.EMAIL_FROM}>`,
       to: data.email,
-      subject: "Thank you for contacting Zavior Technologies",
+      subject: "Thank You for Contacting Zavior Technologies",
       html: `
-        <h2>Thank you, ${data.firstName}!</h2>
-        <p>We’ve received your message and our team will get back to you shortly.</p>
-        <p><strong>Your submitted details:</strong></p>
-        <ul>
-          <li><b>Service Interested:</b> ${data.service}</li>
-          <li><b>Message:</b> ${data.message}</li>
-        </ul>
-        <p>Best regards,<br/>Zavior Technologies Team</p>
+        ${emailStyle}
+        <div class="container">
+          <div class="header">
+            <h1>Thank You, ${data.firstName}!</h1>
+          </div>
+          <div class="content">
+            <p>We’ve received your inquiry and our team will contact you shortly.</p>
+            <p>Here’s a summary of what you submitted:</p>
+            <div class="info">
+              <p><strong>Service Interested:</strong> ${data.service}</p>
+              <p><strong>Message:</strong> ${data.message}</p>
+            </div>
+            <p>We appreciate your trust in <strong>Zavior Technologies</strong>.  
+            You’ll hear from us soon!</p>
+          </div>
+          <div class="footer">
+            <p>Best regards,</p>
+            <p><strong>Zavior Technologies Team</strong></p>
+            <p><a href="https://zavior.com">Visit our website</a></p>
+          </div>
+        </div>
       `,
     };
 
-    // 5️⃣ Send both emails asynchronously
-    await Promise.all([
+    // 5️⃣ Send emails
+    console.log("🚀 [EMAIL] Sending emails...");
+    const [adminResult, userResult] = await Promise.all([
       transporter.sendMail(adminMail),
       transporter.sendMail(userMail),
     ]);
 
-    console.log("✅ Lead saved & emails sent successfully!");
-  } catch (err) {
-    console.error("❌ Error handling lead form:", err);
+    console.log("✅ [EMAIL] Admin mail:", adminResult.response);
+    console.log("✅ [EMAIL] User mail:", userResult.response);
+    console.log("🎉 [SUCCESS] Process completed successfully!");
+  } catch (err: any) {
+    console.error("❌ [ERROR] Lead handling failed:", err.message);
+    console.error(err.stack || err);
   }
 }
