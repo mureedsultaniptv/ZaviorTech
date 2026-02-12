@@ -41,7 +41,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email Us",
-    details: ["info@zavior.com", "support@zavior.com"],
+    details: ["info@zaviortech.ae", "support@zavior.com"],
   },
   {
     icon: Clock,
