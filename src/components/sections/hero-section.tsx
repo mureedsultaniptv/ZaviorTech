@@ -25,7 +25,7 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="container relative z-20 mx-auto px-4 lg:px-8 pt-20">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ export function HeroSection() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
             </span>
             <span className="text-sm font-medium text-primary">
-              Pioneering Digital Transformation
+              Empowering Businesses with Odoo ERP
             </span>
           </motion.div>
 
@@ -49,8 +49,8 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-balance"
           >
-            <span className="block">{t.hero.slogan.split(" ").slice(0, 2).join(" ")}</span>
-            <span className="text-primary">{t.hero.slogan.split(" ").slice(2).join(" ")}</span>
+            <span className="block">Transform Your Business</span>
+            <span className="text-primary">with Odoo ERP Solutions</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -60,7 +60,8 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-pretty"
           >
-            {t.hero.subtitle}
+            From Accounting to CRM, POS to Manufacturing — we design, customize, and
+            implement Odoo ERP systems that automate workflows and accelerate business growth.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -72,14 +73,14 @@ export function HeroSection() {
           >
             <Button asChild size="lg" className="group">
               <Link href="/services">
-                {t.hero.cta}
+                Explore Odoo Solutions
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="group bg-transparent">
               <Link href="/contact">
                 <Play className="mr-2 h-4 w-4" />
-                {t.hero.ctaSecondary}
+                Request a Demo
               </Link>
             </Button>
           </motion.div>
@@ -92,19 +93,14 @@ export function HeroSection() {
             className="mt-16 pt-16 border-t border-border/50"
           >
             <p className="text-sm text-muted-foreground mb-6">
-              Trusted by industry leaders worldwide
+              Trusted by businesses across retail, manufacturing, and services.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-60">
-              {["TechCorp", "InnovateCo", "GlobalBank", "HealthPlus", "DataFlow"].map(
-                (company) => (
-                  <div
-                    key={company}
-                    className="text-lg font-semibold text-muted-foreground"
-                  >
-                    {company}
-                  </div>
-                )
-              )}
+              {["ERPTech", "OdooPro", "BizSuite", "CloudSync", "RetailFlow"].map((company) => (
+                <div key={company} className="text-lg font-semibold text-muted-foreground">
+                  {company}
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>

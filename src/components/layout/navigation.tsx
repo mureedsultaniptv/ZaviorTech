@@ -30,7 +30,7 @@ export function Navigation() {
     { href: "/", label: t.nav.home },
     { href: "/about", label: t.nav.about },
     { href: "/services", label: t.nav.services },
-    { href: "/companies", label: t.nav.companies },
+    // { href: "/companies", label: t.nav.companies },
     { href: "/portfolio", label: t.nav.portfolio },
     { href: "/blog", label: t.nav.blog },
     // { href: "/team", label: t.nav.team },

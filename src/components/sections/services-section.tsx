@@ -21,11 +21,11 @@ export function ServicesSection() {
   const { t } = useLanguage();
 
   const services = [
-    { key: "ai" as const, ...t.services.ai },
     { key: "erp" as const, ...t.services.erp },
     { key: "web" as const, ...t.services.web },
     { key: "mobile" as const, ...t.services.mobile },
     { key: "it" as const, ...t.services.it },
+    { key: "ai" as const, ...t.services.ai },
     { key: "cyber" as const, ...t.services.cyber },
   ];
 

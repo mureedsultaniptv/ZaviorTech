@@ -77,22 +77,7 @@ export const companies = [
 ];
 
 export const services = [
-  {
-    id: "ai-automation",
-    title: "AI Automation",
-    description:
-      "Leverage cutting-edge artificial intelligence to automate processes and drive efficiency across your organization.",
-    icon: "Brain",
-    image: "/services/ai-automation.png",
-    features: [
-      "Machine Learning Models",
-      "Natural Language Processing",
-      "Computer Vision",
-      "Predictive Analytics",
-      "Process Automation",
-      "Intelligent Chatbots",
-    ],
-  },
+
   {
     id: "erp-odoo",
     title: "ERP & Odoo Solutions",
@@ -155,6 +140,22 @@ export const services = [
       "Technical Support",
       "System Integration",
       "IT Security",
+    ],
+  },
+    {
+    id: "ai-automation",
+    title: "AI Automation",
+    description:
+      "Leverage cutting-edge artificial intelligence to automate processes and drive efficiency across your organization.",
+    icon: "Brain",
+    image: "/services/ai-automation.png",
+    features: [
+      "Machine Learning Models",
+      "Natural Language Processing",
+      "Computer Vision",
+      "Predictive Analytics",
+      "Process Automation",
+      "Intelligent Chatbots",
     ],
   },
   {
@@ -230,7 +231,7 @@ export const projects = [
   },
   {
     id: "zero-waste-erp",
-    title: "Recycl Wasteing Industrial ERP",
+    title: "Recycle Wasteing Industrial ERP",
     slug: "zero-waste-industrial-erp",
     category: "Sustainability & Industrial ERP",
     client: "Industrial Sustainability Organization",
@@ -695,32 +696,6 @@ export const testimonials = [
 
 export const careers = [
   {
-    id: "senior-ai-engineer",
-    title: "Senior AI Engineer",
-    slug: "senior-ai-engineer",
-    department: "AI & Machine Learning",
-    location: "Dubai, UAE (Hybrid)",
-    type: "Full-time",
-    experience: "5+ years",
-    description:
-      "We're looking for a Senior AI Engineer to join our growing AI team and help build next-generation intelligent solutions for our enterprise clients.",
-    requirements: [
-      "5+ years of experience in AI/ML development",
-      "Strong proficiency in Python, TensorFlow, and PyTorch",
-      "Experience with large language models and NLP",
-      "Background in deploying ML models to production",
-      "Excellent communication and collaboration skills",
-    ],
-    benefits: [
-      "Competitive salary and equity",
-      "Health and dental insurance",
-      "Flexible working arrangements",
-      "Professional development budget",
-      "Annual team retreats",
-    ],
-    postedAt: "2026-01-10",
-  },
-  {
     id: "odoo-developer",
     title: "Odoo Developer",
     slug: "odoo-developer",
@@ -798,6 +773,32 @@ export const careers = [
     ],
     postedAt: "2026-01-03",
   },
+  {
+    id: "senior-ai-engineer",
+    title: "Senior AI Engineer",
+    slug: "senior-ai-engineer",
+    department: "AI & Machine Learning",
+    location: "Dubai, UAE (Hybrid)",
+    type: "Full-time",
+    experience: "5+ years",
+    description:
+      "We're looking for a Senior AI Engineer to join our growing AI team and help build next-generation intelligent solutions for our enterprise clients.",
+    requirements: [
+      "5+ years of experience in AI/ML development",
+      "Strong proficiency in Python, TensorFlow, and PyTorch",
+      "Experience with large language models and NLP",
+      "Background in deploying ML models to production",
+      "Excellent communication and collaboration skills",
+    ],
+    benefits: [
+      "Competitive salary and equity",
+      "Health and dental insurance",
+      "Flexible working arrangements",
+      "Professional development budget",
+      "Annual team retreats",
+    ],
+    postedAt: "2026-01-10",
+  },
 ];
 
 export const faqs = [
@@ -844,10 +845,10 @@ export const faqs = [
 ];
 
 export const stats = {
-  projects: 500,
-  clients: 200,
-  countries: 35,
-  team: 750,
+  projects: 100,
+  clients: 50,
+  countries: 4,
+  team: 5,
 };
 
 export const milestones = [
