@@ -14,44 +14,53 @@ export const translations = {
     },
     hero: {
       slogan: "Turning Ideas Into Digital Reality",
-      subtitle: "We are a collective of passionate technologists building innovative solutions that transform businesses worldwide.",
+      subtitle:
+        "We are a collective of passionate technologists building innovative solutions that transform businesses worldwide.",
       cta: "Explore Our Services",
       ctaSecondary: "Get In Touch",
     },
     services: {
       badge: "What We Offer",
       title: "Our Services",
-      subtitle: "Our collection of tech services spans various needs at every stage of the transformation process.",
+      subtitle:
+        "Our collection of tech services spans various needs at every stage of the transformation process.",
       learnMore: "Learn More",
       ai: {
         title: "AI Automation",
-        description: "Leverage cutting-edge artificial intelligence to automate processes and drive efficiency across your organization.",
+        description:
+          "Leverage cutting-edge artificial intelligence to automate processes and drive efficiency across your organization.",
       },
       erp: {
         title: "ERP & Odoo Solutions",
-        description: "Comprehensive enterprise resource planning implementations tailored to streamline your business operations.",
+        description:
+          "Comprehensive enterprise resource planning implementations tailored to streamline your business operations.",
       },
       web: {
         title: "Web Development",
-        description: "Custom websites and web applications built with modern technologies for optimal performance and user experience.",
+        description:
+          "Custom websites and web applications built with modern technologies for optimal performance and user experience.",
       },
       mobile: {
         title: "Mobile Applications",
-        description: "Native and cross-platform mobile apps designed to engage users and extend your digital presence.",
+        description:
+          "Native and cross-platform mobile apps designed to engage users and extend your digital presence.",
       },
       it: {
         title: "IT Solutions",
-        description: "End-to-end IT consulting and infrastructure solutions to power your digital transformation journey.",
+        description:
+          "End-to-end IT consulting and infrastructure solutions to power your digital transformation journey.",
       },
-      cyber: {
-        title: "Cybersecurity",
-        description: "Protect your digital assets with our comprehensive security assessments and implementation services.",
+      coreit: {
+        title: "Core IT Infrastructure",
+        description:
+          "Delivering complete hardware and infrastructure solutions — from enterprise servers and networking to CCTV surveillance and workstation setup.",
       },
     },
     companies: {
       badge: "Our Network",
       title: "Our Companies",
-      subtitle: "Explore our network of specialized subsidiaries delivering excellence across industries.",
+      subtitle:
+        "Explore our network of specialized subsidiaries delivering excellence across industries.",
       viewAll: "View All Companies",
       visit: "Visit Website",
     },
@@ -72,7 +81,8 @@ export const translations = {
     blog: {
       badge: "Latest News",
       title: "Latest Insights",
-      subtitle: "Stay updated with our latest thoughts on technology and innovation.",
+      subtitle:
+        "Stay updated with our latest thoughts on technology and innovation.",
       readMore: "Read More",
       viewAll: "View All Articles",
       minRead: "min read",
@@ -96,11 +106,13 @@ export const translations = {
       teamTitle: "The Talent Behind Our Success",
       teamSubtitle: "A diverse group of experts dedicated to excellence.",
       joinTitle: "Want to Join Us?",
-      joinSubtitle: "We're always looking for talented individuals to join our growing team.",
+      joinSubtitle:
+        "We're always looking for talented individuals to join our growing team.",
       viewCareers: "View Open Positions",
     },
     footer: {
-      description: "Zavior is a global technology conglomerate dedicated to turning innovative ideas into digital reality.",
+      description:
+        "Zavior is a global technology conglomerate dedicated to turning innovative ideas into digital reality.",
       quickLinks: "Quick Links",
       services: "Services",
       legal: "Legal",
@@ -119,18 +131,23 @@ export const translations = {
       subtitle: "Pioneering digital transformation since 2015",
       history: "Our Journey",
       mission: "Our Mission",
-      missionText: "To empower businesses worldwide with innovative technology solutions that drive growth, efficiency, and sustainable success.",
+      missionText:
+        "To empower businesses worldwide with innovative technology solutions that drive growth, efficiency, and sustainable success.",
       vision: "Our Vision",
-      visionText: "To be the global leader in digital transformation, setting the standard for innovation and excellence in technology services.",
+      visionText:
+        "To be the global leader in digital transformation, setting the standard for innovation and excellence in technology services.",
       values: "Our Values",
-      valuesText: "Innovation, Integrity, Excellence, Collaboration, and Customer Success guide everything we do.",
+      valuesText:
+        "Innovation, Integrity, Excellence, Collaboration, and Customer Success guide everything we do.",
       story: "Our Story",
-      storyText: "Founded in 2015, Zavior started as a small team of passionate developers with a big vision. Today, we've grown into a global technology conglomerate serving clients across multiple continents.",
+      storyText:
+        "Founded in 2015, Zavior started as a small team of passionate developers with a big vision. Today, we've grown into a global technology conglomerate serving clients across multiple continents.",
     },
     contact: {
       badge: "Contact Us",
       title: "Get In Touch",
-      subtitle: "Ready to start your digital transformation journey? We would love to hear from you.",
+      subtitle:
+        "Ready to start your digital transformation journey? We would love to hear from you.",
       firstName: "First Name",
       lastName: "Last Name",
       email: "Email Address",
@@ -144,30 +161,36 @@ export const translations = {
       address: "Address",
       emailLabel: "Email",
       formTitle: "Send Us a Message",
-      formSubtitle: "Fill out the form and we'll get back to you within 24 hours.",
+      formSubtitle:
+        "Fill out the form and we'll get back to you within 24 hours.",
       offices: "Our Offices",
       mapPlaceholder: "Interactive map coming soon",
       ctaTitle: "Ready to Transform Your Business?",
-      ctaSubtitle: "Let's discuss how we can help you achieve your digital goals.",
+      ctaSubtitle:
+        "Let's discuss how we can help you achieve your digital goals.",
       callNow: "Call Now",
       emailUs: "Email Us",
     },
     careers: {
       badge: "Join Us",
       title: "Join Our Team",
-      subtitle: "Build your career with us and help shape the future of technology.",
+      subtitle:
+        "Build your career with us and help shape the future of technology.",
       benefits: "Benefits",
       benefitsTitle: "Why Work With Us",
-      benefitsSubtitle: "We offer competitive benefits to support your growth and well-being.",
+      benefitsSubtitle:
+        "We offer competitive benefits to support your growth and well-being.",
       openings: "Open Positions",
       openingsTitle: "Current Opportunities",
       openingsSubtitle: "Find your next role and make an impact.",
       viewDetails: "View Details",
       process: "How It Works",
       processTitle: "Our Hiring Process",
-      processSubtitle: "A transparent and efficient process to find the right fit.",
+      processSubtitle:
+        "A transparent and efficient process to find the right fit.",
       ctaTitle: "Don't See a Fit?",
-      ctaSubtitle: "We're always looking for talented individuals. Send us your resume and we'll keep you in mind for future opportunities.",
+      ctaSubtitle:
+        "We're always looking for talented individuals. Send us your resume and we'll keep you in mind for future opportunities.",
       contactUs: "Contact Us",
       backToJobs: "Back to Careers",
       aboutRole: "About This Role",
@@ -188,12 +211,15 @@ export const translations = {
     faq: {
       badge: "FAQ",
       title: "Frequently Asked Questions",
-      subtitle: "Find answers to common questions about our services and processes.",
+      subtitle:
+        "Find answers to common questions about our services and processes.",
       searchPlaceholder: "Search for answers...",
       noResults: "No results found",
-      noResultsDesc: "Try adjusting your search terms or browse our categories below.",
+      noResultsDesc:
+        "Try adjusting your search terms or browse our categories below.",
       ctaTitle: "Still Have Questions?",
-      ctaSubtitle: "Our team is here to help. Reach out and we'll get back to you as soon as possible.",
+      ctaSubtitle:
+        "Our team is here to help. Reach out and we'll get back to you as soon as possible.",
       contactUs: "Contact Support",
     },
     portfolio: {
@@ -216,7 +242,8 @@ export const translations = {
     },
     cta: {
       title: "Ready to Transform Your Business?",
-      subtitle: "Let's discuss how Zavior can help you achieve your digital goals and drive your business forward.",
+      subtitle:
+        "Let's discuss how Zavior can help you achieve your digital goals and drive your business forward.",
       button: "Start Your Journey",
       buttonSecondary: "Learn More",
     },
@@ -236,44 +263,53 @@ export const translations = {
     },
     hero: {
       slogan: "نحول الأفكار إلى واقع رقمي",
-      subtitle: "نحن مجموعة من المتخصصين في التقنية نبني حلولاً مبتكرة تحول الأعمال في جميع أنحاء العالم.",
+      subtitle:
+        "نحن مجموعة من المتخصصين في التقنية نبني حلولاً مبتكرة تحول الأعمال في جميع أنحاء العالم.",
       cta: "استكشف خدماتنا",
       ctaSecondary: "تواصل معنا",
     },
     services: {
       badge: "ما نقدمه",
       title: "خدماتنا",
-      subtitle: "تغطي مجموعة خدماتنا التقنية احتياجات متنوعة في كل مرحلة من مراحل التحول الرقمي.",
+      subtitle:
+        "تغطي مجموعة خدماتنا التقنية احتياجات متنوعة في كل مرحلة من مراحل التحول الرقمي.",
       learnMore: "اعرف المزيد",
       ai: {
         title: "أتمتة الذكاء الاصطناعي",
-        description: "استفد من أحدث تقنيات الذكاء الاصطناعي لأتمتة العمليات وتعزيز الكفاءة في مؤسستك.",
+        description:
+          "استفد من أحدث تقنيات الذكاء الاصطناعي لأتمتة العمليات وتعزيز الكفاءة في مؤسستك.",
       },
       erp: {
         title: "حلول ERP وأودو",
-        description: "تطبيقات شاملة لتخطيط موارد المؤسسات مصممة لتبسيط عمليات أعمالك.",
+        description:
+          "تطبيقات شاملة لتخطيط موارد المؤسسات مصممة لتبسيط عمليات أعمالك.",
       },
       web: {
         title: "تطوير الويب",
-        description: "مواقع وتطبيقات ويب مخصصة مبنية بأحدث التقنيات للحصول على أفضل أداء وتجربة مستخدم.",
+        description:
+          "مواقع وتطبيقات ويب مخصصة مبنية بأحدث التقنيات للحصول على أفضل أداء وتجربة مستخدم.",
       },
       mobile: {
         title: "تطبيقات الجوال",
-        description: "تطبيقات جوال أصلية ومتعددة المنصات مصممة لإشراك المستخدمين وتوسيع حضورك الرقمي.",
+        description:
+          "تطبيقات جوال أصلية ومتعددة المنصات مصممة لإشراك المستخدمين وتوسيع حضورك الرقمي.",
       },
       it: {
         title: "حلول تقنية المعلومات",
-        description: "استشارات وحلول بنية تحتية شاملة لتقنية المعلومات لدعم رحلة تحولك الرقمي.",
+        description:
+          "استشارات وحلول بنية تحتية شاملة لتقنية المعلومات لدعم رحلة تحولك الرقمي.",
       },
-      cyber: {
+      coreit: {
         title: "الأمن السيبراني",
-        description: "احمِ أصولك الرقمية من خلال تقييماتنا الأمنية الشاملة وخدمات التنفيذ.",
+        description:
+          "احمِ أصولك الرقمية من خلال تقييماتنا الأمنية الشاملة وخدمات التنفيذ.",
       },
     },
     companies: {
       badge: "شبكتنا",
       title: "شركاتنا",
-      subtitle: "استكشف شبكتنا من الشركات التابعة المتخصصة التي تقدم التميز عبر الصناعات.",
+      subtitle:
+        "استكشف شبكتنا من الشركات التابعة المتخصصة التي تقدم التميز عبر الصناعات.",
       viewAll: "عرض جميع الشركات",
       visit: "زيارة الموقع",
     },
@@ -318,11 +354,13 @@ export const translations = {
       teamTitle: "المواهب وراء نجاحنا",
       teamSubtitle: "مجموعة متنوعة من الخبراء الملتزمين بالتميز.",
       joinTitle: "هل تريد الانضمام إلينا؟",
-      joinSubtitle: "نبحث دائمًا عن أفراد موهوبين للانضمام إلى فريقنا المتنامي.",
+      joinSubtitle:
+        "نبحث دائمًا عن أفراد موهوبين للانضمام إلى فريقنا المتنامي.",
       viewCareers: "عرض الوظائف المتاحة",
     },
     footer: {
-      description: "زافيور هي مجموعة تقنية عالمية مكرسة لتحويل الأفكار المبتكرة إلى واقع رقمي.",
+      description:
+        "زافيور هي مجموعة تقنية عالمية مكرسة لتحويل الأفكار المبتكرة إلى واقع رقمي.",
       quickLinks: "روابط سريعة",
       services: "الخدمات",
       legal: "قانوني",
@@ -341,13 +379,17 @@ export const translations = {
       subtitle: "رواد التحول الرقمي منذ 2015",
       history: "رحلتنا",
       mission: "مهمتنا",
-      missionText: "تمكين الشركات في جميع أنحاء العالم بحلول تقنية مبتكرة تدفع النمو والكفاءة والنجاح المستدام.",
+      missionText:
+        "تمكين الشركات في جميع أنحاء العالم بحلول تقنية مبتكرة تدفع النمو والكفاءة والنجاح المستدام.",
       vision: "رؤيتنا",
-      visionText: "أن نكون الرائد العالمي في التحول الرقمي، ونضع المعايير للابتكار والتميز في الخدمات التقنية.",
+      visionText:
+        "أن نكون الرائد العالمي في التحول الرقمي، ونضع المعايير للابتكار والتميز في الخدمات التقنية.",
       values: "قيمنا",
-      valuesText: "الابتكار والنزاهة والتميز والتعاون ونجاح العملاء توجه كل ما نقوم به.",
+      valuesText:
+        "الابتكار والنزاهة والتميز والتعاون ونجاح العملاء توجه كل ما نقوم به.",
       story: "قصتنا",
-      storyText: "تأسست زافيور في عام 2015 كفريق صغير من المطورين الشغوفين برؤية كبيرة. اليوم، نمونا لنصبح مجموعة تقنية عالمية تخدم العملاء عبر قارات متعددة.",
+      storyText:
+        "تأسست زافيور في عام 2015 كفريق صغير من المطورين الشغوفين برؤية كبيرة. اليوم، نمونا لنصبح مجموعة تقنية عالمية تخدم العملاء عبر قارات متعددة.",
     },
     contact: {
       badge: "اتصل بنا",
@@ -389,7 +431,8 @@ export const translations = {
       processTitle: "عملية التوظيف لدينا",
       processSubtitle: "عملية شفافة وفعالة للعثور على المرشح المناسب.",
       ctaTitle: "لم تجد ما يناسبك؟",
-      ctaSubtitle: "نبحث دائمًا عن أفراد موهوبين. أرسل لنا سيرتك الذاتية وسنضعك في الاعتبار للفرص المستقبلية.",
+      ctaSubtitle:
+        "نبحث دائمًا عن أفراد موهوبين. أرسل لنا سيرتك الذاتية وسنضعك في الاعتبار للفرص المستقبلية.",
       contactUs: "اتصل بنا",
       backToJobs: "العودة للوظائف",
       aboutRole: "عن هذا الدور",
@@ -415,7 +458,8 @@ export const translations = {
       noResults: "لم يتم العثور على نتائج",
       noResultsDesc: "حاول تعديل مصطلحات البحث أو تصفح فئاتنا أدناه.",
       ctaTitle: "هل لديك المزيد من الأسئلة؟",
-      ctaSubtitle: "فريقنا هنا للمساعدة. تواصل معنا وسنرد عليك في أقرب وقت ممكن.",
+      ctaSubtitle:
+        "فريقنا هنا للمساعدة. تواصل معنا وسنرد عليك في أقرب وقت ممكن.",
       contactUs: "اتصل بالدعم",
     },
     portfolio: {
@@ -438,7 +482,8 @@ export const translations = {
     },
     cta: {
       title: "هل أنت مستعد لتحويل أعمالك؟",
-      subtitle: "دعنا نناقش كيف يمكن لزافيور مساعدتك في تحقيق أهدافك الرقمية ودفع أعمالك للأمام.",
+      subtitle:
+        "دعنا نناقش كيف يمكن لزافيور مساعدتك في تحقيق أهدافك الرقمية ودفع أعمالك للأمام.",
       button: "ابدأ رحلتك",
       buttonSecondary: "اعرف المزيد",
     },

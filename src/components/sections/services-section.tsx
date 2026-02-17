@@ -6,7 +6,7 @@ import { useLanguage } from "@/lib/i18n/language-context";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Brain, Building, Globe, Smartphone, Server, Shield } from "lucide-react";
+import { ArrowRight, Brain, Building, Globe, Smartphone, Server, CircuitBoard } from "lucide-react";
 
 const iconMap = {
   ai: Brain,
@@ -14,7 +14,7 @@ const iconMap = {
   web: Globe,
   mobile: Smartphone,
   it: Server,
-  cyber: Shield,
+  coreit: CircuitBoard,
 };
 
 export function ServicesSection() {
@@ -26,7 +26,7 @@ export function ServicesSection() {
     { key: "mobile" as const, ...t.services.mobile },
     { key: "it" as const, ...t.services.it },
     { key: "ai" as const, ...t.services.ai },
-    { key: "cyber" as const, ...t.services.cyber },
+    { key: "coreit" as const, ...t.services.coreit },
   ];
 
   return (

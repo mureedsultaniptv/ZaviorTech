@@ -137,7 +137,7 @@ export default function PortfolioDetailPage() {
             >
               <Card className="overflow-hidden bg-card border-border/50">
                 <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <Image src={project.image} alt="Project Image" width={600} height={600} className="object-cover w-full h-full" /> 
+                  <Image src={project.image} alt="Project Image" width={600} height={600} className="w-full h-full" /> 
                   {/* <span className="text-8xl font-bold text-primary/30">
                     {project.title.charAt(0)}
                   </span> */}

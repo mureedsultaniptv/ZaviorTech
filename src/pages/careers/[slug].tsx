@@ -20,26 +20,109 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 
-export default function CareerDetailPage({
-}: {
+export default function CareerDetailPage({}: {
   params: Promise<{ id: string }>;
 }) {
-    const params:any = useParams();
-  
+  const params: any = useParams();
   const { t, dir } = useLanguage();
   const job = jobOpenings.find((j) => j.id === params?.slug);
 
-  if (!job) return(<div className="min-h-screen flex items-center justify-center">
-    <div className="text-center">
-      <h1 className="text-4xl font-bold mb-4">Job Not Found</h1>
-      <p className="text-muted-foreground mb-6">The job you are looking for does not exist.</p>
-      <Link href="/careers" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-        <ArrowLeft className="h-4 w-4" />
-        Back to Careers
-      </Link>
-    </div>
-  </div>);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    linkedin: "",
+    portfolio: "",
+    cover: "",
+    resume: null as File | null,
+  });
+
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setFormData((prev) => ({ ...prev, resume: file }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage(null);
+
+    if (!formData.name || !formData.email || !formData.resume) {
+      setMessage({ type: "error", text: "Please fill all required fields." });
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      const fd = new FormData();
+      Object.entries(formData).forEach(([key, val]) => {
+        if (val) fd.append(key, val as any);
+      });
+      fd.append("jobId", job?.id || "");
+
+      const res = await fetch("/api/applyJob", {
+        method: "POST",
+        body: fd,
+      });
+
+      const result = await res.json();
+      if (!res.ok) throw new Error(result?.message || "Submission failed");
+
+      setMessage({
+        type: "success",
+        text: "Application submitted successfully!",
+      });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        linkedin: "",
+        portfolio: "",
+        cover: "",
+        resume: null,
+      });
+    } catch (err: any) {
+      console.error(err);
+      setMessage({
+        type: "error",
+        text: err?.message || "Something went wrong.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (!job)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Job Not Found</h1>
+          <p className="text-muted-foreground mb-6">
+            The job you are looking for does not exist.
+          </p>
+          <Link
+            href="/careers"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Careers
+          </Link>
+        </div>
+      </div>
+    );
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
@@ -60,26 +143,41 @@ export default function CareerDetailPage({
             transition={{ duration: 0.6 }}
             className="max-w-4xl"
           >
-            <Badge variant="outline" className="mb-4 border-primary/50 text-primary">
+            <Badge
+              variant="outline"
+              className="mb-4 border-primary/50 text-primary"
+            >
               {job.department}
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               {job.title}
             </h1>
             <div className="flex flex-wrap gap-4">
-              <Badge variant="secondary" className="flex items-center gap-2 px-4 py-2">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-2 px-4 py-2"
+              >
                 <MapPin className="w-4 h-4" />
                 {job.location}
               </Badge>
-              <Badge variant="secondary" className="flex items-center gap-2 px-4 py-2">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-2 px-4 py-2"
+              >
                 <Clock className="w-4 h-4" />
                 {job.type}
               </Badge>
-              <Badge variant="secondary" className="flex items-center gap-2 px-4 py-2">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-2 px-4 py-2"
+              >
                 <Briefcase className="w-4 h-4" />
                 {job.experience}
               </Badge>
-              <Badge variant="secondary" className="flex items-center gap-2 px-4 py-2">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-2 px-4 py-2"
+              >
                 <DollarSign className="w-4 h-4" />
                 {job.salary}
               </Badge>
@@ -132,7 +230,10 @@ export default function CareerDetailPage({
                         "Contribute to technical architecture decisions",
                         "Stay updated with latest technologies",
                       ].map((item, index) => (
-                        <li key={index} className="flex items-start gap-3 text-muted-foreground">
+                        <li
+                          key={index}
+                          className="flex items-start gap-3 text-muted-foreground"
+                        >
                           <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                           {item}
                         </li>
@@ -161,7 +262,10 @@ export default function CareerDetailPage({
                         "Bachelor's degree in related field or equivalent",
                         "Experience with agile methodologies",
                       ].map((item, index) => (
-                        <li key={index} className="flex items-start gap-3 text-muted-foreground">
+                        <li
+                          key={index}
+                          className="flex items-start gap-3 text-muted-foreground"
+                        >
                           <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                           {item}
                         </li>
@@ -210,29 +314,68 @@ export default function CareerDetailPage({
                   <h2 className="text-2xl font-bold text-foreground mb-6">
                     {t.careers.applyNow}
                   </h2>
-                  <form className="space-y-4">
+                  <form className="space-y-4" onSubmit={handleSubmit}>
                     <div className="space-y-2">
                       <Label htmlFor="name">{t.careers.fullName}</Label>
-                      <Input id="name" placeholder="John Doe" />
+                      <Input
+                        id="name"
+                        placeholder="John Doe"
+                        value={formData.name}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">{t.careers.email}</Label>
-                      <Input id="email" type="email" placeholder="john@example.com" />
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="john@example.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">{t.careers.phone}</Label>
-                      <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+1 (555) 000-0000"
+                        value={formData.phone}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="linkedin">{t.careers.linkedin}</Label>
-                      <Input id="linkedin" placeholder="linkedin.com/in/johndoe" />
+                      <Input
+                        id="linkedin"
+                        placeholder="linkedin.com/in/johndoe"
+                        value={formData.linkedin}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="portfolio">Portfolio URL</Label>
+                      <Input
+                        id="portfolio"
+                        placeholder="https://portfolio.com"
+                        value={formData.portfolio}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="resume">{t.careers.resume}</Label>
                       <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
                         <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground">
-                          {t.careers.uploadResume}
+                        <Input
+                          id="resume"
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          onChange={handleFileChange}
+                        />
+                        <p className="text-sm text-muted-foreground mt-2">
+                          {formData.resume
+                            ? formData.resume.name
+                            : t.careers.uploadResume}
                         </p>
                       </div>
                     </div>
@@ -242,10 +385,35 @@ export default function CareerDetailPage({
                         id="cover"
                         placeholder={t.careers.coverPlaceholder}
                         rows={4}
+                        value={formData.cover}
+                        onChange={handleChange}
                       />
                     </div>
-                    <Button type="submit" className="w-full" size="lg">
-                      {t.careers.submitApplication}
+
+                    {message && (
+                      <div
+                        className={`p-3 rounded ${
+                          message.type === "success"
+                            ? "bg-green-50 text-green-800"
+                            : "bg-red-50 text-red-800"
+                        }`}
+                      >
+                        {message.type === "success" && (
+                          <CheckCircle className="inline mr-2" />
+                        )}
+                        {message.text}
+                      </div>
+                    )}
+
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      size="lg"
+                      disabled={submitting}
+                    >
+                      {submitting
+                        ? "Submitting..."
+                        : t.careers.submitApplication}
                     </Button>
                   </form>
                 </CardContent>
