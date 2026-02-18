@@ -66,13 +66,13 @@ export default function HomePage() {
 
       {/* Floating WhatsApp Button */}
       <div
-        className="fixed bottom-6 right-6 z-50 flex flex-col items-end animate-float"
+        className="fixed w-min bottom-6 right-6 z-50 flex flex-col items-end animate-float"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
         {/* Tooltip with animated state change */}
         <div
-          className={`mb-2 px-3 py-1 rounded-lg shadow-lg text-sm text-white bg-green-600 text-center transition-all duration-300 ease-in-out transform ${
+          className={`mb-2 w-max absolute top-[-40] px-3 py-1 rounded-lg shadow-lg text-sm text-white bg-green-600 text-center transition-all duration-300 ease-in-out transform ${
             hovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"
           }`}
         >

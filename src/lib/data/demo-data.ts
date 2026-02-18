@@ -1169,40 +1169,41 @@ export const testimonials = [
   {
     id: 1,
     quote:
-      "Zavior transformed our entire digital infrastructure. Their AI solutions have increased our operational efficiency by 40% and opened new revenue streams we never thought possible.",
-    author: "Jennifer Walsh",
-    role: "CTO",
-    company: "Global Finance Corp",
-    avatar: "/testimonials/jennifer-walsh.jpg",
+      "Zavior Technologies helped us completely automate our Odoo ERP workflows — from sales to accounting. Their Dubai-based team’s expertise and responsiveness made the entire transition seamless and efficient.",
+    author: "Aamir Khan",
+    role: "Managing Director",
+    company: "Al Noor Trading LLC",
+    avatar: "/testimonials/aamir-khan.jpg",
   },
   {
     id: 2,
     quote:
-      "The Odoo implementation by Zavior was flawless. They understood our complex manufacturing needs and delivered a solution that has streamlined our entire operation.",
-    author: "Robert Martinez",
-    role: "Operations Director",
-    company: "Industrial Manufacturing Inc",
-    avatar: "/testimonials/robert-martinez.jpg",
+      "Thanks to Zavior Tech, our multi-branch retail business now runs smoothly under one unified Odoo system. Inventory, POS, and eCommerce are perfectly integrated, saving us countless hours every month.",
+    author: "Fatima Al Mansoori",
+    role: "Retail Operations Head",
+    company: "StyleHub UAE",
+    avatar: "/testimonials/fatima-al-mansoori.jpg",
   },
   {
     id: 3,
     quote:
-      "Working with Zavior on our mobile app was an exceptional experience. They delivered a world-class product that our customers love and has significantly boosted engagement.",
-    author: "Emma Thompson",
-    role: "Product Manager",
-    company: "TechStart Solutions",
-    avatar: "/testimonials/emma-thompson.jpg",
+      "Their Odoo customization and cloud deployment transformed how we manage clients and projects. Zavior’s team really understands business logic and delivered beyond expectations.",
+    author: "Mohammed Saeed",
+    role: "CEO",
+    company: "SmartBuild Contracting",
+    avatar: "/testimonials/mohammed-saeed.jpg",
   },
   {
     id: 4,
     quote:
-      "Zavior's cybersecurity team helped us achieve compliance and significantly improve our security posture. Their expertise and professionalism are unmatched.",
-    author: "Daniel Park",
-    role: "CISO",
-    company: "Healthcare Systems Ltd",
-    avatar: "/testimonials/daniel-park.jpg",
+      "Working with Zavior Technologies on our AI-powered reporting and HR automation was a game changer. Their innovative approach has enhanced both productivity and accuracy across departments.",
+    author: "Sara Williams",
+    role: "HR Director",
+    company: "FutureEdge Technologies",
+    avatar: "/testimonials/sara-williams.jpg",
   },
 ];
+
 
 export const careers = [
 
