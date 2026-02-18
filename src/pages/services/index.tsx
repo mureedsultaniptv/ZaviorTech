@@ -21,8 +21,6 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Server,
   Shield,
 };
-console.log(services)
-
 export default function ServicesPage() {
   const { t } = useLanguage();
 
