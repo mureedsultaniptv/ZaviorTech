@@ -57,13 +57,14 @@ export function Footer() {
                 <MapPin className="h-4 w-4 text-primary" />
                 <span className="text-sm">Dubai, United Arab Emirates</span>
               </div>
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <a className="flex items-center gap-3 text-muted-foreground">
                 <Phone className="h-4 w-4 text-primary" />
-                <span className="text-sm">+971 4 123 4567</span>
-              </div>
+                {/* <span className="text-sm">+971 4 123 4567</span> */}
+                <span className="text-sm">+971 50 818 5948</span>
+              </a>
               <div className="flex items-center gap-3 text-muted-foreground">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-sm">contact@zavior.com</span>
+                <span className="text-sm">support@zaviortech.org</span>
               </div>
             </div>
           </div>

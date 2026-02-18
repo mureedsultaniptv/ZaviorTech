@@ -12,6 +12,7 @@ import { CTASection } from "@/components/sections/cta-section";
 
 import { FaWhatsapp } from "react-icons/fa"; // Make sure to install react-icons
 import { useState } from "react";
+import Head from "next/head";
 
 
 export default function HomePage() {
@@ -26,6 +27,33 @@ export default function HomePage() {
   };
   return (
     <>
+       <Head>
+        <title>Zavior Tech | Odoo ERP & Business Automation Solutions</title>
+        <meta
+          name="description"
+          content="Zavior Tech is a Dubai-based Odoo Partner providing ERP solutions, digital transformation, and business process automation for global enterprises."
+        />
+        <meta name="robots" content="index, follow" />
+
+        {/* Open Graph / Social Sharing */}
+        <meta property="og:title" content="Zavior Tech | Odoo ERP & Automation" />
+        <meta
+          property="og:description"
+          content="Simplify your global operations with Zavior Tech's Odoo ERP implementation, integration, and digital transformation services."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://zaviortech.vercel.app" />
+        <meta property="og:image" content="https://zaviortech.vercel.app/og-image.png" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Zavior Tech | Odoo ERP & Automation" />
+        <meta
+          name="twitter:description"
+          content="Simplify your global operations with Zavior Tech's Odoo ERP solutions."
+        />
+        <meta name="twitter:image" content="https://zaviortech.vercel.app/og-image.png" />
+      </Head>
       <HeroSection />
       <ServicesSection />
       {/* <CompaniesSection /> */}

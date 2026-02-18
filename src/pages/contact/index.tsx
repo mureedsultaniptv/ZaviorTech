@@ -26,22 +26,27 @@ import {
   Globe,
 } from "lucide-react";
 import { useState } from "react";
+import { link } from "fs";
+import Link from "next/link";
 
 const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["123 Innovation Drive", "Tech Hub, Dubai, UAE"],
+    details: ["Zavior Group of Companies Sharjah"],
+    link: "#",
   },
   {
     icon: Phone,
     title: "Call Us",
-    details: ["+971 4 123 4567", "+971 50 123 4567"],
+    details: ["+971 50 818 5948"],
+    link: "tel:+971508185948",
   },
   {
     icon: Mail,
     title: "Email Us",
-    details: ["info@zaviortech.ae", "support@zavior.com"],
+    details: ["zaviortechnologies@gmail.com", "support@zaviortech.org"],
+    link: "mailto:zaviortechnologies@gmail.com",
   },
   {
     icon: Clock,
@@ -51,13 +56,17 @@ const contactInfo = [
 ];
 
 const offices = [
-  { city: "Dubai", country: "UAE", address: "123 Innovation Drive, Tech Hub" },
   {
-    city: "Riyadh",
-    country: "Saudi Arabia",
-    address: "456 Digital Street, Tech Valley",
+    city: "Sharjah",
+    country: "UAE",
+    address: "SPC Freezone, Sheikh Mohammed Bin Zayed Rd",
   },
-  { city: "Cairo", country: "Egypt", address: "789 Smart Boulevard, Maadi" },
+  // {
+  //   city: "Riyadh",
+  //   country: "Saudi Arabia",
+  //   address: "456 Digital Street, Tech Valley",
+  // },
+  { city: "Islamabad", country: "Pakistan", address: "DHA Islamabad" },
 ];
 
 export default function ContactPage() {
@@ -127,29 +136,31 @@ export default function ContactPage() {
         <div className="container mx-auto px-4">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((info, index) => (
-              <motion.div
-                key={info.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Card className="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                      <info.icon className="w-7 h-7 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-bold text-foreground mb-2">
-                      {info.title}
-                    </h3>
-                    {info.details.map((detail, i) => (
-                      <p key={i} className="text-muted-foreground text-sm">
-                        {detail}
-                      </p>
-                    ))}
-                  </CardContent>
-                </Card>
-              </motion.div>
+              <Link href={info.link ? info.link : "#"}>
+                <motion.div
+                  key={info.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Card className="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300">
+                    <CardContent className="p-6 text-center">
+                      <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <info.icon className="w-7 h-7 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-bold text-foreground mb-2">
+                        {info.title}
+                      </h3>
+                      {info.details.map((detail, i) => (
+                        <p key={i} className="text-muted-foreground text-sm">
+                          {detail}
+                        </p>
+                      ))}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>
@@ -366,11 +377,20 @@ export default function ContactPage() {
               {t.contact.ctaSubtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="px-8">
+              <Button
+                onClick={() => {
+                  window.location.href = "tel:+971508185948";
+                }}
+                size="lg"
+                className="px-8"
+              >
                 <Phone className="w-4 h-4 mr-2" />
                 {t.contact.callNow}
               </Button>
               <Button
+                onClick={() => {
+                  window.location.href = "mailto:zaviortechnologies@gmail.com";
+                }}
                 size="lg"
                 variant="outline"
                 className="px-8 bg-transparent"
