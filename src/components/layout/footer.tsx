@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { Linkedin, Twitter, Github, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Linkedin, Youtube , Github, Instagram, Mail, Phone, MapPin } from "lucide-react";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -33,10 +33,10 @@ export function Footer() {
   };
 
   const socialLinks = [
-    { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-    { href: "https://twitter.com", icon: Twitter, label: "Twitter" },
-    { href: "https://github.com", icon: Github, label: "GitHub" },
-    { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
+    { href: "https://www.linkedin.com/company/zavior-tech", icon: Linkedin, label: "LinkedIn" },
+    { href: "https://www.youtube.com/@ZaviorTechnologiess", icon: Youtube, label: "Youtube" },
+    { href: "https://github.com/Zavior-Technologies", icon: Github, label: "GitHub" },
+    // { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
   ];
 
   return (
