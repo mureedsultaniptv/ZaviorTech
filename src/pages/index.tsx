@@ -19,7 +19,7 @@ export default function HomePage() {
 
     const [hovered, setHovered] = useState(false);
 
-  const whatsappNumber = "+923004720937";
+  const whatsappNumber = "+971508185948";
   const message = encodeURIComponent("Tell me more about your services");
 
   const handleClick = () => {
