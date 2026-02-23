@@ -53,6 +53,10 @@ export default function BlogDetailPage() {
     "url": `https://yourwebsite.com/blog/${blog.slug}`
   };
 
+  function dangerouslySetInnerHTML(content: string): import("react").ReactNode {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <>
       <Head>
@@ -175,6 +179,9 @@ export default function BlogDetailPage() {
               <p className="text-xl text-muted-foreground leading-relaxed mb-8">
                 {blog.excerpt}
               </p>
+
+                  <div  dangerouslySetInnerHTML={{__html:blog.content}}></div>
+            {/* {dangerouslySetInnerHTML(blog.content)} */}
               {blog.content.split("\n\n").map((paragraph, index) => {
                 if (paragraph.startsWith("## ")) {
                   return (

@@ -1054,6 +1054,159 @@ Cross-platform, AI-first, and super apps will define mobile development in 2026.
       "Innovation",
     ],
   },
+    {
+    "id": "odoo-implementation-success",
+    "title": "Odoo Implementation Success: A Step-by-Step Guide for Growing Businesses",
+    "slug": "odoo-implementation-success-guide",
+    "excerpt": "Learn how to implement Odoo ERP effectively, avoid common pitfalls, and achieve rapid ROI with expert strategies from Zavior Technologies.",
+    "content": `<p>Implementing an ERP system like Odoo can transform your business—but only if done right. Based on our experience at Zavior Technologies, here is a step-by-step guide to ensure a smooth, successful Odoo rollout.</p>
+
+<h2>1. Define Clear Objectives</h2>
+<p>Before touching any configuration, identify what you want to achieve. Are you looking to streamline inventory? Improve financial reporting? Automate sales processes? Clear goals will guide every decision.</p>
+
+<h2>2. Choose the Right Modules</h2>
+<p>Odoo offers a modular approach. Start with core modules (CRM, Sales, Inventory, Accounting) and add others as needed. Avoid over-customizing from day one—stick to standard processes where possible.</p>
+
+<h2>3. Data Migration Strategy</h2>
+<p>Clean your existing data before migration. Remove duplicates, standardize formats, and map fields carefully. Use Odoo’s import tools or custom scripts for complex data.</p>
+
+<h2>4. User Training & Change Management</h2>
+<p>Your team’s adoption determines success. Conduct hands-on training sessions, create user guides, and appoint internal champions. Communicate the benefits early to reduce resistance.</p>
+
+<h2>5. Test Thoroughly</h2>
+<p>Set up a staging environment and run through all business scenarios. Involve key users in user acceptance testing (UAT) to catch issues before going live.</p>
+
+<h2>6. Go Live & Support</h2>
+<p>Plan a go-live date (avoid month-end or peak seasons). Have your implementation partner on standby for the first few weeks to resolve teething problems.</p>
+
+<h2>7. Continuous Improvement</h2>
+<p>ERP is not a one-time project. Review processes regularly, gather feedback, and leverage Odoo’s updates to keep improving efficiency.</p>
+
+<p>At Zavior Technologies, we’ve helped dozens of businesses implement Odoo successfully. Whether you’re a startup or an established enterprise, our tailored approach ensures your ERP investment delivers maximum value.</p>
+
+<p><strong>Ready to transform your operations?</strong> <a href='#'>Contact us</a> for a free consultation.</p>`,
+    "image": "/blog/odoo-implementation-guide.jpg",
+    "author": {
+      "name": "Aarav Mehta",
+      "role": "ERP Implementation Lead",
+      "avatar": "/team/aarav-mehta.jpg"
+    },
+    "category": "ERP Implementation",
+    "readTime": "9 min read",
+    "publishedAt": "2026-02-10",
+    "featured": true,
+    "tags": ["Odoo", "ERP Implementation", "Best Practices", "Change Management", "Data Migration", "Zavior Technologies"]
+  },
+  {
+    "id": "custom-erp-spring-boot",
+    "title": "Building Custom ERPs with Spring Boot: Scalability, Security, and Speed",
+    "slug": "custom-erp-spring-boot",
+    "excerpt": "Discover why Spring Boot is the ideal framework for developing custom enterprise ERPs that can scale with your business and integrate seamlessly.",
+    "content": `<p>Off-the-shelf ERP solutions don’t always fit unique business processes. That’s where custom ERPs shine. At Zavior Technologies, we leverage Spring Boot to build robust, scalable, and secure ERP systems tailored to your exact needs.</p>
+
+<h2>Why Spring Boot for ERP Development?</h2>
+<p>Spring Boot simplifies Java development while offering enterprise-grade features:</p>
+<ul>
+  <li><strong>Microservices Ready</strong>: Build modular, independently deployable services.</li>
+  <li><strong>Security</strong>: Spring Security provides comprehensive authentication and authorization.</li>
+  <li><strong>Data Access</strong>: Spring Data JPA and Hibernate make database interactions seamless.</li>
+  <li><strong>Integration</strong>: Easy integration with third-party APIs, message brokers, and legacy systems.</li>
+</ul>
+
+<h2>Key Considerations When Building a Custom ERP</h2>
+
+<h3>1. Requirement Analysis</h3>
+<p>Work closely with stakeholders to map every process. A clear blueprint prevents costly rework.</p>
+
+<h3>2. Scalable Architecture</h3>
+<p>Design for growth from day one. Use microservices or modular monolith patterns depending on your scale.</p>
+
+<h3>3. API-First Design</h3>
+<p>Expose APIs for every core function. This allows future integrations with mobile apps, portals, or external partners.</p>
+
+<h3>4. Security by Design</h3>
+<p>Implement role-based access control (RBAC), encrypt sensitive data, and follow OWASP guidelines. Regular security audits are a must.</p>
+
+<h3>5. Testing & Quality Assurance</h3>
+<p>Automate unit and integration tests. Use CI/CD pipelines to ensure reliable deployments.</p>
+
+<h2>Real-World Example</h2>
+<p>We recently built a custom ERP for a logistics company using Spring Boot. The system handles order management, fleet tracking, invoicing, and real-time analytics—all integrated with their existing warehouse systems. The result? A 30% reduction in manual work and complete visibility across operations.</p>
+
+<h2>Is Custom ERP Right for You?</h2>
+<p>If your processes are highly unique or you need deep integration with specialized tools, a custom solution may be the best investment. At Zavior Technologies, we combine Spring Boot expertise with deep business understanding to deliver ERPs that drive efficiency.</p>
+
+<p><strong>Let’s discuss your vision.</strong> <a href='#'>Get in touch</a> to explore how a custom ERP can accelerate your growth.</p>`,
+    "image": "/blog/spring-boot-erp.jpg",
+    "author": {
+      "name": "Priya Sharma",
+      "role": "Senior Software Architect",
+      "avatar": "/team/priya-sharma.jpg"
+    },
+    "category": "Custom Development",
+    "readTime": "11 min read",
+    "publishedAt": "2026-02-05",
+    "featured": true,
+    "tags": ["Spring Boot", "Custom ERP", "Java", "Microservices", "Enterprise Software", "Zavior Technologies"]
+  },
+  {
+    "id": "legacy-to-modern-erp",
+    "title": "From Legacy to Leading: Why Modernizing Your ERP Is No Longer Optional",
+    "slug": "legacy-to-modern-erp",
+    "excerpt": "Outdated ERP systems are holding businesses back. Learn the risks of sticking with legacy software and the benefits of moving to modern platforms like Odoo or custom-built solutions.",
+    "content": `<p>Many businesses still run on legacy ERP systems—clunky, expensive to maintain, and unable to adapt to modern demands. In this post, we break down why modernization is critical and how Zavior Technologies can help you make the transition smoothly.</p>
+
+<h2>The High Cost of Legacy ERP</h2>
+<ul>
+  <li><strong>Maintenance Nightmares</strong>: Older systems require specialized (and often retiring) skills. Patches and upgrades are costly.</li>
+  <li><strong>Integration Challenges</strong>: Modern tools (e-commerce, AI analytics, IoT) rarely play well with legacy ERPs.</li>
+  <li><strong>Poor User Experience</strong>: Outdated interfaces reduce productivity and frustrate employees.</li>
+  <li><strong>Security Risks</strong>: Unpatched vulnerabilities are a goldmine for cybercriminals.</li>
+</ul>
+
+<h2>Benefits of Modern ERP</h2>
+<ul>
+  <li>✅ <strong>Real-Time Data</strong>: Make decisions based on up-to-the-minute information.</li>
+  <li>✅ <strong>Scalability</strong>: Cloud or hybrid models grow with you.</li>
+  <li>✅ <strong>Mobility</strong>: Access your business from anywhere, on any device.</li>
+  <li>✅ <strong>Automation</strong>: Reduce manual work with workflows and AI.</li>
+  <li>✅ <strong>Compliance</strong>: Stay current with regulatory changes.</li>
+</ul>
+
+<h2>Modernization Pathways</h2>
+
+<h3>Option A: Migrate to Odoo</h3>
+<p>Ideal for businesses wanting a proven, cost-effective solution with extensive module support. Odoo’s flexibility allows you to keep some custom processes while adopting best practices.</p>
+
+<h3>Option B: Build a Custom ERP</h3>
+<p>Best for organizations with unique, complex workflows. Using modern frameworks like Spring Boot, we craft a system that mirrors your exact operations—no compromises.</p>
+
+<h2>Our Proven Migration Process</h2>
+<ol>
+  <li><strong>Discovery & Audit</strong>: We analyze your current system, data, and processes.</li>
+  <li><strong>Roadmap Design</strong>: Define the target architecture and phased migration plan.</li>
+  <li><strong>Data Cleansing & Migration</strong>: Extract, transform, and load data with zero loss.</li>
+  <li><strong>Development & Integration</strong>: Build new features and connect with existing tools.</li>
+  <li><strong>Testing & Training</strong>: Ensure everything works and your team is confident.</li>
+  <li><strong>Go-Live & Support</strong>: Smooth cutover with post-launch assistance.</li>
+</ol>
+
+<h2>Success Story</h2>
+<p>A manufacturing client replaced a 15-year-old ERP with an Odoo-based system in just 4 months. They reduced inventory holding costs by 20% and improved on-time deliveries by 35%.</p>
+
+<p><strong>Don’t let legacy software slow you down.</strong> <a href='#'>Contact Zavior Technologies</a> today to start your modernization journey.</p>`,
+    "image": "/blog/legacy-modernization.jpg",
+    "author": {
+      "name": "Vikram Singh",
+      "role": "Director of Consulting",
+      "avatar": "/team/vikram-singh.jpg"
+    },
+    "category": "ERP Strategy",
+    "readTime": "10 min read",
+    "publishedAt": "2026-01-28",
+    "featured": false,
+    "tags": ["Legacy Systems", "ERP Modernization", "Digital Transformation", "Odoo", "Custom ERP", "Zavior Technologies"]
+  }
 ];
 
 export const team = [
@@ -1204,10 +1357,8 @@ export const testimonials = [
   },
 ];
 
-
 export const careers = [
-
-{
+  {
     id: "graphic-designer",
     title: "Part-time Graphic Designer",
     slug: "part-time-graphic-designer",
@@ -1232,7 +1383,8 @@ export const careers = [
       "Performance-based bonuses",
     ],
     postedAt: "2026-02-17",
-  },  // {
+  },
+  // {
   //   id: "odoo-developer",
   //   title: "Odoo Developer",
   //   slug: "odoo-developer",
