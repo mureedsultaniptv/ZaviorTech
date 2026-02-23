@@ -79,9 +79,32 @@ export const companies = [
 export const services = [
   {
     id: "erp-odoo",
+    slug: "erp-odoo-dubai",
     title: "ERP & Odoo Solutions",
     description:
-      "Comprehensive enterprise resource planning implementations tailored to streamline your business operations.",
+      "Comprehensive enterprise resource planning implementations tailored to streamline your business operations in Dubai.",
+    longDescription: `
+      <p>Our <strong>ERP & Odoo Solutions</strong> in Dubai are designed to help businesses of all sizes streamline operations, improve productivity, and enhance decision-making. 
+      We specialize in full-cycle ERP implementation that covers everything from requirements analysis to deployment and training.</p>
+
+      <p>We provide <strong>custom module development</strong> to tailor Odoo to your business processes, ensuring seamless integration with existing systems. 
+      Our solutions support modules such as Finance, Inventory, HR, Manufacturing, CRM, and Sales, helping companies automate workflows efficiently.</p>
+
+      <p>With <strong>integration services</strong>, we connect your ERP with third-party tools, e-commerce platforms, and payment gateways to create a cohesive ecosystem. 
+      Our team also offers <strong>training and support</strong> to ensure that your employees can fully leverage the system from day one.</p>
+
+      <p>Our <strong>ERP migration services</strong> help businesses move from legacy systems to modern Odoo platforms without downtime or data loss. 
+      We focus on <strong>business process optimization</strong> to maximize ROI and streamline operations for companies operating in Dubai and across the UAE.</p>
+
+      <ul>
+        <li>Odoo Implementation tailored for Dubai businesses</li>
+        <li>Custom Module Development to meet unique operational needs</li>
+        <li>Business Process Optimization and workflow automation</li>
+        <li>Integration with existing software and e-commerce platforms</li>
+        <li>Training and continuous support for employees</li>
+        <li>Secure and seamless migration from legacy ERP systems</li>
+      </ul>
+    `,
     icon: "Building",
     image: "/services/odoo-erp.png",
     features: [
@@ -92,12 +115,38 @@ export const services = [
       "Training & Support",
       "Migration Services",
     ],
+    metaTitle:
+      "ERP & Odoo Solutions Dubai | Zavior Technologies | Business Automation",
+    metaDescription:
+      "Zavior Technologies offers expert ERP and Odoo solutions in Dubai. Streamline business operations with custom modules, integrations, and training.",
+    metaKeywords:
+      "ERP Dubai, Odoo Dubai, Business Automation Dubai, ERP Implementation UAE, Zavior Technologies",
   },
   {
     id: "web-development",
+    slug: "web-development-dubai",
     title: "Web Development",
     description:
-      "Custom websites and web applications built with modern technologies for optimal performance and user experience.",
+      "Custom websites and web applications built with modern technologies for optimal performance and user experience in Dubai.",
+    longDescription: `
+      <p>Our <strong>web development services</strong> in Dubai focus on creating websites and web applications that are fast, responsive, and highly functional. 
+      We specialize in developing <strong>custom web applications</strong>, <strong>e-commerce platforms</strong>, <strong>progressive web apps (PWAs)</strong>, and content management systems tailored to your business needs.</p>
+
+      <p>We follow best practices for <strong>SEO optimization</strong>, performance, and user experience to ensure your website ranks high on Google Dubai searches. 
+      Our team handles front-end and back-end development, API integrations, and database management for scalable and maintainable solutions.</p>
+
+      <p>Whether you are a startup or an established enterprise, our web solutions help you reach your customers effectively while providing tools for analytics, reporting, and customer engagement. 
+      We also offer <strong>ongoing support and performance optimization</strong> to maintain peak performance and security standards.</p>
+
+      <ul>
+        <li>Custom web applications for Dubai businesses</li>
+        <li>E-commerce platforms with payment gateway integration</li>
+        <li>Progressive web apps for mobile and desktop</li>
+        <li>Content management systems for easy updates</li>
+        <li>API development and integrations</li>
+        <li>SEO, performance optimization, and analytics</li>
+      </ul>
+    `,
     icon: "Globe",
     image: "/services/website-dev.png",
     features: [
@@ -108,12 +157,38 @@ export const services = [
       "API Development",
       "Performance Optimization",
     ],
+    metaTitle:
+      "Web Development Dubai | Zavior Technologies | Custom Websites & Apps",
+    metaDescription:
+      "Zavior Technologies provides professional web development services in Dubai. Build high-performing websites, e-commerce platforms, and custom web applications.",
+    metaKeywords:
+      "Web Development Dubai, E-commerce Dubai, Web Apps UAE, Website Design Dubai, Zavior Technologies",
   },
   {
     id: "mobile-apps",
+    slug: "mobile-apps-dubai",
     title: "Mobile Applications",
     description:
-      "Native and cross-platform mobile apps designed to engage users and extend your digital presence.",
+      "Native and cross-platform mobile apps designed to engage users and extend your digital presence in Dubai.",
+    longDescription: `
+      <p>Our <strong>mobile application development services</strong> in Dubai deliver both native and cross-platform apps designed to engage users and enhance your digital presence. 
+      We create iOS and Android apps tailored to your business requirements with intuitive user interfaces and seamless performance.</p>
+
+      <p>We focus on <strong>App Store Optimization (ASO)</strong>, push notifications, and mobile analytics to ensure maximum reach and engagement. 
+      Our solutions include integration with back-end systems, payment gateways, and APIs to create a cohesive mobile experience.</p>
+
+      <p>Our team provides end-to-end support including app design, development, testing, and deployment. 
+      We also assist in regular updates and maintenance, ensuring that your mobile applications remain secure, fast, and competitive in the Dubai marketplace.</p>
+
+      <ul>
+        <li>iOS and Android mobile application development</li>
+        <li>Cross-platform apps with React Native or Flutter</li>
+        <li>App Store Optimization for better discoverability</li>
+        <li>Push notification setup for user engagement</li>
+        <li>Integration with backend APIs and services</li>
+        <li>Analytics and performance monitoring</li>
+      </ul>
+    `,
     icon: "Smartphone",
     image: "/services/hybridapp.png",
     features: [
@@ -124,12 +199,37 @@ export const services = [
       "Push Notifications",
       "Mobile Analytics",
     ],
+    metaTitle:
+      "Mobile App Development Dubai | Zavior Technologies | iOS & Android Apps",
+    metaDescription:
+      "Create engaging mobile applications in Dubai with Zavior Technologies. Native and cross-platform solutions including App Store optimization and analytics.",
+    metaKeywords:
+      "Mobile Apps Dubai, iOS App Dubai, Android App UAE, Cross-Platform Apps Dubai, Zavior Technologies",
   },
   {
     id: "it-solutions",
+    slug: "it-solutions-dubai",
     title: "IT Solutions",
     description:
-      "End-to-end IT consulting and infrastructure solutions to power your digital transformation journey.",
+      "End-to-end IT consulting and infrastructure solutions to power your digital transformation journey in Dubai.",
+    longDescription: `
+      <p>Our <strong>IT solutions</strong> in Dubai cover a comprehensive range of services to enable your business digital transformation. 
+      We provide IT strategy consulting, infrastructure setup, network solutions, system integration, and technical support for enterprises of all sizes.</p>
+
+      <p>We focus on <strong>ensuring reliability, security, and scalability</strong> of your IT systems. 
+      Our team of experts works closely with you to assess your current technology environment and design tailored solutions that optimize workflows and reduce operational risks.</p>
+
+      <p>From deploying servers, networking equipment, and security solutions to ongoing maintenance and monitoring, we ensure your IT infrastructure is robust and capable of supporting your business goals in Dubai and the UAE.</p>
+
+      <ul>
+        <li>IT strategy consulting and assessment</li>
+        <li>Infrastructure setup and optimization</li>
+        <li>Network solutions and cybersecurity</li>
+        <li>System integration and migration</li>
+        <li>Technical support and managed services</li>
+        <li>Continuous monitoring and performance tuning</li>
+      </ul>
+    `,
     icon: "Server",
     image: "/services/it-solution.png",
     features: [
@@ -140,12 +240,38 @@ export const services = [
       "System Integration",
       "IT Security",
     ],
+    metaTitle:
+      "IT Solutions Dubai | Zavior Technologies | Infrastructure & Consulting",
+    metaDescription:
+      "Zavior Technologies provides comprehensive IT solutions in Dubai, including consulting, infrastructure setup, network solutions, and technical support.",
+    metaKeywords:
+      "IT Solutions Dubai, IT Consulting UAE, Network Setup Dubai, IT Infrastructure Dubai, Zavior Technologies",
   },
   {
     id: "ai-automation",
+    slug: "ai-automation-dubai",
     title: "AI Automation",
     description:
-      "Leverage cutting-edge artificial intelligence to automate processes and drive efficiency across your organization.",
+      "Leverage cutting-edge artificial intelligence to automate processes and drive efficiency across your organization in Dubai.",
+    longDescription: `
+      <p>Our <strong>AI automation services</strong> in Dubai help businesses adopt cutting-edge artificial intelligence to automate processes, enhance efficiency, and improve decision-making. 
+      We design and implement solutions including machine learning models, natural language processing, computer vision, and predictive analytics tailored to your business needs.</p>
+
+      <p>We develop <strong>intelligent chatbots</strong>, process automation pipelines, and AI-driven analytics platforms that enable you to streamline operations and gain actionable insights. 
+      Our solutions are fully customized, scalable, and integrate with your existing infrastructure seamlessly.</p>
+
+      <p>By leveraging AI automation, businesses in Dubai can reduce operational costs, improve accuracy, and accelerate growth. 
+      Our team provides end-to-end implementation, monitoring, and support to ensure your AI systems deliver maximum value.</p>
+
+      <ul>
+        <li>Machine learning models for predictive analysis</li>
+        <li>Natural language processing for intelligent chatbots</li>
+        <li>Computer vision solutions for automation and monitoring</li>
+        <li>End-to-end process automation systems</li>
+        <li>AI analytics dashboards for actionable insights</li>
+        <li>Integration with existing business systems</li>
+      </ul>
+    `,
     icon: "Brain",
     image: "/services/ai-automation.png",
     features: [
@@ -156,12 +282,38 @@ export const services = [
       "Process Automation",
       "Intelligent Chatbots",
     ],
+    metaTitle:
+      "AI & Automation Dubai | Zavior Technologies | Intelligent Solutions",
+    metaDescription:
+      "Implement AI and automation solutions in Dubai with Zavior Technologies to enhance efficiency using ML, NLP, predictive analytics, and chatbots.",
+    metaKeywords:
+      "AI Dubai, Automation Dubai, Machine Learning UAE, Intelligent Chatbots Dubai, Zavior Technologies",
   },
   {
     id: "coreit",
+    slug: "core-it-infrastructure-dubai",
     title: "Core IT Infrastructure",
     description:
-      "Delivering complete hardware and infrastructure solutions — from enterprise servers and networking to CCTV surveillance and workstation setup.",
+      "Delivering complete hardware and infrastructure solutions — from enterprise servers and networking to CCTV surveillance and workstation setup in Dubai.",
+    longDescription: `
+      <p>Our <strong>Core IT Infrastructure services</strong> in Dubai provide end-to-end hardware and network solutions to ensure your business operations run smoothly. 
+      We specialize in server installation and maintenance, networking and structured cabling, CCTV surveillance systems, workstation setup, and data backup solutions.</p>
+
+      <p>We focus on <strong>scalability, security, and reliability</strong> to create IT environments that can support growth and continuity. 
+      Our team evaluates your existing infrastructure, identifies gaps, and delivers customized solutions aligned with your business goals.</p>
+
+      <p>We provide ongoing support, hardware procurement assistance, and preventive maintenance to ensure minimal downtime. 
+      Our solutions enable businesses in Dubai to have a secure, robust, and optimized IT infrastructure that meets international standards.</p>
+
+      <ul>
+        <li>Server installation, configuration, and maintenance</li>
+        <li>CCTV and surveillance system deployment</li>
+        <li>Networking solutions and structured cabling</li>
+        <li>Workstation setup and configuration</li>
+        <li>Hardware procurement and support</li>
+        <li>Data backup and secure storage solutions</li>
+      </ul>
+    `,
     icon: "Server",
     image: "/services/core-it.png",
     features: [
@@ -172,17 +324,26 @@ export const services = [
       "Hardware Procurement & Support",
       "Data Backup & Storage Solutions",
     ],
+    metaTitle:
+      "Core IT Infrastructure Dubai | Zavior Technologies | Servers & Networking",
+    metaDescription:
+      "Zavior Technologies provides comprehensive IT infrastructure services in Dubai, including servers, networking, CCTV, workstations, and data backup solutions.",
+    metaKeywords:
+      "IT Infrastructure Dubai, Server Installation UAE, CCTV Dubai, Networking Dubai, Zavior Technologies",
   },
 ];
 
 export const projects = [
-  // ==============================
-  // 1️⃣ ERP & ODOO SOLUTIONS
-  // ==============================
   {
     id: "pharma-erp-system",
-    title: "Pharmaceutical ERP for Manufacturing & Sales",
     slug: "pharma-erp-system",
+    metaTitle: "Pharmaceutical ERP System | Zavior Technologies",
+    metaDescription:
+      "Zavior Technologies developed a custom Pharmaceutical ERP for manufacturing & sales, integrating Odoo, Power BI dashboards, and compliance solutions for DRAP regulations.",
+    canonical: "https://zaviortech.vercel.app/portfolio/pharma-erp-system",
+    metaKeywords:
+      "Pharmaceutical ERP, Odoo ERP, Pharma Manufacturing Software, Batch Tracking ERP, Power BI Dashboards, ERP Pakistan, Zavior Technologies",
+    title: "Pharmaceutical ERP for Manufacturing & Sales",
     category: "ERP & Odoo Solutions",
     client: "Pharmaceutical Company (Karachi)",
     description:
@@ -212,8 +373,14 @@ export const projects = [
   },
   {
     id: "manufacturing-crm",
-    title: "Manufacturing ERP & CRM Platform",
     slug: "manufacturing-erp-crm",
+    metaTitle: "Manufacturing ERP & CRM Platform | Zavior Technologies",
+    metaDescription:
+      "Integrated Manufacturing ERP & CRM solution for industrial manufacturers. Streamline sales, production, and inventory with Odoo ERP and real-time reporting.",
+    canonical: "https://zaviortech.vercel.app/portfolio/manufacturing-erp-crm",
+    metaKeywords:
+      "Manufacturing ERP, Odoo CRM, Industrial ERP, Production Management Software, Inventory Automation, ERP Solutions Pakistan",
+    title: "Manufacturing ERP & CRM Platform",
     category: "ERP & Odoo Solutions",
     client: "Industrial Manufacturing Company (Punjab)",
     description:
@@ -243,8 +410,15 @@ export const projects = [
   },
   {
     id: "beauty-salon-erp",
-    title: "Odoo ERP for Multi-Branch Beauty Salon",
     slug: "odoo-beauty-salon-erp",
+    metaTitle: "Odoo ERP for Multi-Branch Beauty Salon | Zavior Technologies",
+    metaDescription:
+      "Centralize your multi-branch beauty salon operations with Odoo ERP. Manage appointments, POS, staff scheduling, inventory, and customer loyalty seamlessly.",
+    canonical: "https://zaviortech.vercel.app/portfolio/odoo-beauty-salon-erp",
+    metaKeywords:
+      "Beauty Salon ERP, Odoo ERP Dubai, Multi-Branch Salon Software, POS Integration, Salon Appointment Management, Zavior Technologies",
+
+    title: "Odoo ERP for Multi-Branch Beauty Salon",
     category: "ERP & Odoo Solutions",
     client: "Multi-Branch Beauty Salon (Dubai)",
     description:
@@ -282,8 +456,16 @@ export const projects = [
   },
   {
     id: "zero-waste-erp",
-    title: "Zero Waste Industrial ERP",
     slug: "zero-waste-industrial-erp",
+    metaTitle: "Zero Waste Industrial ERP | Zavior Technologies",
+    metaDescription:
+      "Odoo-based Zero Waste ERP for industrial sustainability organizations. Track waste lifecycle, integrate IoT weighbridges, and generate sustainability reports aligned with UN SDGs.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/zero-waste-industrial-erp",
+    metaKeywords:
+      "Zero Waste ERP, Odoo Sustainability ERP, Industrial Waste Management Software, IoT ERP Integration, Sustainability Reporting, Circular Economy ERP",
+
+    title: "Zero Waste Industrial ERP",
     category: "ERP & Odoo Solutions",
     client: "Industrial Sustainability Organization",
     description:
@@ -319,8 +501,15 @@ export const projects = [
   },
   {
     id: "finance-automation",
-    title: "Finance & Accounting Automation System",
     slug: "finance-automation-system",
+    metaTitle: "Finance & Accounting Automation System | Zavior Technologies",
+    metaDescription:
+      "Automate financial reporting with Odoo Accounting. Multi-company consolidation, bank reconciliation, Excel BI integration, and faster month-end closing for enterprises.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/finance-automation-system",
+    metaKeywords:
+      "Finance Automation, Accounting ERP, Odoo Accounting, Multi-Company ERP, Bank Reconciliation Automation, ERP Solutions Pakistan",
+    title: "Finance & Accounting Automation System",
     category: "ERP & Odoo Solutions",
     client: "Regional Enterprise Clients",
     description:
@@ -361,8 +550,15 @@ export const projects = [
   // ==============================
   {
     id: "ecocycle-website",
-    title: "EcoCycle Environmental Website",
     slug: "ecocycle-environmental-website",
+    metaTitle: "EcoCycle Environmental Website | Zavior Technologies",
+    metaDescription:
+      "Responsive, SEO-optimized WordPress website for EcoCycle. Showcasing recycling services, generating leads, and increasing conversions with modern design and Cloudflare CDN.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/ecocycle-environmental-website",
+    metaKeywords:
+      "EcoCycle Website, Environmental Website Design, WordPress SEO, Recycling Services Website, Lead Generation Website, Zavior Technologies",
+    title: "EcoCycle Environmental Website",
     category: "Web Development",
     client: "EcoCycle Co.",
     description:
@@ -398,8 +594,15 @@ export const projects = [
   },
   {
     id: "maintainit-dubai",
-    title: "Maintainit Dubai – Facility Services Website",
     slug: "maintainit-dubai",
+    metaTitle:
+      "Maintainit Dubai – Facility Services Website | Zavior Technologies",
+    metaDescription:
+      "Conversion-focused WordPress website for facility services. Local SEO, service quotation forms, Google My Business integration to drive 50+ qualified leads/month.",
+    canonical: "https://zaviortech.vercel.app/portfolio/maintainit-dubai",
+    metaKeywords:
+      "Facility Services Website, WordPress Dubai, Local SEO Website, Maintenance Services Website, HVAC Website Design, Lead Generation Website",
+    title: "Maintainit Dubai – Facility Services Website",
     category: "Web Development",
     client: "Maintainit Dubai",
     description:
@@ -509,8 +712,14 @@ export const projects = [
   // },
   {
     id: "automobile-crm",
-    title: "Automobile CRM & Sales Management Portal",
     slug: "automobile-crm-portal",
+    metaTitle: "Automobile CRM & Sales Management Portal | Zavior Technologies",
+    metaDescription:
+      "Custom CRM for automobile distributors with lead management, sales workflow, real-time dashboards, and ERP integration. Improve lead response time and sales conversions.",
+    canonical: "https://zaviortech.vercel.app/portfolio/automobile-crm-portal",
+    metaKeywords:
+      "Automobile CRM, Sales Management Software, Lead Management Portal, ERP Integration CRM, Automotive CRM System, Zavior Technologies",
+    title: "Automobile CRM & Sales Management Portal",
     category: "ERP & Odoo Solutions",
     client: "Automobile Distribution Group",
     description:
@@ -540,8 +749,15 @@ export const projects = [
   },
   {
     id: "cabinminutes",
-    title: "CabinMinutes – Cab Booking System (Australia)",
     slug: "cabinminutes-booking-system",
+    metaTitle: "CabinMinutes – Cab Booking System | Zavior Technologies",
+    metaDescription:
+      "Mobile-friendly cab booking web app with Google Maps, fare estimation, and Stripe payments. Streamline dispatch, reduce errors, and improve customer experience.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/cabinminutes-booking-system",
+    metaKeywords:
+      "Cab Booking App, PWA Taxi System, WordPress Booking Platform, Google Maps Integration, Stripe Payment Integration, Zavior Technologies",
+    title: "CabinMinutes – Cab Booking System (Australia)",
     category: "Web Development",
     client: "CabinMinutes Australia",
     description:
@@ -581,8 +797,16 @@ export const projects = [
   // ==============================
   {
     id: "it-hardware-services",
-    title: "Enterprise IT & Hardware Infrastructure Setup",
     slug: "core-it-infrastructure-services",
+    metaTitle:
+      "Enterprise IT & Hardware Infrastructure Services | Zavior Technologies",
+    metaDescription:
+      "Comprehensive IT infrastructure setup for corporate clients. Servers, networking, CCTV, and workstations with scalable design and zero downtime migration.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/core-it-infrastructure-services",
+    metaKeywords:
+      "IT Infrastructure Services, Enterprise IT Setup, Networking Solutions, CCTV Installation, VMware Deployment, Zavior Technologies UAE",
+    title: "Enterprise IT & Hardware Infrastructure Setup",
     category: "Core IT Infrastructure",
     client: "Corporate & Industrial Clients (UAE)",
     description:
@@ -623,8 +847,14 @@ export const projects = [
   // ==============================
   {
     id: "ai-insights-dashboard",
-    title: "AI Insights & Reporting Dashboard",
     slug: "ai-insights-dashboard",
+    metaTitle: "AI Insights & Reporting Dashboard | Zavior Technologies",
+    metaDescription:
+      "AI-powered analytics dashboard for predictive insights. FastAPI backend, OpenAI summaries, and Power BI visualizations to automate reporting and reduce analyst workload.",
+    canonical: "https://zaviortech.vercel.app/portfolio/ai-insights-dashboard",
+    metaKeywords:
+      "AI Dashboard, Predictive Analytics Platform, OpenAI Integration, Power BI Reporting, FastAPI Analytics, Zavior Technologies",
+    title: "AI Insights & Reporting Dashboard",
     category: "AI Automation",
     client: "Data Analytics Firm",
     description:
@@ -660,9 +890,17 @@ export const projects = [
     `,
   },
   {
-    id: "make-linkedin-automation",
-    title: "LinkedIn & Workflow Automation with Make.com",
+    id: "linkedin-make-automation",
     slug: "linkedin-make-automation",
+    metaTitle:
+      "LinkedIn & Workflow Automation with Make.com | Zavior Technologies",
+    metaDescription:
+      "Automate LinkedIn lead generation and CRM integration with Make.com. Clearbit enrichment, automated follow-ups, and pipeline reporting to increase qualified leads.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/linkedin-make-automation",
+    metaKeywords:
+      "LinkedIn Automation, Make.com Workflows, Odoo CRM Automation, Lead Enrichment, Marketing Automation, Zavior Technologies",
+    title: "LinkedIn & Workflow Automation with Make.com",
     category: "AI Automation",
     client: "B2B Marketing Team",
     description:
@@ -697,9 +935,16 @@ export const projects = [
     `,
   },
   {
-    id: "n8n-marketing-workflows",
-    title: "Marketing Automation Pipelines using n8n",
+    id: "n8n-marketing-automation",
     slug: "n8n-marketing-automation",
+    metaTitle: "Marketing Automation Pipelines using n8n | Zavior Technologies",
+    metaDescription:
+      "Automate reporting and lead nurturing across email, social media, and CRM using n8n. Consolidate data, generate dashboards, and trigger personalized email sequences.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/n8n-marketing-automation",
+    metaKeywords:
+      "Marketing Automation, n8n Workflows, CRM Automation, Email Marketing Automation, Google Data Studio Dashboards, Zavior Technologies",
+    title: "Marketing Automation Pipelines using n8n",
     category: "AI Automation",
     client: "Digital Agency (Remote)",
     description:
@@ -736,8 +981,16 @@ export const projects = [
   },
   {
     id: "circular-intelligence-platform",
-    title: "Circular Intelligence & Traceability Platform",
     slug: "circular-intelligence-platform",
+    metaTitle:
+      "Circular Intelligence & Traceability Platform | Zavior Technologies",
+    metaDescription:
+      "Odoo ERP integrated with AI for circular economy insights. Predict waste, optimize supply chains, and provide ESG reports for sustainability-focused enterprises.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/circular-intelligence-platform",
+    metaKeywords:
+      "Circular Economy ERP, Odoo AI Platform, Sustainability Analytics, Waste Reduction Software, ESG Reporting Tool, Zavior Technologies",
+    title: "Circular Intelligence & Traceability Platform",
     category: "AI Automation",
     client: "Sustainability Tech Firm",
     description:
@@ -766,8 +1019,15 @@ export const projects = [
   },
   {
     id: "crm-analytics-dashboard",
-    title: "Enterprise CRM & Analytics Dashboard",
     slug: "crm-analytics-dashboard",
+    metaTitle: "Enterprise CRM & Analytics Dashboard | Zavior Technologies",
+    metaDescription:
+      "Consolidate customer data from multiple touchpoints and provide real-time analytics using React, Node.js, and Power BI. Boost retention and personalized campaigns for enterprises.",
+    canonical:
+      "https://zaviortech.vercel.app/portfolio/crm-analytics-dashboard",
+    metaKeywords:
+      "Enterprise CRM, Analytics Dashboard, Customer Data Platform, React Node.js Dashboard, Power BI CRM Integration, Zavior Technologies",
+    title: "Enterprise CRM & Analytics Dashboard",
     category: "AI Automation",
     client: "Corporate Clients (Confidential)",
     description:
@@ -800,9 +1060,16 @@ export const projects = [
   // 6️⃣ IT SOLUTIONS
   // ==============================
   {
-    id: "logistics-it-consulting",
-    title: "Digital Transformation & IT Strategy for Logistics Firm",
+    id: "logistics-it-strategy",
     slug: "logistics-it-strategy",
+    metaTitle:
+      "Digital Transformation & IT Strategy for Logistics | Zavior Technologies",
+    metaDescription:
+      "IT audit, cloud migration, and digital transformation roadmap for a global logistics provider. Reduce costs, integrate systems, and gain real-time visibility into shipments.",
+    canonical: "https://zaviortech.vercel.app/portfolio/logistics-it-strategy",
+    metaKeywords:
+      "Logistics IT Strategy, Digital Transformation, Cloud Migration Logistics, IT Audit Services, System Integration Logistics, Zavior Technologies",
+    title: "Digital Transformation & IT Strategy for Logistics Firm",
     category: "IT Solutions",
     client: "Global Logistics Provider (UAE)",
     description:
@@ -841,6 +1108,7 @@ export const projects = [
 ];
 
 export const blogs = [
+  // 1️⃣ AI Blog (already done)
   {
     id: "future-of-ai",
     title: "The Future of AI in Enterprise: Trends to Watch in 2026",
@@ -848,25 +1116,45 @@ export const blogs = [
     excerpt:
       "Discover key AI trends like autonomous agents, multimodal AI, and edge intelligence that will transform enterprise operations in 2026.",
     content: `
-Artificial Intelligence continues to evolve at a rapid pace, transforming how businesses operate globally. In this analysis, we explore key AI trends enterprise leaders should watch in 2026 and beyond.
+<p>Artificial Intelligence (AI) is rapidly transforming businesses worldwide, and enterprises in Dubai are no exception. As 2026 approaches, understanding emerging AI trends can give Dubai-based companies a competitive advantage in sectors like finance, logistics, healthcare, and e-commerce.</p>
 
-## The Rise of Autonomous AI Agents
+<h2>The Rise of Autonomous AI Agents</h2>
+<p>Autonomous AI agents are evolving beyond basic automation. These intelligent systems can handle complex, multi-step business workflows with minimal human intervention. In Dubai's fast-paced marketplaces, AI agents can manage tasks such as:</p>
+<ul>
+  <li>Customer support via chatbots and virtual assistants</li>
+  <li>Supply chain automation and logistics optimization</li>
+  <li>Financial forecasting and anomaly detection</li>
+</ul>
 
-AI agents are moving beyond simple automation. They can now handle complex, multi-step tasks with minimal human supervision, acting as digital workers capable of reasoning, planning, and executing workflows.
+<h2>Multimodal AI Integration</h2>
+<p>Multimodal AI combines text, images, video, and audio processing to enable natural and intuitive human-computer interactions. Dubai enterprises can leverage multimodal AI to:</p>
+<ul>
+  <li>Analyze social media and customer feedback in real-time</li>
+  <li>Generate AI-driven marketing content across multiple platforms</li>
+  <li>Enhance e-commerce personalization for UAE customers</li>
+</ul>
 
-## Multimodal AI Integration
+<h2>Edge AI and Decentralized Intelligence</h2>
+<p>Edge AI processes data closer to the source, reducing latency, improving security, and enabling real-time analytics. Key benefits for Dubai enterprises include:</p>
+<ul>
+  <li>Faster decision-making for logistics and smart warehouses</li>
+  <li>Enhanced data privacy compliance in sensitive sectors like healthcare and finance</li>
+  <li>Reduced dependency on cloud infrastructure, optimizing operational costs</li>
+</ul>
 
-Combining text, image, video, and audio processing creates new enterprise applications. This enables more natural and intuitive human-AI interactions across different formats.
+<h2>AI-Powered Decision Making for Dubai Enterprises</h2>
+<p>AI adoption in Dubai’s marketplace is growing rapidly. Companies leveraging AI for predictive analytics, customer engagement, and operational automation are gaining a measurable competitive edge. Examples include:</p>
+<ul>
+  <li>AI-driven inventory management for retail chains</li>
+  <li>Automated fraud detection in banking and finance</li>
+  <li>Smart energy management solutions for real estate and manufacturing</li>
+</ul>
 
-## Edge AI and Decentralized Intelligence
+<h2>Conclusion</h2>
+<p>AI in 2026 is no longer experimental; it is a strategic driver of business value. Dubai enterprises embracing autonomous AI agents, multimodal integration, and edge intelligence will lead their industries in innovation, efficiency, and customer satisfaction.</p>
 
-Edge AI brings processing closer to the data source, reducing latency and improving security. It's critical for sensitive, real-time enterprise applications.
-
-## Conclusion
-
-AI in 2026 will shift from experimental to a measurable business value driver. Companies that adopt these trends will gain competitive advantage.
-
-    `,
+<p><strong>Looking to implement AI solutions for your Dubai enterprise?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> to explore custom AI-driven solutions for your business growth.</p>
+`,
     image: "/blog/ai-future.png",
     author: {
       name: "Sarah Chen",
@@ -877,8 +1165,25 @@ AI in 2026 will shift from experimental to a measurable business value driver. C
     readTime: "8 min read",
     publishedAt: "2026-01-15",
     featured: true,
-    tags: ["AI", "Enterprise", "Autonomous Agents", "Edge AI", "Multimodal AI"],
+    tags: [
+      "AI",
+      "Enterprise",
+      "Autonomous Agents",
+      "Edge AI",
+      "Multimodal AI",
+      "Dubai",
+    ],
+    metaTitle:
+      "Future of AI in Enterprise 2026 | Dubai AI Trends | Zavior Technologies",
+    metaDescription:
+      "Explore key AI trends shaping enterprises in Dubai for 2026, including autonomous AI agents, multimodal AI, and edge intelligence. Stay ahead with Zavior Technologies.",
+    keywords:
+      "AI trends Dubai, Enterprise AI 2026, Autonomous Agents, Edge AI Dubai, Multimodal AI, AI Dubai businesses",
+    canonical:
+      "https://zaviortech.vercel.app/blog/future-of-ai-enterprise-2026",
   },
+
+  // 2️⃣ Digital Transformation
   {
     id: "digital-transformation-guide",
     title: "A Complete Guide to Digital Transformation in 2026",
@@ -886,31 +1191,44 @@ AI in 2026 will shift from experimental to a measurable business value driver. C
     excerpt:
       "Learn how to drive successful digital transformation in 2026 with a holistic approach covering people, process, and technology.",
     content: `
-Digital transformation is a business imperative. Organizations that fail to adapt risk obsolescence. This guide provides a roadmap for success.
+<p>Digital transformation is essential for businesses in Dubai looking to remain competitive in 2026. It is not just about technology but about reimagining how your enterprise delivers value and engages with customers.</p>
 
-## Understanding Digital Transformation
+<h2>Understanding Digital Transformation</h2>
+<p>Digital transformation aligns people, processes, and technology. For Dubai-based organizations, this means:</p>
+<ul>
+  <li>Leveraging cloud and AI technologies to streamline operations</li>
+  <li>Enhancing customer experience across digital platforms</li>
+  <li>Driving agility and faster time-to-market for products</li>
+</ul>
 
-It's not just about technology. Digital transformation reimagines how organizations create value, engage with customers, and operate internally.
+<h2>Key Pillars for Success</h2>
+<ul>
+  <li><strong>Leadership Commitment</strong>: Clear vision and investment from top management</li>
+  <li><strong>Customer-Centric Approach</strong>: Focus on customer satisfaction and engagement</li>
+  <li><strong>Agile Methodology</strong>: Iterative development for continuous improvement</li>
+  <li><strong>Data-Driven Decision Making</strong>: Utilize analytics for informed business strategies</li>
+</ul>
 
-## Key Pillars
+<h2>Impact on Dubai Enterprises</h2>
+<p>Successful digital transformation helps Dubai businesses:</p>
+<ul>
+  <li>Accelerate revenue growth by improving operational efficiency</li>
+  <li>Boost customer satisfaction with personalized digital experiences</li>
+  <li>Enhance competitiveness in fast-moving industries like fintech, e-commerce, and logistics</li>
+</ul>
 
-1. **Leadership Commitment:** Drive change from the top with clear vision and investment.
-2. **Customer-Centric Approach:** Every initiative should improve customer experience.
-3. **Agile Methodology:** Adopt iterative development and continuous improvement.
-4. **Data-Driven Decision Making:** Build the infrastructure and culture to leverage data effectively.
+<h2>Conclusion</h2>
+<p>By adopting a holistic approach to digital transformation, Dubai companies can ensure sustainable growth and maintain a competitive edge.</p>
 
-## Conclusion
-
-Successful transformation aligns people, process, and technology to achieve sustainable growth.
-
-    `,
+<p><strong>Ready to transform your Dubai enterprise?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> for expert guidance.</p>
+`,
     image: "/blog/digital-transformation.png",
     author: {
-      name: "Michael Roberts",
+      name: "Mr  Mubeen Bahoo",
       role: "CEO",
       avatar: "/team/michael-roberts.jpg",
     },
-    category: "Digital Transformation",
+    category: "IT Solutions",
     readTime: "12 min read",
     publishedAt: "2026-01-10",
     featured: true,
@@ -920,8 +1238,19 @@ Successful transformation aligns people, process, and technology to achieve sust
       "Agile",
       "Customer Experience",
       "Data-Driven",
+      "Dubai",
     ],
+    metaTitle:
+      "Digital Transformation Guide 2026 | Dubai Enterprises | Zavior Technologies",
+    metaDescription:
+      "Comprehensive guide for Dubai enterprises on successful digital transformation in 2026, covering people, processes, and technology. Zavior Technologies expertise included.",
+    keywords:
+      "Digital transformation Dubai, Enterprise digital strategy 2026, Agile Dubai, Customer Experience UAE, Technology adoption Dubai",
+    canonical:
+      "https://zaviortech.vercel.app/blog/digital-transformation-guide-2026",
   },
+
+  // 3️⃣ Odoo Best Practices
   {
     id: "odoo-implementation-best-practices",
     title: "Odoo Implementation Best Practices: Lessons from 100+ Projects",
@@ -929,32 +1258,35 @@ Successful transformation aligns people, process, and technology to achieve sust
     excerpt:
       "Learn best practices for Odoo ERP implementation to maximize efficiency, avoid pitfalls, and ensure successful adoption.",
     content: `
-Over 100 Odoo implementations taught us the critical factors for success.
+<p>Odoo ERP is a popular choice for Dubai enterprises looking to streamline operations and improve ROI. Having implemented 100+ projects, Zavior Technologies has gathered key best practices for success.</p>
 
-## Planning is Everything
+<h2>1. Planning is Everything</h2>
+<p>Requirements gathering, process mapping, and stakeholder alignment are essential. Dubai companies should also consider local compliance and VAT regulations.</p>
 
-Requirements gathering, process mapping, and stakeholder alignment are essential before coding begins.
+<h2>2. Standard Modules First</h2>
+<p>Use Odoo’s standard modules (CRM, Sales, Inventory, Accounting) to leverage best practices. Customize only when business-critical requirements demand it.</p>
 
-## Start with Standard, Customize Wisely
+<h2>3. Change Management</h2>
+<p>Train your teams thoroughly. User adoption drives ERP success. Provide user manuals, interactive workshops, and internal champions.</p>
 
-Odoo's standard modules incorporate best practices. Customize only when clearly justified.
+<h2>4. Data Migration Strategy</h2>
+<p>Clean and map your legacy data before migration. Accurate data ensures smooth transition and compliance with UAE business standards.</p>
 
-## Change Management Matters
+<h2>5. Testing & Go-Live</h2>
+<p>Use a staging environment, run UAT with key staff, and schedule go-live during low-activity periods.</p>
 
-Train and support teams for smooth adoption. Communication is key.
+<h2>Conclusion</h2>
+<p>Following these Odoo ERP best practices enables Dubai enterprises to achieve operational efficiency, improve reporting, and reduce errors.</p>
 
-## Conclusion
-
-Combining planning, smart customization, and change management ensures ERP success.
-
-    `,
+<p><strong>Want expert Odoo ERP implementation in Dubai?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today.</p>
+`,
     image: "/blog/odoo-implementation.png",
     author: {
       name: "Ahmed Hassan",
       role: "Director of ERP Solutions",
       avatar: "/team/ahmed-hassan.jpg",
     },
-    category: "ERP Solutions",
+    category: "ERP & Odoo Solutions",
     readTime: "10 min read",
     publishedAt: "2026-01-05",
     featured: false,
@@ -964,41 +1296,57 @@ Combining planning, smart customization, and change management ensures ERP succe
       "Best Practices",
       "Implementation",
       "Change Management",
+      "Dubai",
     ],
+    metaTitle:
+      "Odoo ERP Best Practices 2026 | Dubai Implementation | Zavior Technologies",
+    metaDescription:
+      "Discover proven Odoo ERP implementation best practices for Dubai enterprises. Maximize efficiency, compliance, and ROI with Zavior Technologies.",
+    keywords:
+      "Odoo ERP Dubai, ERP implementation UAE, Best practices Odoo, Dubai business ERP",
+    canonical:
+      "https://zaviortech.vercel.app/blog/odoo-implementation-best-practices",
   },
+
+  // 4️⃣ Cybersecurity
   {
     id: "cybersecurity-trends",
-    title: "Cybersecurity in 2026: Protecting Your Digital Assets",
+    title: "Cybersecurity in 2026: Protecting Your Digital Assets in Dubai",
     slug: "cybersecurity-trends-2026",
     excerpt:
       "Understand the latest cybersecurity trends including AI-driven threats, zero trust models, and supply chain security in 2026.",
     content: `
-Cybersecurity is evolving rapidly. Protecting digital assets requires awareness of emerging trends.
+<p>Cybersecurity is critical for Dubai enterprises in 2026. With increasing digitization, protecting data, customer information, and business operations has never been more important.</p>
 
-## AI-Powered Threats and Defenses
+<h2>AI-Powered Threats</h2>
+<p>Cybercriminals use AI to automate attacks. Enterprises in Dubai must deploy AI-driven defense systems for real-time threat detection and prevention.</p>
 
-Cybercriminals use AI to automate attacks. Enterprises need defensive AI for real-time detection.
+<h2>Zero Trust Architecture</h2>
+<p>Traditional perimeter-based security is obsolete. Zero Trust ensures no device or user is automatically trusted, enhancing security across networks and cloud platforms.</p>
 
-## Zero Trust Architecture
+<h2>Supply Chain Security</h2>
+<p>Third-party vendors often introduce vulnerabilities. Dubai companies should monitor and vet partners, suppliers, and contractors to prevent breaches.</p>
 
-Perimeter-based security is obsolete. Zero Trust ensures no user or system is automatically trusted.
+<h2>Best Practices</h2>
+<ul>
+  <li>Regular audits and penetration testing</li>
+  <li>Employee cybersecurity training</li>
+  <li>Strong encryption for sensitive data</li>
+  <li>Multi-factor authentication (MFA) across systems</li>
+</ul>
 
-## Supply Chain Security
+<h2>Conclusion</h2>
+<p>AI-driven security, zero trust, and robust monitoring help Dubai enterprises protect digital assets, ensure compliance, and maintain customer trust.</p>
 
-Third-party vulnerabilities require strict vetting and monitoring.
-
-## Conclusion
-
-Adopting AI defenses, zero trust, and supply chain monitoring strengthens cybersecurity posture in 2026.
-
-    `,
+<p><strong>Need cybersecurity solutions tailored for Dubai businesses?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> for consultation.</p>
+`,
     image: "/blog/cybersecurity.png",
     author: {
       name: "David Kim",
       role: "Chief Security Officer",
       avatar: "/team/david-kim.jpg",
     },
-    category: "Cybersecurity",
+    category: "IT Solutions",
     readTime: "7 min read",
     publishedAt: "2025-12-20",
     featured: false,
@@ -1007,206 +1355,313 @@ Adopting AI defenses, zero trust, and supply chain monitoring strengthens cybers
       "Zero Trust",
       "AI Security",
       "Supply Chain Security",
-      "Digital Assets",
+      "Dubai",
     ],
+    metaTitle:
+      "Cybersecurity Trends 2026 | Dubai Enterprise Security | Zavior Technologies",
+    metaDescription:
+      "Learn about cybersecurity trends for Dubai enterprises in 2026, including AI-driven threats, zero trust architecture, and supply chain protection. Zavior Technologies expertise included.",
+    keywords:
+      "Cybersecurity Dubai 2026, AI Security UAE, Zero Trust Dubai, Supply Chain Security Dubai",
+    canonical: "https://zaviortech.vercel.app/blog/cybersecurity-trends-2026",
   },
+
+  // 5️⃣ Mobile App Development
   {
     id: "mobile-app-development-trends",
-    title: "Mobile App Development Trends Shaping 2026",
+    title: "Mobile App Development Trends Shaping 2026 in Dubai",
     slug: "mobile-app-development-trends-2026",
     excerpt:
       "Explore the latest trends in mobile app development including cross-platform frameworks, AI-first experiences, and super apps.",
     content: `
-Mobile apps remain central to digital engagement.
+<p>Mobile applications are central to business growth in Dubai. In 2026, enterprises must adopt modern trends to engage customers effectively.</p>
 
-## Cross-Platform Dominance
+<h2>Cross-Platform Development</h2>
+<p>Frameworks like Flutter and React Native allow Dubai enterprises to build high-performance apps across Android and iOS with faster development cycles.</p>
 
-Flutter and React Native now enable high-performance apps across platforms.
+<h2>AI-First Mobile Experiences</h2>
+<p>On-device AI enables real-time translation, intelligent recommendations, and personalized experiences for UAE users.</p>
 
-## AI-First Mobile Experiences
+<h2>Super Apps and Mini Programs</h2>
+<p>Super apps consolidate services like payments, e-commerce, booking, and messaging into a single platform, increasing user retention and engagement.</p>
 
-On-device AI enables real-time translation, intelligent photo editing, and more.
+<h2>Conclusion</h2>
+<p>Cross-platform apps, AI-driven personalization, and super apps will define mobile development in Dubai, giving enterprises a competitive advantage.</p>
 
-## Super Apps and Mini Programs
-
-Super apps allow mini-program ecosystems, increasing engagement and retention.
-
-## Conclusion
-
-Cross-platform, AI-first, and super apps will define mobile development in 2026.
-
-    `,
+<p><strong>Ready to build a Dubai-focused mobile app?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today.</p>
+`,
     image: "/blog/mobile-development.png",
     author: {
       name: "Lisa Wong",
       role: "Head of Mobile Development",
       avatar: "/team/lisa-wong.jpg",
     },
-    category: "Mobile Development",
+    category: "Mobile Applications",
     readTime: "6 min read",
     publishedAt: "2025-12-15",
     featured: false,
-    tags: [
-      "Mobile App Development",
-      "Cross-Platform",
-      "AI",
-      "Super Apps",
-      "Innovation",
-    ],
+    tags: ["Mobile Apps", "Dubai", "AI Mobile", "Super Apps", "Cross-Platform"],
+    metaTitle:
+      "Mobile App Development Trends 2026 | Dubai Enterprises | Zavior Technologies",
+    metaDescription:
+      "Discover mobile app development trends for Dubai businesses in 2026, including cross-platform frameworks, AI-first apps, and super apps. Zavior Technologies expertise included.",
+    keywords:
+      "Mobile app Dubai, Cross-platform apps UAE, AI mobile apps Dubai, Super Apps Dubai",
+    canonical:
+      "https://zaviortech.vercel.app/blog/mobile-app-development-trends-2026",
   },
-    {
-    "id": "odoo-implementation-success",
-    "title": "Odoo Implementation Success: A Step-by-Step Guide for Growing Businesses",
-    "slug": "odoo-implementation-success-guide",
-    "excerpt": "Learn how to implement Odoo ERP effectively, avoid common pitfalls, and achieve rapid ROI with expert strategies from Zavior Technologies.",
-    "content": `<p>Implementing an ERP system like Odoo can transform your business—but only if done right. Based on our experience at Zavior Technologies, here is a step-by-step guide to ensure a smooth, successful Odoo rollout.</p>
+
+  // 6️⃣ Odoo Implementation Success (already updated previously)
+  {
+    id: "odoo-implementation-success",
+    title:
+      "Odoo Implementation Success: A Step-by-Step Guide for Growing Businesses",
+    slug: "odoo-implementation-success-guide",
+    excerpt:
+      "Learn how to implement Odoo ERP effectively, avoid common pitfalls, and achieve rapid ROI with expert strategies from Zavior Technologies.",
+    content: `<p>Implementing Odoo ERP can transform your Dubai business—but only if done right. Based on Zavior Technologies’ experience, here’s a step-by-step guide for success.</p>
 
 <h2>1. Define Clear Objectives</h2>
-<p>Before touching any configuration, identify what you want to achieve. Are you looking to streamline inventory? Improve financial reporting? Automate sales processes? Clear goals will guide every decision.</p>
+<p>Identify goals like streamlining inventory, improving financial reporting, or automating sales processes.</p>
 
 <h2>2. Choose the Right Modules</h2>
-<p>Odoo offers a modular approach. Start with core modules (CRM, Sales, Inventory, Accounting) and add others as needed. Avoid over-customizing from day one—stick to standard processes where possible.</p>
+<p>Start with core modules: CRM, Sales, Inventory, Accounting. Customize only when needed.</p>
 
 <h2>3. Data Migration Strategy</h2>
-<p>Clean your existing data before migration. Remove duplicates, standardize formats, and map fields carefully. Use Odoo’s import tools or custom scripts for complex data.</p>
+<p>Clean and map legacy data to ensure smooth transition and UAE compliance.</p>
 
 <h2>4. User Training & Change Management</h2>
-<p>Your team’s adoption determines success. Conduct hands-on training sessions, create user guides, and appoint internal champions. Communicate the benefits early to reduce resistance.</p>
+<p>Conduct hands-on sessions and appoint internal champions.</p>
 
 <h2>5. Test Thoroughly</h2>
-<p>Set up a staging environment and run through all business scenarios. Involve key users in user acceptance testing (UAT) to catch issues before going live.</p>
+<p>Run UAT in a staging environment and fix issues pre-launch.</p>
 
 <h2>6. Go Live & Support</h2>
-<p>Plan a go-live date (avoid month-end or peak seasons). Have your implementation partner on standby for the first few weeks to resolve teething problems.</p>
+<p>Schedule go-live at low-activity periods and provide on-hand support.</p>
 
 <h2>7. Continuous Improvement</h2>
-<p>ERP is not a one-time project. Review processes regularly, gather feedback, and leverage Odoo’s updates to keep improving efficiency.</p>
+<p>Review processes regularly and leverage Odoo updates to maintain efficiency.</p>
 
-<p>At Zavior Technologies, we’ve helped dozens of businesses implement Odoo successfully. Whether you’re a startup or an established enterprise, our tailored approach ensures your ERP investment delivers maximum value.</p>
-
-<p><strong>Ready to transform your operations?</strong> <a href='#'>Contact us</a> for a free consultation.</p>`,
-    "image": "/blog/odoo-implementation-guide.jpg",
-    "author": {
-      "name": "Aarav Mehta",
-      "role": "ERP Implementation Lead",
-      "avatar": "/team/aarav-mehta.jpg"
+<p><strong>Need expert Odoo ERP implementation in Dubai?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a>.</p>`,
+    image: "/blog/odoo-implementation-guide.png",
+    author: {
+      name: "Aarav Mehta",
+      role: "ERP Implementation Lead",
+      avatar: "/team/aarav-mehta.jpg",
     },
-    "category": "ERP Implementation",
-    "readTime": "9 min read",
-    "publishedAt": "2026-02-10",
-    "featured": true,
-    "tags": ["Odoo", "ERP Implementation", "Best Practices", "Change Management", "Data Migration", "Zavior Technologies"]
+    category: "ERP & Odoo Solutions",
+    readTime: "9 min read",
+    publishedAt: "2026-02-10",
+    featured: true,
+    tags: ["Odoo", "ERP Implementation", "Dubai", "Zavior Technologies"],
+    metaTitle:
+      "Odoo ERP Implementation Success 2026 | Dubai | Zavior Technologies",
+    metaDescription:
+      "Step-by-step guide for Odoo ERP success for Dubai businesses. Avoid pitfalls and maximize ROI with Zavior Technologies’ expertise.",
+    keywords:
+      "Odoo ERP Dubai, ERP Implementation UAE, ERP success Dubai, Zavior Technologies ERP",
+    canonical:
+      "https://zaviortech.vercel.app/blog/odoo-implementation-success-guide",
   },
+
+  // 7️⃣ Custom ERP with Spring Boot
   {
-    "id": "custom-erp-spring-boot",
-    "title": "Building Custom ERPs with Spring Boot: Scalability, Security, and Speed",
-    "slug": "custom-erp-spring-boot",
-    "excerpt": "Discover why Spring Boot is the ideal framework for developing custom enterprise ERPs that can scale with your business and integrate seamlessly.",
-    "content": `<p>Off-the-shelf ERP solutions don’t always fit unique business processes. That’s where custom ERPs shine. At Zavior Technologies, we leverage Spring Boot to build robust, scalable, and secure ERP systems tailored to your exact needs.</p>
+    id: "custom-erp-spring-boot",
+    title:
+      "Building Custom ERPs with Spring Boot: Scalability, Security, and Speed",
+    slug: "custom-erp-spring-boot",
+    excerpt:
+      "Discover why Spring Boot is the ideal framework for developing custom enterprise ERPs that can scale with your business and integrate seamlessly.",
+    content: `<p>Dubai enterprises often need custom ERP solutions for unique workflows. Spring Boot allows building scalable, secure, and flexible ERPs.</p>
 
 <h2>Why Spring Boot for ERP Development?</h2>
-<p>Spring Boot simplifies Java development while offering enterprise-grade features:</p>
 <ul>
-  <li><strong>Microservices Ready</strong>: Build modular, independently deployable services.</li>
-  <li><strong>Security</strong>: Spring Security provides comprehensive authentication and authorization.</li>
-  <li><strong>Data Access</strong>: Spring Data JPA and Hibernate make database interactions seamless.</li>
-  <li><strong>Integration</strong>: Easy integration with third-party APIs, message brokers, and legacy systems.</li>
+<li>Microservices ready for modular deployment</li>
+<li>Enterprise-grade security with Spring Security</li>
+<li>Seamless database integration via Spring Data JPA</li>
+<li>API-first design for future integrations</li>
 </ul>
 
-<h2>Key Considerations When Building a Custom ERP</h2>
-
-<h3>1. Requirement Analysis</h3>
-<p>Work closely with stakeholders to map every process. A clear blueprint prevents costly rework.</p>
-
-<h3>2. Scalable Architecture</h3>
-<p>Design for growth from day one. Use microservices or modular monolith patterns depending on your scale.</p>
-
-<h3>3. API-First Design</h3>
-<p>Expose APIs for every core function. This allows future integrations with mobile apps, portals, or external partners.</p>
-
-<h3>4. Security by Design</h3>
-<p>Implement role-based access control (RBAC), encrypt sensitive data, and follow OWASP guidelines. Regular security audits are a must.</p>
-
-<h3>5. Testing & Quality Assurance</h3>
-<p>Automate unit and integration tests. Use CI/CD pipelines to ensure reliable deployments.</p>
-
-<h2>Real-World Example</h2>
-<p>We recently built a custom ERP for a logistics company using Spring Boot. The system handles order management, fleet tracking, invoicing, and real-time analytics—all integrated with their existing warehouse systems. The result? A 30% reduction in manual work and complete visibility across operations.</p>
-
-<h2>Is Custom ERP Right for You?</h2>
-<p>If your processes are highly unique or you need deep integration with specialized tools, a custom solution may be the best investment. At Zavior Technologies, we combine Spring Boot expertise with deep business understanding to deliver ERPs that drive efficiency.</p>
-
-<p><strong>Let’s discuss your vision.</strong> <a href='#'>Get in touch</a> to explore how a custom ERP can accelerate your growth.</p>`,
-    "image": "/blog/spring-boot-erp.jpg",
-    "author": {
-      "name": "Priya Sharma",
-      "role": "Senior Software Architect",
-      "avatar": "/team/priya-sharma.jpg"
-    },
-    "category": "Custom Development",
-    "readTime": "11 min read",
-    "publishedAt": "2026-02-05",
-    "featured": true,
-    "tags": ["Spring Boot", "Custom ERP", "Java", "Microservices", "Enterprise Software", "Zavior Technologies"]
-  },
-  {
-    "id": "legacy-to-modern-erp",
-    "title": "From Legacy to Leading: Why Modernizing Your ERP Is No Longer Optional",
-    "slug": "legacy-to-modern-erp",
-    "excerpt": "Outdated ERP systems are holding businesses back. Learn the risks of sticking with legacy software and the benefits of moving to modern platforms like Odoo or custom-built solutions.",
-    "content": `<p>Many businesses still run on legacy ERP systems—clunky, expensive to maintain, and unable to adapt to modern demands. In this post, we break down why modernization is critical and how Zavior Technologies can help you make the transition smoothly.</p>
-
-<h2>The High Cost of Legacy ERP</h2>
+<h2>Key Considerations</h2>
 <ul>
-  <li><strong>Maintenance Nightmares</strong>: Older systems require specialized (and often retiring) skills. Patches and upgrades are costly.</li>
-  <li><strong>Integration Challenges</strong>: Modern tools (e-commerce, AI analytics, IoT) rarely play well with legacy ERPs.</li>
-  <li><strong>Poor User Experience</strong>: Outdated interfaces reduce productivity and frustrate employees.</li>
-  <li><strong>Security Risks</strong>: Unpatched vulnerabilities are a goldmine for cybercriminals.</li>
+<li>Requirement analysis with stakeholder involvement</li>
+<li>Scalable architecture from day one</li>
+<li>Robust testing & CI/CD pipelines</li>
+<li>Role-based security and encryption</li>
+</ul>
+
+<h2>Example</h2>
+<p>A logistics company in Dubai saw 30% reduction in manual work after we implemented a Spring Boot ERP integrated with warehouse systems.</p>
+
+<p><strong>Explore custom ERP solutions for your Dubai business.</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a>.</p>`,
+    image: "/blog/spring-boot-erp.png",
+    author: {
+      name: "Priya Sharma",
+      role: "Senior Software Architect",
+      avatar: "/team/priya-sharma.jpg",
+    },
+    category: "ERP & Odoo Solutions",
+    readTime: "11 min read",
+    publishedAt: "2026-02-05",
+    featured: true,
+    tags: ["Spring Boot", "Custom ERP", "Dubai", "Zavior Technologies"],
+    metaTitle: "Custom ERP with Spring Boot | Dubai | Zavior Technologies",
+    metaDescription:
+      "Build scalable and secure custom ERPs for Dubai enterprises using Spring Boot. Learn best practices from Zavior Technologies.",
+    keywords:
+      "Custom ERP Dubai, Spring Boot ERP UAE, Enterprise ERP Dubai, Zavior Technologies",
+    canonical: "https://zaviortech.vercel.app/blog/custom-erp-spring-boot",
+  },
+
+  // 8️⃣ Legacy ERP Modernization
+  {
+    id: "legacy-to-modern-erp",
+    title:
+      "From Legacy to Leading: Why Modernizing Your ERP Is No Longer Optional",
+    slug: "legacy-to-modern-erp",
+    excerpt:
+      "Outdated ERP systems are holding businesses back. Learn the risks of sticking with legacy software and the benefits of moving to modern platforms like Odoo or custom-built solutions.",
+    content: `<p>Many Dubai enterprises still run on legacy ERP systems—clunky, expensive, and inflexible. Modernization ensures competitiveness and efficiency.</p>
+
+<h2>Risks of Legacy ERP</h2>
+<ul>
+<li>High maintenance costs and lack of skilled resources</li>
+<li>Poor integration with modern tools (AI, IoT, e-commerce)</li>
+<li>Subpar UX and employee frustration</li>
+<li>Security vulnerabilities and compliance gaps</li>
 </ul>
 
 <h2>Benefits of Modern ERP</h2>
 <ul>
-  <li>✅ <strong>Real-Time Data</strong>: Make decisions based on up-to-the-minute information.</li>
-  <li>✅ <strong>Scalability</strong>: Cloud or hybrid models grow with you.</li>
-  <li>✅ <strong>Mobility</strong>: Access your business from anywhere, on any device.</li>
-  <li>✅ <strong>Automation</strong>: Reduce manual work with workflows and AI.</li>
-  <li>✅ <strong>Compliance</strong>: Stay current with regulatory changes.</li>
+<li>Real-time data insights for better decision-making</li>
+<li>Scalable cloud or hybrid deployment</li>
+<li>Mobility: Access anywhere, any device</li>
+<li>Automation of workflows and AI integration</li>
+<li>Regulatory compliance in UAE</li>
 </ul>
 
-<h2>Modernization Pathways</h2>
+<h2>Modernization Options</h2>
+<ul>
+<li>Migrate to Odoo for proven, cost-effective ERP</li>
+<li>Custom ERP for complex workflows using frameworks like Spring Boot</li>
+</ul>
 
-<h3>Option A: Migrate to Odoo</h3>
-<p>Ideal for businesses wanting a proven, cost-effective solution with extensive module support. Odoo’s flexibility allows you to keep some custom processes while adopting best practices.</p>
+<h2>Conclusion</h2>
+<p>Modernizing ERP in Dubai is critical for efficiency, growth, and competitiveness.</p>
 
-<h3>Option B: Build a Custom ERP</h3>
-<p>Best for organizations with unique, complex workflows. Using modern frameworks like Spring Boot, we craft a system that mirrors your exact operations—no compromises.</p>
-
-<h2>Our Proven Migration Process</h2>
-<ol>
-  <li><strong>Discovery & Audit</strong>: We analyze your current system, data, and processes.</li>
-  <li><strong>Roadmap Design</strong>: Define the target architecture and phased migration plan.</li>
-  <li><strong>Data Cleansing & Migration</strong>: Extract, transform, and load data with zero loss.</li>
-  <li><strong>Development & Integration</strong>: Build new features and connect with existing tools.</li>
-  <li><strong>Testing & Training</strong>: Ensure everything works and your team is confident.</li>
-  <li><strong>Go-Live & Support</strong>: Smooth cutover with post-launch assistance.</li>
-</ol>
-
-<h2>Success Story</h2>
-<p>A manufacturing client replaced a 15-year-old ERP with an Odoo-based system in just 4 months. They reduced inventory holding costs by 20% and improved on-time deliveries by 35%.</p>
-
-<p><strong>Don’t let legacy software slow you down.</strong> <a href='#'>Contact Zavior Technologies</a> today to start your modernization journey.</p>`,
-    "image": "/blog/legacy-modernization.jpg",
-    "author": {
-      "name": "Vikram Singh",
-      "role": "Director of Consulting",
-      "avatar": "/team/vikram-singh.jpg"
+<p><strong>Start your ERP modernization journey.</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today.</p>`,
+    image: "/blog/legacy-modernization.png",
+    author: {
+      name: "Vikram Singh",
+      role: "Director of Consulting",
+      avatar: "/team/vikram-singh.jpg",
     },
-    "category": "ERP Strategy",
-    "readTime": "10 min read",
-    "publishedAt": "2026-01-28",
-    "featured": false,
-    "tags": ["Legacy Systems", "ERP Modernization", "Digital Transformation", "Odoo", "Custom ERP", "Zavior Technologies"]
-  }
+    category: "ERP Strategy",
+    readTime: "10 min read",
+    publishedAt: "2026-01-28",
+    featured: false,
+    tags: [
+      "Legacy Systems",
+      "ERP Modernization",
+      "Dubai",
+      "Zavior Technologies",
+    ],
+    metaTitle:
+      "ERP Modernization 2026 | Dubai Legacy Systems | Zavior Technologies",
+    metaDescription:
+      "Learn why modernizing legacy ERP systems is critical for Dubai enterprises. Explore Odoo and custom ERP solutions with Zavior Technologies.",
+    keywords:
+      "ERP modernization Dubai, Legacy ERP UAE, Odoo Dubai, Custom ERP Dubai",
+    canonical: "https://zaviortech.vercel.app/blog/legacy-to-modern-erp",
+  },
+
+  // 9️⃣ New Blog: AI-Powered ERP
+  {
+    id: "ai-powered-erp",
+    title: "AI-Powered ERP: Driving Intelligent Enterprise Operations in Dubai",
+    slug: "ai-powered-erp-dubai",
+    excerpt:
+      "Discover how AI-integrated ERP systems optimize operations, improve insights, and accelerate growth for Dubai businesses in 2026.",
+    content: `<p>AI is transforming ERP systems into intelligent platforms. Dubai enterprises can leverage AI-powered ERP to automate workflows, predict trends, and improve decision-making.</p>
+
+<h2>Key Benefits</h2>
+<ul>
+<li>Automated financial reporting and predictive analytics</li>
+<li>Smart inventory and demand forecasting</li>
+<li>Enhanced customer engagement via AI-driven CRM</li>
+<li>Optimized workforce and task allocation</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>Dubai businesses adopting AI-powered ERP gain efficiency, agility, and competitive advantage.</p>
+
+<p><strong>Explore AI-driven ERP solutions.</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a>.</p>`,
+    image: "/blog/ai-erp.png",
+    author: {
+      name: "Rashid Al Mansoori",
+      role: "ERP AI Specialist",
+      avatar: "/team/rashid-al-mansoori.jpg",
+    },
+    category: "AI ERP",
+    readTime: "8 min read",
+    publishedAt: "2026-02-18",
+    featured: true,
+    tags: ["AI ERP", "Dubai", "ERP Automation", "Zavior Technologies"],
+    metaTitle: "AI-Powered ERP in Dubai 2026 | Zavior Technologies",
+    metaDescription:
+      "Discover AI-powered ERP solutions for Dubai enterprises. Automate workflows and gain predictive insights with Zavior Technologies.",
+    keywords:
+      "AI ERP Dubai, Intelligent ERP UAE, ERP automation Dubai, AI-driven ERP",
+    canonical: "https://zaviortech.vercel.app/blog/ai-powered-erp-dubai",
+  },
+
+  // 10️⃣ New Blog: Cloud ERP Adoption Dubai
+  {
+    id: "cloud-erp-adoption",
+    title:
+      "Cloud ERP Adoption in Dubai: Benefits, Challenges, and Best Practices",
+    slug: "cloud-erp-adoption-dubai",
+    excerpt:
+      "Learn why Dubai businesses are moving to cloud ERP solutions, how to overcome challenges, and best practices for successful adoption.",
+    content: `<p>Cloud ERP adoption in Dubai is accelerating as enterprises seek scalable, cost-effective, and flexible systems. Cloud-based solutions provide real-time access, enhanced collaboration, and faster deployment.</p>
+
+<h2>Benefits of Cloud ERP</h2>
+<ul>
+<li>Scalability for growing Dubai enterprises</li>
+<li>Lower upfront costs and predictable subscriptions</li>
+<li>Remote access from any device for a mobile workforce</li>
+<li>Regular updates and AI-enhanced features</li>
+</ul>
+
+<h2>Challenges & Mitigation</h2>
+<ul>
+<li>Data privacy and UAE compliance — ensure secure cloud hosting</li>
+<li>Change management — train staff and communicate benefits</li>
+<li>Integration with legacy systems — plan phased migration</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>Cloud ERP adoption enables Dubai businesses to improve agility, reduce costs, and drive digital transformation.</p>
+
+<p><strong>Ready to migrate to Cloud ERP?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today.</p>`,
+    image: "/blog/cloud-erp.png",
+    author: {
+      name: "Fatima Al Suwaidi",
+      role: "Cloud ERP Consultant",
+      avatar: "/team/fatima-al-suwaidi.jpg",
+    },
+    category: "Cloud ERP",
+    readTime: "9 min read",
+    publishedAt: "2026-02-20",
+    featured: true,
+    tags: ["Cloud ERP", "Dubai", "ERP Migration", "Zavior Technologies"],
+    metaTitle: "Cloud ERP Adoption Dubai 2026 | Zavior Technologies",
+    metaDescription:
+      "Dubai businesses adopting cloud ERP gain flexibility, scalability, and real-time insights. Learn benefits and best practices with Zavior Technologies.",
+    keywords:
+      "Cloud ERP Dubai, ERP migration UAE, Cloud ERP adoption Dubai, Zavior Technologies",
+    canonical: "https://zaviortech.vercel.app/blog/cloud-erp-adoption-dubai",
+  },
 ];
 
 export const team = [

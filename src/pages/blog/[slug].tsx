@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -15,16 +15,23 @@ export default function BlogDetailPage() {
   const blog = blogs.find((b) => b.slug === params?.slug);
 
   if (!blog) {
-    return(<div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Blog Post Not Found</h1>
-        <p className="text-muted-foreground mb-6">The blog post you are looking for does not exist.</p>
-        <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" />
-          Back to Blog
-        </Link>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Blog Post Not Found</h1>
+          <p className="text-muted-foreground mb-6">
+            The blog post you are looking for does not exist.
+          </p>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Blog
+          </Link>
+        </div>
       </div>
-    </div>);
+    );
   }
 
   const relatedBlogs = blogs
@@ -34,35 +41,26 @@ export default function BlogDetailPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": blog.title,
-    "image": blog.image,
-    "author": {
-      "@type": "Person",
-      "name": blog.author.name
-    },
-    "publisher": {
+    headline: blog.title,
+    image: blog.image,
+    author: { "@type": "Person", name: blog.author.name },
+    publisher: {
       "@type": "Organization",
-      "name": "Your Company",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "/logo.png"
-      }
+      name: "Zavior Technologies",
+      logo: { "@type": "ImageObject", url: "/logo.png" },
     },
-    "datePublished": blog.publishedAt,
-    "description": blog.excerpt,
-    "url": `https://yourwebsite.com/blog/${blog.slug}`
+    datePublished: blog.publishedAt,
+    description: blog.excerpt,
+    url: `https://zaviortech.vercel.app/blog/${blog.slug}`,
   };
-
-  function dangerouslySetInnerHTML(content: string): import("react").ReactNode {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <>
       <Head>
-        <title>{blog.title} | Your Company</title>
-        <meta name="description" content={blog.excerpt} />
-        <link rel="canonical" href={`https://yourwebsite.com/blog/${blog.slug}`} />
+        <title>{blog.metaTitle}</title>
+        <meta name="description" content={blog.metaDescription} />
+        <meta name="keywords" content={blog.keywords} />
+        <link rel="canonical" href={blog.canonical} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -131,13 +129,13 @@ export default function BlogDetailPage() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="icon" className="bg-transparent" aria-label="Share">
+                <Button variant="outline" size="icon" className="bg-transparent">
                   <Share2 className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon" className="bg-transparent" aria-label="Share on Twitter">
+                <Button variant="outline" size="icon" className="bg-transparent">
                   <Twitter className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon" className="bg-transparent" aria-label="Share on Linkedin">
+                <Button variant="outline" size="icon" className="bg-transparent">
                   <Linkedin className="h-4 w-4" />
                 </Button>
               </div>
@@ -176,38 +174,7 @@ export default function BlogDetailPage() {
             className="max-w-3xl mx-auto"
           >
             <div className="prose prose-lg dark:prose-invert max-w-none">
-              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-                {blog.excerpt}
-              </p>
-
-                  <div  dangerouslySetInnerHTML={{__html:blog.content}}></div>
-            {/* {dangerouslySetInnerHTML(blog.content)} */}
-              {blog.content.split("\n\n").map((paragraph, index) => {
-                if (paragraph.startsWith("## ")) {
-                  return (
-                    <h2 key={index} className="text-2xl font-bold mt-10 mb-4">
-                      {paragraph.replace("## ", "")}
-                    </h2>
-                  );
-                }
-                if (paragraph.startsWith("1. ") || paragraph.startsWith("- ")) {
-                  const items = paragraph.split("\n");
-                  return (
-                    <ul key={index} className="list-disc pl-6 space-y-2 my-6">
-                      {items.map((item, i) => (
-                        <li key={i} className="text-muted-foreground">
-                          {item.replace(/^[\d]+\.\s\*\*|\*\*.*?\*\*\s-\s/, "").replace(/\*\*/g, "")}
-                        </li>
-                      ))}
-                    </ul>
-                  );
-                }
-                return (
-                  <p key={index} className="text-muted-foreground leading-relaxed mb-6">
-                    {paragraph}
-                  </p>
-                );
-              })}
+              <div dangerouslySetInnerHTML={{ __html: blog.content }} />
             </div>
           </motion.article>
         </div>
@@ -220,7 +187,7 @@ export default function BlogDetailPage() {
             <div className="flex items-center gap-4 py-6 border-t border-border">
               <span className="text-sm font-medium">Tags:</span>
               <div className="flex flex-wrap gap-2">
-                {[blog.category, "Technology", "Innovation", "Digital"].map((tag) => (
+                {blog.tags.map((tag) => (
                   <span
                     key={tag}
                     className="px-3 py-1 text-sm rounded-full bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"

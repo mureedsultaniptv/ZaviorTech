@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react"
+import Head from "next/head";
 
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -94,7 +95,7 @@ export default function ServicesPage() {
                         ))}
                       </ul>
                       <Button asChild>
-                        <Link href="/contact">
+                        <Link href={'/services/'+service.slug||""}>
                           Get Started
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>

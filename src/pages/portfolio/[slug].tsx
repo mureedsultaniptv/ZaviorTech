@@ -9,22 +9,30 @@ import { projects } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Calendar, Building, Globe } from "lucide-react";
 import Image from "next/image";
+import Head from "next/head";
 
 export default function PortfolioDetailPage() {
   const params = useParams();
   const project = projects.find((p) => p.slug === params?.slug);
 
   if (!project) {
-   return(<div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
-        <p className="text-muted-foreground mb-6">The project you are looking for does not exist.</p>
-        <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" />
-          Back to Portfolio
-        </Link>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
+          <p className="text-muted-foreground mb-6">
+            The project you are looking for does not exist.
+          </p>
+          <Link
+            href="/portfolio"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Portfolio
+          </Link>
+        </div>
       </div>
-    </div>);
+    );
   }
 
   const relatedProjects = projects
@@ -33,6 +41,27 @@ export default function PortfolioDetailPage() {
 
   return (
     <>
+      <Head>
+        <title>
+          {project.metaTitle || project.title + " | Zavior Technologies Dubai"}
+        </title>
+        <meta
+          name="description"
+          content={project.metaDescription || project.description}
+        />
+        <meta
+    name="keywords"
+    content={
+      Array.isArray(project.metaKeywords)
+        ? project.metaKeywords.join(", ")
+        : project.metaKeywords || ""
+    }
+  />
+        <link
+          rel="canonical"
+          href={`https://zaviortech.vercel.app/portfolio/${project.slug}`}
+        />
+      </Head>
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">
@@ -91,7 +120,9 @@ export default function PortfolioDetailPage() {
                 <div className="flex items-center gap-3">
                   <Building className="h-5 w-5 text-primary" />
                   <div>
-                    <span className="text-sm text-muted-foreground">Client</span>
+                    <span className="text-sm text-muted-foreground">
+                      Client
+                    </span>
                     <p className="font-medium">{project.client}</p>
                   </div>
                 </div>
@@ -105,7 +136,9 @@ export default function PortfolioDetailPage() {
                 <div className="flex items-center gap-3">
                   <Globe className="h-5 w-5 text-primary" />
                   <div>
-                    <span className="text-sm text-muted-foreground">Category</span>
+                    <span className="text-sm text-muted-foreground">
+                      Category
+                    </span>
                     <p className="font-medium">{project.category}</p>
                   </div>
                 </div>
@@ -137,7 +170,13 @@ export default function PortfolioDetailPage() {
             >
               <Card className="overflow-hidden bg-card border-border/50">
                 <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <Image src={project.image} alt="Project Image" width={600} height={600} className="w-full h-full" /> 
+                  <Image
+                    src={project.image}
+                    alt="Project Image"
+                    width={600}
+                    height={600}
+                    className="w-full h-full"
+                  />
                   {/* <span className="text-8xl font-bold text-primary/30">
                     {project.title.charAt(0)}
                   </span> */}
@@ -153,11 +192,10 @@ export default function PortfolioDetailPage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold mb-6">Project Overview</h2>
-        <div
-  className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed"
-  dangerouslySetInnerHTML={{ __html: project.projectOverview }}
-/>
-
+            <div
+              className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: project.projectOverview }}
+            />
           </div>
         </div>
       </section>
@@ -187,9 +225,10 @@ export default function PortfolioDetailPage() {
                   <Link href={`/portfolio/${relatedProject.slug}`}>
                     <Card className="group h-full overflow-hidden bg-card hover:shadow-lg transition-all border-border/50 hover:border-primary/30">
                       <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                        <span className="text-4xl font-bold text-primary/30">
+                       <Image src={relatedProject.image} alt={relatedProject.title} width={750} height={250}/>
+                        {/* <span className="text-4xl font-bold text-primary/30">
                           {relatedProject.title.charAt(0)}
-                        </span>
+                        </span> */}
                       </div>
                       <CardContent className="p-6">
                         <span className="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">
