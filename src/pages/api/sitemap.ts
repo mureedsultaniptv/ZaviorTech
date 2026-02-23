@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import path from "path";
-import { careers, projects, blogs } from "@/lib/data/demo-data"; 
+import { careers, projects, blogs, services } from "@/lib/data/demo-data"; 
 
 const SITE_URL = "https://zaviortech.vercel.app"; // Your live site URL
 
@@ -18,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ...careers.map((p) => ({ loc: `${SITE_URL}/careers/${p.id}`, priority: 0.9 })),
       ...projects.map((p) => ({ loc: `${SITE_URL}/portfolio/${p.slug}`, priority: 0.9 })),
       ...blogs.map((b) => ({ loc: `${SITE_URL}/blog/${b.slug}`, priority: 0.9 })),
+      ...services.map((b) => ({ loc: `${SITE_URL}/services/${b.slug}`, priority: 0.9 })),
     ];
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
