@@ -1,6 +1,6 @@
-"use client";
-
-import { useParams } from "next/navigation";
+// /src/pages/services/[slug].tsx
+import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
@@ -9,12 +9,29 @@ import { services } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import Image from "next/image";
-import Head from "next/head";
+import { ParsedUrlQuery } from "querystring";
 
-export default function ServiceDetailPage() {
-  const params = useParams();
-  const service = services.find((s) => s.slug === params?.slug);
+// Define the shape of a service (adjust based on your actual data)
+interface Service {
+  slug: string;
+  title: string;
+  description: string;
+  metaKeywords?: string | string[];
+  image: string;
+  features: string[];
+  longDescription: string;
+}
 
+interface Props {
+  service: Service;
+}
+
+interface Params extends ParsedUrlQuery {
+  slug: string;
+}
+
+export default function ServiceDetailPage({ service }: Props) {
+  // If service is null (should be handled by getStaticProps notFound), but just in case:
   if (!service) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -35,24 +52,33 @@ export default function ServiceDetailPage() {
     );
   }
 
+  // Build meta keywords string
+  const metaKeywords = Array.isArray(service.metaKeywords)
+    ? service.metaKeywords.join(", ")
+    : service.metaKeywords || "";
+
   return (
     <>
       <Head>
         <title>{service.title} | Zavior Technologies Dubai</title>
         <meta name="description" content={service.description} />
-        <meta
-          name="keywords"
-          content={
-            Array.isArray(service.metaKeywords)
-              ? service.metaKeywords.join(", ")
-              : service.metaKeywords || ""
-          }
-        />
+        {metaKeywords && <meta name="keywords" content={metaKeywords} />}
         <link
           rel="canonical"
           href={`https://zaviortech.vercel.app/services/${service.slug}`}
         />
+        {/* Open Graph / Social Media Tags */}
+        <meta property="og:title" content={service.title} />
+        <meta property="og:description" content={service.description} />
+        <meta
+          property="og:url"
+          content={`https://zaviortech.vercel.app/services/${service.slug}`}
+        />
+        <meta property="og:image" content={service.image} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
+
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="absolute inset-0 -z-10">
@@ -186,3 +212,30 @@ export default function ServiceDetailPage() {
     </>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = services.map((service) => ({
+    params: { slug: service.slug },
+  }));
+
+  return {
+    paths,
+    fallback: false, // or 'blocking' if you want to generate on-demand for new services
+  };
+};
+
+export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
+  const service = services.find((s) => s.slug === params?.slug);
+
+  if (!service) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      service,
+    },
+  };
+};

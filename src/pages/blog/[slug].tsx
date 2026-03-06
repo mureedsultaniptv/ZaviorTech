@@ -1,6 +1,5 @@
-"use client";
-
-import { useParams } from "next/navigation";
+// /src/pages/blog/[slug].tsx
+import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -9,11 +8,36 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { blogs } from "@/lib/data/demo-data";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Linkedin, Twitter } from "lucide-react";
+import { ParsedUrlQuery } from "querystring";
 
-export default function BlogDetailPage() {
-  const params = useParams();
-  const blog = blogs.find((b) => b.slug === params?.slug);
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: { name: string; role: string };
+  publishedAt: string;
+  readTime: string;
+  image: string;
+  tags: string[];
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string;
+  canonical?: string;
+}
 
+interface Props {
+  blog: BlogPost;
+}
+
+interface Params extends ParsedUrlQuery {
+  slug: string;
+}
+
+export default function BlogDetailPage({ blog }: Props) {
+  // If blog is null (should be handled by getStaticProps notFound), but just in case:
   if (!blog) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -47,7 +71,7 @@ export default function BlogDetailPage() {
     publisher: {
       "@type": "Organization",
       name: "Zavior Technologies",
-      logo: { "@type": "ImageObject", url: "/logo.png" },
+      logo: { "@type": "ImageObject", url: "https://zaviortech.vercel.app/logo.png" },
     },
     datePublished: blog.publishedAt,
     description: blog.excerpt,
@@ -57,10 +81,21 @@ export default function BlogDetailPage() {
   return (
     <>
       <Head>
-        <title>{blog.metaTitle}</title>
-        <meta name="description" content={blog.metaDescription} />
-        <meta name="keywords" content={blog.keywords} />
-        <link rel="canonical" href={blog.canonical} />
+        <title>{blog.metaTitle || `${blog.title} | Zavior Technologies Blog`}</title>
+        <meta name="description" content={blog.metaDescription || blog.excerpt} />
+        {blog.keywords && <meta name="keywords" content={blog.keywords} />}
+        <link rel="canonical" href={blog.canonical || `https://zaviortech.vercel.app/blog/${blog.slug}`} />
+        <meta property="og:title" content={blog.title} />
+        <meta property="og:description" content={blog.excerpt} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://zaviortech.vercel.app/blog/${blog.slug}`} />
+        <meta property="og:image" content={blog.image} />
+        <meta property="article:published_time" content={blog.publishedAt} />
+        <meta property="article:author" content={blog.author.name} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={blog.title} />
+        <meta name="twitter:description" content={blog.excerpt} />
+        <meta name="twitter:image" content={blog.image} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -257,3 +292,30 @@ export default function BlogDetailPage() {
     </>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = blogs.map((blog) => ({
+    params: { slug: blog.slug },
+  }));
+
+  return {
+    paths,
+    fallback: false, // or 'blocking' if you want to generate on-demand for new posts
+  };
+};
+
+export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
+  const blog = blogs.find((b) => b.slug === params?.slug);
+
+  if (!blog) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      blog,
+    },
+  };
+};

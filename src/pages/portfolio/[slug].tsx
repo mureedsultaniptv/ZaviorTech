@@ -1,6 +1,6 @@
-"use client";
-
-import { useParams, notFound } from "next/navigation";
+// /src/pages/portfolio/[slug].tsx
+import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,12 +9,30 @@ import { projects } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Calendar, Building, Globe } from "lucide-react";
 import Image from "next/image";
-import Head from "next/head";
+import { ParsedUrlQuery } from "querystring";
 
-export default function PortfolioDetailPage() {
-  const params = useParams();
-  const project = projects.find((p) => p.slug === params?.slug);
+interface Project {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  year: string;
+  client: string;
+  technologies: string[];
+  image: string;
+  projectOverview: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string | string[];
+}
 
+interface Props {
+  project: Project;
+}
+
+export default function PortfolioDetailPage({ project }: Props) {
+  // If project is null (should be handled by getStaticProps notFound), but just in case:
   if (!project) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -39,29 +57,20 @@ export default function PortfolioDetailPage() {
     .filter((p) => p.id !== project.id && p.category === project.category)
     .slice(0, 2);
 
+  // Build meta keywords string
+  const metaKeywords = Array.isArray(project.metaKeywords)
+    ? project.metaKeywords.join(", ")
+    : project.metaKeywords || "";
+
   return (
     <>
       <Head>
-        <title>
-          {project.metaTitle || project.title + " | Zavior Technologies Dubai"}
-        </title>
-        <meta
-          name="description"
-          content={project.metaDescription || project.description}
-        />
-        <meta
-    name="keywords"
-    content={
-      Array.isArray(project.metaKeywords)
-        ? project.metaKeywords.join(", ")
-        : project.metaKeywords || ""
-    }
-  />
-        <link
-          rel="canonical"
-          href={`https://zaviortech.vercel.app/portfolio/${project.slug}`}
-        />
+        <title>{project.metaTitle || `${project.title} | Zavior Technologies Dubai`}</title>
+        <meta name="description" content={project.metaDescription || project.description} />
+        {metaKeywords && <meta name="keywords" content={metaKeywords} />}
+        <link rel="canonical" href={`https://zaviortech.vercel.app/portfolio/${project.slug}`} />
       </Head>
+
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">
@@ -120,9 +129,7 @@ export default function PortfolioDetailPage() {
                 <div className="flex items-center gap-3">
                   <Building className="h-5 w-5 text-primary" />
                   <div>
-                    <span className="text-sm text-muted-foreground">
-                      Client
-                    </span>
+                    <span className="text-sm text-muted-foreground">Client</span>
                     <p className="font-medium">{project.client}</p>
                   </div>
                 </div>
@@ -136,9 +143,7 @@ export default function PortfolioDetailPage() {
                 <div className="flex items-center gap-3">
                   <Globe className="h-5 w-5 text-primary" />
                   <div>
-                    <span className="text-sm text-muted-foreground">
-                      Category
-                    </span>
+                    <span className="text-sm text-muted-foreground">Category</span>
                     <p className="font-medium">{project.category}</p>
                   </div>
                 </div>
@@ -172,14 +177,11 @@ export default function PortfolioDetailPage() {
                 <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                   <Image
                     src={project.image}
-                    alt="Project Image"
+                    alt={`${project.title} project image`}
                     width={600}
                     height={600}
-                    className="w-full h-full"
+                    className="w-full h-full object-fit"
                   />
-                  {/* <span className="text-8xl font-bold text-primary/30">
-                    {project.title.charAt(0)}
-                  </span> */}
                 </div>
               </Card>
             </motion.div>
@@ -225,10 +227,13 @@ export default function PortfolioDetailPage() {
                   <Link href={`/portfolio/${relatedProject.slug}`}>
                     <Card className="group h-full overflow-hidden bg-card hover:shadow-lg transition-all border-border/50 hover:border-primary/30">
                       <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                       <Image src={relatedProject.image} alt={relatedProject.title} width={750} height={250}/>
-                        {/* <span className="text-4xl font-bold text-primary/30">
-                          {relatedProject.title.charAt(0)}
-                        </span> */}
+                        <Image
+                          src={relatedProject.image}
+                          alt={relatedProject.title}
+                          width={750}
+                          height={250}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <CardContent className="p-6">
                         <span className="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">
@@ -254,3 +259,30 @@ export default function PortfolioDetailPage() {
     </>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = projects.map((project) => ({
+    params: { slug: project.slug },
+  }));
+
+  return {
+    paths,
+    fallback: false, // or 'blocking' if you want to generate on-demand for new projects
+  };
+};
+
+export const getStaticProps = async ({ params }:any) => {
+  const project = projects.find((p) => p.slug === params?.slug);
+
+  if (!project) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      project,
+    },
+  };
+};
