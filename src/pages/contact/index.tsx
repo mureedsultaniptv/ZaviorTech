@@ -73,13 +73,16 @@ export default function ContactPage() {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [selectedService, setSelectedService] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
+    setFeedbackMessage("");
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     formData.append("service", selectedService);
     const data = Object.fromEntries(formData.entries());
 
@@ -93,16 +96,28 @@ export default function ContactPage() {
         body: JSON.stringify(data),
       });
 
-      if (res.ok) {
-        setStatus("success");
-        e.currentTarget.reset();
-        setSelectedService("");
-      } else {
-        setStatus("error");
+      const result = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        throw new Error(
+          result?.message || "Something went wrong. Please try again later.",
+        );
       }
+
+      setStatus("success");
+      setFeedbackMessage(
+        result?.message || "Message received. We are processing it now.",
+      );
+      form.reset();
+      setSelectedService("");
     } catch (err) {
       console.error(err);
       setStatus("error");
+      setFeedbackMessage(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again later.",
+      );
     }
   };
   const { t, dir } = useLanguage();
@@ -315,12 +330,12 @@ export default function ContactPage() {
 
                     {status === "success" && (
                       <p className="text-green-500 text-center mt-2">
-                        ✅ Your message has been sent successfully!
+                        {feedbackMessage}
                       </p>
                     )}
                     {status === "error" && (
                       <p className="text-red-500 text-center mt-2">
-                        ❌ Something went wrong. Please try again later.
+                        {feedbackMessage}
                       </p>
                     )}
                   </form>

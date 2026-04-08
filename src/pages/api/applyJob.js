@@ -1,5 +1,4 @@
 import Busboy from "busboy";
-import { createClient } from "@sanity/client";
 import { ApiError } from "@/lib/server/api-errors";
 import {
   validateJobApplicationPayload,
@@ -7,34 +6,19 @@ import {
 } from "@/lib/server/form-validation";
 import {
   applyRateLimit,
+  getClientIp,
   requireTrustedFormRequest,
   sanitizeFilename,
 } from "@/lib/server/request-security";
+import { queueJobApplicationSubmission } from "@/lib/server/submission-processors";
 
 const MAX_REQUEST_BYTES = 4.5 * 1024 * 1024;
-
-const client = createClient({
-  projectId:
-    process.env.SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.SANITY_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion:
-    process.env.SANITY_API_VERSION ||
-    process.env.NEXT_PUBLIC_SANITY_API_VERSION,
-  token: process.env.SANITY_WRITE_TOKEN,
-  useCdn: false,
-});
 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
-
-function ensureServerConfig() {
-  if (!process.env.SANITY_WRITE_TOKEN) {
-    throw new ApiError(500, "Server configuration is incomplete.");
-  }
-}
 
 async function parseMultipartForm(req) {
   const contentType = req.headers["content-type"] || "";
@@ -133,8 +117,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    ensureServerConfig();
-
     if (!requireTrustedFormRequest(req, res, "job-application")) {
       return;
     }
@@ -151,25 +133,21 @@ export default async function handler(req, res) {
     const { fields, resumeFile } = await parseMultipartForm(req);
     const data = validateJobApplicationPayload(fields);
     const validatedResume = await validateResumeFile(resumeFile);
-
-    const uploadedFile = await client.assets.upload("file", validatedResume.content, {
-      filename: validatedResume.filename,
-      contentType: validatedResume.mimeType,
-    });
-
-    await client.create({
-      _type: "jobApplication",
+    const submission = await queueJobApplicationSubmission({
       ...data,
       resume: {
-        _type: "file",
-        asset: { _type: "reference", _ref: uploadedFile._id },
+        filename: validatedResume.filename,
+        mimeType: validatedResume.mimeType,
+        contentBase64: validatedResume.content.toString("base64"),
       },
       submittedAt: new Date().toISOString(),
-      submissionSource: "website",
+      ip: getClientIp(req),
     });
 
-    return res.status(200).json({
-      message: "Application submitted successfully.",
+    return res.status(202).json({
+      success: true,
+      submissionId: submission.id,
+      message: "Application received. We are processing it now.",
     });
   } catch (error) {
     const statusCode =
@@ -182,7 +160,7 @@ export default async function handler(req, res) {
     return res.status(statusCode).json({
       message:
         statusCode >= 500
-          ? "We could not submit your application right now. Please try again later."
+          ? "We could not save your application right now. Please try again later."
           : error.message,
     });
   }

@@ -19,6 +19,8 @@
 
 # production
 /build
+submission.json
+submission.json.tmp
 
 # misc
 .DS_Store

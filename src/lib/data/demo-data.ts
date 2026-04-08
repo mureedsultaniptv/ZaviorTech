@@ -37,9 +37,9 @@ export const companies = [
     color: "#b45309",
     sector: "Furniture",
     headquarters: "Dubai, United Arab Emirates",
-    website: "https://zaviorfurniture.ae/",
-    websiteLabel: "zaviorfurniture.ae",
-    href: "https://zaviorfurniture.ae/",
+    website: "https://zaviorfurnitre.ae",
+    websiteLabel: "zaviorfurnitre.ae",
+    href: "https://zaviorfurnitre.ae",
     isExternal: true,
     overview:
       "Zavior Furniture supports turnkey furnishing requirements with an emphasis on procurement coordination, practical layouts, durable materials, and delivery readiness for project-driven environments across Dubai and the wider UAE.",
