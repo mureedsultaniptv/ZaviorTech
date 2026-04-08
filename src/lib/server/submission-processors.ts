@@ -1,14 +1,11 @@
+import { randomUUID } from "crypto";
 import nodemailer from "nodemailer";
 import { createClient } from "@sanity/client";
 import { absoluteUrl } from "@/lib/site";
 import { escapeHtml } from "@/lib/server/form-validation";
-import {
-  enqueueSubmission,
-  scheduleSubmissionProcessing,
-  updateSubmissionEntry,
-  type JobApplicationSubmissionPayload,
-  type LeadSubmissionPayload,
-  type SubmissionEntry,
+import type {
+  JobApplicationSubmissionPayload,
+  LeadSubmissionPayload,
 } from "@/lib/server/submission-queue";
 
 function getSanityConfig() {
@@ -411,154 +408,90 @@ function formatSubject(firstName: string, lastName: string) {
   );
 }
 
-async function updateSubmissionProgress(
-  submissionId: string,
-  nextProgress: Record<string, string>,
-) {
-  await updateSubmissionEntry(submissionId, (submission) => ({
-    ...submission,
-    progress: {
-      ...submission.progress,
-      ...nextProgress,
-    },
-  }));
-}
-
-async function processLeadSubmission(submission: SubmissionEntry) {
-  const data = submission.payload as LeadSubmissionPayload;
+async function processLeadSubmission(data: LeadSubmissionPayload) {
   const sanity = getSanityClient();
   const transporter = getTransporter();
-  const progress = { ...submission.progress };
-
-  if (!progress.sanityDocumentId) {
-    const createdDocument = await sanity.create({
-      _type: "leadzaviorForm",
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phone: data.phone,
-      company: data.company,
-      service: data.service,
-      message: data.message,
-      createdAt: data.createdAt,
-    });
-
-    progress.sanityDocumentId = createdDocument._id;
-    await updateSubmissionProgress(submission.id, {
-      sanityDocumentId: createdDocument._id,
-    });
-  }
+  await sanity.create({
+    _type: "leadzaviorForm",
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    phone: data.phone,
+    company: data.company,
+    service: data.service,
+    message: data.message,
+    createdAt: data.createdAt,
+  });
 
   const emailFrom = process.env.EMAIL_FROM!;
   const adminRecipient = process.env.LEADS_INBOX || emailFrom;
 
-  if (!progress.adminEmailSentAt) {
-    await transporter.sendMail({
-      from: `"Zavior Website" <${emailFrom}>`,
-      to: adminRecipient,
-      subject: formatSubject(data.firstName, data.lastName),
-      html: createEmailTemplate("admin", data),
-    });
+  await transporter.sendMail({
+    from: `"Zavior Website" <${emailFrom}>`,
+    to: adminRecipient,
+    subject: formatSubject(data.firstName, data.lastName),
+    html: createEmailTemplate("admin", data),
+  });
 
-    const sentAt = new Date().toISOString();
-    progress.adminEmailSentAt = sentAt;
-    await updateSubmissionProgress(submission.id, {
-      adminEmailSentAt: sentAt,
-    });
-  }
-
-  if (!progress.userEmailSentAt) {
-    await transporter.sendMail({
-      from: `"Zavior Group" <${emailFrom}>`,
-      to: data.email,
-      subject: "Thank you for contacting Zavior Group",
-      html: createEmailTemplate("user", data),
-    });
-
-    const sentAt = new Date().toISOString();
-    progress.userEmailSentAt = sentAt;
-    await updateSubmissionProgress(submission.id, {
-      userEmailSentAt: sentAt,
-    });
-  }
+  await transporter.sendMail({
+    from: `"Zavior Group" <${emailFrom}>`,
+    to: data.email,
+    subject: "Thank you for contacting Zavior Group",
+    html: createEmailTemplate("user", data),
+  });
 }
 
-async function processJobApplicationSubmission(submission: SubmissionEntry) {
-  const data = submission.payload as JobApplicationSubmissionPayload;
+async function processJobApplicationSubmission(
+  data: JobApplicationSubmissionPayload,
+) {
   const sanity = getSanityClient();
-  const progress = { ...submission.progress };
+  const uploadedResume = await sanity.assets.upload(
+    "file",
+    Buffer.from(data.resume.contentBase64, "base64"),
+    {
+      filename: data.resume.filename,
+      contentType: data.resume.mimeType,
+    },
+  );
 
-  if (!progress.sanityAssetId) {
-    const uploadedResume = await sanity.assets.upload(
-      "file",
-      Buffer.from(data.resume.contentBase64, "base64"),
-      {
-        filename: data.resume.filename,
-        contentType: data.resume.mimeType,
+  await sanity.create({
+    _type: "jobApplication",
+    jobId: data.jobId,
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    linkedin: data.linkedin,
+    portfolio: data.portfolio,
+    coverLetter: data.coverLetter,
+    resume: {
+      _type: "file",
+      asset: {
+        _type: "reference",
+        _ref: uploadedResume._id,
       },
-    );
-
-    progress.sanityAssetId = uploadedResume._id;
-    await updateSubmissionProgress(submission.id, {
-      sanityAssetId: uploadedResume._id,
-    });
-  }
-
-  if (!progress.sanityDocumentId) {
-    const createdDocument = await sanity.create({
-      _type: "jobApplication",
-      jobId: data.jobId,
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      linkedin: data.linkedin,
-      portfolio: data.portfolio,
-      coverLetter: data.coverLetter,
-      resume: {
-        _type: "file",
-        asset: {
-          _type: "reference",
-          _ref: progress.sanityAssetId,
-        },
-      },
-      submittedAt: data.submittedAt,
-      ip: data.ip,
-      submissionSource: "website",
-    });
-
-    await updateSubmissionProgress(submission.id, {
-      sanityDocumentId: createdDocument._id,
-    });
-  }
-}
-
-async function processSubmission(submission: SubmissionEntry) {
-  switch (submission.formType) {
-    case "leadform":
-      await processLeadSubmission(submission);
-      return;
-    case "job-application":
-      await processJobApplicationSubmission(submission);
-      return;
-    default:
-      throw new Error(`Unsupported submission type: ${submission.formType}`);
-  }
-}
-
-function kickOffQueueProcessing() {
-  scheduleSubmissionProcessing(processSubmission);
+    },
+    submittedAt: data.submittedAt,
+    ip: data.ip,
+    submissionSource: "website",
+  });
 }
 
 export async function queueLeadSubmission(payload: LeadSubmissionPayload) {
-  const submission = await enqueueSubmission("leadform", payload);
-  kickOffQueueProcessing();
+  const submission = {
+    id: randomUUID(),
+  };
+  // Serverless runtimes end after the response, so submission work must
+  // complete within the request instead of relying on in-process queues.
+  await processLeadSubmission(payload);
   return submission;
 }
 
 export async function queueJobApplicationSubmission(
   payload: JobApplicationSubmissionPayload,
 ) {
-  const submission = await enqueueSubmission("job-application", payload);
-  kickOffQueueProcessing();
+  const submission = {
+    id: randomUUID(),
+  };
+  await processJobApplicationSubmission(payload);
   return submission;
 }

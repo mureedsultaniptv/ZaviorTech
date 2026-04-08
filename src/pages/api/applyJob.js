@@ -144,10 +144,10 @@ export default async function handler(req, res) {
       ip: getClientIp(req),
     });
 
-    return res.status(202).json({
+    return res.status(200).json({
       success: true,
       submissionId: submission.id,
-      message: "Application received. We are processing it now.",
+      message: "Application received successfully.",
     });
   } catch (error) {
     const statusCode =
