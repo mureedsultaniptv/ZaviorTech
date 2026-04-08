@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { projects } from "@/lib/data/demo-data";
@@ -20,6 +21,11 @@ export default function PortfolioPage() {
 
   return (
     <>
+      <SeoHead
+        title="Portfolio | Zavior Group"
+        description="Review recent ERP, software, infrastructure, and digital delivery projects completed by Zavior Group."
+        path="/portfolio"
+      />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">

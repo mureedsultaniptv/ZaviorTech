@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -67,10 +68,15 @@ Upon termination, your right to use the Service will immediately cease. All prov
 ];
 
 export default function TermsPage() {
-  const { t, dir } = useLanguage();
+  const { dir } = useLanguage();
 
   return (
-    <main className="min-h-screen bg-background" dir={dir ? "ltr":"rtl"}>
+    <main className="min-h-screen bg-background" dir={dir}>
+      <SeoHead
+        title="Terms of Service | Zavior Group"
+        description="Review the terms of service for using the Zavior Group website and services."
+        path="/terms"
+      />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />

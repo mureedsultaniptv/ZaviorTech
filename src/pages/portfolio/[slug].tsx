@@ -1,15 +1,15 @@
 // /src/pages/portfolio/[slug].tsx
 import { GetStaticPaths, GetStaticProps } from "next";
-import Head from "next/head";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SeoHead } from "@/components/seo/seo-head";
+import { SafeRichText } from "@/components/ui/safe-rich-text";
 import { projects } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Calendar, Building, Globe } from "lucide-react";
 import Image from "next/image";
-import { ParsedUrlQuery } from "querystring";
 
 interface Project {
   id: string;
@@ -17,7 +17,7 @@ interface Project {
   title: string;
   description: string;
   category: string;
-  year: string;
+  year: number;
   client: string;
   technologies: string[];
   image: string;
@@ -62,14 +62,28 @@ export default function PortfolioDetailPage({ project }: Props) {
     ? project.metaKeywords.join(", ")
     : project.metaKeywords || "";
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.metaDescription || project.description,
+    creator: {
+      "@type": "Organization",
+      name: "Zavior Technologies",
+    },
+    about: project.category,
+  };
+
   return (
     <>
-      <Head>
-        <title>{project.metaTitle || `${project.title} | Zavior Technologies Dubai`}</title>
-        <meta name="description" content={project.metaDescription || project.description} />
-        {metaKeywords && <meta name="keywords" content={metaKeywords} />}
-        <link rel="canonical" href={`https://zaviortech.vercel.app/portfolio/${project.slug}`} />
-      </Head>
+      <SeoHead
+        title={project.metaTitle || `${project.title} | Zavior Technologies`}
+        description={project.metaDescription || project.description}
+        image={project.image}
+        path={`/portfolio/${project.slug}`}
+        keywords={metaKeywords}
+        structuredData={structuredData}
+      />
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
@@ -194,9 +208,9 @@ export default function PortfolioDetailPage({ project }: Props) {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold mb-6">Project Overview</h2>
-            <div
+            <SafeRichText
               className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: project.projectOverview }}
+              html={project.projectOverview}
             />
           </div>
         </div>
@@ -271,7 +285,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }:any) => {
+export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({
+  params,
+}) => {
   const project = projects.find((p) => p.slug === params?.slug);
 
   if (!project) {

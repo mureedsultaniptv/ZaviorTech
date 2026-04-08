@@ -1,141 +1,189 @@
+import Busboy from "busboy";
 import { createClient } from "@sanity/client";
+import { ApiError } from "@/lib/server/api-errors";
+import {
+  validateJobApplicationPayload,
+  validateResumeFile,
+} from "@/lib/server/form-validation";
+import {
+  applyRateLimit,
+  requireTrustedFormRequest,
+  sanitizeFilename,
+} from "@/lib/server/request-security";
 
-// Sanity client
+const MAX_REQUEST_BYTES = 4.5 * 1024 * 1024;
+
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
+  projectId:
+    process.env.SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion:
+    process.env.SANITY_API_VERSION ||
+    process.env.NEXT_PUBLIC_SANITY_API_VERSION,
   token: process.env.SANITY_WRITE_TOKEN,
   useCdn: false,
 });
 
-// Disable body parsing so we can handle file uploads manually
 export const config = {
   api: {
     bodyParser: false,
   },
 };
 
-// In-memory rate-limit map (light usage only)
-const rateLimitStore = new Map();
+function ensureServerConfig() {
+  if (!process.env.SANITY_WRITE_TOKEN) {
+    throw new ApiError(500, "Server configuration is incomplete.");
+  }
+}
 
-// Helper: parse multipart/form-data
-async function parseForm(req) {
+async function parseMultipartForm(req) {
+  const contentType = req.headers["content-type"] || "";
+  if (!contentType.includes("multipart/form-data")) {
+    throw new ApiError(400, "Invalid content type.");
+  }
+
+  const contentLength = Number(req.headers["content-length"] || 0);
+  if (contentLength && contentLength > MAX_REQUEST_BYTES) {
+    throw new ApiError(413, "Resume file must be 4 MB or smaller.");
+  }
+
   return new Promise((resolve, reject) => {
-    let data = Buffer.alloc(0);
-    req.on("data", (chunk) => {
-      data = Buffer.concat([data, chunk]);
+    const fields = {};
+    let resumeFile = null;
+    let uploadError = null;
+    let completed = false;
+
+    const busboy = Busboy({
+      headers: req.headers,
+      limits: {
+        fields: 12,
+        files: 1,
+        fileSize: MAX_REQUEST_BYTES,
+        parts: 20,
+      },
     });
-    req.on("end", () => {
-      const boundary = req.headers["content-type"].split("boundary=")[1];
-      if (!boundary) return reject("No boundary in request");
 
-      const parts = data
-        .toString()
-        .split(`--${boundary}`)
-        .filter((part) => part && part !== "--\r\n");
+    const finish = (error, result) => {
+      if (completed) {
+        return;
+      }
 
-      const result = {};
-      parts.forEach((part) => {
-        const [rawHeaders, rawContent] = part.split("\r\n\r\n");
-        if (!rawHeaders || !rawContent) return;
-
-        const nameMatch = rawHeaders.match(/name="([^"]+)"/);
-        if (!nameMatch) return;
-
-        const name = nameMatch[1];
-        if (rawHeaders.includes("filename")) {
-          // It's a file
-          const filenameMatch = rawHeaders.match(/filename="([^"]+)"/);
-          const filename = filenameMatch ? filenameMatch[1] : "file";
-          const content = Buffer.from(
-            rawContent.replace(/\r\n$/, ""),
-            "binary",
-          );
-          result[name] = { filename, content };
-        } else {
-          // Regular field
-          result[name] = rawContent.replace(/\r\n$/, "");
-        }
-      });
+      completed = true;
+      if (error) {
+        reject(error);
+        return;
+      }
 
       resolve(result);
+    };
+
+    busboy.on("field", (name, value) => {
+      fields[name] = value;
     });
-    req.on("error", (err) => reject(err));
+
+    busboy.on("file", (name, fileStream, info) => {
+      const chunks = [];
+
+      fileStream.on("limit", () => {
+        uploadError = new ApiError(413, "Resume file must be 4 MB or smaller.");
+      });
+
+      fileStream.on("data", (chunk) => {
+        chunks.push(chunk);
+      });
+
+      fileStream.on("end", () => {
+        if (name !== "resume") {
+          return;
+        }
+
+        resumeFile = {
+          filename: sanitizeFilename(info.filename || "resume"),
+          mimeType: info.mimeType,
+          content: Buffer.concat(chunks),
+        };
+      });
+    });
+
+    busboy.on("filesLimit", () => {
+      uploadError = new ApiError(400, "Only one resume file is allowed.");
+    });
+
+    busboy.on("partsLimit", () => {
+      uploadError = new ApiError(400, "Invalid multipart request.");
+    });
+
+    busboy.on("error", (error) => finish(error));
+    busboy.on("finish", () => {
+      if (uploadError) {
+        finish(uploadError);
+        return;
+      }
+
+      finish(null, { fields, resumeFile });
+    });
+
+    req.pipe(busboy);
   });
 }
 
 export default async function handler(req, res) {
-  if (req.method !== "POST")
-    return res.status(405).json({ message: "Method not allowed" });
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed." });
+  }
 
   try {
-    // Rate-limit per IP
-    const ip =
-      req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || // behind proxies like Vercel
-      req.socket?.remoteAddress || // normal IP
-      "unknown"; // fallback
+    ensureServerConfig();
 
-    // Convert IPv6 loopback (::1) to IPv4 loopback (127.0.0.1) for local
-    const cleanIp = ip === "::1" ? "127.0.0.1" : ip;
-    // const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    const now = Date.now();
-    const last = rateLimitStore.get(cleanIp);
-    if (last && now - last < 2 * 60 * 1000) {
-      return res
-        .status(429)
-        .json({
-          message: "Too many submissions from this IP. Wait 2 minutes.",
-        });
-    }
-    rateLimitStore.set(cleanIp, now);
-
-    // Parse multipart form
-    const form = await parseForm(req);
-
-    const { name, email, phone, linkedin, portfolio, cover, jobId } = form;
-    const resumeFile = form.resume;
-
-    if (!name || !email || !resumeFile) {
-      return res
-        .status(400)
-        .json({ message: "Name, email, and resume are required" });
+    if (!requireTrustedFormRequest(req, res, "job-application")) {
+      return;
     }
 
-    // Upload file to Sanity
-    const uploadedFile = await client.assets.upload(
-      "file",
-      resumeFile.content,
-      {
-        filename: resumeFile.filename,
-      },
-    );
+    if (
+      !applyRateLimit(req, res, "job-application", {
+        max: 3,
+        windowMs: 30 * 60 * 1000,
+      })
+    ) {
+      return;
+    }
 
-    // Create application document
-    const doc = {
+    const { fields, resumeFile } = await parseMultipartForm(req);
+    const data = validateJobApplicationPayload(fields);
+    const validatedResume = await validateResumeFile(resumeFile);
+
+    const uploadedFile = await client.assets.upload("file", validatedResume.content, {
+      filename: validatedResume.filename,
+      contentType: validatedResume.mimeType,
+    });
+
+    await client.create({
       _type: "jobApplication",
-      jobId,
-      name,
-      email,
-      phone: phone || "",
-      linkedin: linkedin || "",
-      portfolio: portfolio || "",
-      coverLetter: cover || "",
+      ...data,
       resume: {
         _type: "file",
         asset: { _type: "reference", _ref: uploadedFile._id },
       },
       submittedAt: new Date().toISOString(),
-      ip,
-    };
+      submissionSource: "website",
+    });
 
-    await client.create(doc);
+    return res.status(200).json({
+      message: "Application submitted successfully.",
+    });
+  } catch (error) {
+    const statusCode =
+      error instanceof ApiError ? error.statusCode : 500;
 
-    res.status(200).json({ message: "Application submitted successfully" });
-  } catch (err) {
-    console.error(err);
-    res
-      .status(500)
-      .json({ message: "Something went wrong", error: err.toString() });
+    if (statusCode >= 500) {
+      console.error("Job application submission failed:", error);
+    }
+
+    return res.status(statusCode).json({
+      message:
+        statusCode >= 500
+          ? "We could not submit your application right now. Please try again later."
+          : error.message,
+    });
   }
 }

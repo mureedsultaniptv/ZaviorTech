@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { blogs } from "@/lib/data/demo-data";
@@ -23,6 +24,11 @@ export default function BlogPage() {
 
   return (
     <>
+      <SeoHead
+        title="Insights | Zavior Group"
+        description="Read articles and practical insights from Zavior Group on ERP, software delivery, AI automation, and digital operations."
+        path="/blog"
+      />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">

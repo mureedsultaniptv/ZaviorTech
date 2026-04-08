@@ -1,18 +1,25 @@
 "use client";
 
-import { useParams, notFound } from "next/navigation";
+import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { team } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
+import { SeoHead } from "@/components/seo/seo-head";
+import { SafeRichText } from "@/components/ui/safe-rich-text";
 import { Linkedin, Twitter, Github, Globe, Facebook, Instagram } from "lucide-react";
 import Image from "next/image";
 
 export default function TeamMemberDetailPage() {
-  const params = useParams();
-  const member = team.find((m) => m.slug === params?.slug);
+  const router = useRouter();
+  const slug =
+    typeof router.query.slug === "string" ? router.query.slug : undefined;
+  const member = team.find((m) => m.slug === slug);
+
+  if (!router.isReady) {
+    return null;
+  }
 
   if (!member) {
     return(<div className="min-h-screen flex items-center justify-center">
@@ -41,6 +48,19 @@ export default function TeamMemberDetailPage() {
 
   return (
     <>
+      <SeoHead
+        title={`${member.name} | Zavior Team`}
+        description={member.bio}
+        image={member.image}
+        path={`/team/${member.slug}`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: member.name,
+          jobTitle: member.role,
+          description: member.bio,
+        }}
+      />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">
@@ -84,7 +104,12 @@ export default function TeamMemberDetailPage() {
                     if (!url) return null;
                     const Icon = socialIcons[key as keyof typeof socialIcons] || Globe;
                     return (
-                      <Link key={key} href={url} target="_blank">
+                      <Link
+                        key={key}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Icon className="h-6 w-6 text-primary hover:text-accent" />
                       </Link>
                     );
@@ -124,9 +149,9 @@ export default function TeamMemberDetailPage() {
       {member.details && (
         <section className="py-20 bg-muted/10">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-            <div
+            <SafeRichText
               className="prose prose-lg dark:prose-invert text-muted-foreground"
-              dangerouslySetInnerHTML={{ __html: member.details }}
+              html={member.details}
             />
           </div>
         </section>

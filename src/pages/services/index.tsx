@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react"
-import Head from "next/head";
+import React from "react";
 
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -27,6 +27,11 @@ export default function ServicesPage() {
 
   return (
     <>
+      <SeoHead
+        title="Services | Zavior Group"
+        description="Explore Zavior Group services across ERP, AI automation, web development, mobile apps, IT solutions, and core infrastructure."
+        path="/services"
+      />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">
@@ -95,7 +100,7 @@ export default function ServicesPage() {
                         ))}
                       </ul>
                       <Button asChild>
-                        <Link href={'/services/'+service.slug||""}>
+                        <Link href={`/services/${service.slug}`}>
                           Get Started
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>

@@ -1,7 +1,7 @@
 // app/chat.tsx
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useLocalAI } from '@/lib/hooks/useLocalAI';
 import { services } from '@/lib/data/demo-data'; // move your services array to a separate file for reusability
 
@@ -26,7 +26,7 @@ const STATES = {
 const fallbackRules = {
   [STATES.START]: {
     keywords: ['erp', 'odoo', 'enterprise'],
-    response: (userInput, state) => {
+    response: (userInput) => {
       if (userInput.toLowerCase().includes('hotel')) {
         return "Great! We have extensive experience implementing ERP for hotels. Our Odoo solution can manage reservations, housekeeping, billing, and inventory. Would you like details on hotel‑specific modules?";
       }
@@ -36,7 +36,7 @@ const fallbackRules = {
   },
   [STATES.EPRS]: {
     keywords: ['erp', 'odoo', 'module', 'custom'],
-    response: (userInput, state) => {
+    response: (userInput) => {
       if (userInput.toLowerCase().includes('hotel')) {
         return "For hotels, we offer modules for room booking, POS, housekeeping management, and integration with channel managers. Would you like a demo?";
       }
@@ -49,7 +49,7 @@ const fallbackRules = {
   },
   [STATES.WEB]: {
     keywords: ['web', 'website', 'development'],
-    response: (userInput, state) => {
+    response: (userInput) => {
       if (userInput.toLowerCase().includes('ecommerce') || userInput.toLowerCase().includes('shop')) {
         return "We build powerful e‑commerce platforms with Next.js and headless CMS. Would you like to see examples?";
       }
@@ -60,21 +60,21 @@ const fallbackRules = {
   // ... similar for other services
   [STATES.PRICING]: {
     keywords: ['price', 'cost', 'how much'],
-    response: (userInput, state) => {
+    response: () => {
       return "Pricing depends on scope and requirements. Could you tell me which service you're interested in? I'll connect you with a specialist for a quote.";
     },
     nextState: STATES.ASK_SERVICE,
   },
   [STATES.CONTACT]: {
     keywords: ['contact', 'speak', 'human', 'specialist'],
-    response: (userInput, state) => {
+    response: () => {
       return "You can reach us at contact@zavior.tech or call +1 (555) 123-4567. Our team typically responds within 24 hours.";
     },
     nextState: STATES.START,
   },
   [STATES.ASK_SERVICE]: {
     keywords: [],
-    response: (userInput, state) => {
+    response: () => {
       return "I can help with ERP, Web Development, Mobile Apps, IT Solutions, AI Automation, or Core IT Infrastructure. Which one interests you?";
     },
     nextState: STATES.START,
@@ -86,7 +86,7 @@ function getFallbackReply(userMessage, conversationState, setConversationState) 
   const lower = userMessage.toLowerCase();
   
   // Check for state transitions based on keywords
-  for (const [state, rule] of Object.entries(fallbackRules)) {
+  for (const rule of Object.values(fallbackRules)) {
     if (rule.keywords.some(kw => lower.includes(kw))) {
       // Generate response using the rule, passing user message and current state
       const response = rule.response(userMessage, conversationState);

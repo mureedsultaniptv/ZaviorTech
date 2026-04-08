@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { jobOpenings } from "@/lib/data/demo-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -58,6 +59,11 @@ export default function CareersPage() {
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
+      <SeoHead
+        title="Careers | Zavior Group"
+        description="Explore current opportunities at Zavior Group and join a team working across technology, operations, and creative delivery."
+        path="/careers"
+      />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />

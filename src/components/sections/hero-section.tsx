@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/lib/i18n/language-context";
 import { ArrowRight, Play } from "lucide-react";
 import dynamic from "next/dynamic";
 
@@ -13,8 +12,6 @@ const HeroScene = dynamic(
 );
 
 export function HeroSection() {
-  const { t } = useLanguage();
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* 3D Background */}

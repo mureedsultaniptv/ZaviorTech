@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { Linkedin, Youtube , Github, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Linkedin, Youtube, Github, Mail, Phone, MapPin } from "lucide-react";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -34,7 +34,7 @@ export function Footer() {
 
   const socialLinks = [
     { href: "https://www.linkedin.com/company/zavior-tech", icon: Linkedin, label: "LinkedIn" },
-    { href: "https://www.youtube.com/@ZaviorTechnologiess", icon: Youtube, label: "Youtube" },
+    { href: "https://www.youtube.com/@ZaviorTechnologiess", icon: Youtube, label: "YouTube" },
     { href: "https://github.com/Zavior-Technologies", icon: Github, label: "GitHub" },
     // { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
   ];
@@ -57,15 +57,20 @@ export function Footer() {
                 <MapPin className="h-4 w-4 text-primary" />
                 <span className="text-sm">Dubai, United Arab Emirates</span>
               </div>
-              <a className="flex items-center gap-3 text-muted-foreground">
+              <a
+                href="tel:+971508185948"
+                className="flex items-center gap-3 text-muted-foreground"
+              >
                 <Phone className="h-4 w-4 text-primary" />
-                {/* <span className="text-sm">+971 4 123 4567</span> */}
                 <span className="text-sm">+971 50 818 5948</span>
               </a>
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <a
+                href="mailto:support@zaviortech.org"
+                className="flex items-center gap-3 text-muted-foreground"
+              >
                 <Mail className="h-4 w-4 text-primary" />
                 <span className="text-sm">support@zaviortech.org</span>
-              </div>
+              </a>
             </div>
           </div>
 

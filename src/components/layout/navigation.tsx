@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Moon, Sun, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import Image from "next/image";
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
 
@@ -30,10 +30,9 @@ export function Navigation() {
     { href: "/", label: t.nav.home },
     { href: "/about", label: t.nav.about },
     { href: "/services", label: t.nav.services },
-    // { href: "/companies", label: t.nav.companies },
+    { href: "/companies", label: t.nav.companies },
     { href: "/portfolio", label: t.nav.portfolio },
     { href: "/blog", label: t.nav.blog },
-    // { href: "/team", label: t.nav.team },
     { href: "/careers", label: t.nav.careers },
     { href: "/contact", label: t.nav.contact },
   ];
@@ -47,20 +46,21 @@ export function Navigation() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
           ? "glass border-b border-border/50 shadow-lg"
-          : (theme === "dark" ? "bg-black " : "bg-white "),
+          : theme === "dark"
+            ? "bg-black"
+            : "bg-white",
       )}
     >
       <nav className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-          <Image src={theme === "dark" ? "/zaviorlogo-dark.png" : "/zaviorlogo-light.png"} alt="Zavior Logo" width={150} height={40} />
-            {/* <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold tracking-tight"
-            >
-              <span className="text-primary">Zavior</span>
-            </motion.div> */}
+            <Image
+              src={theme === "dark" ? "/zaviorlogo-dark.png" : "/zaviorlogo-light.png"}
+              alt="Zavior Logo"
+              width={150}
+              height={40}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -71,9 +71,9 @@ export function Navigation() {
                 href={link.href}
                 className={cn(
                   "px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                  pathname === link.href
+                  router.pathname === link.href
                     ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
                 )}
               >
                 {link.label}
@@ -145,9 +145,9 @@ export function Navigation() {
                       onClick={() => setIsOpen(false)}
                       className={cn(
                         "block px-4 py-3 text-base font-medium rounded-lg transition-colors",
-                        pathname === link.href
+                        router.pathname === link.href
                           ? "text-primary bg-primary/10"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted",
                       )}
                     >
                       {link.label}

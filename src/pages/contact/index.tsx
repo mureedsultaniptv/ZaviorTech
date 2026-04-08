@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,6 @@ import {
   Globe,
 } from "lucide-react";
 import { useState } from "react";
-import { link } from "fs";
 import Link from "next/link";
 
 const contactInfo = [
@@ -86,13 +86,17 @@ export default function ContactPage() {
     try {
       const res = await fetch("/api/leadform", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-zavior-form": "leadform",
+        },
         body: JSON.stringify(data),
       });
 
       if (res.ok) {
         setStatus("success");
-        // e.currentTarget.reset();
+        e.currentTarget.reset();
+        setSelectedService("");
       } else {
         setStatus("error");
       }
@@ -105,6 +109,11 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
+      <SeoHead
+        title="Contact Zavior Group"
+        description="Get in touch with Zavior Group for ERP, software, furniture, and maintenance service inquiries."
+        path="/contact"
+      />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
@@ -136,9 +145,8 @@ export default function ContactPage() {
         <div className="container mx-auto px-4">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((info, index) => (
-              <Link href={info.link ? info.link : "#"}>
+              <Link key={info.title} href={info.link ? info.link : "#"}>
                 <motion.div
-                  key={info.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -193,6 +201,13 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <form className="space-y-6" onSubmit={handleSubmit}>
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      className="hidden"
+                    />
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">{t.contact.firstName}</Label>
@@ -200,6 +215,7 @@ export default function ContactPage() {
                           id="firstName"
                           name="firstName"
                           placeholder="John"
+                          maxLength={80}
                           required
                         />
                       </div>
@@ -209,6 +225,7 @@ export default function ContactPage() {
                           id="lastName"
                           name="lastName"
                           placeholder="Doe"
+                          maxLength={80}
                           required
                         />
                       </div>
@@ -221,6 +238,7 @@ export default function ContactPage() {
                         name="email"
                         type="email"
                         placeholder="john@example.com"
+                        maxLength={160}
                         required
                       />
                     </div>
@@ -232,6 +250,8 @@ export default function ContactPage() {
                         name="phone"
                         type="tel"
                         placeholder="+1 (555) 000-0000"
+                        inputMode="tel"
+                        maxLength={30}
                       />
                     </div>
 
@@ -241,6 +261,7 @@ export default function ContactPage() {
                         id="company"
                         name="company"
                         placeholder="Company Name"
+                        maxLength={120}
                       />
                     </div>
 
@@ -277,6 +298,8 @@ export default function ContactPage() {
                         name="message"
                         placeholder={t.contact.messagePlaceholder}
                         rows={5}
+                        maxLength={2000}
+                        required
                       />
                     </div>
 

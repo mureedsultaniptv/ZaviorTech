@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://zaviortech.vercel.app
-
-# Sitemaps
-Sitemap: https://zaviortech.vercel.app/sitemap.xml

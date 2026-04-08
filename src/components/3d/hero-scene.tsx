@@ -5,6 +5,11 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
+function seededRandom(seed: number) {
+  const value = Math.sin(seed) * 10000;
+  return value - Math.floor(value);
+}
+
 function ParticleField() {
   const ref = useRef<THREE.Points>(null);
   
@@ -13,9 +18,9 @@ function ParticleField() {
   const positions = useMemo(() => {
     const pos = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount; i++) {
-      const x = (Math.random() - 0.5) * 20;
-      const y = (Math.random() - 0.5) * 20;
-      const z = (Math.random() - 0.5) * 20;
+      const x = (seededRandom(i + 1) - 0.5) * 20;
+      const y = (seededRandom(i + 101) - 0.5) * 20;
+      const z = (seededRandom(i + 1001) - 0.5) * 20;
       pos[i * 3] = x;
       pos[i * 3 + 1] = y;
       pos[i * 3 + 2] = z;

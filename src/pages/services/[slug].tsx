@@ -1,10 +1,11 @@
 // /src/pages/services/[slug].tsx
 import { GetStaticPaths, GetStaticProps } from "next";
-import Head from "next/head";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SeoHead } from "@/components/seo/seo-head";
+import { SafeRichText } from "@/components/ui/safe-rich-text";
 import { services } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
@@ -57,27 +58,25 @@ export default function ServiceDetailPage({ service }: Props) {
     ? service.metaKeywords.join(", ")
     : service.metaKeywords || "";
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.description,
+    serviceType: service.title,
+    areaServed: "United Arab Emirates",
+  };
+
   return (
     <>
-      <Head>
-        <title>{service.title} | Zavior Technologies Dubai</title>
-        <meta name="description" content={service.description} />
-        {metaKeywords && <meta name="keywords" content={metaKeywords} />}
-        <link
-          rel="canonical"
-          href={`https://zaviortech.vercel.app/services/${service.slug}`}
-        />
-        {/* Open Graph / Social Media Tags */}
-        <meta property="og:title" content={service.title} />
-        <meta property="og:description" content={service.description} />
-        <meta
-          property="og:url"
-          content={`https://zaviortech.vercel.app/services/${service.slug}`}
-        />
-        <meta property="og:image" content={service.image} />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Head>
+      <SeoHead
+        title={`${service.title} | Zavior Technologies`}
+        description={service.description}
+        image={service.image}
+        path={`/services/${service.slug}`}
+        keywords={metaKeywords}
+        structuredData={structuredData}
+      />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32">
@@ -151,9 +150,9 @@ export default function ServiceDetailPage({ service }: Props) {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl font-bold mb-6">About This Service</h2>
-            <div
+            <SafeRichText
               className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: service.longDescription }}
+              html={service.longDescription}
             />
           </motion.div>
 

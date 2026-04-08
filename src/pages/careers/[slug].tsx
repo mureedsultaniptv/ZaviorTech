@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { jobOpenings } from "@/lib/data/demo-data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,15 +20,22 @@ import {
   Upload,
 } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
-export default function CareerDetailPage({}: {
-  params: Promise<{ id: string }>;
-}) {
-  const params: any = useParams();
+const MAX_RESUME_BYTES = 4 * 1024 * 1024;
+const ALLOWED_RESUME_TYPES = new Set([
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+]);
+
+export default function CareerDetailPage() {
+  const router = useRouter();
+  const slug =
+    typeof router.query.slug === "string" ? router.query.slug : undefined;
   const { t, dir } = useLanguage();
-  const job = jobOpenings.find((j) => j.id === params?.slug);
+  const job = jobOpenings.find((j) => j.id === slug);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -53,6 +61,29 @@ export default function CareerDetailPage({}: {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
+    if (!file) {
+      setFormData((prev) => ({ ...prev, resume: null }));
+      return;
+    }
+
+    const extension = file.name.split(".").pop()?.toLowerCase();
+    const hasValidExtension = ["pdf", "doc", "docx"].includes(extension || "");
+    const hasValidMime = !file.type || ALLOWED_RESUME_TYPES.has(file.type);
+
+    if (
+      !hasValidExtension ||
+      !hasValidMime ||
+      file.size > MAX_RESUME_BYTES
+    ) {
+      setMessage({
+        type: "error",
+        text: "Please upload a PDF, DOC, or DOCX file up to 4 MB.",
+      });
+      e.target.value = "";
+      return;
+    }
+
+    setMessage(null);
     setFormData((prev) => ({ ...prev, resume: file }));
   };
 
@@ -69,12 +100,24 @@ export default function CareerDetailPage({}: {
       setSubmitting(true);
       const fd = new FormData();
       Object.entries(formData).forEach(([key, val]) => {
-        if (val) fd.append(key, val as any);
+        if (!val) {
+          return;
+        }
+
+        if (val instanceof File) {
+          fd.append(key, val);
+          return;
+        }
+
+        fd.append(key, val);
       });
       fd.append("jobId", job?.id || "");
 
       const res = await fetch("/api/applyJob", {
         method: "POST",
+        headers: {
+          "x-zavior-form": "job-application",
+        },
         body: fd,
       });
 
@@ -94,16 +137,21 @@ export default function CareerDetailPage({}: {
         cover: "",
         resume: null,
       });
-    } catch (err: any) {
-      console.error(err);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Something went wrong.";
       setMessage({
         type: "error",
-        text: err?.message || "Something went wrong.",
+        text: errorMessage,
       });
     } finally {
       setSubmitting(false);
     }
   };
+
+  if (!router.isReady) {
+    return null;
+  }
 
   if (!job)
     return (
@@ -126,6 +174,19 @@ export default function CareerDetailPage({}: {
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
+      <SeoHead
+        title={`${job.title} | Careers at Zavior Group`}
+        description={job.description}
+        path={`/careers/${job.id}`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "JobPosting",
+          title: job.title,
+          description: job.description,
+          employmentType: job.type,
+          jobLocationType: job.location,
+        }}
+      />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
@@ -315,6 +376,13 @@ export default function CareerDetailPage({}: {
                     {t.careers.applyNow}
                   </h2>
                   <form className="space-y-4" onSubmit={handleSubmit}>
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      className="hidden"
+                    />
                     <div className="space-y-2">
                       <Label htmlFor="name">{t.careers.fullName}</Label>
                       <Input
@@ -322,6 +390,8 @@ export default function CareerDetailPage({}: {
                         placeholder="John Doe"
                         value={formData.name}
                         onChange={handleChange}
+                        maxLength={120}
+                        required
                       />
                     </div>
                     <div className="space-y-2">
@@ -332,6 +402,8 @@ export default function CareerDetailPage({}: {
                         placeholder="john@example.com"
                         value={formData.email}
                         onChange={handleChange}
+                        maxLength={160}
+                        required
                       />
                     </div>
                     <div className="space-y-2">
@@ -342,6 +414,8 @@ export default function CareerDetailPage({}: {
                         placeholder="+1 (555) 000-0000"
                         value={formData.phone}
                         onChange={handleChange}
+                        inputMode="tel"
+                        maxLength={30}
                       />
                     </div>
                     <div className="space-y-2">
@@ -351,6 +425,7 @@ export default function CareerDetailPage({}: {
                         placeholder="linkedin.com/in/johndoe"
                         value={formData.linkedin}
                         onChange={handleChange}
+                        maxLength={300}
                       />
                     </div>
                     <div className="space-y-2">
@@ -360,6 +435,7 @@ export default function CareerDetailPage({}: {
                         placeholder="https://portfolio.com"
                         value={formData.portfolio}
                         onChange={handleChange}
+                        maxLength={300}
                       />
                     </div>
                     <div className="space-y-2">
@@ -371,6 +447,7 @@ export default function CareerDetailPage({}: {
                           type="file"
                           accept=".pdf,.doc,.docx"
                           onChange={handleFileChange}
+                          required
                         />
                         <p className="text-sm text-muted-foreground mt-2">
                           {formData.resume
@@ -387,6 +464,7 @@ export default function CareerDetailPage({}: {
                         rows={4}
                         value={formData.cover}
                         onChange={handleChange}
+                        maxLength={2000}
                       />
                     </div>
 

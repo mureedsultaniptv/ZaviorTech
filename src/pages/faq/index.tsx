@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import {
@@ -88,7 +89,7 @@ const faqCategories = [
 ];
 
 export default function FAQPage() {
-  const { t, dir } = useLanguage(); // ✅ updated to match new context
+  const { dir } = useLanguage();
   const isRTL = dir === "rtl";
   const searchParams = useSearchParams();
   const searchQuery = searchParams?.get("query") || "";
@@ -108,6 +109,11 @@ export default function FAQPage() {
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
+      <SeoHead
+        title="FAQ | Zavior Group"
+        description="Find answers to common questions about Zavior Group services, delivery process, and pricing."
+        path="/faq"
+      />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />

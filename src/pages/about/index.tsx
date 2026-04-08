@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { SeoHead } from "@/components/seo/seo-head";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
 import { milestones, stats } from "@/lib/data/demo-data";
@@ -23,6 +24,11 @@ export default function AboutPage() {
 
   return (
     <>
+      <SeoHead
+        title="About | Zavior Group"
+        description="Learn about Zavior Group, its mission, values, milestones, and the companies driving its growth."
+        path="/about"
+      />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">

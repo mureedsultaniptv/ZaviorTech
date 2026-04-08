@@ -5,10 +5,18 @@ import { useLanguage } from "@/lib/i18n/language-context";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Linkedin, Twitter, Github, Mail, Instagram, Dribbble, Facebook } from "lucide-react";
+import { Linkedin, Twitter, Github, Instagram, Dribbble, Facebook } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { team } from "@/lib/data/demo-data"; // ✅ Import your actual team data
+
+type SocialLinkType =
+  | "linkedin"
+  | "twitter"
+  | "github"
+  | "facebook"
+  | "instagram"
+  | "dribbble";
 
 export default function TeamPage() {
   const { dir } = useLanguage();
@@ -21,22 +29,22 @@ export default function TeamPage() {
   const otherTeam = team.filter((m) => !leadership.includes(m));
 
   // Function to render social icons dynamically
-  const renderSocialIcon = (type:any, url:any) => {
+  const renderSocialIcon = (type: SocialLinkType, url: string) => {
     if (!url) return null;
     const className = "w-5 h-5 text-muted-foreground hover:text-primary transition-colors";
     switch (type) {
       case "linkedin":
-        return <Link href={url} target="_blank"><Linkedin className={className} /></Link>;
+        return <Link href={url} target="_blank" rel="noopener noreferrer"><Linkedin className={className} /></Link>;
       case "twitter":
-        return <Link href={url} target="_blank"><Twitter className={className} /></Link>;
+        return <Link href={url} target="_blank" rel="noopener noreferrer"><Twitter className={className} /></Link>;
       case "github":
-        return <Link href={url} target="_blank"><Github className={className} /></Link>;
+        return <Link href={url} target="_blank" rel="noopener noreferrer"><Github className={className} /></Link>;
       case "facebook":
-        return <Link href={url} target="_blank"><Facebook className={className} /></Link>;
+        return <Link href={url} target="_blank" rel="noopener noreferrer"><Facebook className={className} /></Link>;
       case "instagram":
-        return <Link href={url} target="_blank"><Instagram className={className} /></Link>;
+        return <Link href={url} target="_blank" rel="noopener noreferrer"><Instagram className={className} /></Link>;
       case "dribbble":
-        return <Link href={url} target="_blank"><Dribbble className={className} /></Link>;
+        return <Link href={url} target="_blank" rel="noopener noreferrer"><Dribbble className={className} /></Link>;
       default:
         return null;
     }
@@ -101,9 +109,13 @@ export default function TeamPage() {
                       <p className="text-muted-foreground text-sm mb-4">{member.bio}</p>
                       <div className="flex gap-3">
                         {member.social &&
-                          Object.entries(member.social).map(([key, url]) =>
-                            renderSocialIcon(key, url)
-                          )}
+                          Object.entries(member.social).map(([key, url]) => {
+                            if (!url) {
+                              return null;
+                            }
+
+                            return renderSocialIcon(key as SocialLinkType, url);
+                          })}
                       </div>
                     </div>
                   </CardContent>
@@ -146,9 +158,13 @@ export default function TeamPage() {
                     <p className="text-muted-foreground text-sm line-clamp-2">{member.bio}</p>
                     <div className="flex gap-3 mt-4">
                       {member.social &&
-                        Object.entries(member.social).map(([key, url]) =>
-                          renderSocialIcon(key, url)
-                        )}
+                        Object.entries(member.social).map(([key, url]) => {
+                          if (!url) {
+                            return null;
+                          }
+
+                          return renderSocialIcon(key as SocialLinkType, url);
+                        })}
                     </div>
                   </CardContent>
                 </Card>

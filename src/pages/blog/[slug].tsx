@@ -6,9 +6,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SeoHead } from "@/components/seo/seo-head";
+import { SafeRichText } from "@/components/ui/safe-rich-text";
 import { blogs } from "@/lib/data/demo-data";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Linkedin, Twitter } from "lucide-react";
 import { ParsedUrlQuery } from "querystring";
+import { absoluteUrl } from "@/lib/site";
 
 interface BlogPost {
   id: string;
@@ -61,44 +64,45 @@ export default function BlogDetailPage({ blog }: Props) {
   const relatedBlogs = blogs
     .filter((b) => b.id !== blog.id && b.category === blog.category)
     .slice(0, 2);
+  const articleUrl = absoluteUrl(`/blog/${blog.slug}`);
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: blog.title,
-    image: blog.image,
+    image: absoluteUrl(blog.image),
     author: { "@type": "Person", name: blog.author.name },
     publisher: {
       "@type": "Organization",
       name: "Zavior Technologies",
-      logo: { "@type": "ImageObject", url: "https://zaviortech.vercel.app/logo.png" },
+      logo: { "@type": "ImageObject", url: absoluteUrl("/zaviorlogo-dark.png") },
     },
     datePublished: blog.publishedAt,
     description: blog.excerpt,
-    url: `https://zaviortech.vercel.app/blog/${blog.slug}`,
+    url: articleUrl,
   };
 
   return (
     <>
+      <SeoHead
+        title={blog.metaTitle || `${blog.title} | Zavior Technologies Blog`}
+        description={blog.metaDescription || blog.excerpt}
+        image={blog.image}
+        path={`/blog/${blog.slug}`}
+        keywords={blog.keywords}
+        structuredData={structuredData}
+        type="article"
+      />
       <Head>
-        <title>{blog.metaTitle || `${blog.title} | Zavior Technologies Blog`}</title>
-        <meta name="description" content={blog.metaDescription || blog.excerpt} />
-        {blog.keywords && <meta name="keywords" content={blog.keywords} />}
-        <link rel="canonical" href={blog.canonical || `https://zaviortech.vercel.app/blog/${blog.slug}`} />
-        <meta property="og:title" content={blog.title} />
-        <meta property="og:description" content={blog.excerpt} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://zaviortech.vercel.app/blog/${blog.slug}`} />
-        <meta property="og:image" content={blog.image} />
-        <meta property="article:published_time" content={blog.publishedAt} />
-        <meta property="article:author" content={blog.author.name} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={blog.title} />
-        <meta name="twitter:description" content={blog.excerpt} />
-        <meta name="twitter:image" content={blog.image} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        <meta
+          key="article:published_time"
+          property="article:published_time"
+          content={blog.publishedAt}
+        />
+        <meta
+          key="article:author"
+          property="article:author"
+          content={blog.author.name}
         />
       </Head>
 
@@ -209,7 +213,7 @@ export default function BlogDetailPage({ blog }: Props) {
             className="max-w-3xl mx-auto"
           >
             <div className="prose prose-lg dark:prose-invert max-w-none">
-              <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+              <SafeRichText html={blog.content} />
             </div>
           </motion.article>
         </div>
