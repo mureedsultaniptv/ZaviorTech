@@ -1,0 +1,46 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="74" x2="1502" y2="830" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111F"/>
+      <stop offset="0.48" stop-color="#163971"/>
+      <stop offset="1" stop-color="#5F3EEA"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1440" cy="152" r="144" fill="#BAA3FF" fill-opacity="0.12"/>
+  <circle cx="164" cy="770" r="150" fill="#88D4FF" fill-opacity="0.08"/>
+  <rect x="78" y="74" width="1444" height="752" rx="34" fill="white" fill-opacity="0.03" stroke="white" stroke-opacity="0.08"/>
+  <rect x="120" y="132" width="228" height="44" rx="22" fill="white" fill-opacity="0.1" stroke="white" stroke-opacity="0.16"/>
+  <text x="154" y="160" fill="#F5F7FF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Zavior Technologies</text>
+  <rect x="120" y="212" width="260" height="40" rx="20" fill="#AEE4FF" fill-opacity="0.12" stroke="#D5F1FF" stroke-opacity="0.22"/>
+  <text x="148" y="238" fill="#E2F4FF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">AI + ERP OPERATIONS</text>
+  <text x="120" y="340" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="800">How Odoo</text>
+  <text x="120" y="420" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="800">and AI work together</text>
+  <text x="120" y="484" fill="#D8E4FF" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="500">Smarter sales, support, reporting, and operations</text>
+  <text x="120" y="572" fill="#E4E8FF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Use ERP data to power better automation,</text>
+  <text x="120" y="608" fill="#E4E8FF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">faster decisions, and more reliable workflows.</text>
+  <rect x="882" y="176" width="536" height="510" rx="34" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
+  <rect x="930" y="236" width="214" height="272" rx="26" fill="#E8F4FF" fill-opacity="0.12" stroke="#D8EDFF" stroke-opacity="0.16"/>
+  <text x="972" y="284" fill="#EFF7FF" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800">ODOO ERP</text>
+  <rect x="968" y="320" width="126" height="14" rx="7" fill="#F2FAFF" fill-opacity="0.84"/>
+  <rect x="968" y="352" width="140" height="58" rx="18" fill="#D8EDFF" fill-opacity="0.14"/>
+  <text x="998" y="388" fill="#F5FBFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">CRM</text>
+  <rect x="968" y="428" width="140" height="58" rx="18" fill="#D8EDFF" fill-opacity="0.14"/>
+  <text x="990" y="464" fill="#F5FBFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Inventory</text>
+  <rect x="1154" y="236" width="214" height="272" rx="26" fill="#F4EFFF" fill-opacity="0.12" stroke="#EEE4FF" stroke-opacity="0.16"/>
+  <text x="1210" y="284" fill="#FAF5FF" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800">AI LAYER</text>
+  <rect x="1192" y="320" width="136" height="14" rx="7" fill="#FFF5FF" fill-opacity="0.84"/>
+  <rect x="1192" y="352" width="140" height="58" rx="18" fill="#E9DCFF" fill-opacity="0.16"/>
+  <text x="1214" y="388" fill="#FFF8FF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Summaries</text>
+  <rect x="1192" y="428" width="140" height="58" rx="18" fill="#E9DCFF" fill-opacity="0.16"/>
+  <text x="1226" y="464" fill="#FFF8FF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Signals</text>
+  <circle cx="1148" cy="372" r="48" fill="#F8FBFF"/>
+  <circle cx="1148" cy="372" r="22" fill="#0D5BD3"/>
+  <path d="M1080 372H1038" stroke="#CFEAFF" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1256 372H1298" stroke="#F2E7FF" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1148 552C1184 520 1236 520 1272 552" stroke="#F0E2FF" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1148 552C1112 520 1060 520 1024 552" stroke="#D7F0FF" stroke-width="10" stroke-linecap="round"/>
+  <rect x="1008" y="570" width="280" height="72" rx="22" fill="white" fill-opacity="0.08" stroke="white" stroke-opacity="0.12"/>
+  <text x="1050" y="612" fill="#F5F7FF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Better workflows, less noise</text>
+  <text x="120" y="762" fill="#D6D8FF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600">zavior.org  |  Practical AI for ERP-driven teams</text>
+</svg>

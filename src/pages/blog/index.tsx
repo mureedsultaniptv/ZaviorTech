@@ -8,18 +8,21 @@ import { useLanguage } from "@/lib/i18n/language-context";
 import { SeoHead } from "@/components/seo/seo-head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { blogs } from "@/lib/data/demo-data";
+import { sortedBlogs } from "@/lib/data/demo-data";
 import { Calendar, Clock } from "lucide-react";
 
 export default function BlogPage() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState("all");
 
-  const categories = ["all", ...new Set(blogs.map((b) => b.category))];
-  const filteredBlogs = filter === "all" ? blogs : blogs.filter((b) => b.category === filter);
+  const categories = ["all", ...new Set(sortedBlogs.map((b) => b.category))];
+  const filteredBlogs =
+    filter === "all"
+      ? sortedBlogs
+      : sortedBlogs.filter((b) => b.category === filter);
 
   // Featured blog (first featured or first blog)
-  const featuredBlog = blogs.find((b) => b.featured) || blogs[0];
+  const featuredBlog = sortedBlogs.find((b) => b.featured) || sortedBlogs[0];
   const otherBlogs = filteredBlogs.filter((b) => b.id !== featuredBlog.id);
 
   return (
@@ -77,6 +80,7 @@ export default function BlogPage() {
                       src={featuredBlog.image}
                       alt={featuredBlog.title}
                       fill
+                      sizes="(min-width: 1024px) 50vw, 100vw"
                       className="object-cover"
                     />
                   </div>
@@ -163,6 +167,7 @@ export default function BlogPage() {
                           src={blog.image}
                           alt={blog.title}
                           fill
+                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                           className="object-cover"
                         />
                       </div>

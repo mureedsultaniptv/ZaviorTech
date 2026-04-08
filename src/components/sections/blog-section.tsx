@@ -7,12 +7,12 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
-import { blogs } from "@/lib/data/demo-data";
+import { sortedBlogs } from "@/lib/data/demo-data";
 import Image from "next/image";
 
 export function BlogSection() {
   const { t } = useLanguage();
-  const recentBlogs = blogs.slice(0, 3);
+  const recentBlogs = sortedBlogs.slice(0, 3);
 
   return (
     <section className="py-20 lg:py-32">
@@ -31,18 +31,13 @@ export function BlogSection() {
               <Link href={`/blog/${blog.slug}`}>
                 <Card className="group h-full overflow-hidden bg-card hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 border-border/50 hover:border-primary/30">
                   <div className="relative aspect-video overflow-hidden bg-muted">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                     <Image
-                        src={blog.image}
-                        alt={blog.title}
-                        width={400}
-                        height={225}
-                        className="object-cover object-center"
-                      />
-                      {/* <span className="text-4xl font-bold text-primary/30">
-                        {blog.title.charAt(0)}
-                      </span> */}
-                    </div>
+                      src={blog.image}
+                      alt={blog.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover object-center"
+                    />
                   </div>
                   <CardContent className="p-6">
                     <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">

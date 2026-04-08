@@ -1,0 +1,40 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="82" y1="76" x2="1494" y2="824" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111F"/>
+      <stop offset="0.48" stop-color="#133C6C"/>
+      <stop offset="1" stop-color="#0F67D0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1430" cy="150" r="146" fill="#8DD5FF" fill-opacity="0.11"/>
+  <circle cx="172" cy="770" r="150" fill="#7EC7FF" fill-opacity="0.08"/>
+  <rect x="78" y="74" width="1444" height="752" rx="34" fill="white" fill-opacity="0.03" stroke="white" stroke-opacity="0.08"/>
+  <rect x="120" y="132" width="228" height="44" rx="22" fill="white" fill-opacity="0.1" stroke="white" stroke-opacity="0.16"/>
+  <text x="154" y="160" fill="#EFF7FF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Zavior Technologies</text>
+  <rect x="120" y="212" width="272" height="40" rx="20" fill="#9BD7FF" fill-opacity="0.12" stroke="#D5EEFF" stroke-opacity="0.24"/>
+  <text x="148" y="238" fill="#E5F4FF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">IMPLEMENTATION GUIDE</text>
+  <text x="120" y="340" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="800">Choose the right</text>
+  <text x="120" y="420" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="800">Odoo partner</text>
+  <text x="120" y="484" fill="#D6E8FF" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="500">10 questions that matter before you sign</text>
+  <text x="120" y="572" fill="#E4F0FF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Evaluate discovery, migration, training,</text>
+  <text x="120" y="608" fill="#E4F0FF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">support, integrations, and business fit.</text>
+  <rect x="914" y="170" width="452" height="536" rx="34" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
+  <rect x="972" y="224" width="244" height="362" rx="26" fill="#F2F8FF" fill-opacity="0.9"/>
+  <rect x="1020" y="270" width="148" height="14" rx="7" fill="#0C4B8E" fill-opacity="0.22"/>
+  <rect x="1014" y="326" width="40" height="40" rx="12" fill="#0F66D0" fill-opacity="0.16"/>
+  <path d="M1028 346L1040 358L1066 332" stroke="#0F66D0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1076" y="338" width="98" height="14" rx="7" fill="#0B4987" fill-opacity="0.18"/>
+  <rect x="1014" y="396" width="40" height="40" rx="12" fill="#0F66D0" fill-opacity="0.16"/>
+  <path d="M1028 416L1040 428L1066 402" stroke="#0F66D0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1076" y="408" width="92" height="14" rx="7" fill="#0B4987" fill-opacity="0.18"/>
+  <rect x="1014" y="466" width="40" height="40" rx="12" fill="#0F66D0" fill-opacity="0.16"/>
+  <path d="M1028 486L1040 498L1066 472" stroke="#0F66D0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1076" y="478" width="108" height="14" rx="7" fill="#0B4987" fill-opacity="0.18"/>
+  <path d="M1260 390C1288 362 1332 362 1360 390L1402 432C1430 460 1430 504 1402 532L1374 560C1346 588 1302 588 1274 560L1232 518C1204 490 1204 446 1232 418L1260 390Z" fill="#EAF5FF" fill-opacity="0.18"/>
+  <path d="M1246 518L1332 432C1352 412 1386 412 1406 432L1446 472" stroke="#F7FBFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1202 560L1284 478C1304 458 1336 458 1356 478L1390 510" stroke="#93CCFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="948" y="618" width="326" height="70" rx="22" fill="white" fill-opacity="0.08" stroke="white" stroke-opacity="0.12"/>
+  <text x="998" y="662" fill="#F2F8FF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Select for outcomes, not hype</text>
+  <text x="120" y="762" fill="#BCD9F7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600">zavior.org  |  Implementation decisions that reduce ERP risk</text>
+</svg>

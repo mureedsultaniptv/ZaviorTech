@@ -1,0 +1,44 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="82" y1="76" x2="1490" y2="828" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08131D"/>
+      <stop offset="0.5" stop-color="#0E3C55"/>
+      <stop offset="1" stop-color="#0F8E85"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1418" cy="150" r="144" fill="#84F7E4" fill-opacity="0.1"/>
+  <circle cx="158" cy="776" r="152" fill="#63DFF0" fill-opacity="0.09"/>
+  <rect x="78" y="74" width="1444" height="752" rx="34" fill="white" fill-opacity="0.03" stroke="white" stroke-opacity="0.08"/>
+  <rect x="120" y="132" width="228" height="44" rx="22" fill="white" fill-opacity="0.1" stroke="white" stroke-opacity="0.16"/>
+  <text x="154" y="160" fill="#EDFFFC" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Zavior Technologies</text>
+  <rect x="120" y="212" width="246" height="40" rx="20" fill="#57FFE5" fill-opacity="0.14" stroke="#B0FFF4" stroke-opacity="0.24"/>
+  <text x="148" y="238" fill="#D8FFF8" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">AI AUTOMATION</text>
+  <text x="120" y="340" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">AI Automation</text>
+  <text x="120" y="424" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">for SMEs</text>
+  <text x="120" y="488" fill="#C7FFF5" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="500">7 high-impact workflows to start with</text>
+  <text x="120" y="576" fill="#D6FFF8" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Lead routing, support, documents, reporting,</text>
+  <text x="120" y="612" fill="#D6FFF8" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">and process automation for growing teams.</text>
+  <rect x="862" y="186" width="560" height="504" rx="34" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
+  <circle cx="1144" cy="436" r="76" fill="#DBFFFA" fill-opacity="0.94"/>
+  <circle cx="1144" cy="436" r="30" fill="#0C706A"/>
+  <path d="M1144 298V344" stroke="#B7FFF5" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1006 358L1042 388" stroke="#B7FFF5" stroke-width="10" stroke-linecap="round"/>
+  <path d="M982 528L1030 502" stroke="#B7FFF5" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1260 358L1224 388" stroke="#B7FFF5" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1284 528L1238 502" stroke="#B7FFF5" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1144 528V574" stroke="#B7FFF5" stroke-width="10" stroke-linecap="round"/>
+  <rect x="1046" y="240" width="196" height="54" rx="18" fill="#E4FFFB" fill-opacity="0.12"/>
+  <text x="1086" y="274" fill="#EDFFFC" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">REPORTS</text>
+  <rect x="894" y="334" width="188" height="54" rx="18" fill="#E4FFFB" fill-opacity="0.12"/>
+  <text x="944" y="368" fill="#EDFFFC" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">LEADS</text>
+  <rect x="880" y="520" width="198" height="54" rx="18" fill="#E4FFFB" fill-opacity="0.12"/>
+  <text x="926" y="554" fill="#EDFFFC" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">SUPPORT</text>
+  <rect x="1206" y="334" width="172" height="54" rx="18" fill="#E4FFFB" fill-opacity="0.12"/>
+  <text x="1244" y="368" fill="#EDFFFC" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">DOCS</text>
+  <rect x="1202" y="520" width="176" height="54" rx="18" fill="#E4FFFB" fill-opacity="0.12"/>
+  <text x="1246" y="554" fill="#EDFFFC" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">TASKS</text>
+  <rect x="1042" y="584" width="206" height="54" rx="18" fill="#E4FFFB" fill-opacity="0.12"/>
+  <text x="1080" y="618" fill="#EDFFFC" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">OPERATIONS</text>
+  <text x="120" y="762" fill="#B8EEE8" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600">zavior.org  |  AI workflows for fast-moving teams</text>
+</svg>

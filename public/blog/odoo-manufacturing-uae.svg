@@ -1,0 +1,43 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="94" y1="68" x2="1504" y2="826" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08131F"/>
+      <stop offset="0.48" stop-color="#123353"/>
+      <stop offset="1" stop-color="#0F746C"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1442" cy="150" r="148" fill="#77EFD5" fill-opacity="0.08"/>
+  <circle cx="168" cy="772" r="154" fill="#78BFFF" fill-opacity="0.08"/>
+  <rect x="78" y="74" width="1444" height="752" rx="34" fill="white" fill-opacity="0.03" stroke="white" stroke-opacity="0.08"/>
+  <rect x="120" y="132" width="228" height="44" rx="22" fill="white" fill-opacity="0.1" stroke="white" stroke-opacity="0.16"/>
+  <text x="154" y="160" fill="#E8FFFB" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Zavior Technologies</text>
+  <rect x="120" y="212" width="274" height="40" rx="20" fill="#63FFE4" fill-opacity="0.14" stroke="#B5FFF1" stroke-opacity="0.24"/>
+  <text x="148" y="238" fill="#D8FFF7" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">MANUFACTURING ERP</text>
+  <text x="120" y="340" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="800">Odoo for</text>
+  <text x="120" y="420" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="800">Manufacturing</text>
+  <text x="120" y="484" fill="#C7FFF2" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="500">Inventory, MRP, quality, and traceability in the UAE</text>
+  <text x="120" y="572" fill="#D6FFF8" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Connect stock, planning, procurement,</text>
+  <text x="120" y="608" fill="#D6FFF8" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">production, and finance in one system.</text>
+  <rect x="892" y="174" width="514" height="516" rx="34" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
+  <rect x="934" y="514" width="88" height="110" rx="14" fill="#E7FFFC" fill-opacity="0.14"/>
+  <rect x="1036" y="466" width="96" height="158" rx="14" fill="#E7FFFC" fill-opacity="0.16"/>
+  <rect x="1148" y="422" width="96" height="202" rx="14" fill="#E7FFFC" fill-opacity="0.2"/>
+  <rect x="1260" y="478" width="96" height="146" rx="14" fill="#E7FFFC" fill-opacity="0.14"/>
+  <path d="M930 384L1030 340L1140 376L1252 318L1348 352" stroke="#94FFEB" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="930" cy="384" r="16" fill="#DEFFF9"/>
+  <circle cx="1030" cy="340" r="16" fill="#DEFFF9"/>
+  <circle cx="1140" cy="376" r="16" fill="#DEFFF9"/>
+  <circle cx="1252" cy="318" r="16" fill="#DEFFF9"/>
+  <circle cx="1348" cy="352" r="16" fill="#DEFFF9"/>
+  <path d="M944 324L1018 272L1092 324V530H944V324Z" fill="#E7FFFC" fill-opacity="0.14"/>
+  <rect x="964" y="362" width="34" height="34" rx="6" fill="#E7FFFC" fill-opacity="0.22"/>
+  <rect x="1018" y="362" width="34" height="34" rx="6" fill="#E7FFFC" fill-opacity="0.12"/>
+  <rect x="964" y="416" width="34" height="34" rx="6" fill="#E7FFFC" fill-opacity="0.12"/>
+  <rect x="1018" y="416" width="34" height="34" rx="6" fill="#E7FFFC" fill-opacity="0.22"/>
+  <rect x="1118" y="234" width="236" height="84" rx="22" fill="#081C2D" fill-opacity="0.48" stroke="#D6FFF8" stroke-opacity="0.14"/>
+  <text x="1150" y="270" fill="#E7FFFC" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">LIVE PRODUCTION VIEW</text>
+  <rect x="1150" y="286" width="98" height="12" rx="6" fill="#E7FFFC" fill-opacity="0.8"/>
+  <rect x="1150" y="306" width="168" height="10" rx="5" fill="#E7FFFC" fill-opacity="0.22"/>
+  <text x="120" y="762" fill="#B8EFE6" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600">zavior.org  |  Odoo for production-driven businesses</text>
+</svg>

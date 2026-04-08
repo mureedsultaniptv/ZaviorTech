@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SeoHead } from "@/components/seo/seo-head";
 import { SafeRichText } from "@/components/ui/safe-rich-text";
-import { blogs } from "@/lib/data/demo-data";
+import { blogs, sortedBlogs } from "@/lib/data/demo-data";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Linkedin, Twitter } from "lucide-react";
 import { ParsedUrlQuery } from "querystring";
 import { absoluteUrl } from "@/lib/site";
@@ -63,6 +63,7 @@ export default function BlogDetailPage({ blog }: Props) {
 
   const relatedBlogs = blogs
     .filter((b) => b.id !== blog.id && b.category === blog.category)
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
     .slice(0, 2);
   const articleUrl = absoluteUrl(`/blog/${blog.slug}`);
 
@@ -78,6 +79,7 @@ export default function BlogDetailPage({ blog }: Props) {
       logo: { "@type": "ImageObject", url: absoluteUrl("/zaviorlogo-dark.png") },
     },
     datePublished: blog.publishedAt,
+    dateModified: blog.publishedAt,
     description: blog.excerpt,
     url: articleUrl,
   };
@@ -87,6 +89,7 @@ export default function BlogDetailPage({ blog }: Props) {
       <SeoHead
         title={blog.metaTitle || `${blog.title} | Zavior Technologies Blog`}
         description={blog.metaDescription || blog.excerpt}
+        canonical={blog.canonical}
         image={blog.image}
         path={`/blog/${blog.slug}`}
         keywords={blog.keywords}
@@ -197,6 +200,7 @@ export default function BlogDetailPage({ blog }: Props) {
               alt={blog.title}
               width={1200}
               height={600}
+              sizes="(min-width: 1280px) 896px, (min-width: 768px) 100vw, 100vw"
               className="w-full h-auto rounded-2xl object-cover"
             />
           </motion.div>
@@ -270,6 +274,7 @@ export default function BlogDetailPage({ blog }: Props) {
                             src={relatedBlog.image}
                             alt={relatedBlog.title}
                             fill
+                            sizes="(min-width: 768px) 50vw, 100vw"
                             className="object-cover"
                           />
                         </div>
@@ -298,7 +303,7 @@ export default function BlogDetailPage({ blog }: Props) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = blogs.map((blog) => ({
+  const paths = sortedBlogs.map((blog) => ({
     params: { slug: blog.slug },
   }));
 

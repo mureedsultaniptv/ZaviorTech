@@ -1,0 +1,52 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="90" y1="80" x2="1496" y2="838" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111E"/>
+      <stop offset="0.5" stop-color="#123B66"/>
+      <stop offset="1" stop-color="#0F67C7"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F4FAFF" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#D8E8FF" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="918" y1="186" x2="1350" y2="670" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7ED7FF"/>
+      <stop offset="1" stop-color="#DDF4FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <circle cx="1420" cy="144" r="150" fill="#79C9FF" fill-opacity="0.12"/>
+  <circle cx="128" cy="784" r="144" fill="#58BCFF" fill-opacity="0.1"/>
+  <rect x="76" y="74" width="1448" height="752" rx="34" fill="white" fill-opacity="0.03" stroke="white" stroke-opacity="0.08"/>
+  <rect x="120" y="132" width="228" height="44" rx="22" fill="white" fill-opacity="0.1" stroke="white" stroke-opacity="0.16"/>
+  <text x="154" y="160" fill="#E9F6FF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Zavior Technologies</text>
+  <rect x="120" y="212" width="226" height="40" rx="20" fill="#1EC5FF" fill-opacity="0.18" stroke="#A6E8FF" stroke-opacity="0.28"/>
+  <text x="148" y="238" fill="#D7F7FF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">ERP STRATEGY</text>
+  <text x="120" y="340" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="74" font-weight="800">Odoo vs</text>
+  <text x="120" y="426" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="74" font-weight="800">Traditional ERP</text>
+  <text x="120" y="490" fill="#D2E7FF" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="500">What fits a growing business in Dubai?</text>
+  <text x="120" y="578" fill="#DCEBFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Compare cost, flexibility, rollout speed,</text>
+  <text x="120" y="614" fill="#DCEBFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">and long-term operational fit.</text>
+  <rect x="876" y="172" width="252" height="510" rx="28" fill="url(#panel)" stroke="white" stroke-opacity="0.16"/>
+  <rect x="1160" y="172" width="252" height="510" rx="28" fill="url(#panel)" stroke="white" stroke-opacity="0.16"/>
+  <text x="936" y="236" fill="#EAF8FF" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800">ODOO</text>
+  <text x="1220" y="236" fill="#EAF8FF" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800">LEGACY ERP</text>
+  <rect x="924" y="276" width="156" height="16" rx="8" fill="#C8EEFF" fill-opacity="0.84"/>
+  <rect x="1208" y="276" width="156" height="16" rx="8" fill="#C8EEFF" fill-opacity="0.32"/>
+  <rect x="924" y="328" width="164" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.12"/>
+  <rect x="1208" y="328" width="164" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.08"/>
+  <text x="952" y="370" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Faster rollout</text>
+  <text x="1236" y="370" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Longer cycles</text>
+  <rect x="924" y="432" width="164" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.12"/>
+  <rect x="1208" y="432" width="164" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.08"/>
+  <text x="952" y="474" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Modular growth</text>
+  <text x="1236" y="474" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Heavy programs</text>
+  <rect x="924" y="536" width="164" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.12"/>
+  <rect x="1208" y="536" width="164" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.08"/>
+  <text x="952" y="578" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Lower TCO</text>
+  <text x="1236" y="578" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Higher overhead</text>
+  <circle cx="1144" cy="428" r="18" fill="url(#accent)"/>
+  <circle cx="1144" cy="532" r="18" fill="url(#accent)"/>
+  <path d="M1144 298L1144 598" stroke="#A4E5FF" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 12"/>
+  <text x="120" y="762" fill="#B9D8F4" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600">zavior.org  |  ERP &amp; Odoo Solutions</text>
+</svg>
