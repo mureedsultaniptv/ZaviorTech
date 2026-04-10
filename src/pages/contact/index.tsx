@@ -45,8 +45,8 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email Us",
-    details: ["zaviortechnologies@gmail.com", "support@zaviortech.org"],
-    link: "mailto:zaviortechnologies@gmail.com",
+    details: ["info@zavior.org"],
+    link: "mailto:info@zavior.org",
   },
   {
     icon: Clock,
@@ -427,7 +427,7 @@ export default function ContactPage() {
               </Button>
               <Button
                 onClick={() => {
-                  window.location.href = "mailto:zaviortechnologies@gmail.com";
+                  window.location.href = "mailto:info@zavior.org";
                 }}
                 size="lg"
                 variant="outline"

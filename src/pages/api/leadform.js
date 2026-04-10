@@ -39,11 +39,16 @@ export default async function handler(req, res) {
       console.error("Lead form submission failed:", error);
     }
 
+    const isProduction = process.env.NODE_ENV === "production";
+    const debugMessage =
+      !isProduction && error instanceof Error ? error.message : undefined;
+
     return res.status(statusCode).json({
       message:
         statusCode >= 500
           ? "We could not save your message right now. Please try again later."
           : error.message,
+      ...(debugMessage ? { debug: debugMessage } : {}),
     });
   }
 }

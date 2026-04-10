@@ -2,6 +2,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+## Environment
+
+Create a `.env` (or `.env.local`) file based on `.env.example` and fill in the required values (Sanity + SMTP). For Namecheap Private Email, `EMAIL_SERVER_HOST` is typically `mail.privateemail.com` (port `587` for STARTTLS or `465` for SSL).
+
 First, run the development server:
 
 ```bash

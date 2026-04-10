@@ -1,7 +1,6 @@
 import { randomUUID } from "crypto";
 import nodemailer from "nodemailer";
 import { createClient } from "@sanity/client";
-import { absoluteUrl } from "@/lib/site";
 import { escapeHtml } from "@/lib/server/form-validation";
 import type {
   JobApplicationSubmissionPayload,
@@ -92,312 +91,258 @@ function formatServiceLabel(service: string) {
   return serviceLabels[normalized] || service;
 }
 
-function renderEmailRows(rows: Array<{ label: string; value: string }>) {
-  return rows
-    .map(
-      ({ label, value }) => `
-        <tr>
-          <td style="padding: 12px 0; border-bottom: 1px solid #e6edf5; width: 180px; vertical-align: top; font-size: 13px; font-weight: 700; color: #5b6b80;">
-            ${escapeHtml(label)}
-          </td>
-          <td style="padding: 12px 0; border-bottom: 1px solid #e6edf5; font-size: 14px; line-height: 1.6; color: #162334;">
-            ${escapeHtml(value)}
-          </td>
-        </tr>
-      `,
-    )
-    .join("");
-}
-
 function createEmailTemplate(type: "admin" | "user", data: LeadSubmissionPayload) {
-  const logoUrl = absoluteUrl("/zaviorlogo-dark.png");
-  const siteUrl = absoluteUrl("/");
   const fullName = `${data.firstName} ${data.lastName}`.trim();
   const serviceLabel = formatServiceLabel(data.service);
-  const submittedAt = new Date(data.createdAt).toLocaleString("en-US", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
-  const sharedStyles = `
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background-color: #eef3f8;
-        font-family: Arial, 'Segoe UI', sans-serif;
-        color: #162334;
-      }
-      table {
-        border-collapse: collapse;
-      }
-      .email-shell {
-        width: 100%;
-        background: linear-gradient(180deg, #eef3f8 0%, #f7f9fc 100%);
-        padding: 32px 12px;
-      }
-      .email-card {
-        width: 100%;
-        max-width: 640px;
-        margin: 0 auto;
-        background: #ffffff;
-        border-radius: 20px;
-        overflow: hidden;
-        border: 1px solid #d9e3ef;
-        box-shadow: 0 12px 36px rgba(15, 39, 69, 0.08);
-      }
-      .hero {
-        background: linear-gradient(135deg, #0e3558 0%, #0e4d92 100%);
-        padding: 28px 36px 34px;
-      }
-      .eyebrow {
-        font-size: 12px;
-        letter-spacing: 1.2px;
-        text-transform: uppercase;
-        color: #a8d1ff;
-        font-weight: 700;
-      }
-      .hero-title {
-        margin: 14px 0 8px;
-        font-size: 28px;
-        line-height: 1.25;
-        color: #ffffff;
-        font-weight: 700;
-      }
-      .hero-copy {
-        margin: 0;
-        font-size: 15px;
-        line-height: 1.7;
-        color: #dcecff;
-      }
-      .section-title {
-        margin: 0 0 14px;
-        font-size: 16px;
-        font-weight: 700;
-        color: #0f2f52;
-      }
-      .body-copy {
-        margin: 0;
-        font-size: 15px;
-        line-height: 1.8;
-        color: #344255;
-      }
-      .panel {
-        background: #f8fbff;
-        border: 1px solid #dce8f5;
-        border-radius: 16px;
-      }
-      .button {
-        display: inline-block;
-        padding: 13px 24px;
-        border-radius: 999px;
-        background: #0e4d92;
-        color: #ffffff !important;
-        font-size: 14px;
-        font-weight: 700;
-        text-decoration: none;
-      }
-      .footer-copy {
-        margin: 0;
-        font-size: 12px;
-        line-height: 1.8;
-        color: #708196;
-      }
-      @media only screen and (max-width: 640px) {
-        .hero,
-        .content,
-        .footer {
-          padding-left: 22px !important;
-          padding-right: 22px !important;
-        }
-        .hero-title {
-          font-size: 24px !important;
-        }
-      }
-    </style>
-  `;
+  const year = new Date().getFullYear();
+  const replyToAddress = process.env.EMAIL_REPLY_TO || "info@zavior.org";
+  const whatsappNumber = (process.env.WHATSAPP_NUMBER || "971508185948").replace(
+    /[^\d]/g,
+    "",
+  );
+  const whatsappMessage = encodeURIComponent(
+    `Hello Zavior Team, my name is ${fullName || data.firstName}. I need help with ${serviceLabel}. Please advise on next steps. Thank you.`,
+  );
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+  const fullNameValue = fullName || "Not provided";
+  const emailValue = data.email?.trim() ? data.email.trim() : "Not provided";
+  const phoneValue = data.phone?.trim() ? data.phone.trim() : "Not provided";
+  const companyValue = data.company?.trim()
+    ? data.company.trim()
+    : "Not provided";
+  const serviceValue = serviceLabel || "Not specified";
+  const messageValue = data.message?.trim()
+    ? escapeHtml(data.message).replace(/\r?\n/g, "<br />")
+    : "Not provided";
+
+  const ctaEmail =
+    type === "admin"
+      ? (data.email?.trim() ? data.email.trim() : replyToAddress)
+      : replyToAddress;
 
   if (type === "admin") {
     return `
-      ${sharedStyles}
-      <div style="display:none; max-height:0; overflow:hidden; opacity:0; color:transparent;">
-        New website lead received from ${escapeHtml(fullName)}.
-      </div>
-      <div class="email-shell">
-        <table role="presentation" width="100%">
-          <tr>
-            <td align="center">
-              <table role="presentation" class="email-card">
-                <tr>
-                  <td class="hero">
-                    <table role="presentation" width="100%">
-                      <tr>
-                        <td align="left">
-                          <img
-                            src="${logoUrl}"
-                            alt="Zavior Group"
-                            width="160"
-                            style="display:block; width:160px; max-width:100%; height:auto;"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding-top: 28px;">
-                          <div class="eyebrow">Lead Notification</div>
-                          <h1 class="hero-title">New Website Inquiry Received</h1>
-                          <p class="hero-copy">
-                            A new lead has been submitted through the Zavior Group website and is ready for follow-up.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="content" style="padding: 34px 36px 18px;">
-                    <table role="presentation" width="100%" class="panel" style="padding: 22px 24px;">
-                      <tr>
-                        <td>
-                          <h2 class="section-title">Lead Summary</h2>
-                          <table role="presentation" width="100%">
-                            ${renderEmailRows([
-                              { label: "Full Name", value: fullName || "Not provided" },
-                              { label: "Email Address", value: data.email || "Not provided" },
-                              { label: "Phone Number", value: data.phone || "Not provided" },
-                              { label: "Company", value: data.company || "Not provided" },
-                              { label: "Service", value: serviceLabel },
-                              { label: "Submitted At", value: submittedAt },
-                            ])}
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="content" style="padding: 0 36px 24px;">
-                    <table role="presentation" width="100%" class="panel" style="padding: 22px 24px;">
-                      <tr>
-                        <td>
-                          <h2 class="section-title">Message</h2>
-                          <p class="body-copy">${escapeHtml(data.message)}</p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="content" style="padding: 0 36px 34px;">
-                    <a href="${siteUrl}" class="button">Visit Zavior Website</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="footer" style="padding: 0 36px 32px;">
-                    <p class="footer-copy">
-                      This notification was automatically generated from the Zavior Group website contact form.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </div>
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>New Inquiry - Zavior Group</title>
+        </head>
+        <body style="margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; background-color:#f4f6f8;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8; padding: 30px 0;">
+            <tr>
+              <td align="center">
+                <table width="650" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:8px; overflow:hidden;">
+                  <tr>
+                    <td style="background:#0a1f44; color:#ffffff; padding:20px 30px;">
+                      <h2 style="margin:0; font-size:20px;">Zavior Group</h2>
+                      <p style="margin:5px 0 0; font-size:13px; opacity:0.8;">
+                        Global Business Solutions | ERP | Furniture | Maintenance | Technology
+                      </p>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="padding:25px 30px 10px;">
+                      <h3 style="margin:0; color:#0a1f44;">New Inquiry Received</h3>
+                      <p style="margin:5px 0 0; color:#555; font-size:14px;">
+                        A new client inquiry has been submitted through your website.
+                      </p>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="padding:20px 30px;">
+                      <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse; font-size:14px;">
+                        <tr>
+                          <td style="background:#f1f3f6; width:35%;"><strong>Full Name</strong></td>
+                          <td>${escapeHtml(fullNameValue)}</td>
+                        </tr>
+                        <tr>
+                          <td style="background:#f1f3f6;"><strong>Email Address</strong></td>
+                          <td>${escapeHtml(emailValue)}</td>
+                        </tr>
+                        <tr>
+                          <td style="background:#f1f3f6;"><strong>Phone Number</strong></td>
+                          <td>${escapeHtml(phoneValue)}</td>
+                        </tr>
+                        <tr>
+                          <td style="background:#f1f3f6;"><strong>Company Name</strong></td>
+                          <td>${escapeHtml(companyValue)}</td>
+                        </tr>
+                        <tr>
+                          <td style="background:#f1f3f6;"><strong>Service Interest</strong></td>
+                          <td>${escapeHtml(serviceValue)}</td>
+                        </tr>
+                        <tr>
+                          <td style="background:#f1f3f6; vertical-align:top;"><strong>Message</strong></td>
+                          <td style="line-height:1.6;">${messageValue}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="padding:0 30px;">
+                      <hr style="border:none; border-top:1px solid #e5e7eb;" />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="padding:20px 30px;">
+                      <p style="font-size:14px; color:#333;">
+                        Please respond to this inquiry promptly to maintain our high service standards.
+                      </p>
+                      <a
+                        href="mailto:${escapeHtml(ctaEmail)}"
+                        style="display:inline-block; padding:10px 18px; background:#0a1f44; color:#ffffff; text-decoration:none; border-radius:4px; font-size:13px;"
+                      >
+                        Reply to Client
+                      </a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="background:#f9fafb; padding:20px 30px; font-size:12px; color:#777; text-align:center;">
+                      <p style="margin:0;">© ${year} Zavior Group. All rights reserved.</p>
+                      <p style="margin:5px 0 0;">Operating Globally: UK | UAE | Australia | International Markets</p>
+                      <p style="margin:5px 0 0;">This is an automated notification. Please do not reply directly to this email.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
     `;
   }
 
   return `
-    ${sharedStyles}
-    <div style="display:none; max-height:0; overflow:hidden; opacity:0; color:transparent;">
-      Thank you for contacting Zavior Group. Your inquiry has been received.
-    </div>
-    <div class="email-shell">
-      <table role="presentation" width="100%">
-        <tr>
-          <td align="center">
-            <table role="presentation" class="email-card">
-              <tr>
-                <td class="hero">
-                  <table role="presentation" width="100%">
-                    <tr>
-                      <td align="left">
-                        <img
-                          src="${logoUrl}"
-                          alt="Zavior Group"
-                          width="160"
-                          style="display:block; width:160px; max-width:100%; height:auto;"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="padding-top: 28px;">
-                        <div class="eyebrow">Confirmation</div>
-                        <h1 class="hero-title">Thank You for Reaching Out</h1>
-                        <p class="hero-copy">
-                          Dear ${escapeHtml(data.firstName)}, we appreciate your interest in Zavior Group. Your message has been received and will be reviewed by our team shortly.
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td class="content" style="padding: 34px 36px 22px;">
-                  <table role="presentation" width="100%" class="panel" style="padding: 22px 24px;">
-                    <tr>
-                      <td>
-                        <h2 class="section-title">Your Submission</h2>
-                        <table role="presentation" width="100%">
-                          ${renderEmailRows([
-                            { label: "Service Requested", value: serviceLabel },
-                            { label: "Submitted At", value: submittedAt },
-                            { label: "Email Address", value: data.email || "Not provided" },
-                          ])}
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td class="content" style="padding: 0 36px 22px;">
-                  <table role="presentation" width="100%" class="panel" style="padding: 22px 24px;">
-                    <tr>
-                      <td>
-                        <h2 class="section-title">Message Received</h2>
-                        <p class="body-copy">${escapeHtml(data.message)}</p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td class="content" style="padding: 0 36px 18px;">
-                  <p class="body-copy">
-                    Our team will review your inquiry and get back to you as soon as possible. We appreciate the opportunity to assist you.
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td class="content" style="padding: 0 36px 34px;">
-                  <a href="${siteUrl}" class="button">Visit Zavior Group</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="footer" style="padding: 0 36px 32px;">
-                  <p class="footer-copy">
-                    Warm regards,<br />
-                    Zavior Group Team
-                  </p>
-                  <p class="footer-copy" style="margin-top: 8px;">
-                    This is an automated confirmation email. Please reply to your regular Zavior contact for urgent matters.
-                  </p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </div>
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8" />
+        <title>New Inquiry - Zavior Group</title>
+      </head>
+      <body style="margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; background-color:#f4f6f8;">
+
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8; padding: 30px 0;">
+          <tr>
+            <td align="center">
+
+              <table width="650" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:8px; overflow:hidden;">
+
+                <tr>
+                  <td style="background:#0a1f44; color:#ffffff; padding:20px 30px;">
+                    <h2 style="margin:0; font-size:20px;">Zavior Group</h2>
+                    <p style="margin:5px 0 0; font-size:13px; opacity:0.8;">
+                      Global Business Solutions | ERP | Furniture | Maintenance | Technology
+                    </p>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:25px 30px 10px;">
+                    <h3 style="margin:0; color:#0a1f44;">New Inquiry Received</h3>
+                    <p style="margin:5px 0 0; color:#555; font-size:14px;">
+                      A new client inquiry has been submitted through your website.
+                    </p>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:20px 30px;">
+                    <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse; font-size:14px;">
+
+                      <tr>
+                        <td style="background:#f1f3f6; width:35%;"><strong>Full Name</strong></td>
+                        <td>${escapeHtml(fullNameValue)}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="background:#f1f3f6;"><strong>Email Address</strong></td>
+                        <td>${escapeHtml(emailValue)}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="background:#f1f3f6;"><strong>Phone Number</strong></td>
+                        <td>${escapeHtml(phoneValue)}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="background:#f1f3f6;"><strong>Company Name</strong></td>
+                        <td>${escapeHtml(companyValue)}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="background:#f1f3f6;"><strong>Service Interest</strong></td>
+                        <td>${escapeHtml(serviceValue)}</td>
+                      </tr>
+
+                      <tr>
+                        <td style="background:#f1f3f6; vertical-align:top;"><strong>Message</strong></td>
+                        <td style="line-height:1.6;">${messageValue}</td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:0 30px;">
+                    <hr style="border:none; border-top:1px solid #e5e7eb;">
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:20px 30px;">
+                    <p style="font-size:14px; color:#333;">
+                      Please respond to this inquiry promptly to maintain our high service standards.
+                    </p>
+
+                    <a
+                      href="mailto:${escapeHtml(ctaEmail)}"
+                      style="display:inline-block; padding:10px 18px; background:#0a1f44; color:#ffffff; text-decoration:none; border-radius:4px; font-size:13px;"
+                    >
+                      Reply via Email
+                    </a>
+                    <a
+                      href="${whatsappUrl}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-text="WhatsApp Consultation"
+                      style="display:inline-block; margin-left:10px; padding:10px 18px; background:#25D366; color:#ffffff; text-decoration:none; border-radius:4px; font-size:13px;"
+                    >
+                      WhatsApp Consultation
+                    </a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="background:#f9fafb; padding:20px 30px; font-size:12px; color:#777; text-align:center;">
+                    <p style="margin:0;">
+                      © ${year} Zavior Group. All rights reserved.
+                    </p>
+                    <p style="margin:5px 0 0;">
+                      Operating Globally: UK | UAE | Australia | International Markets
+                    </p>
+                    <p style="margin:5px 0 0;">
+                      This is an automated notification. Please do not reply directly to this email.
+                    </p>
+                  </td>
+                </tr>
+
+              </table>
+
+            </td>
+          </tr>
+        </table>
+
+      </body>
+    </html>
   `;
 }
 
@@ -411,34 +356,52 @@ function formatSubject(firstName: string, lastName: string) {
 async function processLeadSubmission(data: LeadSubmissionPayload) {
   const sanity = getSanityClient();
   const transporter = getTransporter();
-  await sanity.create({
-    _type: "leadzaviorForm",
-    firstName: data.firstName,
-    lastName: data.lastName,
-    email: data.email,
-    phone: data.phone,
-    company: data.company,
-    service: data.service,
-    message: data.message,
-    createdAt: data.createdAt,
-  });
+  try {
+    await sanity.create({
+      _type: "leadzaviorForm",
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      company: data.company,
+      service: data.service,
+      message: data.message,
+      createdAt: data.createdAt,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Sanity save failed: ${message}`);
+  }
 
   const emailFrom = process.env.EMAIL_FROM!;
-  const adminRecipient = process.env.LEADS_INBOX || emailFrom;
+  const adminRecipient = "mureedsultangeni@gmail.com";
+  const replyToAddress = process.env.EMAIL_REPLY_TO || "info@zavior.org";
 
-  await transporter.sendMail({
-    from: `"Zavior Website" <${emailFrom}>`,
-    to: adminRecipient,
-    subject: formatSubject(data.firstName, data.lastName),
-    html: createEmailTemplate("admin", data),
-  });
+  try {
+    await transporter.sendMail({
+      from: `"Zavior Website" <${emailFrom}>`,
+      to: adminRecipient,
+      replyTo: data.email,
+      subject: formatSubject(data.firstName, data.lastName),
+      html: createEmailTemplate("admin", data),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Admin email failed to send: ${message}`);
+  }
 
-  await transporter.sendMail({
-    from: `"Zavior Group" <${emailFrom}>`,
-    to: data.email,
-    subject: "Thank you for contacting Zavior Group",
-    html: createEmailTemplate("user", data),
-  });
+  try {
+    await transporter.sendMail({
+      from: `"Zavior Group" <${emailFrom}>`,
+      to: data.email,
+      replyTo: replyToAddress,
+      subject: "Thank you for contacting Zavior Group",
+      html: createEmailTemplate("user", data),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Customer email failed to send: ${message}`);
+  }
 }
 
 async function processJobApplicationSubmission(
