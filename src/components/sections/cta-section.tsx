@@ -47,17 +47,13 @@ export function CTASection() {
                 Get In Touch
               </Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+            <Link
+              href="/services"
+              className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-md border border-white bg-black px-6 text-sm font-medium text-white transition-colors hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
             >
-              <Link href="/services">
-                Explore Services
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+              Explore Services
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </motion.div>
         </div>
       </div>

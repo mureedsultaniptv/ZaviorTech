@@ -2,8 +2,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useLocalAI } from '@/lib/hooks/useLocalAI';
-import { services } from '@/lib/data/demo-data'; // move your services array to a separate file for reusability
 
 // ---------- Improved Rule‑Based Engine ----------
 // We'll maintain a simple state machine for the fallback conversation.
@@ -162,36 +160,12 @@ export default function ChatPage() {
   // State for fallback conversation
   const [convState, setConvState] = useState(STATES.START);
 
-  const { generateResponse, loading, error, webGPUAvailable } = useLocalAI();
-
-  const handleSendMessage = async (userMessage) => {
+  const handleSendMessage = (userMessage) => {
     // Add user message
     const userMsg = { id: Date.now(), text: userMessage, sender: 'user' };
     setMessages((prev) => [...prev, userMsg]);
 
-    let botReplyText = '';
-
-    // Try AI if available and no error
-    if (!loading && !error && generateResponse) {
-      try {
-        // Build conversation history
-        const history = messages.map((m) => ({
-          role: m.sender === 'user' ? 'user' : 'assistant',
-          content: m.text,
-        }));
-
-        botReplyText = await generateResponse(
-          [...history, { role: 'user', content: userMessage }],
-          services
-        );
-      } catch (err) {
-        console.warn('AI generation failed, using fallback', err);
-        botReplyText = getFallbackReply(userMessage, convState, setConvState);
-      }
-    } else {
-      botReplyText = getFallbackReply(userMessage, convState, setConvState);
-    }
-
+    const botReplyText = getFallbackReply(userMessage, convState, setConvState);
     const botMsg = { id: Date.now() + 1, text: botReplyText, sender: 'bot' };
     setMessages((prev) => [...prev, botMsg]);
   };
@@ -201,14 +175,6 @@ export default function ChatPage() {
       {/* Header */}
       <div className="bg-blue-600 text-white p-4 rounded-t-lg">
         <h1 className="text-xl font-bold">Zavior Tech Assistant</h1>
-        {loading && <p className="text-sm text-blue-200">Loading AI model (one-time download)...</p>}
-        {!loading && webGPUAvailable && (
-          <p className="text-xs text-green-200">⚡ Using WebGPU (your GPU)</p>
-        )}
-        {!loading && !webGPUAvailable && (
-          <p className="text-xs text-yellow-200">⚠️ Using CPU (responses may be slower)</p>
-        )}
-        {error && <p className="text-xs text-red-200">AI model failed, using fallback.</p>}
       </div>
 
       {/* Messages */}
@@ -219,7 +185,7 @@ export default function ChatPage() {
       </div>
 
       {/* Input */}
-      <ChatInput onSendMessage={handleSendMessage} disabled={loading} />
+      <ChatInput onSendMessage={handleSendMessage} disabled={false} />
     </div>
   );
 }

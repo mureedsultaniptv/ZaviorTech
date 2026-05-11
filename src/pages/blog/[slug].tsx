@@ -12,6 +12,7 @@ import { blogs, sortedBlogs } from "@/lib/data/demo-data";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Linkedin, Twitter } from "lucide-react";
 import { ParsedUrlQuery } from "querystring";
 import { absoluteUrl } from "@/lib/site";
+import { breadcrumbJsonLd, jsonLdGraph, organizationJsonLd } from "@/lib/seo";
 
 interface BlogPost {
   id: string;
@@ -24,7 +25,10 @@ interface BlogPost {
   publishedAt: string;
   readTime: string;
   image: string;
+  imageAlt?: string;
   tags: string[];
+  faqs?: Array<{ question: string; answer: string }>;
+  updatedAt?: string;
   metaTitle?: string;
   metaDescription?: string;
   keywords?: string;
@@ -65,24 +69,49 @@ export default function BlogDetailPage({ blog }: Props) {
     .filter((b) => b.id !== blog.id && b.category === blog.category)
     .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
     .slice(0, 2);
-  const articleUrl = absoluteUrl(`/blog/${blog.slug}`);
+  const articleUrl = absoluteUrl(blog.canonical || `/blog/${blog.slug}`);
+  const shareTitle = encodeURIComponent(blog.title);
+  const shareUrl = encodeURIComponent(articleUrl);
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: blog.title,
-    image: absoluteUrl(blog.image),
-    author: { "@type": "Person", name: blog.author.name },
-    publisher: {
-      "@type": "Organization",
-      name: "Zavior Technologies",
-      logo: { "@type": "ImageObject", url: absoluteUrl("/zaviorlogo-dark.png") },
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Blog", path: "/blog" },
+      { name: blog.title, path: `/blog/${blog.slug}` },
+    ]),
+    {
+      "@type": "BlogPosting",
+      "@id": `${articleUrl}#article`,
+      mainEntityOfPage: articleUrl,
+      headline: blog.title,
+      image: absoluteUrl(blog.image),
+      author: { "@type": "Person", name: blog.author.name },
+      publisher: { "@id": absoluteUrl("/#organization") },
+      datePublished: blog.publishedAt,
+      dateModified: blog.updatedAt || blog.publishedAt,
+      description: blog.excerpt,
+      articleSection: blog.category,
+      keywords: blog.tags.join(", "),
+      url: articleUrl,
     },
-    datePublished: blog.publishedAt,
-    dateModified: blog.publishedAt,
-    description: blog.excerpt,
-    url: articleUrl,
-  };
+    ...(blog.faqs?.length
+      ? [
+          {
+            "@type": "FAQPage",
+            "@id": `${articleUrl}#faq`,
+            mainEntity: blog.faqs.map((faq) => ({
+              "@type": "Question",
+              name: faq.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: faq.answer,
+              },
+            })),
+          },
+        ]
+      : []),
+  ]);
 
   return (
     <>
@@ -101,6 +130,11 @@ export default function BlogDetailPage({ blog }: Props) {
           key="article:published_time"
           property="article:published_time"
           content={blog.publishedAt}
+        />
+        <meta
+          key="article:modified_time"
+          property="article:modified_time"
+          content={blog.updatedAt || blog.publishedAt}
         />
         <meta
           key="article:author"
@@ -171,14 +205,33 @@ export default function BlogDetailPage({ blog }: Props) {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="icon" className="bg-transparent">
-                  <Share2 className="h-4 w-4" />
+                <Button asChild variant="outline" size="icon" className="bg-transparent">
+                  <a
+                    href={`mailto:?subject=${shareTitle}&body=${shareUrl}`}
+                    aria-label="Share article by email"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </a>
                 </Button>
-                <Button variant="outline" size="icon" className="bg-transparent">
-                  <Twitter className="h-4 w-4" />
+                <Button asChild variant="outline" size="icon" className="bg-transparent">
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share article on X"
+                  >
+                    <Twitter className="h-4 w-4" />
+                  </a>
                 </Button>
-                <Button variant="outline" size="icon" className="bg-transparent">
-                  <Linkedin className="h-4 w-4" />
+                <Button asChild variant="outline" size="icon" className="bg-transparent">
+                  <a
+                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareTitle}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share article on LinkedIn"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
                 </Button>
               </div>
             </motion.div>
@@ -197,7 +250,7 @@ export default function BlogDetailPage({ blog }: Props) {
           >
             <Image
               src={blog.image}
-              alt={blog.title}
+              alt={blog.imageAlt || blog.title}
               width={1200}
               height={600}
               sizes="(min-width: 1280px) 896px, (min-width: 768px) 100vw, 100vw"
@@ -222,6 +275,41 @@ export default function BlogDetailPage({ blog }: Props) {
           </motion.article>
         </div>
       </section>
+
+      {blog.faqs?.length ? (
+        <section id="faq" className="py-12">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-4">
+                {blog.faqs.map((faq) => (
+                  <div
+                    key={faq.question}
+                    className="rounded-lg border border-border bg-card p-6"
+                  >
+                    <h3 className="text-lg font-semibold mb-2">
+                      {faq.question}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8">
+                <Button asChild>
+                  <Link href="/contact">
+                    Discuss Your ERP Project
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Tags */}
       <section className="py-12">
@@ -272,7 +360,11 @@ export default function BlogDetailPage({ blog }: Props) {
                         <div className="relative aspect-video overflow-hidden rounded-xl">
                           <Image
                             src={relatedBlog.image}
-                            alt={relatedBlog.title}
+                            alt={
+                              "imageAlt" in relatedBlog && relatedBlog.imageAlt
+                                ? relatedBlog.imageAlt
+                                : relatedBlog.title
+                            }
                             fill
                             sizes="(min-width: 768px) 50vw, 100vw"
                             className="object-cover"

@@ -1,10 +1,10 @@
 const FALLBACK_SITE_URL = "https://zavior.org";
 
-export const SITE_NAME = "Zavior Group";
+export const SITE_NAME = "Zavior Technologies";
 export const SITE_TITLE =
-  "Zavior Group | Technology, Furniture, and Maintenance Services";
+  "Zavior Technologies | Odoo ERP, AI Automation & Web Development Dubai";
 export const SITE_DESCRIPTION =
-  "Zavior Group brings together technology, furniture, and maintenance service companies focused on reliable delivery, practical innovation, and long-term business value.";
+  "Dubai and UAE technology partner for Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, and digital transformation.";
 export const DEFAULT_OG_IMAGE = "/zaviorlogo-dark.png";
 export const LEGACY_SITE_HOSTS = new Set(["zaviortech.vercel.app"]);
 

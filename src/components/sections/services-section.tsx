@@ -17,6 +17,15 @@ const iconMap = {
   coreit: CircuitBoard,
 };
 
+const serviceLinks = {
+  ai: "/services/ai-automation-dubai",
+  erp: "/services/erp-odoo-dubai",
+  web: "/services/web-development-dubai",
+  mobile: "/services/mobile-apps-dubai",
+  it: "/services/it-solutions-dubai",
+  coreit: "/services/core-it-infrastructure-dubai",
+};
+
 export function ServicesSection() {
   const { t } = useLanguage();
 
@@ -55,10 +64,11 @@ export function ServicesSection() {
                       {service.description}
                     </p>
                     <Link
-                      href={`/services#${service.key}`}
+                      href={serviceLinks[service.key]}
                       className="inline-flex items-center text-sm font-medium text-primary hover:underline group"
                     >
                       Learn more
+                      <span className="sr-only"> about {service.title}</span>
                       <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </CardContent>

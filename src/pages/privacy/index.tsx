@@ -150,9 +150,9 @@ export default function PrivacyPage() {
                   If you have any questions about this Privacy Policy, please contact us:
                 </p>
                 <div className="space-y-2 text-muted-foreground">
-                  <p>Email: privacy@zavior.com</p>
-                  <p>Phone: +971 4 123 4567</p>
-                  <p>Address: 123 Innovation Drive, Tech Hub, Dubai, UAE</p>
+                  <p>Email: privacy@zavior.org</p>
+                  <p>Phone: +971 50 818 5948</p>
+                  <p>Address: SPC Freezone, Sheikh Mohammed Bin Zayed Rd, Sharjah, UAE</p>
                 </div>
               </CardContent>
             </Card>

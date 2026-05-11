@@ -9,31 +9,34 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { BlogSection } from "@/components/sections/blog-section";
 import { CTASection } from "@/components/sections/cta-section";
 import { SeoHead } from "@/components/seo/seo-head";
-
-import { FaWhatsapp } from "react-icons/fa";
-import { useState } from "react";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+  technologyServiceJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
+import { MessageCircle } from "lucide-react";
 
 
 export default function HomePage() {
-
-    const [hovered, setHovered] = useState(false);
-
   const whatsappNumber = "971508185948";
   const message = encodeURIComponent("Tell me more about your services");
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-  const handleClick = () => {
-    window.open(
-      `https://wa.me/${whatsappNumber}?text=${message}`,
-      "_blank",
-      "noopener,noreferrer",
-    );
-  };
   return (
     <>
       <SeoHead
-        title="Zavior Group | Technology, Furniture, and Maintenance Services"
-        description="Zavior Group brings together Zavior Technologies, Zavior Furniture, and Zavior Maintenance Services to deliver practical business transformation, furnishing support, and maintenance operations."
+        title="Odoo ERP, AI Automation & Web Development Dubai | Zavior Technologies"
+        description="Zavior Technologies helps Dubai and UAE companies implement Odoo ERP, AI automation, custom websites, mobile apps, IT solutions, and core infrastructure."
         path="/"
+        structuredData={jsonLdGraph([
+          organizationJsonLd(),
+          websiteJsonLd(),
+          technologyServiceJsonLd(),
+          breadcrumbJsonLd([{ name: "Home", path: "/" }]),
+        ])}
+        structuredDataId="home-structured-data"
       />
       <HeroSection />
       <ServicesSection />
@@ -44,31 +47,25 @@ export default function HomePage() {
       <BlogSection />
       <CTASection />
 
-      {/* Floating WhatsApp Button */}
       <div
-        className="fixed w-min bottom-6 right-6 z-50 flex flex-col items-end animate-float"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        className="group fixed w-min bottom-6 right-6 z-50 flex flex-col items-end animate-float"
       >
-        {/* Tooltip with animated state change */}
         <div
-          className={`mb-2 w-max absolute top-[-40] px-3 py-1 rounded-lg shadow-lg text-sm text-white bg-green-600 text-center transition-all duration-300 ease-in-out transform ${
-            hovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"
-          }`}
+          className="pointer-events-none absolute -top-10 mb-2 w-max rounded-lg bg-green-600 px-3 py-1 text-center text-sm text-white opacity-0 shadow-lg transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100"
         >
           What help do you need?
         </div>
 
-        {/* WhatsApp Button */}
-        <button
-          onClick={handleClick}
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl flex items-center justify-center transition-transform duration-300 hover:scale-110"
           aria-label="Chat on WhatsApp"
         >
-          <FaWhatsapp className="w-6 h-6" />
-        </button>
+          <MessageCircle className="w-6 h-6" />
+        </a>
       </div>
-
     </>
   );
 }

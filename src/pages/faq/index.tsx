@@ -16,6 +16,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { breadcrumbJsonLd, jsonLdGraph, organizationJsonLd } from "@/lib/seo";
 
 const faqCategories = [
   {
@@ -27,11 +28,11 @@ const faqCategories = [
       },
       {
         q: "Where is Zavior located?",
-        a: "Zavior is headquartered in Dubai, UAE, with additional offices in Riyadh, Saudi Arabia, and Cairo, Egypt. We serve clients globally and offer both on-site and remote services.",
+        a: "Zavior Technologies operates from Sharjah, UAE and serves Dubai, the wider UAE, and international clients through on-site and remote delivery models.",
       },
       {
         q: "How long has Zavior been in business?",
-        a: "Zavior has been delivering exceptional digital solutions for over 10 years, serving 500+ clients across various industries worldwide.",
+        a: "Zavior has delivered technology projects for more than 10 years, with 100+ projects and 50+ clients across multiple industries.",
       },
     ],
   },
@@ -106,13 +107,35 @@ export default function FAQPage() {
       ),
     }))
     .filter((category) => category.questions.length > 0);
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "FAQ", path: "/faq" },
+    ]),
+    {
+      "@type": "FAQPage",
+      mainEntity: faqCategories.flatMap((category) =>
+        category.questions.map((question) => ({
+          "@type": "Question",
+          name: question.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: question.a,
+          },
+        })),
+      ),
+    },
+  ]);
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
-        title="FAQ | Zavior Group"
-        description="Find answers to common questions about Zavior Group services, delivery process, and pricing."
+        title="FAQ | Odoo ERP, AI Automation & Web Development Dubai | Zavior"
+        description="Find answers about Zavior Technologies services for Dubai and UAE businesses, including Odoo ERP, AI automation, web development, IT support, process, and pricing."
         path="/faq"
+        structuredData={structuredData}
+        structuredDataId="faq-structured-data"
       />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">

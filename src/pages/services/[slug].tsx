@@ -11,16 +11,21 @@ import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
+import { absoluteUrl } from "@/lib/site";
+import { breadcrumbJsonLd, jsonLdGraph, organizationJsonLd } from "@/lib/seo";
 
 // Define the shape of a service (adjust based on your actual data)
 interface Service {
   slug: string;
   title: string;
   description: string;
+  metaTitle?: string;
+  metaDescription?: string;
   metaKeywords?: string | string[];
   image: string;
   features: string[];
   longDescription: string;
+  faqs?: Array<{ question: string; answer: string }>;
 }
 
 interface Props {
@@ -58,20 +63,52 @@ export default function ServiceDetailPage({ service }: Props) {
     ? service.metaKeywords.join(", ")
     : service.metaKeywords || "";
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: service.title,
-    description: service.description,
-    serviceType: service.title,
-    areaServed: "United Arab Emirates",
-  };
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: service.title, path: `/services/${service.slug}` },
+    ]),
+    {
+      "@type": "Service",
+      "@id": absoluteUrl(`/services/${service.slug}#service`),
+      name: service.title,
+      description: service.metaDescription || service.description,
+      serviceType: service.title,
+      provider: { "@id": absoluteUrl("/#organization") },
+      areaServed: [
+        { "@type": "City", name: "Dubai" },
+        { "@type": "City", name: "Sharjah" },
+        { "@type": "City", name: "Abu Dhabi" },
+        { "@type": "Country", name: "United Arab Emirates" },
+      ],
+      image: absoluteUrl(service.image),
+      url: absoluteUrl(`/services/${service.slug}`),
+    },
+    ...(service.faqs?.length
+      ? [
+          {
+            "@type": "FAQPage",
+            "@id": absoluteUrl(`/services/${service.slug}#faq`),
+            mainEntity: service.faqs.map((faq) => ({
+              "@type": "Question",
+              name: faq.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: faq.answer,
+              },
+            })),
+          },
+        ]
+      : []),
+  ]);
 
   return (
     <>
       <SeoHead
-        title={`${service.title} | Zavior Technologies`}
-        description={service.description}
+        title={service.metaTitle || `${service.title} | Zavior Technologies`}
+        description={service.metaDescription || service.description}
         image={service.image}
         path={`/services/${service.slug}`}
         keywords={metaKeywords}
@@ -85,6 +122,7 @@ export default function ServiceDetailPage({ service }: Props) {
             src={service.image}
             alt={service.title}
             fill
+            sizes="100vw"
             className="object-cover object-center opacity-30"
           />
         </div>
@@ -175,6 +213,41 @@ export default function ServiceDetailPage({ service }: Props) {
           </motion.div>
         </div>
       </section>
+
+      {service.faqs?.length ? (
+        <section id="faq" className="py-20 bg-muted/20">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-3xl font-bold mb-8">
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-4">
+                {service.faqs.map((faq) => (
+                  <div
+                    key={faq.question}
+                    className="rounded-lg border border-border bg-card p-6"
+                  >
+                    <h3 className="text-lg font-semibold mb-2">
+                      {faq.question}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8">
+                <Button asChild>
+                  <Link href="/contact">
+                    Talk to an ERP Consultant
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Book Consultancy CTA */}
       <section className="py-20 bg-primary/10">

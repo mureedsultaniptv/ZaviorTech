@@ -13,6 +13,12 @@ import { services } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { Brain, Building, Globe, Smartphone, Server, Shield, Check, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import {
+  breadcrumbJsonLd,
+  itemListJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+} from "@/lib/seo";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Brain,
@@ -24,13 +30,29 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 export default function ServicesPage() {
   const { t } = useLanguage();
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+    ]),
+    itemListJsonLd(
+      "Zavior Technologies services for Dubai and UAE businesses",
+      services.map((service) => ({
+        name: service.title,
+        path: `/services/${service.slug}`,
+      })),
+    ),
+  ]);
 
   return (
     <>
       <SeoHead
-        title="Services | Zavior Group"
-        description="Explore Zavior Group services across ERP, AI automation, web development, mobile apps, IT solutions, and core infrastructure."
+        title="Odoo ERP, AI Automation, Web & IT Services Dubai | Zavior Technologies"
+        description="Explore Dubai-focused Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, cybersecurity, and core infrastructure services."
         path="/services"
+        structuredData={structuredData}
+        structuredDataId="services-index-structured-data"
       />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">

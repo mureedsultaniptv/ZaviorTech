@@ -28,6 +28,13 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+  technologyServiceJsonLd,
+} from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 
 const contactInfo = [
   {
@@ -121,13 +128,29 @@ export default function ContactPage() {
     }
   };
   const { t, dir } = useLanguage();
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    technologyServiceJsonLd(),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Contact", path: "/contact" },
+    ]),
+    {
+      "@type": "ContactPage",
+      name: "Contact Zavior Technologies",
+      url: absoluteUrl("/contact"),
+      about: { "@id": absoluteUrl("/#technology-service") },
+    },
+  ]);
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
-        title="Contact Zavior Group"
-        description="Get in touch with Zavior Group for ERP, software, furniture, and maintenance service inquiries."
+        title="Contact Zavior Technologies Dubai | ERP, AI, Web & IT Consultation"
+        description="Contact Zavior Technologies for Dubai and UAE Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, and infrastructure projects."
         path="/contact"
+        structuredData={structuredData}
+        structuredDataId="contact-structured-data"
       />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">

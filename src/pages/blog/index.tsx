@@ -8,29 +8,90 @@ import { useLanguage } from "@/lib/i18n/language-context";
 import { SeoHead } from "@/components/seo/seo-head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { sortedBlogs } from "@/lib/data/demo-data";
-import { Calendar, Clock } from "lucide-react";
+import {
+  BarChart3,
+  Calendar,
+  Clock,
+  Factory,
+  Search,
+  ShieldCheck,
+  Workflow,
+} from "lucide-react";
+import {
+  breadcrumbJsonLd,
+  itemListJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+} from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 
 export default function BlogPage() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState("all");
+  const [query, setQuery] = useState("");
 
-  const categories = ["all", ...new Set(sortedBlogs.map((b) => b.category))];
-  const filteredBlogs =
-    filter === "all"
-      ? sortedBlogs
-      : sortedBlogs.filter((b) => b.category === filter);
+  const categories = ["all", ...new Set(sortedBlogs.map((b) => b.category))].sort(
+    (a, b) => (a === "all" ? -1 : b === "all" ? 1 : a.localeCompare(b)),
+  );
+  const normalizedQuery = query.trim().toLowerCase();
+  const filteredBlogs = sortedBlogs.filter((blog) => {
+    const categoryMatches = filter === "all" || blog.category === filter;
+    const queryMatches =
+      !normalizedQuery ||
+      [blog.title, blog.excerpt, blog.category, ...blog.tags]
+        .join(" ")
+        .toLowerCase()
+        .includes(normalizedQuery);
 
-  // Featured blog (first featured or first blog)
-  const featuredBlog = sortedBlogs.find((b) => b.featured) || sortedBlogs[0];
-  const otherBlogs = filteredBlogs.filter((b) => b.id !== featuredBlog.id);
+    return categoryMatches && queryMatches;
+  });
+
+  const featuredBlog =
+    filteredBlogs.find((blog) => blog.featured) || filteredBlogs[0] || null;
+  const otherBlogs = featuredBlog
+    ? filteredBlogs.filter((blog) => blog.id !== featuredBlog.id)
+    : [];
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Blog", path: "/blog" },
+    ]),
+    {
+      "@type": "Blog",
+      "@id": absoluteUrl("/blog#blog"),
+      name: "Dubai Technology, ERP and AI Automation Insights",
+      description:
+        "Practical articles for Dubai and UAE businesses evaluating Odoo ERP, AI automation, web development, cybersecurity, and digital transformation.",
+      url: absoluteUrl("/blog"),
+      publisher: { "@id": absoluteUrl("/#organization") },
+      blogPost: sortedBlogs.slice(0, 12).map((blog) => ({
+        "@type": "BlogPosting",
+        headline: blog.title,
+        url: absoluteUrl(`/blog/${blog.slug}`),
+        datePublished: blog.publishedAt,
+        articleSection: blog.category,
+      })),
+    },
+    itemListJsonLd(
+      "Latest Dubai ERP, AI and web development articles",
+      sortedBlogs.slice(0, 12).map((blog) => ({
+        name: blog.title,
+        path: `/blog/${blog.slug}`,
+      })),
+    ),
+  ]);
 
   return (
     <>
       <SeoHead
-        title="Insights | Zavior Group"
-        description="Read articles and practical insights from Zavior Group on ERP, software delivery, AI automation, and digital operations."
+        title="Dubai ERP, AI Automation & Web Development Blog | Zavior Technologies"
+        description="Read practical Dubai and UAE technology insights on Odoo ERP, AI automation, web development, cybersecurity, CRM, e-commerce, and digital transformation."
         path="/blog"
+        structuredData={structuredData}
+        structuredDataId="blog-index-structured-data"
       />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
@@ -58,14 +119,54 @@ export default function BlogPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-lg md:text-xl text-muted-foreground text-pretty"
             >
-              {t.blog.subtitle}
+              Practical guidance for Dubai and UAE teams choosing ERP,
+              automation, websites, CRM, cybersecurity, and scalable digital
+              operations.
             </motion.p>
           </div>
         </div>
       </section>
 
+      <section className="pb-16">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[
+              {
+                icon: Workflow,
+                label: "Odoo ERP",
+                detail: "Implementation, migration, modules, and reporting.",
+              },
+              {
+                icon: BarChart3,
+                label: "AI Automation",
+                detail: "Lead routing, documents, support, and insights.",
+              },
+              {
+                icon: Factory,
+                label: "UAE Operations",
+                detail: "Retail, manufacturing, logistics, and services.",
+              },
+              {
+                icon: ShieldCheck,
+                label: "Technical SEO",
+                detail: "Fast Next.js pages, schema, and crawl clarity.",
+              },
+            ].map((signal) => (
+              <Card key={signal.label} className="bg-card/70 border-border/50">
+                <CardContent className="p-5">
+                  <signal.icon className="h-5 w-5 text-primary mb-4" />
+                  <h2 className="text-base font-semibold mb-2">{signal.label}</h2>
+                  <p className="text-sm text-muted-foreground">{signal.detail}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Featured Post */}
-      <section className="pb-20">
+      {featuredBlog ? (
+        <section className="pb-20">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -123,11 +224,25 @@ export default function BlogPage() {
             </Link>
           </motion.div>
         </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* Category Filters & Blog Grid */}
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search Dubai ERP, AI automation, CRM, SEO, cybersecurity..."
+                className="h-11 pl-10"
+                aria-label="Search articles"
+              />
+            </div>
+          </div>
+
           {/* Category Filters */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -149,9 +264,10 @@ export default function BlogPage() {
           </motion.div>
 
           {/* Blog Grid */}
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <AnimatePresence mode="popLayout">
-              {otherBlogs.map((blog, index) => (
+          {filteredBlogs.length > 0 ? (
+            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <AnimatePresence mode="popLayout">
+                {otherBlogs.map((blog, index) => (
                 <motion.div
                   key={blog.id}
                   layout
@@ -204,9 +320,28 @@ export default function BlogPage() {
                     </Card>
                   </Link>
                 </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          ) : (
+            <div className="mx-auto max-w-xl text-center">
+              <h2 className="text-2xl font-semibold mb-3">No articles found</h2>
+              <p className="text-muted-foreground mb-6">
+                Try a broader term like Odoo, ERP, AI automation, CRM, web
+                development, or Dubai.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setFilter("all");
+                  setQuery("");
+                }}
+              >
+                Reset filters
+              </Button>
+            </div>
+          )}
         </div>
       </section>
     </>

@@ -18,11 +18,11 @@ export function Footer() {
       { href: "/blog", label: t.nav.blog },
     ],
     services: [
-      { href: "/services#ai", label: t.services.ai.title },
-      { href: "/services#erp", label: t.services.erp.title },
-      { href: "/services#web", label: t.services.web.title },
-      { href: "/services#mobile", label: t.services.mobile.title },
-      { href: "/services#it", label: t.services.it.title },
+      { href: "/services/ai-automation-dubai", label: t.services.ai.title },
+      { href: "/services/erp-odoo-dubai", label: t.services.erp.title },
+      { href: "/services/web-development-dubai", label: t.services.web.title },
+      { href: "/services/mobile-apps-dubai", label: t.services.mobile.title },
+      { href: "/services/it-solutions-dubai", label: t.services.it.title },
     ],
     legal: [
       { href: "/privacy", label: t.footer.privacy },
@@ -55,7 +55,7 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-muted-foreground">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-sm">Dubai, United Arab Emirates</span>
+                <span className="text-sm">Sharjah, UAE - Serving Dubai</span>
               </div>
               <a
                 href="tel:+971508185948"
@@ -76,7 +76,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">{t.footer.quickLinks}</h4>
+            <h2 className="font-semibold mb-4">{t.footer.quickLinks}</h2>
             <ul className="space-y-3">
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.href}>
@@ -93,7 +93,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold mb-4">{t.footer.services}</h4>
+            <h2 className="font-semibold mb-4">{t.footer.services}</h2>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
@@ -110,7 +110,7 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="font-semibold mb-4">{t.footer.legal}</h4>
+            <h2 className="font-semibold mb-4">{t.footer.legal}</h2>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.href}>

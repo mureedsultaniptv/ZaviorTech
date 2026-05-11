@@ -19,10 +19,25 @@ export function Navigation() {
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (ticking) {
+        return;
+      }
+
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const nextScrolled = window.scrollY > 20;
+        setScrolled((current) =>
+          current === nextScrolled ? current : nextScrolled,
+        );
+        ticking = false;
+      });
     };
-    window.addEventListener("scroll", handleScroll);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -113,6 +128,9 @@ export function Navigation() {
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              <span className="sr-only">
+                {isOpen ? "Close navigation menu" : "Open navigation menu"}
+              </span>
             </Button>
 
             {/* CTA Button */}

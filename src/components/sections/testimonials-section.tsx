@@ -86,24 +86,43 @@ export function TestimonialsSection() {
 
           {/* Controls */}
           <div className="flex items-center justify-center gap-4 mt-8">
-            <Button variant="outline" size="icon" onClick={prev} className="bg-transparent">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={prev}
+              className="bg-transparent"
+              aria-label="Show previous testimonial"
+            >
               <ChevronLeft className="h-5 w-5" />
             </Button>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
+                  type="button"
+                  aria-label={`Show testimonial ${index + 1}`}
+                  aria-pressed={index === current}
                   onClick={() => {
                     setDirection(index > current ? 1 : -1);
                     setCurrent(index);
                   }}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === current ? "bg-primary w-6" : "bg-muted-foreground/30"
-                  }`}
-                />
+                  className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <span
+                    className={`h-2 rounded-full transition-[width,background-color] ${
+                      index === current ? "w-6 bg-primary" : "w-2 bg-muted-foreground/50"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
-            <Button variant="outline" size="icon" onClick={next} className="bg-transparent">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={next}
+              className="bg-transparent"
+              aria-label="Show next testimonial"
+            >
               <ChevronRight className="h-5 w-5" />
             </Button>
           </div>

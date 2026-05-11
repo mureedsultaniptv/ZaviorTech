@@ -77,6 +77,29 @@ export const companies = [
   },
 ];
 
+const odooImplementationFaqs = [
+  {
+    question: "Do you provide Odoo implementation for Dubai companies?",
+    answer:
+      "Yes. Zavior Technologies provides Odoo implementation in Dubai for CRM, accounting, inventory, sales, purchasing, POS, manufacturing, HR, and reporting workflows.",
+  },
+  {
+    question: "Can you customize Odoo for UAE business requirements?",
+    answer:
+      "Yes. We customize Odoo for UAE workflows including VAT-ready invoicing, approval controls, multi-branch operations, warehouse rules, reporting dashboards, and third-party integrations.",
+  },
+  {
+    question: "How long does an Odoo ERP project take in the UAE?",
+    answer:
+      "A focused Odoo rollout can take a few weeks, while multi-department ERP implementation may take several months depending on modules, data migration, integrations, and training needs.",
+  },
+  {
+    question: "Do you support Sharjah and Abu Dhabi businesses too?",
+    answer:
+      "Yes. We support Odoo and ERP projects across Dubai, Sharjah, Abu Dhabi, and the wider UAE with remote and on-site discovery options.",
+  },
+];
+
 export const services = [
   {
     id: "erp-odoo",
@@ -107,7 +130,7 @@ export const services = [
       </ul>
     `,
     icon: "Building",
-    image: "/services/odoo-erp.png",
+    image: "/services/odoo-erp.webp",
     features: [
       "Odoo Implementation",
       "Custom Module Development",
@@ -149,7 +172,7 @@ export const services = [
       </ul>
     `,
     icon: "Globe",
-    image: "/services/website-dev.png",
+    image: "/services/website-dev.webp",
     features: [
       "Custom Web Applications",
       "E-commerce Platforms",
@@ -191,7 +214,7 @@ export const services = [
       </ul>
     `,
     icon: "Smartphone",
-    image: "/services/hybridapp.png",
+    image: "/services/hybridapp.webp",
     features: [
       "iOS Development",
       "Android Development",
@@ -232,7 +255,7 @@ export const services = [
       </ul>
     `,
     icon: "Server",
-    image: "/services/it-solution.png",
+    image: "/services/it-solution.webp",
     features: [
       "IT Strategy Consulting",
       "Infrastructure Setup",
@@ -274,7 +297,7 @@ export const services = [
       </ul>
     `,
     icon: "Brain",
-    image: "/services/ai-automation.png",
+    image: "/services/ai-automation.webp",
     features: [
       "Machine Learning Models",
       "Natural Language Processing",
@@ -316,7 +339,7 @@ export const services = [
       </ul>
     `,
     icon: "Server",
-    image: "/services/core-it.png",
+    image: "/services/core-it.webp",
     features: [
       "Server Installation & Maintenance",
       "CCTV & Surveillance Systems",
@@ -332,6 +355,227 @@ export const services = [
     metaKeywords:
       "IT Infrastructure Dubai, Server Installation UAE, CCTV Dubai, Networking Dubai, Zavior Technologies",
   },
+  {
+    id: "odoo-services-dubai",
+    slug: "odoo-services-dubai",
+    title: "Odoo Services in Dubai",
+    description:
+      "Odoo services in Dubai for UAE companies that need CRM, accounting, inventory, POS, manufacturing, and business automation in one ERP platform.",
+    longDescription: `
+      <p>Zavior Technologies delivers <strong>Odoo services in Dubai</strong> for growing businesses that want cleaner operations, faster reporting, and fewer disconnected tools. We help UAE teams plan, configure, customize, integrate, and support Odoo across everyday business workflows.</p>
+
+      <h2>Dubai Odoo Services for Practical Business Operations</h2>
+      <p>Our Odoo work covers CRM, Sales, Accounting, Inventory, Purchase, POS, Manufacturing, Projects, HR, approvals, dashboards, and integrations. The goal is to build an ERP setup that matches how your Dubai business actually works.</p>
+
+      <h3>What We Configure and Customize</h3>
+      <ul>
+        <li>Odoo CRM and quotation workflows for sales teams</li>
+        <li>UAE VAT-ready invoicing, accounting, and approval controls</li>
+        <li>Inventory, warehouse, barcode, purchasing, and replenishment rules</li>
+        <li>POS, e-commerce, payment gateway, WhatsApp, and reporting integrations</li>
+      </ul>
+
+      <h2>Internal Links for Buyers Comparing ERP Options</h2>
+      <p>Businesses planning a full rollout can also review our <a href="/services/odoo-erp-implementation-dubai">Odoo ERP implementation Dubai</a> page. If you are comparing platforms, see our <a href="/services/erp-software-dubai">ERP software company in Dubai</a> service page or browse practical insights on the <a href="/blog">Zavior blog</a>.</p>
+
+      <p><strong>Ready to discuss your Odoo scope?</strong> <a href="/contact">Contact Zavior Technologies</a> for a Dubai ERP discovery session.</p>
+    `,
+    icon: "Building",
+    image: "/services/odoo-erp.webp",
+    features: [
+      "Odoo implementation Dubai",
+      "Odoo customization UAE",
+      "CRM, accounting, inventory, and POS",
+      "Data migration and user training",
+      "UAE VAT and reporting workflows",
+      "Ongoing Odoo support",
+    ],
+    faqs: odooImplementationFaqs,
+    metaTitle:
+      "Odoo Services in Dubai | Odoo ERP, Customization & Support | Zavior",
+    metaDescription:
+      "Odoo services in Dubai for UAE businesses. Zavior Technologies implements and customizes Odoo ERP for CRM, accounting, inventory, POS, manufacturing, and automation.",
+    metaKeywords:
+      "Odoo services in Dubai, Odoo ERP Dubai, Odoo customization UAE, Odoo services UAE, business automation services UAE",
+  },
+  {
+    id: "odoo-erp-implementation-dubai",
+    slug: "odoo-erp-implementation-dubai",
+    title: "Odoo ERP Implementation Dubai",
+    description:
+      "Structured Odoo ERP implementation in Dubai with discovery, module configuration, migration, customization, integrations, training, and post-launch support.",
+    longDescription: `
+      <p>Successful <strong>Odoo ERP implementation in Dubai</strong> starts with process clarity. Zavior Technologies maps your workflows, validates the right modules, cleans migration data, configures Odoo, and trains users so the system becomes a reliable operating platform.</p>
+
+      <h2>Our Odoo Implementation Process</h2>
+      <h3>Discovery and Scope</h3>
+      <p>We document sales, finance, procurement, inventory, HR, manufacturing, POS, and reporting needs before configuration begins. This prevents unnecessary customization and protects the timeline.</p>
+
+      <h3>Configuration, Migration, and Integrations</h3>
+      <p>We configure standard Odoo modules first, then customize workflows where business value is clear. We also handle opening balances, product masters, customer data, stock quantities, and integrations with e-commerce, payment, logistics, or custom systems.</p>
+
+      <h3>Go-Live and Support</h3>
+      <p>Your Dubai team receives role-based training, launch support, issue tracking, and optimization after go-live.</p>
+
+      <h2>Related Odoo and ERP Services</h2>
+      <p>For location-specific support, explore <a href="/services/odoo-services-dubai">Odoo services in Dubai</a>, <a href="/services/odoo-services-sharjah">Odoo services in Sharjah</a>, and <a href="/services/odoo-services-abu-dhabi">Odoo services in Abu Dhabi</a>. For broader ERP strategy, visit <a href="/services/erp-software-dubai">ERP software Dubai</a>.</p>
+
+      <p><strong>Planning an Odoo rollout?</strong> <a href="/contact">Book a consultation</a> with Zavior Technologies.</p>
+    `,
+    icon: "Building",
+    image: "/services/odoo-erp.webp",
+    features: [
+      "ERP discovery and workflow mapping",
+      "Odoo module configuration",
+      "Data migration and validation",
+      "Custom development where needed",
+      "Integration with business systems",
+      "Training, go-live, and support",
+    ],
+    faqs: odooImplementationFaqs,
+    metaTitle:
+      "Odoo ERP Implementation Dubai | Process, Migration & Support | Zavior",
+    metaDescription:
+      "Odoo ERP implementation in Dubai with discovery, configuration, customization, migration, integrations, training, and support for UAE businesses.",
+    metaKeywords:
+      "Odoo implementation Dubai, Odoo ERP Dubai, ERP implementation UAE, Odoo partner Dubai, Odoo customization UAE",
+  },
+  {
+    id: "erp-software-dubai",
+    slug: "erp-software-dubai",
+    title: "ERP Software Company in Dubai",
+    description:
+      "ERP software company in Dubai helping UAE businesses choose, implement, customize, and integrate Odoo ERP and business automation platforms.",
+    longDescription: `
+      <p>Zavior Technologies is an <strong>ERP software company in Dubai</strong> for businesses that need connected finance, inventory, sales, procurement, CRM, HR, manufacturing, and reporting workflows.</p>
+
+      <h2>ERP Software for UAE Business Automation</h2>
+      <p>We help teams move from spreadsheets and disconnected apps to a structured ERP system. For many Dubai companies, Odoo is the right foundation because it supports modular rollout, strong customization, and practical integrations.</p>
+
+      <h3>ERP Capabilities We Deliver</h3>
+      <ul>
+        <li>CRM, sales, quotations, invoicing, and accounting workflows</li>
+        <li>Warehouse, inventory, purchasing, barcode, and replenishment</li>
+        <li>Manufacturing, POS, project tracking, approvals, and dashboards</li>
+        <li>Automation with e-commerce, WhatsApp, payment, logistics, and BI tools</li>
+      </ul>
+
+      <h2>Choosing the Right ERP Path</h2>
+      <p>If you already prefer Odoo, visit <a href="/services/odoo-services-dubai">Odoo services in Dubai</a>. If you need a rollout plan, review <a href="/services/odoo-erp-implementation-dubai">Odoo ERP implementation Dubai</a>. You can also read <a href="/blog/odoo-vs-traditional-erp-dubai">Odoo vs traditional ERP in Dubai</a>.</p>
+
+      <p><strong>Need ERP software guidance?</strong> <a href="/contact">Contact us</a> to discuss your operations and automation goals.</p>
+    `,
+    icon: "Building",
+    image: "/services/odoo-erp.webp",
+    features: [
+      "ERP strategy and platform selection",
+      "Odoo ERP configuration",
+      "Custom ERP workflows",
+      "Business automation services UAE",
+      "Reporting and dashboard setup",
+      "Long-term ERP support",
+    ],
+    faqs: [
+      {
+        question: "Which ERP software is best for Dubai businesses?",
+        answer:
+          "Odoo is often a strong fit for Dubai SMEs and mid-market companies because it is modular, customizable, and practical for CRM, finance, inventory, POS, manufacturing, and reporting.",
+      },
+      ...odooImplementationFaqs.slice(1),
+    ],
+    metaTitle:
+      "ERP Software Company in Dubai | Odoo ERP & Automation UAE | Zavior",
+    metaDescription:
+      "ERP software company in Dubai for Odoo ERP, business automation, CRM, inventory, accounting, POS, manufacturing, dashboards, and UAE implementation support.",
+    metaKeywords:
+      "ERP software company in Dubai, ERP implementation UAE, Odoo ERP Dubai, business automation services UAE, ERP Dubai",
+  },
+  {
+    id: "odoo-services-sharjah",
+    slug: "odoo-services-sharjah",
+    title: "Odoo Services in Sharjah",
+    description:
+      "Odoo services in Sharjah for trading, services, manufacturing, retail, and distribution companies that need reliable ERP implementation and customization.",
+    longDescription: `
+      <p>Zavior Technologies provides <strong>Odoo services in Sharjah</strong> for UAE businesses that want better control over sales, finance, stock, operations, and reporting. Based in Sharjah and serving the wider UAE, we support discovery, implementation, customization, migration, and ongoing Odoo support.</p>
+
+      <h2>Sharjah Odoo ERP Services</h2>
+      <p>We work with trading companies, service businesses, warehouses, manufacturers, retailers, and multi-branch teams that need Odoo configured around real operational workflows.</p>
+
+      <h3>Local ERP Needs We Support</h3>
+      <ul>
+        <li>Sales, CRM, quotations, invoicing, accounting, and UAE VAT workflows</li>
+        <li>Inventory, purchasing, warehouse movement, and approvals</li>
+        <li>POS, manufacturing, HR, dashboards, and automation</li>
+        <li>Odoo customization and integrations for UAE teams</li>
+      </ul>
+
+      <h2>Related UAE Odoo Pages</h2>
+      <p>For Dubai buyers, visit <a href="/services/odoo-services-dubai">Odoo services in Dubai</a>. For capital-market coverage, see <a href="/services/odoo-services-abu-dhabi">Odoo services in Abu Dhabi</a>. For full rollout planning, review <a href="/services/odoo-erp-implementation-dubai">Odoo ERP implementation Dubai</a>.</p>
+
+      <p><strong>Need Odoo support in Sharjah?</strong> <a href="/contact">Contact Zavior Technologies</a>.</p>
+    `,
+    icon: "Building",
+    image: "/services/odoo-erp.webp",
+    features: [
+      "Odoo services Sharjah",
+      "ERP implementation UAE",
+      "Odoo customization UAE",
+      "Accounting, CRM, inventory, and POS",
+      "Data migration and training",
+      "Remote and on-site discovery",
+    ],
+    faqs: odooImplementationFaqs,
+    metaTitle:
+      "Odoo Services Sharjah | Odoo ERP Implementation UAE | Zavior",
+    metaDescription:
+      "Odoo services in Sharjah for UAE companies. Implement and customize Odoo ERP for CRM, accounting, inventory, POS, manufacturing, and automation.",
+    metaKeywords:
+      "Odoo services Sharjah, Odoo customization UAE, ERP implementation UAE, Odoo ERP UAE, business automation services UAE",
+  },
+  {
+    id: "odoo-services-abu-dhabi",
+    slug: "odoo-services-abu-dhabi",
+    title: "Odoo Services in Abu Dhabi",
+    description:
+      "Odoo services in Abu Dhabi for UAE organizations that need ERP implementation, customization, reporting, integrations, and long-term support.",
+    longDescription: `
+      <p>Zavior Technologies provides <strong>Odoo services in Abu Dhabi</strong> for UAE businesses and organizations that need reliable ERP implementation, cleaner reporting, and stronger automation across teams.</p>
+
+      <h2>Odoo ERP for Abu Dhabi Companies</h2>
+      <p>We configure and customize Odoo for CRM, sales, accounting, inventory, procurement, POS, manufacturing, HR, projects, approvals, and dashboards. Our approach is practical: stabilize core workflows first, then expand into automation and advanced reporting.</p>
+
+      <h3>Implementation Areas</h3>
+      <ul>
+        <li>Odoo discovery, module planning, configuration, and go-live</li>
+        <li>UAE VAT-ready finance and management reporting</li>
+        <li>Inventory, warehouse, purchasing, and operations automation</li>
+        <li>Custom integrations with websites, e-commerce, payment, and BI tools</li>
+      </ul>
+
+      <h2>Useful Internal Links</h2>
+      <p>Compare related service pages for <a href="/services/odoo-services-dubai">Odoo services in Dubai</a>, <a href="/services/odoo-services-sharjah">Odoo services in Sharjah</a>, and <a href="/services/erp-software-dubai">ERP software Dubai</a>. For implementation details, visit <a href="/services/odoo-erp-implementation-dubai">Odoo ERP implementation Dubai</a>.</p>
+
+      <p><strong>Planning an Abu Dhabi Odoo project?</strong> <a href="/contact">Contact Zavior Technologies</a> for a discovery call.</p>
+    `,
+    icon: "Building",
+    image: "/services/odoo-erp.webp",
+    features: [
+      "Odoo services Abu Dhabi",
+      "Odoo ERP implementation",
+      "Odoo customization UAE",
+      "Finance, inventory, CRM, and POS",
+      "Reporting dashboards",
+      "Integrations and support",
+    ],
+    faqs: odooImplementationFaqs,
+    metaTitle:
+      "Odoo Services Abu Dhabi | Odoo ERP Implementation UAE | Zavior",
+    metaDescription:
+      "Odoo services in Abu Dhabi for UAE businesses. Zavior Technologies implements and customizes Odoo ERP with reporting, integrations, training, and support.",
+    metaKeywords:
+      "Odoo services Abu Dhabi, Odoo ERP Abu Dhabi, Odoo customization UAE, ERP implementation UAE, business automation services UAE",
+  },
 ];
 
 export const projects = [
@@ -341,7 +585,7 @@ export const projects = [
     metaTitle: "Pharmaceutical ERP System | Zavior Technologies",
     metaDescription:
       "Zavior Technologies developed a custom Pharmaceutical ERP for manufacturing & sales, integrating Odoo, Power BI dashboards, and compliance solutions for DRAP regulations.",
-    canonical: "https://zaviortech.vercel.app/portfolio/pharma-erp-system",
+    canonical: "https://zavior.org/portfolio/pharma-erp-system",
     metaKeywords:
       "Pharmaceutical ERP, Odoo ERP, Pharma Manufacturing Software, Batch Tracking ERP, Power BI Dashboards, ERP Pakistan, Zavior Technologies",
     title: "Pharmaceutical ERP for Manufacturing & Sales",
@@ -349,7 +593,7 @@ export const projects = [
     client: "Pharmaceutical Company (Karachi)",
     description:
       "A leading pharmaceutical manufacturer in Pakistan engaged us to replace their fragmented legacy systems with a unified Odoo ERP. The goal was to achieve full traceability of raw materials and finished goods, streamline multi-location inventory, and ensure compliance with DRAP regulations. We delivered a customized solution integrating manufacturing, batch tracking, sales, and CRM with real-time Power BI dashboards for management.",
-    image: "/projects/platinum-pharma.png",
+    image: "/projects/platinum-pharma.webp",
     technologies: ["Odoo", "Python", "PostgreSQL", "Power BI", "Docker"],
     year: 2025,
     featured: true,
@@ -378,7 +622,7 @@ export const projects = [
     metaTitle: "Manufacturing ERP & CRM Platform | Zavior Technologies",
     metaDescription:
       "Integrated Manufacturing ERP & CRM solution for industrial manufacturers. Streamline sales, production, and inventory with Odoo ERP and real-time reporting.",
-    canonical: "https://zaviortech.vercel.app/portfolio/manufacturing-erp-crm",
+    canonical: "https://zavior.org/portfolio/manufacturing-erp-crm",
     metaKeywords:
       "Manufacturing ERP, Odoo CRM, Industrial ERP, Production Management Software, Inventory Automation, ERP Solutions Pakistan",
     title: "Manufacturing ERP & CRM Platform",
@@ -386,7 +630,7 @@ export const projects = [
     client: "Industrial Manufacturing Company (Punjab)",
     description:
       "A medium-sized industrial manufacturer needed to integrate their sales, production, and inventory operations. We deployed Odoo ERP with customizations for their specific workflows, enabling seamless data flow between departments and providing management with real-time reports. The project eliminated manual reconciliations and reduced order-to-delivery cycle time by 30%.",
-    image: "/projects/manuf-erp.png",
+    image: "/projects/manuf-erp.webp",
     technologies: ["Odoo", "Python", "PostgreSQL", "Excel BI", "Docker"],
     year: 2025,
     featured: false,
@@ -415,7 +659,7 @@ export const projects = [
     metaTitle: "Odoo ERP for Multi-Branch Beauty Salon | Zavior Technologies",
     metaDescription:
       "Centralize your multi-branch beauty salon operations with Odoo ERP. Manage appointments, POS, staff scheduling, inventory, and customer loyalty seamlessly.",
-    canonical: "https://zaviortech.vercel.app/portfolio/odoo-beauty-salon-erp",
+    canonical: "https://zavior.org/portfolio/odoo-beauty-salon-erp",
     metaKeywords:
       "Beauty Salon ERP, Odoo ERP Dubai, Multi-Branch Salon Software, POS Integration, Salon Appointment Management, Zavior Technologies",
 
@@ -424,7 +668,7 @@ export const projects = [
     client: "Multi-Branch Beauty Salon (Dubai)",
     description:
       "A premium beauty salon chain with 8 branches in Dubai needed to centralize operations: point-of-sale, appointments, staff scheduling, inventory, and customer loyalty. We deployed Odoo with custom modules and integrated external APIs for SMS reminders and accounting. The result: real-time branch performance tracking, 40% faster appointment bookings, and unified customer experience.",
-    image: "/projects/odoo-nbeauty-erp.png",
+    image: "/projects/odoo-nbeauty-erp.webp",
     technologies: [
       "Odoo",
       "Python",
@@ -462,7 +706,7 @@ export const projects = [
     metaDescription:
       "Odoo-based Zero Waste ERP for industrial sustainability organizations. Track waste lifecycle, integrate IoT weighbridges, and generate sustainability reports aligned with UN SDGs.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/zero-waste-industrial-erp",
+      "https://zavior.org/portfolio/zero-waste-industrial-erp",
     metaKeywords:
       "Zero Waste ERP, Odoo Sustainability ERP, Industrial Waste Management Software, IoT ERP Integration, Sustainability Reporting, Circular Economy ERP",
 
@@ -471,7 +715,7 @@ export const projects = [
     client: "Industrial Sustainability Organization",
     description:
       "A non-profit organization focused on industrial waste management needed a system to track waste collection, processing, and resale of recycled materials. We built an Odoo-based ERP with custom modules for waste lifecycle management, integrating with IoT weighbridges and generating sustainability reports aligned with UN SDG goals. The platform now processes 500+ tons of waste monthly with full traceability.",
-    image: "/projects/zero_waste.png",
+    image: "/projects/zero_waste.webp",
     technologies: [
       "Odoo",
       "Python",
@@ -507,7 +751,7 @@ export const projects = [
     metaDescription:
       "Automate financial reporting with Odoo Accounting. Multi-company consolidation, bank reconciliation, Excel BI integration, and faster month-end closing for enterprises.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/finance-automation-system",
+      "https://zavior.org/portfolio/finance-automation-system",
     metaKeywords:
       "Finance Automation, Accounting ERP, Odoo Accounting, Multi-Company ERP, Bank Reconciliation Automation, ERP Solutions Pakistan",
     title: "Finance & Accounting Automation System",
@@ -515,7 +759,7 @@ export const projects = [
     client: "Regional Enterprise Clients",
     description:
       "A group of companies with diverse business lines needed to consolidate their financial reporting and automate manual accounting tasks. We customized Odoo Accounting to handle multi-company consolidation, automated bank reconciliation, and integrated with their existing Excel-based reporting. The project reduced month-end closing time from 15 days to 3 days.",
-    image: "/projects/finance-automation.png",
+    image: "/projects/finance-automation.webp",
     technologies: [
       "Odoo",
       "Python",
@@ -556,7 +800,7 @@ export const projects = [
     metaDescription:
       "Responsive, SEO-optimized WordPress website for EcoCycle. Showcasing recycling services, generating leads, and increasing conversions with modern design and Cloudflare CDN.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/ecocycle-environmental-website",
+      "https://zavior.org/portfolio/ecocycle-environmental-website",
     metaKeywords:
       "EcoCycle Website, Environmental Website Design, WordPress SEO, Recycling Services Website, Lead Generation Website, Zavior Technologies",
     title: "EcoCycle Environmental Website",
@@ -564,7 +808,7 @@ export const projects = [
     client: "EcoCycle Co.",
     description:
       "EcoCycle, a recycling startup, needed a professional website to showcase their services, attract corporate clients, and generate leads. We built a responsive WordPress site with a modern design, optimized for SEO, and integrated with Cloudflare CDN for fast global access. The site now ranks on first page for key environmental keywords and has increased inquiry conversions by 60%.",
-    image: "/projects/eco-cycle-website.png",
+    image: "/projects/eco-cycle-website.webp",
     technologies: [
       "WordPress",
       "Elementor",
@@ -600,7 +844,7 @@ export const projects = [
       "Maintainit Dubai – Facility Services Website | Zavior Technologies",
     metaDescription:
       "Conversion-focused WordPress website for facility services. Local SEO, service quotation forms, Google My Business integration to drive 50+ qualified leads/month.",
-    canonical: "https://zaviortech.vercel.app/portfolio/maintainit-dubai",
+    canonical: "https://zavior.org/portfolio/maintainit-dubai",
     metaKeywords:
       "Facility Services Website, WordPress Dubai, Local SEO Website, Maintenance Services Website, HVAC Website Design, Lead Generation Website",
     title: "Maintainit Dubai – Facility Services Website",
@@ -608,7 +852,7 @@ export const projects = [
     client: "Maintainit Dubai",
     description:
       "Maintainit Dubai, a growing facilities management company, needed a website that would generate leads for their maintenance, cleaning, and HVAC services. We created a conversion-focused WordPress site with local SEO, service quotation forms, and integrated Google My Business. The site now drives 50+ qualified leads per month and has become their primary sales channel.",
-    image: "/projects/maintainit-dubai.png",
+    image: "/projects/maintainit-dubai.webp",
     technologies: [
       "WordPress",
       "Elementor",
@@ -645,7 +889,7 @@ export const projects = [
   //   client: "Government Organization (Australia)",
   //   description:
   //     "An Australian government agency required a secure, accessible information portal for defence industry partners. We developed a Drupal-based solution with strict security protocols, WCAG 2.1 AA compliance, and a content workflow for multiple editors. The portal now serves over 10,000 registered users and has passed rigorous security audits.",
-  //   image: "/projects/defence_industry.png",
+  //   image: "/projects/defence_industry.webp",
   //   technologies: [
   //     "Drupal",
   //     "Twig",
@@ -682,7 +926,7 @@ export const projects = [
   //   client: "Swim Productions",
   //   description:
   //     "Swim Productions, a creative agency specializing in photography and branding, wanted a portfolio website that would wow potential clients. We built a custom WordPress theme with a heavy focus on visuals: full-screen media galleries, smooth animations, and fast loading. The site has been featured in design blogs and helped the agency win three major accounts.",
-  //   image: "/projects/swim_productions.png",
+  //   image: "/projects/swim_productions.webp",
   //   technologies: [
   //     "WordPress",
   //     "Custom Theme",
@@ -717,7 +961,7 @@ export const projects = [
     metaTitle: "Automobile CRM & Sales Management Portal | Zavior Technologies",
     metaDescription:
       "Custom CRM for automobile distributors with lead management, sales workflow, real-time dashboards, and ERP integration. Improve lead response time and sales conversions.",
-    canonical: "https://zaviortech.vercel.app/portfolio/automobile-crm-portal",
+    canonical: "https://zavior.org/portfolio/automobile-crm-portal",
     metaKeywords:
       "Automobile CRM, Sales Management Software, Lead Management Portal, ERP Integration CRM, Automotive CRM System, Zavior Technologies",
     title: "Automobile CRM & Sales Management Portal",
@@ -725,7 +969,7 @@ export const projects = [
     client: "Automobile Distribution Group",
     description:
       "A large automobile distributor needed a custom CRM to manage leads, track sales performance, and provide real-time dashboards to management. We built a Spring Boot and React application with role-based access, automated lead routing, and integration with their existing ERP. The system now handles 20,000+ leads annually and increased sales conversion by 15%.",
-    image: "/projects/automobile_crm.png",
+    image: "/projects/automobile_crm.webp",
     technologies: ["Spring Boot", "Java", "MySQL", "React", "REST APIs", "JWT"],
     year: 2024,
     featured: true,
@@ -755,7 +999,7 @@ export const projects = [
     metaDescription:
       "Mobile-friendly cab booking web app with Google Maps, fare estimation, and Stripe payments. Streamline dispatch, reduce errors, and improve customer experience.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/cabinminutes-booking-system",
+      "https://zavior.org/portfolio/cabinminutes-booking-system",
     metaKeywords:
       "Cab Booking App, PWA Taxi System, WordPress Booking Platform, Google Maps Integration, Stripe Payment Integration, Zavior Technologies",
     title: "CabinMinutes – Cab Booking System (Australia)",
@@ -763,7 +1007,7 @@ export const projects = [
     client: "CabinMinutes Australia",
     description:
       "CabinMinutes, an Australian taxi service, needed a mobile-friendly booking platform to replace their phone-based system. We developed a responsive web app (PWA) with Google Maps integration, fare estimation, and Stripe payments. The platform now processes over 1,000 bookings weekly with a 4.8-star user rating and has reduced dispatch errors to near zero.",
-    image: "/projects/cabinmint.png",
+    image: "/projects/cabinmint.webp",
     technologies: [
       "WordPress",
       "Booking Plugin",
@@ -804,7 +1048,7 @@ export const projects = [
     metaDescription:
       "Comprehensive IT infrastructure setup for corporate clients. Servers, networking, CCTV, and workstations with scalable design and zero downtime migration.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/core-it-infrastructure-services",
+      "https://zavior.org/portfolio/core-it-infrastructure-services",
     metaKeywords:
       "IT Infrastructure Services, Enterprise IT Setup, Networking Solutions, CCTV Installation, VMware Deployment, Zavior Technologies UAE",
     title: "Enterprise IT & Hardware Infrastructure Setup",
@@ -812,7 +1056,7 @@ export const projects = [
     client: "Corporate & Industrial Clients (UAE)",
     description:
       "A UAE-based group with offices across the region required a complete IT infrastructure overhaul: new servers, networking, CCTV surveillance, and workstation setup for 200+ employees. We designed and implemented a scalable solution with Dell servers, Meraki networking, and a centralized monitoring system. The project was completed on time and under budget, with zero downtime during migration.",
-    image: "/projects/it-hardware.png",
+    image: "/projects/it-hardware.webp",
     technologies: [
       "Dell PowerEdge",
       "Cisco Meraki",
@@ -852,7 +1096,7 @@ export const projects = [
     metaTitle: "AI Insights & Reporting Dashboard | Zavior Technologies",
     metaDescription:
       "AI-powered analytics dashboard for predictive insights. FastAPI backend, OpenAI summaries, and Power BI visualizations to automate reporting and reduce analyst workload.",
-    canonical: "https://zaviortech.vercel.app/portfolio/ai-insights-dashboard",
+    canonical: "https://zavior.org/portfolio/ai-insights-dashboard",
     metaKeywords:
       "AI Dashboard, Predictive Analytics Platform, OpenAI Integration, Power BI Reporting, FastAPI Analytics, Zavior Technologies",
     title: "AI Insights & Reporting Dashboard",
@@ -860,7 +1104,7 @@ export const projects = [
     client: "Data Analytics Firm",
     description:
       "A data analytics firm wanted to offer predictive insights to their clients but lacked the infrastructure. We built an AI-powered dashboard using Python/FastAPI backend, integrating OpenAI API for natural language summaries, and Power BI for visualizations. The platform now serves 50+ enterprise clients, automating weekly reports and reducing analysts' workload by 70%.",
-    image: "/projects/ai-dashboard.png",
+    image: "/projects/ai-dashboard.webp",
     technologies: [
       "Python",
       "FastAPI",
@@ -898,7 +1142,7 @@ export const projects = [
     metaDescription:
       "Automate LinkedIn lead generation and CRM integration with Make.com. Clearbit enrichment, automated follow-ups, and pipeline reporting to increase qualified leads.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/linkedin-make-automation",
+      "https://zavior.org/portfolio/linkedin-make-automation",
     metaKeywords:
       "LinkedIn Automation, Make.com Workflows, Odoo CRM Automation, Lead Enrichment, Marketing Automation, Zavior Technologies",
     title: "LinkedIn & Workflow Automation with Make.com",
@@ -906,7 +1150,7 @@ export const projects = [
     client: "B2B Marketing Team",
     description:
       "A B2B marketing team needed to streamline lead generation from LinkedIn. We built an automation using Make.com to scrape profile data, enrich it with Clearbit, and sync to Odoo CRM with automated follow-up sequences. The system saves 30 hours weekly and has increased qualified leads by 50%.",
-    image: "/projects/linedin-automation.png",
+    image: "/projects/linedin-automation.webp",
     technologies: [
       "Make.com",
       "LinkedIn API",
@@ -942,7 +1186,7 @@ export const projects = [
     metaDescription:
       "Automate reporting and lead nurturing across email, social media, and CRM using n8n. Consolidate data, generate dashboards, and trigger personalized email sequences.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/n8n-marketing-automation",
+      "https://zavior.org/portfolio/n8n-marketing-automation",
     metaKeywords:
       "Marketing Automation, n8n Workflows, CRM Automation, Email Marketing Automation, Google Data Studio Dashboards, Zavior Technologies",
     title: "Marketing Automation Pipelines using n8n",
@@ -950,7 +1194,7 @@ export const projects = [
     client: "Digital Agency (Remote)",
     description:
       "A digital agency managing multiple client campaigns needed to automate reporting and lead nurturing across email, social media, and CRM. We built custom n8n workflows that pull data from various platforms, consolidate into Google Data Studio dashboards, and trigger personalized email sequences. The agency now saves 40 hours per week and offers real-time reporting to clients.",
-    image: "/projects/n8n-automation.png",
+    image: "/projects/n8n-automation.webp",
     technologies: [
       "n8n",
       "Odoo",
@@ -988,7 +1232,7 @@ export const projects = [
     metaDescription:
       "Odoo ERP integrated with AI for circular economy insights. Predict waste, optimize supply chains, and provide ESG reports for sustainability-focused enterprises.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/circular-intelligence-platform",
+      "https://zavior.org/portfolio/circular-intelligence-platform",
     metaKeywords:
       "Circular Economy ERP, Odoo AI Platform, Sustainability Analytics, Waste Reduction Software, ESG Reporting Tool, Zavior Technologies",
     title: "Circular Intelligence & Traceability Platform",
@@ -996,7 +1240,7 @@ export const projects = [
     client: "Sustainability Tech Firm",
     description:
       "A sustainability tech firm wanted to combine Odoo ERP with AI to provide circular economy insights to their clients. We developed a platform with a FastAPI AI layer that analyzes supply chain data from Odoo, predicts waste generation, and recommends optimization. The platform now serves 10 enterprise clients, helping them reduce waste by an average of 15%.",
-    image: "/projects/circular_intelligence.png",
+    image: "/projects/circular_intelligence.webp",
     technologies: ["Odoo", "React", "Python", "FastAPI", "Azure AI", "Docker"],
     year: 2025,
     featured: true,
@@ -1025,7 +1269,7 @@ export const projects = [
     metaDescription:
       "Consolidate customer data from multiple touchpoints and provide real-time analytics using React, Node.js, and Power BI. Boost retention and personalized campaigns for enterprises.",
     canonical:
-      "https://zaviortech.vercel.app/portfolio/crm-analytics-dashboard",
+      "https://zavior.org/portfolio/crm-analytics-dashboard",
     metaKeywords:
       "Enterprise CRM, Analytics Dashboard, Customer Data Platform, React Node.js Dashboard, Power BI CRM Integration, Zavior Technologies",
     title: "Enterprise CRM & Analytics Dashboard",
@@ -1033,7 +1277,7 @@ export const projects = [
     client: "Corporate Clients (Confidential)",
     description:
       "A large enterprise needed to consolidate customer data from multiple touchpoints and provide real-time analytics to sales and marketing teams. We built a custom dashboard using React and Node.js, integrating with their existing CRM and data warehouse. The solution now processes millions of records daily, enabling personalized campaigns and increasing customer retention by 10%.",
-    image: "/projects/crm_analytics.png",
+    image: "/projects/crm_analytics.webp",
     technologies: ["React", "Node.js", "MongoDB", "Power BI", "AWS", "Segment"],
     year: 2023,
     featured: false,
@@ -1067,7 +1311,7 @@ export const projects = [
       "Digital Transformation & IT Strategy for Logistics | Zavior Technologies",
     metaDescription:
       "IT audit, cloud migration, and digital transformation roadmap for a global logistics provider. Reduce costs, integrate systems, and gain real-time visibility into shipments.",
-    canonical: "https://zaviortech.vercel.app/portfolio/logistics-it-strategy",
+    canonical: "https://zavior.org/portfolio/logistics-it-strategy",
     metaKeywords:
       "Logistics IT Strategy, Digital Transformation, Cloud Migration Logistics, IT Audit Services, System Integration Logistics, Zavior Technologies",
     title: "Digital Transformation & IT Strategy for Logistics Firm",
@@ -1075,7 +1319,7 @@ export const projects = [
     client: "Global Logistics Provider (UAE)",
     description:
       "A global logistics company with operations in 15 countries engaged us to modernize their IT landscape. We conducted a comprehensive audit, developed a 3-year digital transformation roadmap, and led the implementation of cloud migration, system integration, and analytics. The project resulted in 30% lower IT costs, 99.9% system availability, and real-time visibility into global shipments.",
-    image: "/projects/it_solutions_logistics.png",
+    image: "/projects/it_solutions_logistics.webp",
     technologies: [
       "AWS",
       "Microsoft 365",
@@ -1154,9 +1398,9 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>AI in 2026 is no longer experimental; it is a strategic driver of business value. Dubai enterprises embracing autonomous AI agents, multimodal integration, and edge intelligence will lead their industries in innovation, efficiency, and customer satisfaction.</p>
 
-<p><strong>Looking to implement AI solutions for your Dubai enterprise?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> to explore custom AI-driven solutions for your business growth.</p>
+<p><strong>Looking to implement AI solutions for your Dubai enterprise?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> to explore custom AI-driven solutions for your business growth.</p>
 `,
-    image: "/blog/ai-future.png",
+    image: "/blog/ai-future.webp",
     author: {
       name: "Sarah Chen",
       role: "Chief AI Officer",
@@ -1181,7 +1425,7 @@ export const blogs = [
     keywords:
       "AI trends Dubai, Enterprise AI 2026, Autonomous Agents, Edge AI Dubai, Multimodal AI, AI Dubai businesses",
     canonical:
-      "https://zaviortech.vercel.app/blog/future-of-ai-enterprise-2026",
+      "https://zavior.org/blog/future-of-ai-enterprise-2026",
   },
 
   // 2️⃣ Digital Transformation
@@ -1221,9 +1465,9 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>By adopting a holistic approach to digital transformation, Dubai companies can ensure sustainable growth and maintain a competitive edge.</p>
 
-<p><strong>Ready to transform your Dubai enterprise?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> for expert guidance.</p>
+<p><strong>Ready to transform your Dubai enterprise?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> for expert guidance.</p>
 `,
-    image: "/blog/digital-transformation.png",
+    image: "/blog/digital-transformation.webp",
     author: {
       name: "Mr  Mubeen Bahoo",
       role: "CEO",
@@ -1248,7 +1492,7 @@ export const blogs = [
     keywords:
       "Digital transformation Dubai, Enterprise digital strategy 2026, Agile Dubai, Customer Experience UAE, Technology adoption Dubai",
     canonical:
-      "https://zaviortech.vercel.app/blog/digital-transformation-guide-2026",
+      "https://zavior.org/blog/digital-transformation-guide-2026",
   },
 
   // 3️⃣ Odoo Best Practices
@@ -1279,9 +1523,9 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>Following these Odoo ERP best practices enables Dubai enterprises to achieve operational efficiency, improve reporting, and reduce errors.</p>
 
-<p><strong>Want expert Odoo ERP implementation in Dubai?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today.</p>
+<p><strong>Want expert Odoo ERP implementation in Dubai?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> today.</p>
 `,
-    image: "/blog/odoo-implementation.png",
+    image: "/blog/odoo-implementation.webp",
     author: {
       name: "Ahmed Hassan",
       role: "Director of ERP Solutions",
@@ -1306,7 +1550,7 @@ export const blogs = [
     keywords:
       "Odoo ERP Dubai, ERP implementation UAE, Best practices Odoo, Dubai business ERP",
     canonical:
-      "https://zaviortech.vercel.app/blog/odoo-implementation-best-practices",
+      "https://zavior.org/blog/odoo-implementation-best-practices",
   },
 
   // 4️⃣ Cybersecurity
@@ -1339,9 +1583,9 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>AI-driven security, zero trust, and robust monitoring help Dubai enterprises protect digital assets, ensure compliance, and maintain customer trust.</p>
 
-<p><strong>Need cybersecurity solutions tailored for Dubai businesses?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> for consultation.</p>
+<p><strong>Need cybersecurity solutions tailored for Dubai businesses?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> for consultation.</p>
 `,
-    image: "/blog/cybersecurity.png",
+    image: "/blog/cybersecurity.webp",
     author: {
       name: "David Kim",
       role: "Chief Security Officer",
@@ -1364,7 +1608,7 @@ export const blogs = [
       "Learn about cybersecurity trends for Dubai enterprises in 2026, including AI-driven threats, zero trust architecture, and supply chain protection. Zavior Technologies expertise included.",
     keywords:
       "Cybersecurity Dubai 2026, AI Security UAE, Zero Trust Dubai, Supply Chain Security Dubai",
-    canonical: "https://zaviortech.vercel.app/blog/cybersecurity-trends-2026",
+    canonical: "https://zavior.org/blog/cybersecurity-trends-2026",
   },
 
   // 5️⃣ Mobile App Development
@@ -1389,9 +1633,9 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>Cross-platform apps, AI-driven personalization, and super apps will define mobile development in Dubai, giving enterprises a competitive advantage.</p>
 
-<p><strong>Ready to build a Dubai-focused mobile app?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today.</p>
+<p><strong>Ready to build a Dubai-focused mobile app?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> today.</p>
 `,
-    image: "/blog/mobile-development.png",
+    image: "/blog/mobile-development.webp",
     author: {
       name: "Lisa Wong",
       role: "Head of Mobile Development",
@@ -1409,7 +1653,7 @@ export const blogs = [
     keywords:
       "Mobile app Dubai, Cross-platform apps UAE, AI mobile apps Dubai, Super Apps Dubai",
     canonical:
-      "https://zaviortech.vercel.app/blog/mobile-app-development-trends-2026",
+      "https://zavior.org/blog/mobile-app-development-trends-2026",
   },
 
   // 6️⃣ Odoo Implementation Success (already updated previously)
@@ -1443,8 +1687,8 @@ export const blogs = [
 <h2>7. Continuous Improvement</h2>
 <p>Review processes regularly and leverage Odoo updates to maintain efficiency.</p>
 
-<p><strong>Need expert Odoo ERP implementation in Dubai?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a>.</p>`,
-    image: "/blog/odoo-implementation-guide.png",
+<p><strong>Need expert Odoo ERP implementation in Dubai?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a>.</p>`,
+    image: "/blog/odoo-implementation-guide.webp",
     author: {
       name: "Aarav Mehta",
       role: "ERP Implementation Lead",
@@ -1462,7 +1706,7 @@ export const blogs = [
     keywords:
       "Odoo ERP Dubai, ERP Implementation UAE, ERP success Dubai, Zavior Technologies ERP",
     canonical:
-      "https://zaviortech.vercel.app/blog/odoo-implementation-success-guide",
+      "https://zavior.org/blog/odoo-implementation-success-guide",
   },
 
   // 7️⃣ Custom ERP with Spring Boot
@@ -1494,8 +1738,8 @@ export const blogs = [
 <h2>Example</h2>
 <p>A logistics company in Dubai saw 30% reduction in manual work after we implemented a Spring Boot ERP integrated with warehouse systems.</p>
 
-<p><strong>Explore custom ERP solutions for your Dubai business.</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a>.</p>`,
-    image: "/blog/spring-boot-erp.png",
+<p><strong>Explore custom ERP solutions for your Dubai business.</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a>.</p>`,
+    image: "/blog/spring-boot-erp.webp",
     author: {
       name: "Priya Sharma",
       role: "Senior Software Architect",
@@ -1511,7 +1755,7 @@ export const blogs = [
       "Build scalable and secure custom ERPs for Dubai enterprises using Spring Boot. Learn best practices from Zavior Technologies.",
     keywords:
       "Custom ERP Dubai, Spring Boot ERP UAE, Enterprise ERP Dubai, Zavior Technologies",
-    canonical: "https://zaviortech.vercel.app/blog/custom-erp-spring-boot",
+    canonical: "https://zavior.org/blog/custom-erp-spring-boot",
   },
 
   // 8️⃣ Legacy ERP Modernization
@@ -1550,8 +1794,8 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>Modernizing ERP in Dubai is critical for efficiency, growth, and competitiveness.</p>
 
-<p><strong>Start your ERP modernization journey.</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today.</p>`,
-    image: "/blog/legacy-modernization.png",
+<p><strong>Start your ERP modernization journey.</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> today.</p>`,
+    image: "/blog/legacy-modernization.webp",
     author: {
       name: "Vikram Singh",
       role: "Director of Consulting",
@@ -1573,7 +1817,7 @@ export const blogs = [
       "Learn why modernizing legacy ERP systems is critical for Dubai enterprises. Explore Odoo and custom ERP solutions with Zavior Technologies.",
     keywords:
       "ERP modernization Dubai, Legacy ERP UAE, Odoo Dubai, Custom ERP Dubai",
-    canonical: "https://zaviortech.vercel.app/blog/legacy-to-modern-erp",
+    canonical: "https://zavior.org/blog/legacy-to-modern-erp",
   },
 
   // 9️⃣ New Blog: AI-Powered ERP
@@ -1596,8 +1840,8 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>Dubai businesses adopting AI-powered ERP gain efficiency, agility, and competitive advantage.</p>
 
-<p><strong>Explore AI-driven ERP solutions.</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a>.</p>`,
-    image: "/blog/ai-erp.png",
+<p><strong>Explore AI-driven ERP solutions.</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a>.</p>`,
+    image: "/blog/ai-erp.webp",
     author: {
       name: "Rashid Al Mansoori",
       role: "ERP AI Specialist",
@@ -1613,7 +1857,7 @@ export const blogs = [
       "Discover AI-powered ERP solutions for Dubai enterprises. Automate workflows and gain predictive insights with Zavior Technologies.",
     keywords:
       "AI ERP Dubai, Intelligent ERP UAE, ERP automation Dubai, AI-driven ERP",
-    canonical: "https://zaviortech.vercel.app/blog/ai-powered-erp-dubai",
+    canonical: "https://zavior.org/blog/ai-powered-erp-dubai",
   },
 
   // 10️⃣ New Blog: Cloud ERP Adoption Dubai
@@ -1644,8 +1888,8 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>Cloud ERP adoption enables Dubai businesses to improve agility, reduce costs, and drive digital transformation.</p>
 
-<p><strong>Ready to migrate to Cloud ERP?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today.</p>`,
-    image: "/blog/cloud-erp.png",
+<p><strong>Ready to migrate to Cloud ERP?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> today.</p>`,
+    image: "/blog/cloud-erp.webp",
     author: {
       name: "Fatima Al Suwaidi",
       role: "Cloud ERP Consultant",
@@ -1661,7 +1905,7 @@ export const blogs = [
       "Dubai businesses adopting cloud ERP gain flexibility, scalability, and real-time insights. Learn benefits and best practices with Zavior Technologies.",
     keywords:
       "Cloud ERP Dubai, ERP migration UAE, Cloud ERP adoption Dubai, Zavior Technologies",
-    canonical: "https://zaviortech.vercel.app/blog/cloud-erp-adoption-dubai",
+    canonical: "https://zavior.org/blog/cloud-erp-adoption-dubai",
   },
   {
   id: "stop-spreadsheet-chaos",
@@ -1703,9 +1947,9 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>If your team is wasting hours navigating spreadsheets, it’s time to consider Odoo ERP. Centralize operations, improve accuracy, and make data-driven decisions that accelerate growth in Dubai’s competitive marketplace.</p>
 
-<p><strong>Ready to leave spreadsheet chaos behind?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> today for a free consultation and discover how Odoo ERP can transform your Dubai enterprise.</p>
+<p><strong>Ready to leave spreadsheet chaos behind?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> today for a free consultation and discover how Odoo ERP can transform your Dubai enterprise.</p>
 `,
-  image: "/blog/stop-spreadsheet-chaos.png",
+  image: "/blog/stop-spreadsheet-chaos.webp",
   author: {
     name: "Mureed Sultan",
     role: "ERP Solutions Architect",
@@ -1723,7 +1967,7 @@ export const blogs = [
   keywords:
     "Odoo ERP Dubai, ERP Dubai 2026, Spreadsheet replacement Dubai, ERP implementation UAE, Dubai business solutions",
   canonical:
-    "https://zaviortech.vercel.app/blog/stop-spreadsheet-chaos-odoo-erp-dubai",
+    "https://zavior.org/blog/stop-spreadsheet-chaos-odoo-erp-dubai",
 },
 
 // 14️⃣ Ditch Manual Processes – Odoo ERP Advantage
@@ -1767,9 +2011,9 @@ export const blogs = [
 <h2>Conclusion</h2>
 <p>If your Dubai enterprise struggles with manual processes, Odoo ERP is the solution to centralize operations, eliminate errors, and unlock growth. Stop losing hours every week to repetitive tasks and focus on scaling your business.</p>
 
-<p><strong>Ready to transform your operations?</strong> <a href="https://zaviortech.vercel.app/contact">Contact Zavior Technologies</a> to implement Odoo ERP tailored for Dubai businesses.</p>
+<p><strong>Ready to transform your operations?</strong> <a href="https://zavior.org/contact">Contact Zavior Technologies</a> to implement Odoo ERP tailored for Dubai businesses.</p>
 `,
-  image: "/blog/ditch-manual-processes.png",
+  image: "/blog/ditch-manual-processes.webp",
   author: {
     name: "Mr. Mubeen Bahoo",
     role: "CEO & ERP Strategist",
@@ -1787,7 +2031,7 @@ export const blogs = [
   keywords:
     "Odoo ERP Dubai, ERP implementation UAE, Replace manual processes Dubai, ERP Dubai businesses, Dubai ERP solution",
   canonical:
-    "https://zaviortech.vercel.app/blog/ditch-manual-processes-odoo-erp-dubai",
+    "https://zavior.org/blog/ditch-manual-processes-odoo-erp-dubai",
 },
 // 15️⃣ Odoo vs Traditional ERP
 {
@@ -2204,6 +2448,892 @@ export const blogs = [
     "Odoo partner Dubai, Odoo implementation partner UAE, ERP consultant Dubai, Odoo consultant UAE, Zavior Technologies",
   canonical:
     "https://zavior.org/blog/choose-odoo-implementation-partner-dubai",
+},
+
+// 20. ERP implementation cost in Dubai
+{
+  id: "odoo-erp-implementation-cost-dubai",
+  title:
+    "Odoo ERP Implementation Cost in Dubai: What Actually Drives the Budget?",
+  slug: "odoo-erp-implementation-cost-dubai",
+  excerpt:
+    "Understand the real cost drivers behind Odoo ERP implementation in Dubai, including modules, migration, integrations, customization, training, and support.",
+  content: `
+<p>Many Dubai businesses ask for an ERP price before the implementation scope is clear. That is understandable, but it is also where bad ERP decisions begin. Odoo implementation cost depends less on the software name and more on the business processes that must be configured, migrated, integrated, trained, and supported.</p>
+
+<p>A lean sales and accounting rollout is very different from a multi-branch retail, inventory, manufacturing, HR, and finance implementation. The right budgeting conversation should separate platform cost, implementation effort, data migration, integrations, and post-launch support.</p>
+
+<h2>1. Modules and Business Scope</h2>
+<p>The more departments involved, the more discovery and configuration effort is required. A Dubai SME may begin with CRM, Sales, Accounting, and Inventory. A larger operation may need Purchase, Manufacturing, POS, HR, Payroll coordination, approvals, and advanced reporting.</p>
+
+<h2>2. Data Migration Quality</h2>
+<p>Clean migration is one of the most important budget factors. Customer records, product masters, opening balances, stock quantities, supplier lists, and historical transactions must be reviewed before import. Bad data can make a technically successful go-live feel like a failure to users.</p>
+
+<h2>3. Customization Discipline</h2>
+<p>Customization is useful when it protects a real business advantage. It becomes expensive when every old spreadsheet habit is copied into ERP. A strong implementation partner will challenge custom requests, use standard Odoo features where possible, and customize only when the business case is clear.</p>
+
+<h2>4. Integrations</h2>
+<p>Dubai companies often need ERP connected to e-commerce stores, payment gateways, WhatsApp workflows, logistics tools, accounting processes, or custom portals. Integration effort depends on API quality, data mapping, security, and error handling.</p>
+
+<h2>5. Training and Change Management</h2>
+<p>Training is not optional. Sales, finance, warehouse, purchasing, and management teams need role-based training and simple documentation. This reduces support tickets and helps the team trust the system faster.</p>
+
+<h2>A Practical Budgeting Framework</h2>
+<ul>
+  <li><strong>Phase one:</strong> Stabilize the core workflows that create invoices, stock movement, and reporting.</li>
+  <li><strong>Phase two:</strong> Add integrations, dashboards, approvals, and automation once the foundation is trusted.</li>
+  <li><strong>Phase three:</strong> Optimize with AI, advanced analytics, and department-specific enhancements.</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>The best Odoo ERP budget is tied to measurable outcomes: fewer manual reports, cleaner stock visibility, faster invoicing, better sales follow-up, and stronger management control. Start with a practical scope, protect the go-live, and expand once the business is stable.</p>
+
+<p><strong>Planning an Odoo rollout in Dubai?</strong> <a href="/contact">Contact Zavior Technologies</a> for a discovery session focused on your workflow, data, and implementation priorities.</p>
+`,
+  image: "/blog/odoo-implementation.webp",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "ERP Research Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "ERP & Odoo Solutions",
+  readTime: "9 min read",
+  publishedAt: "2026-05-06",
+  updatedAt: "2026-05-06",
+  featured: true,
+  tags: [
+    "Odoo Cost Dubai",
+    "ERP Budget",
+    "Odoo Implementation",
+    "Dubai ERP",
+    "UAE Business Systems",
+  ],
+  metaTitle:
+    "Odoo ERP Implementation Cost Dubai | Budget Drivers | Zavior Technologies",
+  metaDescription:
+    "Learn what drives Odoo ERP implementation cost in Dubai, from modules and migration to integrations, customization, training, and support.",
+  keywords:
+    "Odoo ERP implementation cost Dubai, ERP cost UAE, Odoo partner Dubai, ERP budget Dubai",
+  canonical:
+    "https://zavior.org/blog/odoo-erp-implementation-cost-dubai",
+},
+
+// 21. E-commerce ERP integration
+{
+  id: "ecommerce-erp-integration-uae",
+  title:
+    "E-commerce ERP Integration in the UAE: Connecting Storefronts, Stock, and Finance",
+  slug: "ecommerce-erp-integration-uae",
+  excerpt:
+    "See how UAE e-commerce brands can connect Shopify, WooCommerce, marketplaces, inventory, accounting, and fulfillment through ERP integration.",
+  content: `
+<p>E-commerce growth in the UAE creates a familiar operational problem: orders arrive quickly, but back-office systems struggle to keep up. Sales happen through Shopify, WooCommerce, marketplaces, social channels, and WhatsApp. Inventory is updated manually. Finance waits for exports. Fulfillment teams chase missing information.</p>
+
+<p>ERP integration solves this by connecting customer orders, stock movement, invoicing, payments, and reporting in one reliable workflow. For growing Dubai and UAE retailers, this is often the difference between selling more and operating profitably.</p>
+
+<h2>What Should Be Integrated?</h2>
+<ul>
+  <li><strong>Orders:</strong> Bring online orders into ERP automatically with customer, SKU, tax, discount, and payment details.</li>
+  <li><strong>Inventory:</strong> Sync stock levels so storefronts do not sell unavailable items.</li>
+  <li><strong>Accounting:</strong> Connect invoices, credit notes, VAT treatment, and payment reconciliation.</li>
+  <li><strong>Fulfillment:</strong> Push picking, packing, delivery, and tracking updates back into customer-facing systems.</li>
+  <li><strong>Reporting:</strong> Give leadership one view of revenue, stock, margins, and returns.</li>
+</ul>
+
+<h2>Common Integration Mistakes</h2>
+<p>The biggest mistake is treating integration as a simple data sync. A strong integration must handle failed orders, duplicate customers, partial refunds, out-of-stock items, shipping changes, and tax differences. Without error handling, teams simply replace manual entry with manual troubleshooting.</p>
+
+<h2>Why Odoo Works Well for E-commerce Operations</h2>
+<p>Odoo gives UAE retailers a practical ERP foundation for products, warehouses, invoices, purchases, POS, and CRM. When connected properly to e-commerce channels, it becomes the operational backbone behind the storefront.</p>
+
+<h2>Implementation Sequence</h2>
+<ul>
+  <li>Clean product SKUs and inventory rules first.</li>
+  <li>Map order, tax, discount, and payment logic.</li>
+  <li>Test refunds, cancellations, and stock exceptions.</li>
+  <li>Train operations and finance teams together.</li>
+  <li>Monitor integration logs after launch.</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>Fast storefronts need strong operations behind them. ERP integration helps UAE e-commerce companies reduce manual work, improve fulfillment accuracy, and understand profitability across channels.</p>
+
+<p><strong>Need your store connected to ERP?</strong> <a href="/services/erp-odoo-dubai">Explore our Odoo ERP services</a> or <a href="/contact">talk to Zavior Technologies</a> about your integration flow.</p>
+`,
+  image: "/blog/cloud-erp.webp",
+  author: {
+    name: "Mureed Sultan",
+    role: "Chief Technology Officer",
+    avatar: "/placeholder-user.jpg",
+  },
+  category: "ERP & Odoo Solutions",
+  readTime: "8 min read",
+  publishedAt: "2026-05-05",
+  updatedAt: "2026-05-06",
+  featured: true,
+  tags: [
+    "E-commerce ERP",
+    "Odoo Integration",
+    "Shopify ERP",
+    "WooCommerce ERP",
+    "UAE Retail",
+  ],
+  metaTitle:
+    "E-commerce ERP Integration UAE | Odoo, Shopify & WooCommerce | Zavior",
+  metaDescription:
+    "Connect e-commerce orders, stock, accounting, payments, and fulfillment with ERP integration for UAE and Dubai retailers.",
+  keywords:
+    "ecommerce ERP UAE, Shopify Odoo Dubai, WooCommerce ERP UAE, retail ERP Dubai",
+  canonical:
+    "https://zavior.org/blog/ecommerce-erp-integration-uae",
+},
+
+// 22. CRM implementation
+{
+  id: "crm-implementation-dubai-smes",
+  title:
+    "CRM Implementation for Dubai SMEs: Pipeline, WhatsApp, Quotes, and Follow-Up",
+  slug: "crm-implementation-dubai-smes",
+  excerpt:
+    "Learn how Dubai SMEs can build a practical CRM setup that improves lead response, sales visibility, WhatsApp follow-up, quotations, and reporting.",
+  content: `
+<p>Many Dubai SMEs do not lose sales because demand is missing. They lose sales because follow-up is inconsistent, quote status is unclear, and lead ownership is spread across phones, spreadsheets, inboxes, and WhatsApp chats. A CRM implementation fixes this by creating one accountable sales workflow.</p>
+
+<h2>Start with the Sales Process, Not the Tool</h2>
+<p>The CRM should reflect how your team sells: inquiry, qualification, proposal, negotiation, approval, won, lost, and post-sale handoff. If those stages are unclear, the system will only store confusion more neatly.</p>
+
+<h2>What Dubai SMEs Should Configure First</h2>
+<ul>
+  <li><strong>Lead sources:</strong> Website forms, phone calls, WhatsApp, referrals, campaigns, and marketplaces.</li>
+  <li><strong>Pipeline stages:</strong> Stages that match real buying behavior and manager review points.</li>
+  <li><strong>Quote workflow:</strong> Proposal templates, approval rules, expiry dates, and follow-up reminders.</li>
+  <li><strong>Activity tracking:</strong> Calls, meetings, tasks, and next action dates.</li>
+  <li><strong>Dashboards:</strong> Conversion rate, open pipeline, overdue follow-ups, and expected revenue.</li>
+</ul>
+
+<h2>Where WhatsApp Fits</h2>
+<p>WhatsApp is central to business communication in the UAE, but it should not be the only system of record. A good CRM strategy captures inquiries and follow-up status while allowing teams to communicate through the channels customers prefer.</p>
+
+<h2>Odoo CRM vs Custom CRM</h2>
+<p>Odoo CRM is often a strong fit when sales must connect to quotations, invoicing, inventory, projects, or accounting. A custom CRM can make sense when the sales model is highly specialized or part of a larger platform. The decision should be based on workflow complexity, integration needs, and long-term maintenance.</p>
+
+<h2>Conclusion</h2>
+<p>A practical CRM gives Dubai SMEs faster response times, cleaner accountability, and better sales forecasting. The system does not need to be complicated. It needs to be used every day and connected to the way the business actually wins deals.</p>
+
+<p><strong>Want a CRM that your sales team will actually use?</strong> <a href="/contact">Contact Zavior Technologies</a> to map your pipeline and automation opportunities.</p>
+`,
+  image: "/projects/crm_analytics.webp",
+  author: {
+    name: "Mr. Mubeen Bahoo",
+    role: "CEO & ERP Strategist",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "CRM & Sales Automation",
+  readTime: "8 min read",
+  publishedAt: "2026-05-04",
+  updatedAt: "2026-05-06",
+  featured: false,
+  tags: [
+    "CRM Dubai",
+    "Sales Automation",
+    "Odoo CRM",
+    "WhatsApp Workflow",
+    "SME Dubai",
+  ],
+  metaTitle:
+    "CRM Implementation Dubai SMEs | Pipeline & WhatsApp Automation | Zavior",
+  metaDescription:
+    "A practical CRM implementation guide for Dubai SMEs covering pipeline design, WhatsApp follow-up, quotations, dashboards, and Odoo CRM.",
+  keywords:
+    "CRM implementation Dubai, Odoo CRM UAE, WhatsApp CRM Dubai, sales automation UAE",
+  canonical:
+    "https://zavior.org/blog/crm-implementation-dubai-smes",
+},
+
+// 23. Local SEO for service businesses
+{
+  id: "local-seo-dubai-service-businesses",
+  title:
+    "Local SEO for Dubai Service Businesses: The Website Foundation That Converts",
+  slug: "local-seo-dubai-service-businesses",
+  excerpt:
+    "Learn the technical and content foundations Dubai service businesses need for local SEO, from service pages and schema to speed, trust signals, and lead forms.",
+  content: `
+<p>Local SEO in Dubai is not only about adding city names to a page. Search performance depends on whether the website clearly explains the service, proves local relevance, loads quickly, earns trust, and gives visitors a simple path to contact the business.</p>
+
+<p>For service companies, the website should act like a sales system: educate, qualify, reassure, and capture leads. That requires a stronger foundation than a generic homepage and a contact form.</p>
+
+<h2>Build Dedicated Service Pages</h2>
+<p>Each important service should have its own page with a descriptive URL, clear heading, useful explanation, FAQs, internal links, and a focused call to action. A page for Odoo ERP Dubai should not compete with a generic IT services page.</p>
+
+<h2>Use Structured Data Carefully</h2>
+<p>Schema helps search engines understand the business, services, articles, breadcrumbs, and contact details. It does not replace useful content, but it improves clarity when paired with accurate page information.</p>
+
+<h2>Show Local Trust Signals</h2>
+<ul>
+  <li>UAE contact details and service areas.</li>
+  <li>Relevant project examples or sector experience.</li>
+  <li>Clear company identity, team information, and social profiles.</li>
+  <li>Fast inquiry paths such as phone, email, form, and WhatsApp.</li>
+</ul>
+
+<h2>Performance Matters</h2>
+<p>Dubai buyers often compare multiple vendors quickly. Slow mobile pages lose attention before the content can work. Next.js, optimized images, stable layouts, and clean hosting can improve user experience and conversion quality.</p>
+
+<h2>Avoid Keyword Stuffing</h2>
+<p>Repeating "Dubai" in every sentence does not create a stronger page. Useful pages answer buyer questions: cost, process, timeline, support, risks, outcomes, and why the provider is credible.</p>
+
+<h2>Conclusion</h2>
+<p>The best local SEO foundation combines helpful content, clean technical SEO, strong page speed, accurate structured data, and conversion-focused design. That is how Dubai service businesses turn search visibility into real inquiries.</p>
+
+<p><strong>Need a Dubai-ready SEO and web foundation?</strong> <a href="/services/web-development-dubai">Explore our web development services</a> or <a href="/contact">book a consultation</a>.</p>
+`,
+  image: "/blog/digital-transformation.webp",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "Digital Growth Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "Digital Growth",
+  readTime: "9 min read",
+  publishedAt: "2026-05-03",
+  updatedAt: "2026-05-06",
+  featured: false,
+  tags: [
+    "Local SEO Dubai",
+    "Website SEO",
+    "Service Business",
+    "Next.js SEO",
+    "Lead Generation",
+  ],
+  metaTitle:
+    "Local SEO for Dubai Service Businesses | Website Foundation | Zavior",
+  metaDescription:
+    "Build a local SEO foundation for Dubai service businesses with dedicated pages, schema, fast performance, trust signals, and better lead paths.",
+  keywords:
+    "local SEO Dubai, service business SEO UAE, website SEO Dubai, Next.js SEO Dubai",
+  canonical:
+    "https://zavior.org/blog/local-seo-dubai-service-businesses",
+},
+
+// 24. Managed IT support
+{
+  id: "managed-it-support-dubai",
+  title:
+    "Managed IT Support in Dubai: What Growing Companies Should Standardize First",
+  slug: "managed-it-support-dubai",
+  excerpt:
+    "A practical guide to managed IT support for Dubai businesses covering endpoints, backups, network reliability, cybersecurity, access control, and monitoring.",
+  content: `
+<p>As companies grow, IT issues become business issues. Slow networks, unmanaged laptops, weak backups, shared passwords, and unmonitored systems can interrupt sales, finance, operations, and customer support. Managed IT support helps Dubai businesses standardize the basics before small risks become expensive downtime.</p>
+
+<h2>1. Endpoint Management</h2>
+<p>Laptops and workstations should have approved software, security updates, antivirus or EDR protection, disk encryption where needed, and a clear handover process when employees join or leave.</p>
+
+<h2>2. Backup and Recovery</h2>
+<p>Backups should be tested, not assumed. Businesses need defined recovery points, recovery time expectations, and separate protection for critical files, databases, accounting data, and cloud systems.</p>
+
+<h2>3. Network Reliability</h2>
+<p>Wi-Fi, switches, routers, firewalls, and cabling affect daily productivity. A stable network design reduces random outages and helps teams work without constant interruption.</p>
+
+<h2>4. Identity and Access Control</h2>
+<p>Access should match job roles. Shared accounts and unmanaged admin access create unnecessary risk. Multi-factor authentication, password policies, and clear access reviews protect business systems.</p>
+
+<h2>5. Cybersecurity Monitoring</h2>
+<p>Security is not a one-time installation. Logs, alerts, patching, phishing awareness, and incident response planning help companies detect and respond to issues earlier.</p>
+
+<h2>Conclusion</h2>
+<p>Managed IT support gives growing Dubai companies structure: fewer recurring issues, stronger security, better asset visibility, and faster response when something breaks. Start by standardizing the foundations, then mature into automation and monitoring.</p>
+
+<p><strong>Need reliable IT support for your UAE team?</strong> <a href="/services/it-solutions-dubai">Explore our IT solutions</a> or <a href="/contact">contact Zavior Technologies</a>.</p>
+`,
+  image: "/blog/cybersecurity.webp",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "IT Infrastructure Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "IT Solutions",
+  readTime: "7 min read",
+  publishedAt: "2026-05-02",
+  updatedAt: "2026-05-06",
+  featured: false,
+  tags: [
+    "Managed IT Dubai",
+    "IT Support UAE",
+    "Cybersecurity",
+    "Backups",
+    "Network Support",
+  ],
+  metaTitle:
+    "Managed IT Support Dubai | Standards for Growing Companies | Zavior",
+  metaDescription:
+    "Learn what Dubai companies should standardize first in managed IT support, from endpoints and backups to networks, access control, and security.",
+  keywords:
+    "managed IT support Dubai, IT support UAE, network support Dubai, cybersecurity Dubai",
+  canonical:
+    "https://zavior.org/blog/managed-it-support-dubai",
+},
+
+// 25. Next.js performance for Dubai websites
+{
+  id: "nextjs-website-performance-dubai",
+  title:
+    "Next.js Website Performance for Dubai Businesses: Speed, SEO, and Conversion",
+  slug: "nextjs-website-performance-dubai",
+  excerpt:
+    "Learn why Next.js is a strong foundation for Dubai business websites that need fast pages, technical SEO, reliable hosting, and better lead conversion.",
+  content: `
+<p>A business website in Dubai has to do more than look modern. It must load quickly on mobile, explain the offer clearly, support SEO, handle lead forms reliably, and scale without becoming painful to maintain. Next.js is a strong foundation when those requirements matter.</p>
+
+<h2>Why Speed Matters</h2>
+<p>Visitors compare vendors quickly. If a page is slow, unstable, or confusing on mobile, the business loses trust before the offer is understood. Fast static pages, optimized images, and stable layouts help users stay focused.</p>
+
+<h2>Technical SEO Advantages</h2>
+<p>Next.js can support clean URLs, server-rendered pages, canonical tags, structured data, image optimization, sitemap generation, and performance-friendly routing. These pieces help search engines discover and understand the site more clearly.</p>
+
+<h2>When Vercel Helps</h2>
+<p>Hosting a Next.js site on Vercel gives teams simple deployments, global CDN delivery, preview URLs, and strong support for static and incremental rendering patterns. For marketing and service websites, that usually means less infrastructure work and faster delivery.</p>
+
+<h2>What Still Needs Human Strategy</h2>
+<p>Framework choice alone does not create rankings or leads. The site still needs useful content, clear service architecture, Dubai-relevant trust signals, strong calls to action, good internal linking, and ongoing updates.</p>
+
+<h2>Conclusion</h2>
+<p>Next.js is a practical choice for Dubai businesses that want speed, SEO clarity, and a maintainable growth platform. The best results come when performance engineering is paired with strong market positioning and conversion-focused content.</p>
+
+<p><strong>Planning a faster company website?</strong> <a href="/services/web-development-dubai">Explore our web development services</a> or <a href="/contact">book a consultation</a>.</p>
+`,
+  image: "/blog/ai-automation-smes.svg",
+  author: {
+    name: "Mureed Sultan",
+    role: "Chief Technology Officer",
+    avatar: "/placeholder-user.jpg",
+  },
+  category: "Web Development",
+  readTime: "7 min read",
+  publishedAt: "2026-05-01",
+  updatedAt: "2026-05-06",
+  featured: false,
+  tags: [
+    "Next.js Dubai",
+    "Website Performance",
+    "Technical SEO",
+    "Vercel",
+    "Lead Conversion",
+  ],
+  metaTitle:
+    "Next.js Website Performance Dubai | Speed, SEO & Conversion | Zavior",
+  metaDescription:
+    "Why Next.js is a strong foundation for Dubai business websites needing speed, technical SEO, Vercel hosting, and better lead conversion.",
+  keywords:
+    "Next.js Dubai, website performance Dubai, technical SEO UAE, Vercel website Dubai",
+  canonical:
+    "https://zavior.org/blog/nextjs-website-performance-dubai",
+},
+{
+  id: "odoo-erp-services-dubai-complete-guide",
+  title: "Odoo ERP Services in Dubai: Complete Guide for UAE Businesses",
+  slug: "odoo-erp-services-dubai-complete-guide",
+  excerpt:
+    "A practical guide to Odoo ERP services in Dubai, covering modules, implementation steps, customization, integrations, support, and UAE business benefits.",
+  content: `
+<p>Odoo ERP services in Dubai are most valuable when they solve real operational friction: scattered spreadsheets, slow approvals, manual invoicing, stock mismatch, unclear sales follow-up, and delayed reporting. For UAE businesses, Odoo can bring CRM, accounting, sales, inventory, POS, manufacturing, HR, and dashboards into one connected system.</p>
+
+<h2>What Odoo ERP Services Include</h2>
+<p>A complete Odoo service engagement usually includes discovery, process mapping, module selection, configuration, customization, data migration, integrations, training, go-live support, and post-launch optimization.</p>
+
+<h3>Core Modules for Dubai Companies</h3>
+<ul>
+  <li>CRM, Sales, Quotations, Invoicing, and Accounting</li>
+  <li>Inventory, Purchase, Warehouse, Barcode, and Reordering</li>
+  <li>POS, E-commerce, Manufacturing, Projects, HR, and Approvals</li>
+  <li>Dashboards, management reports, and UAE VAT-ready workflows</li>
+</ul>
+
+<h2>Why Dubai Businesses Choose Odoo</h2>
+<p>Odoo is modular, customizable, and scalable. Companies can start with the departments that need urgent control, then expand once users trust the system. This makes it practical for Dubai SMEs, growing trading companies, service firms, retailers, distributors, and manufacturers.</p>
+
+<h2>How to Start Safely</h2>
+<p>Begin by documenting the workflows that create revenue, cost, stock movement, and financial reporting. Then choose the modules that support those workflows with the least unnecessary customization.</p>
+
+<p>For service details, explore <a href="/services/odoo-services-dubai">Odoo services in Dubai</a> and <a href="/services/odoo-erp-implementation-dubai">Odoo ERP implementation Dubai</a>. You can also compare options on our <a href="/services/erp-software-dubai">ERP software Dubai</a> page.</p>
+
+<p><strong>Need a Dubai Odoo roadmap?</strong> <a href="/contact">Contact Zavior Technologies</a> for a discovery session.</p>
+`,
+  image: "/blog/odoo-vs-traditional-erp.svg",
+  imageAlt:
+    "Odoo ERP dashboard and Dubai business automation workflow for UAE companies",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "ERP Research Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "ERP & Odoo Solutions",
+  readTime: "9 min read",
+  publishedAt: "2026-05-11",
+  updatedAt: "2026-05-11",
+  featured: true,
+  tags: [
+    "Odoo Services Dubai",
+    "Odoo ERP Dubai",
+    "ERP Implementation UAE",
+    "Business Automation UAE",
+  ],
+  faqs: [
+    {
+      question: "What are Odoo ERP services in Dubai?",
+      answer:
+        "Odoo ERP services in Dubai include consulting, implementation, customization, data migration, integrations, training, reporting, and long-term support for UAE businesses.",
+    },
+    {
+      question: "Is Odoo suitable for UAE SMEs?",
+      answer:
+        "Yes. Odoo is often suitable for UAE SMEs because it is modular, cost-flexible, and can support CRM, accounting, inventory, POS, manufacturing, and reporting as the company grows.",
+    },
+  ],
+  metaTitle:
+    "Odoo ERP Services in Dubai | Complete UAE Business Guide | Zavior",
+  metaDescription:
+    "Complete guide to Odoo ERP services in Dubai for UAE businesses, including modules, implementation, customization, integrations, support, and automation benefits.",
+  keywords:
+    "Odoo services in Dubai, Odoo ERP Dubai, Odoo implementation Dubai, ERP implementation UAE, business automation services UAE",
+  canonical:
+    "https://zavior.org/blog/odoo-erp-services-dubai-complete-guide",
+},
+{
+  id: "odoo-implementation-dubai-cost-timeline-process",
+  title: "Odoo Implementation in Dubai: Cost, Timeline, and Process",
+  slug: "odoo-implementation-dubai-cost-timeline-process",
+  excerpt:
+    "Understand what drives Odoo implementation cost in Dubai, realistic timelines, implementation phases, migration risks, integrations, and go-live planning.",
+  content: `
+<p>Odoo implementation in Dubai should be budgeted around business scope, not only software licensing. The real cost depends on modules, process complexity, customization, migration quality, integrations, reporting needs, training, and support after go-live.</p>
+
+<h2>What Drives Odoo Implementation Cost?</h2>
+<ul>
+  <li><strong>Modules:</strong> CRM and accounting are simpler than a full inventory, POS, manufacturing, HR, and finance rollout.</li>
+  <li><strong>Data migration:</strong> Product masters, customer records, stock, opening balances, and historical transactions need cleanup.</li>
+  <li><strong>Customization:</strong> Custom workflows add value when they protect a real business process, but they must be scoped carefully.</li>
+  <li><strong>Integrations:</strong> E-commerce, payment gateways, WhatsApp, logistics, and BI tools affect effort.</li>
+</ul>
+
+<h2>Typical Timeline</h2>
+<p>A focused Odoo implementation may take a few weeks. A multi-department ERP rollout can take several months. The best timeline is phased: stabilize core workflows first, then add advanced automation and reporting.</p>
+
+<h3>Recommended Process</h3>
+<p>Discovery, scope approval, configuration, data migration testing, user acceptance testing, training, go-live, and hypercare should all be planned before launch.</p>
+
+<p>Review our <a href="/services/odoo-erp-implementation-dubai">Odoo ERP implementation Dubai</a> service page or compare broader options on <a href="/services/erp-software-dubai">ERP software Dubai</a>.</p>
+
+<p><strong>Want a practical cost range?</strong> <a href="/contact">Contact Zavior Technologies</a> with your modules and rollout scope.</p>
+`,
+  image: "/blog/odoo-implementation.webp",
+  imageAlt:
+    "Odoo implementation timeline and ERP project planning for Dubai companies",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "ERP Research Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "ERP & Odoo Solutions",
+  readTime: "8 min read",
+  publishedAt: "2026-05-10",
+  updatedAt: "2026-05-11",
+  featured: true,
+  tags: ["Odoo Implementation Dubai", "Odoo Cost", "ERP Timeline", "UAE ERP"],
+  faqs: [
+    {
+      question: "How much does Odoo implementation cost in Dubai?",
+      answer:
+        "Cost depends on modules, users, customization, migration, integrations, training, and support. A discovery session is needed for an accurate estimate.",
+    },
+    {
+      question: "How long does Odoo implementation take?",
+      answer:
+        "A focused rollout may take weeks, while a full ERP implementation across departments may take several months depending on scope and data readiness.",
+    },
+  ],
+  metaTitle:
+    "Odoo Implementation Dubai | Cost, Timeline & Process | Zavior",
+  metaDescription:
+    "Learn what drives Odoo implementation cost in Dubai, realistic timelines, process phases, data migration, integrations, training, and go-live support.",
+  keywords:
+    "Odoo implementation Dubai, Odoo ERP Dubai, Odoo implementation cost Dubai, ERP implementation UAE",
+  canonical:
+    "https://zavior.org/blog/odoo-implementation-dubai-cost-timeline-process",
+},
+{
+  id: "odoo-customization-services-uae",
+  title: "Odoo Customization Services in UAE",
+  slug: "odoo-customization-services-uae",
+  excerpt:
+    "Learn when Odoo customization is useful for UAE companies, what to customize, what to avoid, and how to keep ERP changes maintainable.",
+  content: `
+<p>Odoo customization services in the UAE help businesses adapt ERP workflows to real operational needs. The key is discipline: customize where the business case is clear, and use standard Odoo features where they already solve the problem.</p>
+
+<h2>When Odoo Customization Makes Sense</h2>
+<p>Customization is useful when your approval flow, pricing model, warehouse rule, manufacturing process, reporting requirement, or integration cannot be handled cleanly through configuration.</p>
+
+<h3>Common Customization Areas</h3>
+<ul>
+  <li>Custom fields, forms, approval rules, and workflows</li>
+  <li>PDF reports, invoices, quotations, and management dashboards</li>
+  <li>UAE VAT and finance process adjustments</li>
+  <li>E-commerce, payment, WhatsApp, logistics, and BI integrations</li>
+</ul>
+
+<h2>What to Avoid</h2>
+<p>Do not recreate every spreadsheet habit inside Odoo. Over-customization can slow implementation, increase support cost, and make upgrades harder.</p>
+
+<p>See our <a href="/services/odoo-services-dubai">Odoo services in Dubai</a> and <a href="/services/odoo-erp-implementation-dubai">Odoo ERP implementation Dubai</a> pages for related support.</p>
+
+<p><strong>Need Odoo customization in the UAE?</strong> <a href="/contact">Contact Zavior Technologies</a> to review your workflow.</p>
+`,
+  image: "/blog/odoo-ai-automation.svg",
+  imageAlt:
+    "Odoo customization workflow with UAE business automation modules",
+  author: {
+    name: "Mureed Sultan",
+    role: "ERP Solutions Architect",
+    avatar: "/placeholder-user.jpg",
+  },
+  category: "ERP & Odoo Solutions",
+  readTime: "7 min read",
+  publishedAt: "2026-05-09",
+  updatedAt: "2026-05-11",
+  featured: false,
+  tags: ["Odoo Customization UAE", "Odoo Development", "ERP Automation"],
+  faqs: [
+    {
+      question: "Can Odoo be customized for UAE companies?",
+      answer:
+        "Yes. Odoo can be customized for UAE finance, inventory, approval, reporting, POS, manufacturing, CRM, and integration needs.",
+    },
+    {
+      question: "Is too much Odoo customization risky?",
+      answer:
+        "Yes. Excessive customization can increase cost and make upgrades harder, so strong scoping and standard-module review are important.",
+    },
+  ],
+  metaTitle:
+    "Odoo Customization Services UAE | ERP Workflow Development | Zavior",
+  metaDescription:
+    "Odoo customization services in UAE for workflows, approvals, reports, dashboards, integrations, accounting, CRM, inventory, POS, and automation.",
+  keywords:
+    "Odoo customization UAE, Odoo development UAE, Odoo ERP Dubai, business automation services UAE",
+  canonical:
+    "https://zavior.org/blog/odoo-customization-services-uae",
+},
+{
+  id: "best-erp-software-small-businesses-dubai",
+  title: "Best ERP Software for Small Businesses in Dubai",
+  slug: "best-erp-software-small-businesses-dubai",
+  excerpt:
+    "A Dubai SME guide to choosing ERP software, comparing Odoo with custom ERP, cloud tools, integrations, cost, scalability, and implementation risk.",
+  content: `
+<p>The best ERP software for small businesses in Dubai is the one your team can actually adopt. It should connect sales, finance, stock, purchasing, CRM, reporting, and daily approvals without creating unnecessary complexity.</p>
+
+<h2>What Dubai SMEs Should Look For</h2>
+<ul>
+  <li>Modular rollout so the business can start small</li>
+  <li>Affordable ownership cost and clear support model</li>
+  <li>Accounting, VAT, inventory, sales, and CRM coverage</li>
+  <li>Integration options for e-commerce, payment, POS, and WhatsApp workflows</li>
+  <li>Dashboards that help owners see cash, pipeline, stock, and performance</li>
+</ul>
+
+<h2>Why Odoo Is Often a Strong Fit</h2>
+<p>Odoo gives SMEs a broad ERP foundation without requiring a heavyweight enterprise rollout from day one. It can grow from CRM and accounting into inventory, POS, manufacturing, HR, and automation.</p>
+
+<h3>When Custom ERP Makes Sense</h3>
+<p>A custom ERP may be right when the business model is highly specialized or tied to proprietary workflows. For many SMEs, Odoo offers a faster and more economical starting point.</p>
+
+<p>Explore <a href="/services/erp-software-dubai">ERP software Dubai</a> or <a href="/services/odoo-services-dubai">Odoo services in Dubai</a> for next steps.</p>
+
+<p><strong>Choosing ERP for your Dubai SME?</strong> <a href="/contact">Talk to Zavior Technologies</a>.</p>
+`,
+  image: "/blog/cloud-erp.webp",
+  imageAlt:
+    "ERP software dashboard for small businesses in Dubai with CRM and accounting",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "ERP Research Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "ERP Strategy",
+  readTime: "8 min read",
+  publishedAt: "2026-05-08",
+  updatedAt: "2026-05-11",
+  featured: false,
+  tags: ["ERP Dubai", "Small Business ERP", "Odoo ERP", "UAE SME"],
+  faqs: [
+    {
+      question: "What is the best ERP for small businesses in Dubai?",
+      answer:
+        "Odoo is often a strong choice because it is modular, customizable, and practical for finance, CRM, inventory, sales, POS, and reporting.",
+    },
+    {
+      question: "Should a small business start with every ERP module?",
+      answer:
+        "Usually no. A phased rollout helps SMEs stabilize core workflows before adding more modules and automation.",
+    },
+  ],
+  metaTitle:
+    "Best ERP Software for Small Businesses in Dubai | Odoo & ERP Guide",
+  metaDescription:
+    "Choose the best ERP software for small businesses in Dubai. Compare Odoo, custom ERP, cloud tools, costs, integrations, and SME rollout strategy.",
+  keywords:
+    "best ERP software Dubai, ERP software company in Dubai, Odoo ERP Dubai, small business ERP UAE",
+  canonical:
+    "https://zavior.org/blog/best-erp-software-small-businesses-dubai",
+},
+{
+  id: "odoo-vs-zoho-vs-erpnext-uae",
+  title: "Odoo vs Zoho vs ERPNext for UAE Companies",
+  slug: "odoo-vs-zoho-vs-erpnext-uae",
+  excerpt:
+    "Compare Odoo, Zoho, and ERPNext for UAE companies based on ERP depth, customization, cost, implementation, integrations, and long-term scalability.",
+  content: `
+<p>UAE companies comparing Odoo, Zoho, and ERPNext usually want one answer: which system will support growth without creating avoidable complexity? The answer depends on operational depth, implementation budget, customization needs, and long-term support expectations.</p>
+
+<h2>Odoo</h2>
+<p>Odoo is strong when a company needs ERP depth across CRM, sales, accounting, inventory, purchasing, POS, manufacturing, projects, HR, and reporting. It is modular and highly customizable.</p>
+
+<h2>Zoho</h2>
+<p>Zoho can work well for CRM-led teams and service businesses that want a broad cloud app suite. It may be less ERP-centered for complex warehouse, manufacturing, or deeply customized operations.</p>
+
+<h2>ERPNext</h2>
+<p>ERPNext is open-source and can be attractive for teams that want control and flexibility. The success of ERPNext often depends heavily on implementation capability and local support maturity.</p>
+
+<h3>How UAE Companies Should Decide</h3>
+<ul>
+  <li>Choose based on actual workflows, not feature lists alone.</li>
+  <li>Review customization, support, migration, integrations, and reporting needs.</li>
+  <li>Consider who will maintain the system after go-live.</li>
+</ul>
+
+<p>For Odoo-specific help, visit <a href="/services/odoo-services-dubai">Odoo services in Dubai</a>. For platform planning, see <a href="/services/erp-software-dubai">ERP software Dubai</a>.</p>
+
+<p><strong>Need a platform recommendation?</strong> <a href="/contact">Contact Zavior Technologies</a>.</p>
+`,
+  image: "/blog/odoo-vs-traditional-erp.svg",
+  imageAlt:
+    "Comparison of Odoo Zoho and ERPNext for UAE business software selection",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "ERP Research Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "ERP Strategy",
+  readTime: "8 min read",
+  publishedAt: "2026-05-07",
+  updatedAt: "2026-05-11",
+  featured: false,
+  tags: ["Odoo", "Zoho", "ERPNext", "ERP UAE", "Software Comparison"],
+  faqs: [
+    {
+      question: "Is Odoo better than Zoho for ERP in the UAE?",
+      answer:
+        "Odoo is often stronger for deeper ERP needs such as inventory, manufacturing, POS, and accounting workflows. Zoho may suit CRM-led service teams.",
+    },
+    {
+      question: "Is ERPNext a good option for UAE companies?",
+      answer:
+        "ERPNext can be a good option when the company has strong implementation support and wants open-source flexibility.",
+    },
+  ],
+  metaTitle:
+    "Odoo vs Zoho vs ERPNext UAE | ERP Software Comparison | Zavior",
+  metaDescription:
+    "Compare Odoo, Zoho, and ERPNext for UAE companies by ERP depth, customization, cost, integrations, implementation, and scalability.",
+  keywords:
+    "Odoo vs Zoho vs ERPNext UAE, Odoo ERP Dubai, ERP software Dubai, ERPNext UAE, Zoho ERP UAE",
+  canonical:
+    "https://zavior.org/blog/odoo-vs-zoho-vs-erpnext-uae",
+},
+{
+  id: "odoo-services-sharjah-guide",
+  title: "Odoo Services in Sharjah",
+  slug: "odoo-services-sharjah",
+  excerpt:
+    "A guide to Odoo services in Sharjah for UAE trading, retail, manufacturing, logistics, and service companies planning ERP implementation.",
+  content: `
+<p>Odoo services in Sharjah help companies centralize sales, accounting, inventory, purchasing, POS, manufacturing, projects, and reporting. For many Sharjah businesses, the first ERP priority is simple: reduce manual work and improve visibility.</p>
+
+<h2>Who Needs Odoo in Sharjah?</h2>
+<p>Trading companies, distributors, retailers, service providers, and manufacturers often outgrow spreadsheets as stock, invoices, approvals, and customer follow-up become harder to control.</p>
+
+<h3>Useful Odoo Modules</h3>
+<ul>
+  <li>CRM, Sales, Accounting, Inventory, Purchase, and POS</li>
+  <li>Manufacturing, Projects, HR, approvals, and dashboards</li>
+  <li>UAE VAT workflows, reporting, and integrations</li>
+</ul>
+
+<h2>Local Implementation Approach</h2>
+<p>The safest approach is phased implementation: stabilize core operations, train users, then expand to automation and analytics.</p>
+
+<p>Learn more on our <a href="/services/odoo-services-sharjah">Odoo services Sharjah</a> page or compare <a href="/services/odoo-services-dubai">Odoo services in Dubai</a>.</p>
+
+<p><strong>Need Odoo support in Sharjah?</strong> <a href="/contact">Contact Zavior Technologies</a>.</p>
+`,
+  image: "/blog/choose-odoo-partner.svg",
+  imageAlt:
+    "Odoo services in Sharjah for ERP implementation and UAE business automation",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "ERP Research Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "ERP & Odoo Solutions",
+  readTime: "6 min read",
+  publishedAt: "2026-05-06",
+  updatedAt: "2026-05-11",
+  featured: false,
+  tags: ["Odoo Services Sharjah", "Odoo UAE", "ERP Implementation UAE"],
+  faqs: [
+    {
+      question: "Do you provide Odoo services in Sharjah?",
+      answer:
+        "Yes. Zavior Technologies supports Odoo implementation, customization, migration, training, and support for Sharjah businesses.",
+    },
+    {
+      question: "Which Sharjah businesses use Odoo?",
+      answer:
+        "Trading, retail, services, distribution, logistics, and manufacturing companies commonly use Odoo to connect operations and reporting.",
+    },
+  ],
+  metaTitle:
+    "Odoo Services Sharjah | Odoo ERP Implementation UAE | Zavior",
+  metaDescription:
+    "Odoo services in Sharjah for UAE companies needing ERP implementation, customization, CRM, accounting, inventory, POS, manufacturing, and automation.",
+  keywords:
+    "Odoo services Sharjah, Odoo implementation Sharjah, Odoo customization UAE, ERP implementation UAE",
+  canonical:
+    "https://zavior.org/blog/odoo-services-sharjah",
+},
+{
+  id: "odoo-services-abu-dhabi-guide",
+  title: "Odoo Services in Abu Dhabi",
+  slug: "odoo-services-abu-dhabi",
+  excerpt:
+    "A practical guide to Odoo services in Abu Dhabi for UAE businesses that need ERP implementation, customization, integrations, and reporting.",
+  content: `
+<p>Odoo services in Abu Dhabi support organizations that need better control across finance, procurement, inventory, sales, projects, HR, and reporting. A well-planned ERP rollout can reduce manual work and improve management visibility.</p>
+
+<h2>Odoo for Abu Dhabi Operations</h2>
+<p>Businesses in Abu Dhabi often need structured approvals, finance controls, reporting, inventory visibility, and integrated customer workflows. Odoo can support these needs through standard modules and focused customization.</p>
+
+<h3>Key Services</h3>
+<ul>
+  <li>ERP discovery, configuration, migration, and training</li>
+  <li>Odoo customization for approvals, reports, dashboards, and workflows</li>
+  <li>Integrations with websites, e-commerce, payment, logistics, and BI tools</li>
+</ul>
+
+<h2>Implementation Advice</h2>
+<p>Start with the workflows that affect revenue, cost, cash, and compliance. Avoid adding every department before core users are trained and the data is trusted.</p>
+
+<p>Visit our <a href="/services/odoo-services-abu-dhabi">Odoo services Abu Dhabi</a> page or compare related support for <a href="/services/odoo-services-dubai">Dubai</a> and <a href="/services/odoo-services-sharjah">Sharjah</a>.</p>
+
+<p><strong>Planning an Odoo project in Abu Dhabi?</strong> <a href="/contact">Contact Zavior Technologies</a>.</p>
+`,
+  image: "/blog/odoo-manufacturing-uae.svg",
+  imageAlt:
+    "Odoo services in Abu Dhabi for ERP dashboards and UAE automation workflows",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "ERP Research Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "ERP & Odoo Solutions",
+  readTime: "6 min read",
+  publishedAt: "2026-05-05",
+  updatedAt: "2026-05-11",
+  featured: false,
+  tags: ["Odoo Services Abu Dhabi", "Odoo UAE", "ERP Implementation UAE"],
+  faqs: [
+    {
+      question: "Do you provide Odoo services in Abu Dhabi?",
+      answer:
+        "Yes. Zavior Technologies supports Odoo ERP implementation, customization, integrations, training, and support for Abu Dhabi businesses.",
+    },
+    {
+      question: "Can Odoo support Abu Dhabi multi-department teams?",
+      answer:
+        "Yes. Odoo can connect finance, CRM, inventory, procurement, projects, HR, approvals, and reporting for multi-department teams.",
+    },
+  ],
+  metaTitle:
+    "Odoo Services Abu Dhabi | Odoo ERP Implementation UAE | Zavior",
+  metaDescription:
+    "Odoo services in Abu Dhabi for UAE businesses needing ERP implementation, customization, integrations, dashboards, training, and support.",
+  keywords:
+    "Odoo services Abu Dhabi, Odoo ERP Abu Dhabi, Odoo customization UAE, ERP implementation UAE",
+  canonical:
+    "https://zavior.org/blog/odoo-services-abu-dhabi",
+},
+{
+  id: "why-uae-businesses-need-erp",
+  title: "Why UAE Businesses Need ERP",
+  slug: "why-uae-businesses-need-erp",
+  excerpt:
+    "Learn why UAE businesses need ERP systems to connect finance, sales, inventory, procurement, CRM, reporting, and business automation.",
+  content: `
+<p>UAE businesses need ERP when growth starts creating operational blind spots. Separate spreadsheets, disconnected apps, manual approvals, and delayed reporting make it harder to control cost, cash, stock, sales, and service quality.</p>
+
+<h2>ERP Creates One Source of Truth</h2>
+<p>An ERP connects departments so teams work from the same customer, product, stock, invoice, and reporting data. This reduces duplicated work and improves decision-making.</p>
+
+<h2>Where ERP Helps Most</h2>
+<ul>
+  <li>Finance, invoicing, VAT, collections, and management reporting</li>
+  <li>CRM, sales pipeline, quotations, and customer follow-up</li>
+  <li>Inventory, purchasing, warehouse, POS, and manufacturing workflows</li>
+  <li>Approvals, dashboards, automation, and integrations</li>
+</ul>
+
+<h3>Why Odoo Is Popular in the UAE</h3>
+<p>Odoo gives growing companies a modular ERP path. Teams can start with urgent workflows, then add departments and automation as adoption improves.</p>
+
+<p>Explore <a href="/services/erp-software-dubai">ERP software Dubai</a>, <a href="/services/odoo-services-dubai">Odoo services in Dubai</a>, or <a href="/services/odoo-erp-implementation-dubai">Odoo ERP implementation Dubai</a>.</p>
+
+<p><strong>Ready to replace disconnected tools?</strong> <a href="/contact">Contact Zavior Technologies</a>.</p>
+`,
+  image: "/blog/digital-transformation.webp",
+  imageAlt:
+    "UAE business ERP dashboard connecting finance sales inventory and automation",
+  author: {
+    name: "Zavior Editorial Team",
+    role: "Digital Growth Desk",
+    avatar: "/team/mubeenbahuu.jpeg",
+  },
+  category: "ERP Strategy",
+  readTime: "7 min read",
+  publishedAt: "2026-05-04",
+  updatedAt: "2026-05-11",
+  featured: false,
+  tags: ["ERP UAE", "Business Automation UAE", "Odoo ERP Dubai", "Digital Transformation"],
+  faqs: [
+    {
+      question: "Why do UAE businesses need ERP?",
+      answer:
+        "ERP helps UAE businesses connect finance, sales, inventory, procurement, CRM, reporting, and approvals so teams can operate from one source of truth.",
+    },
+    {
+      question: "When should a business implement ERP?",
+      answer:
+        "A business should consider ERP when spreadsheets, disconnected tools, manual reporting, stock errors, or approval delays are slowing growth.",
+    },
+  ],
+  metaTitle:
+    "Why UAE Businesses Need ERP | Automation & Odoo ERP Guide | Zavior",
+  metaDescription:
+    "Learn why UAE businesses need ERP to connect finance, sales, inventory, procurement, CRM, reporting, approvals, and business automation.",
+  keywords:
+    "why UAE businesses need ERP, ERP implementation UAE, business automation services UAE, Odoo ERP Dubai",
+  canonical:
+    "https://zavior.org/blog/why-uae-businesses-need-erp",
 },
 ];
 
