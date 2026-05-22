@@ -17,6 +17,7 @@ import {
   websiteJsonLd,
 } from "@/lib/seo";
 import "@/styles/globals.css";
+import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -66,6 +67,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         ])}
         structuredDataId="site-identity-structured-data"
       />
+      <Head>
+           <meta
+          name="google-site-verification"
+          content="DgJZYmiKANOgaq-k-_MY-dExp-x0YgIV_DM6YG4pKW8"
+        />
+      </Head>
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
         <LanguageProvider>
           <Navigation />
