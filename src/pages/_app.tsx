@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/lib/i18n/language-context";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
+import { ChatWidget } from "@/components/chatbot/ChatWidget";
 import { SeoHead } from "@/components/seo/seo-head";
 import { Analytics } from "@vercel/analytics/next";
 import { cleanPath, SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
@@ -21,6 +22,8 @@ import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const currentPath = cleanPath(router.asPath || "/");
+  const isChatPage = currentPath === "/chat";
 
   useEffect(() => {
     const projectId = process.env.NEXT_PUBLIC_MS_CLARITY_PROJECT_ID;
@@ -59,7 +62,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <SeoHead
         title={SITE_TITLE}
         description={SITE_DESCRIPTION}
-        path={cleanPath(router.asPath || "/")}
+        path={currentPath}
         structuredData={jsonLdGraph([
           organizationJsonLd(),
           websiteJsonLd(),
@@ -80,6 +83,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </main>
           <Footer />
+          {!isChatPage ? <ChatWidget avoidWhatsApp={currentPath === "/"} /> : null}
         </LanguageProvider>
         <Analytics />
       </ThemeProvider>
