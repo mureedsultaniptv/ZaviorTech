@@ -1,6 +1,6 @@
-import { blogs, careers, projects, services } from "@/lib/data/demo-data";
+import { blogs, careers, projects, services, team } from "@/lib/data/demo-data";
 
-const STATIC_LASTMOD = "2026-05-11";
+const STATIC_LASTMOD = "2026-06-18";
 
 export type SitemapEntry = {
   path: string;
@@ -8,6 +8,7 @@ export type SitemapEntry = {
   changefreq: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
   lastmod: string;
   image?: string;
+  imageTitle?: string;
 };
 
 export const staticSiteRoutes = [
@@ -18,12 +19,38 @@ export const staticSiteRoutes = [
   "/portfolio",
   "/blog",
   "/careers",
+  "/team",
   "/contact",
   "/faq",
   "/cookies",
   "/privacy",
   "/terms",
 ];
+
+const blockedPathPrefixes = ["/api", "/admin", "/private", "/chat", "/search"];
+
+export function isIndexablePath(path: string) {
+  if (!path || path.includes("?") || path.includes("#")) {
+    return false;
+  }
+
+  return !blockedPathPrefixes.some(
+    (prefix) => path === prefix || path.startsWith(`${prefix}/`),
+  );
+}
+
+function uniqueIndexableEntries(entries: SitemapEntry[]) {
+  const seen = new Set<string>();
+
+  return entries.filter((entry) => {
+    if (!isIndexablePath(entry.path) || seen.has(entry.path)) {
+      return false;
+    }
+
+    seen.add(entry.path);
+    return true;
+  });
+}
 
 export function getAllSiteRoutes() {
   return [
@@ -32,11 +59,12 @@ export function getAllSiteRoutes() {
     ...projects.map((project) => `/portfolio/${project.slug}`),
     ...blogs.map((blog) => `/blog/${blog.slug}`),
     ...careers.map((career) => `/careers/${career.id}`),
-  ];
+    ...team.map((member) => `/team/${member.slug}`),
+  ].filter(isIndexablePath);
 }
 
 export function getSitemapEntries(): SitemapEntry[] {
-  return [
+  return uniqueIndexableEntries([
     ...staticSiteRoutes.map((path) => ({
       path,
       priority: path === "/" ? 1 : 0.8,
@@ -49,6 +77,7 @@ export function getSitemapEntries(): SitemapEntry[] {
       changefreq: "monthly" as const,
       lastmod: STATIC_LASTMOD,
       image: service.image,
+      imageTitle: service.title,
     })),
     ...projects.map((project) => ({
       path: `/portfolio/${project.slug}`,
@@ -56,6 +85,7 @@ export function getSitemapEntries(): SitemapEntry[] {
       changefreq: "monthly" as const,
       lastmod: STATIC_LASTMOD,
       image: project.image,
+      imageTitle: project.title,
     })),
     ...blogs.map((blog) => ({
       path: `/blog/${blog.slug}`,
@@ -66,6 +96,7 @@ export function getSitemapEntries(): SitemapEntry[] {
           ? blog.updatedAt
           : blog.publishedAt,
       image: blog.image,
+      imageTitle: blog.title,
     })),
     ...careers.map((career) => ({
       path: `/careers/${career.id}`,
@@ -73,5 +104,13 @@ export function getSitemapEntries(): SitemapEntry[] {
       changefreq: "weekly" as const,
       lastmod: career.postedAt || STATIC_LASTMOD,
     })),
-  ];
+    ...team.map((member) => ({
+      path: `/team/${member.slug}`,
+      priority: 0.5,
+      changefreq: "yearly" as const,
+      lastmod: STATIC_LASTMOD,
+      image: member.image,
+      imageTitle: member.name,
+    })),
+  ]);
 }

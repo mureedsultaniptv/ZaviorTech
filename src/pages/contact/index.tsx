@@ -31,6 +31,7 @@ import Link from "next/link";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
+  localBusinessJsonLd,
   organizationJsonLd,
   technologyServiceJsonLd,
 } from "@/lib/seo";
@@ -130,6 +131,7 @@ export default function ContactPage() {
   const { t, dir } = useLanguage();
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
+    localBusinessJsonLd(),
     technologyServiceJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },

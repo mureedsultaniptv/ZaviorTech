@@ -32,7 +32,15 @@ export function PortfolioSection() {
                 <Card className="group h-full overflow-hidden bg-card hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 border-border/50 hover:border-primary/30">
                   <div className="relative aspect-video overflow-hidden bg-muted">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                      <Image src={project.image} alt="Service Image" width={640} height={360} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        width={640}
+                        height={360}
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        loading="lazy"
+                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                      />
                       {/* <span className="text-4xl font-bold text-primary/30">
                         {project.title.charAt(0)}
                       </span> */}

@@ -22,6 +22,7 @@ ${urls
     <priority>${entry.priority.toFixed(1)}</priority>
 ${entry.image ? `    <image:image>
       <image:loc>${escapeXml(absoluteUrl(entry.image))}</image:loc>
+      ${entry.imageTitle ? `<image:title>${escapeXml(entry.imageTitle)}</image:title>` : ""}
     </image:image>` : ""}
   </url>`,
   )

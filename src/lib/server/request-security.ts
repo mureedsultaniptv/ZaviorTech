@@ -10,6 +10,7 @@ type RateLimitRecord = {
 const RATE_LIMIT_STORE = new Map<string, RateLimitRecord>();
 const DEFAULT_LOCAL_ORIGINS = new Set([
   "http://localhost:3000",
+  "https://www.zavior.org",
   "https://zavior.org",
 ]);
 
@@ -131,4 +132,3 @@ export function sanitizeFilename(filename: string) {
   const cleaned = baseName.replace(/[^a-zA-Z0-9._-]/g, "-").replace(/-+/g, "-");
   return cleaned.slice(0, 120) || "file";
 }
-

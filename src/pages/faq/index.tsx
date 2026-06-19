@@ -16,78 +16,48 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { breadcrumbJsonLd, jsonLdGraph, organizationJsonLd } from "@/lib/seo";
+import { faqs } from "@/lib/data/demo-data";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
-const faqCategories = [
-  {
-    category: "General",
-    questions: [
-      {
-        q: "What services does Zavior offer?",
-        a: "Zavior offers a comprehensive suite of digital services including AI Automation, ERP/Odoo solutions, Website Development, Mobile Applications, and IT Solutions. We specialize in transforming businesses through innovative technology solutions.",
-      },
-      {
-        q: "Where is Zavior located?",
-        a: "Zavior Technologies operates from Sharjah, UAE and serves Dubai, the wider UAE, and international clients through on-site and remote delivery models.",
-      },
-      {
-        q: "How long has Zavior been in business?",
-        a: "Zavior has delivered technology projects for more than 10 years, with 100+ projects and 50+ clients across multiple industries.",
-      },
-    ],
-  },
-  {
-    category: "Services",
-    questions: [
-      {
-        q: "What is AI Automation and how can it help my business?",
-        a: "AI Automation uses artificial intelligence to automate repetitive tasks, analyze data, and make intelligent decisions. It can help your business increase efficiency, reduce costs, and improve accuracy.",
-      },
-      {
-        q: "Do you offer custom ERP solutions?",
-        a: "Yes, we specialize in custom ERP solutions built on the Odoo platform. We tailor the system to your specific business needs, ensuring seamless integration with your existing processes and workflows.",
-      },
-      {
-        q: "Can you develop both web and mobile applications?",
-        a: "Absolutely! We offer full-stack development services for both web and mobile platforms including React, Next.js, React Native, and Flutter.",
-      },
-    ],
-  },
-  {
-    category: "Process",
-    questions: [
-      {
-        q: "What is your typical project timeline?",
-        a: "Project timelines vary based on scope and complexity. A simple website might take 4–6 weeks, while a full ERP implementation could take 3–6 months.",
-      },
-      {
-        q: "How do you handle project management?",
-        a: "We follow agile methodologies with regular sprints, daily standups, and weekly progress reports. Clients have full visibility via our project dashboard.",
-      },
-      {
-        q: "Do you offer ongoing support after project completion?",
-        a: "Yes, we provide 24/7 monitoring, updates, and feature enhancements through flexible support packages.",
-      },
-    ],
-  },
-  {
-    category: "Pricing",
-    questions: [
-      {
-        q: "How do you price your services?",
-        a: "We offer flexible pricing models such as fixed-price, hourly (time & materials), and retainer contracts depending on your project needs.",
-      },
-      {
-        q: "Do you require upfront payment?",
-        a: "Typically, we request a 30–50% upfront payment with the remainder tied to agreed milestones.",
-      },
-      {
-        q: "Are there any hidden costs?",
-        a: "No. Zavior follows a transparent pricing model with no hidden fees. All costs are clearly detailed before work begins.",
-      },
-    ],
-  },
-];
+const categoryOrder = ["Services", "Process", "Security", "Pricing"];
+
+function getFaqCategory(question: string) {
+  const text = question.toLowerCase();
+
+  if (text.includes("pricing")) {
+    return "Pricing";
+  }
+
+  if (
+    text.includes("project") ||
+    text.includes("timeline") ||
+    text.includes("management") ||
+    text.includes("training")
+  ) {
+    return "Process";
+  }
+
+  if (text.includes("security")) {
+    return "Security";
+  }
+
+  return "Services";
+}
+
+const faqCategories = categoryOrder
+  .map((category) => ({
+    category,
+    questions: faqs
+      .filter((faq) => getFaqCategory(faq.question) === category)
+      .map((faq) => ({ q: faq.question, a: faq.answer })),
+  }))
+  .filter((category) => category.questions.length > 0);
 
 export default function FAQPage() {
   const { dir } = useLanguage();
@@ -109,22 +79,29 @@ export default function FAQPage() {
     .filter((category) => category.questions.length > 0);
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: "/faq",
+      name: "Zavior Technologies FAQ",
+      description:
+        "Find answers about Zavior Technologies services for Dubai and UAE businesses, including Odoo ERP, AI automation, web development, IT support, process, and pricing.",
+      pageType: "FAQPage",
+      speakableSelectors: ["h1", "#faq-content"],
+    }),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "FAQ", path: "/faq" },
     ]),
     {
       "@type": "FAQPage",
-      mainEntity: faqCategories.flatMap((category) =>
-        category.questions.map((question) => ({
+      mainEntity: faqs.map((faq) => ({
           "@type": "Question",
-          name: question.q,
+          name: faq.question,
           acceptedAnswer: {
             "@type": "Answer",
-            text: question.a,
+            text: faq.answer,
           },
         })),
-      ),
     },
   ]);
 
@@ -173,7 +150,7 @@ export default function FAQPage() {
       </section>
 
       {/* FAQ Content */}
-      <section className="py-16 md:py-24">
+      <section id="faq-content" className="py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-4xl">
           {filteredCategories.length > 0 ? (
             filteredCategories.map((category, categoryIndex) => (

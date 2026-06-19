@@ -9,16 +9,21 @@ import { SeoHead } from "@/components/seo/seo-head";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { services } from "@/lib/data/demo-data";
+import { faqs, services } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { Brain, Building, Globe, Smartphone, Server, Shield, Check, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import {
   breadcrumbJsonLd,
+  faqPageJsonLd,
   itemListJsonLd,
   jsonLdGraph,
+  localBusinessJsonLd,
   organizationJsonLd,
+  serviceJsonLd,
+  webPageJsonLd,
 } from "@/lib/seo";
+import { getPriorityServices } from "@/lib/seo-content";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Brain,
@@ -30,8 +35,17 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 export default function ServicesPage() {
   const { t } = useLanguage();
+  const priorityServices = getPriorityServices(6);
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: "/services",
+      name: "Odoo ERP, AI Automation, Web and IT Services Dubai",
+      description:
+        "Explore Dubai-focused Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, cybersecurity, and core infrastructure services.",
+      speakableSelectors: ["h1", "#services-answer p"],
+    }),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Services", path: "/services" },
@@ -43,6 +57,8 @@ export default function ServicesPage() {
         path: `/services/${service.slug}`,
       })),
     ),
+    ...services.map((service) => serviceJsonLd(service)),
+    faqPageJsonLd(faqs.slice(0, 6), "/services#faq"),
   ]);
 
   return (
@@ -82,6 +98,24 @@ export default function ServicesPage() {
             >
               {t.services.subtitle}
             </motion.p>
+          </div>
+        </div>
+      </section>
+
+      <section id="services-answer" className="pb-12">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-4xl rounded-lg border border-border bg-card p-6 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-3">
+              Short Answer
+            </p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              What can Zavior Technologies deliver?
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Zavior Technologies helps Dubai and UAE businesses implement Odoo
+              ERP, automate workflows with AI, build fast websites and mobile
+              apps, improve IT operations, and modernize core infrastructure.
+            </p>
           </div>
         </div>
       </section>
@@ -132,7 +166,19 @@ export default function ServicesPage() {
                       <Card className="bg-card border-border/50 overflow-hidden">
                         <CardContent className="p-0">
                           <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                            {service.image ? <Image src={service.image} alt={service.title} className="w-full h-full object-cover" width={400} height={225} /> : <Icon className="h-24 w-24 text-primary/30" />}
+                            {service.image ? (
+                              <Image
+                                src={service.image}
+                                alt={service.title}
+                                className="w-full h-full object-cover"
+                                width={640}
+                                height={360}
+                                sizes="(min-width: 1024px) 50vw, 100vw"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <Icon className="h-24 w-24 text-primary/30" />
+                            )}
                             {/* <Icon className="h-24 w-24 text-primary/30" /> */}
                           </div>
                         </CardContent>
@@ -145,6 +191,51 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      <section id="faq" className="py-20 bg-muted/20">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="text-3xl font-bold mb-8">Service Questions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {faqs.slice(0, 6).map((faq) => (
+                <div
+                  key={faq.question}
+                  className="rounded-lg border border-border bg-card p-6"
+                >
+                  <h3 className="font-semibold mb-2">{faq.question}</h3>
+                  <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {priorityServices.length > 0 ? (
+        <section className="py-20">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="mx-auto max-w-4xl">
+              <h2 className="text-3xl font-bold mb-8">
+                Priority Service Pages
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {priorityServices.map((service) => (
+                  <Link
+                    key={service.slug}
+                    href={`/services/${service.slug}`}
+                    className="rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/40"
+                  >
+                    <h3 className="font-semibold mb-2">{service.title}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {service.description}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Process Section */}
       <section className="py-20 lg:py-32">

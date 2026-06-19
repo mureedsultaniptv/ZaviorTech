@@ -9,6 +9,13 @@ import { milestones, stats } from "@/lib/data/demo-data";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { CTASection } from "@/components/sections/cta-section";
 import { Target, Eye, Heart, Globe, Award, Users } from "lucide-react";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 export default function AboutPage() {
   const { t } = useLanguage();
@@ -21,6 +28,21 @@ export default function AboutPage() {
     { icon: Globe, title: "Global Impact", description: "Creating solutions that transcend borders" },
     { icon: Eye, title: "Vision", description: "Looking ahead to shape the future" },
   ];
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: "/about",
+      name: "About Zavior Group",
+      description:
+        "Learn about Zavior Group, its mission, values, milestones, and the companies driving its growth.",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "About", path: "/about" },
+    ]),
+  ]);
 
   return (
     <>
@@ -28,6 +50,8 @@ export default function AboutPage() {
         title="About | Zavior Group"
         description="Learn about Zavior Group, its mission, values, milestones, and the companies driving its growth."
         path="/about"
+        structuredData={structuredData}
+        structuredDataId="about-structured-data"
       />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">

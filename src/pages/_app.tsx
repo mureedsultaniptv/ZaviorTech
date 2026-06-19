@@ -2,15 +2,16 @@
 
 import React, { useEffect } from "react";
 import type { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/lib/i18n/language-context";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
-import { ChatWidget } from "@/components/chatbot/ChatWidget";
 import { SeoHead } from "@/components/seo/seo-head";
 import { Analytics } from "@vercel/analytics/next";
 import { cleanPath, SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
+import { isIndexablePath } from "@/lib/routes";
 import {
   jsonLdGraph,
   organizationJsonLd,
@@ -20,10 +21,17 @@ import {
 import "@/styles/globals.css";
 import Head from "next/head";
 
+// const ChatWidget = dynamic(
+//   () => import("@/components/chatbot/ChatWidget").then((mod) => mod.ChatWidget),
+//   { ssr: false },
+// );
+
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const currentPath = cleanPath(router.asPath || "/");
+  const rawPath = router.asPath || "/";
+  const currentPath = cleanPath(rawPath);
   const isChatPage = currentPath === "/chat";
+  const isIndexable = isIndexablePath(currentPath) && !rawPath.includes("?");
 
   useEffect(() => {
     const projectId = process.env.NEXT_PUBLIC_MS_CLARITY_PROJECT_ID;
@@ -63,6 +71,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         title={SITE_TITLE}
         description={SITE_DESCRIPTION}
         path={currentPath}
+        robots={
+          isIndexable
+            ? undefined
+            : "noindex,nofollow,noarchive,nosnippet,noimageindex"
+        }
         structuredData={jsonLdGraph([
           organizationJsonLd(),
           websiteJsonLd(),
@@ -83,7 +96,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </main>
           <Footer />
-          {!isChatPage ? <ChatWidget avoidWhatsApp={currentPath === "/"} /> : null}
+          {/* {!isChatPage ? <ChatWidget avoidWhatsApp={currentPath === "/"} /> : null} */}
         </LanguageProvider>
         <Analytics />
       </ThemeProvider>

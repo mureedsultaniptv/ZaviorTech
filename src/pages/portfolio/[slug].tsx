@@ -10,6 +10,14 @@ import { projects } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Calendar, Building, Globe } from "lucide-react";
 import Image from "next/image";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  projectJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 interface Project {
   id: string;
@@ -25,6 +33,7 @@ interface Project {
   metaTitle?: string;
   metaDescription?: string;
   metaKeywords?: string | string[];
+  canonical?: string;
 }
 
 interface Props {
@@ -62,23 +71,31 @@ export default function PortfolioDetailPage({ project }: Props) {
     ? project.metaKeywords.join(", ")
     : project.metaKeywords || "";
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: project.title,
-    description: project.metaDescription || project.description,
-    creator: {
-      "@type": "Organization",
-      name: "Zavior Technologies",
-    },
-    about: project.category,
-  };
+  const pageTitle = project.metaTitle || `${project.title} | Zavior Technologies`;
+  const pageDescription = project.metaDescription || project.description;
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: `/portfolio/${project.slug}`,
+      name: pageTitle,
+      description: pageDescription,
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Portfolio", path: "/portfolio" },
+      { name: project.title, path: `/portfolio/${project.slug}` },
+    ]),
+    projectJsonLd(project),
+  ]);
 
   return (
     <>
       <SeoHead
-        title={project.metaTitle || `${project.title} | Zavior Technologies`}
-        description={project.metaDescription || project.description}
+        title={pageTitle}
+        description={pageDescription}
+        canonical={project.canonical}
         image={project.image}
         path={`/portfolio/${project.slug}`}
         keywords={metaKeywords}
@@ -194,7 +211,9 @@ export default function PortfolioDetailPage({ project }: Props) {
                     alt={`${project.title} project image`}
                     width={600}
                     height={600}
-                    className="w-full h-full object-fit"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    priority
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </Card>
@@ -246,6 +265,8 @@ export default function PortfolioDetailPage({ project }: Props) {
                           alt={relatedProject.title}
                           width={750}
                           height={250}
+                          sizes="(min-width: 768px) 50vw, 100vw"
+                          loading="lazy"
                           className="w-full h-full object-cover"
                         />
                       </div>

@@ -13,6 +13,7 @@ type SeoHeadProps = {
   image?: string;
   keywords?: string;
   path?: string;
+  robots?: string;
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
   structuredDataId?: string;
   title?: string;
@@ -28,7 +29,9 @@ export function SeoHead(props: SeoHeadProps) {
     canonical,
     description = SITE_DESCRIPTION,
     image = DEFAULT_OG_IMAGE,
+    keywords,
     path = "/",
+    robots = "index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1",
     structuredData,
     structuredDataId = "structured-data",
     title = SITE_NAME,
@@ -46,11 +49,10 @@ export function SeoHead(props: SeoHeadProps) {
         content="width=device-width, initial-scale=1, viewport-fit=cover"
       />
       <meta key="description" name="description" content={description} />
-      <meta
-        key="robots"
-        name="robots"
-        content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"
-      />
+      {keywords ? (
+        <meta key="keywords" name="keywords" content={keywords} />
+      ) : null}
+      <meta key="robots" name="robots" content={robots} />
       <meta key="format-detection" name="format-detection" content="telephone=no" />
       <meta key="geo.region" name="geo.region" content="AE-DU" />
       <meta key="geo.placename" name="geo.placename" content="Dubai" />
@@ -65,6 +67,8 @@ export function SeoHead(props: SeoHeadProps) {
       <meta key="og:locale" property="og:locale" content={SEO_LOCALE} />
       <meta key="og:image" property="og:image" content={imageUrl} />
       <meta key="og:image:alt" property="og:image:alt" content={`${title} - ${SITE_NAME}`} />
+      <meta key="og:image:width" property="og:image:width" content="1200" />
+      <meta key="og:image:height" property="og:image:height" content="630" />
       <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
       <meta key="twitter:title" name="twitter:title" content={title} />
       <meta

@@ -9,6 +9,15 @@ import { Linkedin, Twitter, Github, Instagram, Dribbble, Facebook } from "lucide
 import Link from "next/link";
 import Image from "next/image";
 import { team } from "@/lib/data/demo-data"; // ✅ Import your actual team data
+import { SeoHead } from "@/components/seo/seo-head";
+import {
+  breadcrumbJsonLd,
+  itemListJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+  personJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 type SocialLinkType =
   | "linkedin"
@@ -27,6 +36,28 @@ export default function TeamPage() {
     ["Owner", "CEO", "CTO", "Head"].some((r) => m.role.includes(r))
   );
   const otherTeam = team.filter((m) => !leadership.includes(m));
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    webPageJsonLd({
+      path: "/team",
+      name: "Zavior Technologies Team",
+      description:
+        "Meet the people behind Zavior Technologies, including leadership and delivery team members.",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Team", path: "/team" },
+    ]),
+    itemListJsonLd(
+      "Zavior Technologies team members",
+      team.map((member) => ({
+        name: member.name,
+        path: `/team/${member.slug}`,
+      })),
+    ),
+    ...team.map((member) => personJsonLd(member)),
+  ]);
 
   // Function to render social icons dynamically
   const renderSocialIcon = (type: SocialLinkType, url: string) => {
@@ -52,6 +83,13 @@ export default function TeamPage() {
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
+      <SeoHead
+        title="Team | Zavior Technologies"
+        description="Meet the Zavior Technologies leadership and delivery team behind ERP, AI automation, web, mobile, and IT projects."
+        path="/team"
+        structuredData={structuredData}
+        structuredDataId="team-structured-data"
+      />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
@@ -98,6 +136,7 @@ export default function TeamPage() {
                       src={member.image}
                       alt={member.name}
                       fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
@@ -107,6 +146,12 @@ export default function TeamPage() {
                       <h3 className="text-xl font-bold text-foreground mb-1">{member.name}</h3>
                       <p className="text-primary font-medium mb-3">{member.role}</p>
                       <p className="text-muted-foreground text-sm mb-4">{member.bio}</p>
+                      <Link
+                        href={`/team/${member.slug}`}
+                        className="mb-4 inline-flex text-sm font-medium text-primary hover:underline"
+                      >
+                        View profile
+                      </Link>
                       <div className="flex gap-3">
                         {member.social &&
                           Object.entries(member.social).map(([key, url]) => {
@@ -149,6 +194,7 @@ export default function TeamPage() {
                       src={member.image}
                       alt={member.name}
                       fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
@@ -156,6 +202,12 @@ export default function TeamPage() {
                     <h3 className="text-lg font-bold text-foreground mb-1">{member.name}</h3>
                     <p className="text-primary text-sm font-medium mb-2">{member.role}</p>
                     <p className="text-muted-foreground text-sm line-clamp-2">{member.bio}</p>
+                    <Link
+                      href={`/team/${member.slug}`}
+                      className="mt-3 inline-flex text-sm font-medium text-primary hover:underline"
+                    >
+                      View profile
+                    </Link>
                     <div className="flex gap-3 mt-4">
                       {member.social &&
                         Object.entries(member.social).map(([key, url]) => {

@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Brain, Building, Globe, Smartphone, Server, CircuitBoard } from "lucide-react";
+import { getPriorityServices } from "@/lib/seo-content";
 
 const iconMap = {
   ai: Brain,
@@ -37,6 +38,7 @@ export function ServicesSection() {
     { key: "ai" as const, ...t.services.ai },
     { key: "coreit" as const, ...t.services.coreit },
   ];
+  const priorityServices = getPriorityServices(6);
 
   return (
     <section className="py-20 lg:py-32 bg-muted/30">
@@ -76,6 +78,23 @@ export function ServicesSection() {
               </motion.div>
             );
           })}
+        </div>
+
+        <div className="mt-10 rounded-lg border border-border bg-card p-6">
+          <h3 className="text-xl font-semibold mb-4">
+            Priority Service Pages
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {priorityServices.map((service) => (
+              <Link
+                key={service.slug}
+                href={`/services/${service.slug}`}
+                className="rounded-md border border-border/70 p-4 text-sm transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                {service.title}
+              </Link>
+            ))}
+          </div>
         </div>
 
         <motion.div

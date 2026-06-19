@@ -13,6 +13,12 @@ import {
   AlertTriangle,
   RefreshCcw,
 } from "lucide-react";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 const sections = [
   {
@@ -69,6 +75,20 @@ Upon termination, your right to use the Service will immediately cease. All prov
 
 export default function TermsPage() {
   const { dir } = useLanguage();
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    webPageJsonLd({
+      path: "/terms",
+      name: "Terms of Service",
+      description:
+        "Review the terms of service for using the Zavior Group website and services.",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Terms of Service", path: "/terms" },
+    ]),
+  ]);
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
@@ -76,6 +96,8 @@ export default function TermsPage() {
         title="Terms of Service | Zavior Group"
         description="Review the terms of service for using the Zavior Group website and services."
         path="/terms"
+        structuredData={structuredData}
+        structuredDataId="terms-structured-data"
       />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">

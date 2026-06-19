@@ -6,6 +6,12 @@ import { SeoHead } from "@/components/seo/seo-head";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Shield, Eye, Lock, Database, UserCheck, Bell } from "lucide-react";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 const sections = [
   {
@@ -67,6 +73,20 @@ const sections = [
 
 export default function PrivacyPage() {
   const { dir } = useLanguage();
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    webPageJsonLd({
+      path: "/privacy",
+      name: "Privacy Policy",
+      description:
+        "Read the Zavior Group privacy policy covering data collection, security practices, and user rights.",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Privacy Policy", path: "/privacy" },
+    ]),
+  ]);
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
@@ -74,6 +94,8 @@ export default function PrivacyPage() {
         title="Privacy Policy | Zavior Group"
         description="Read the Zavior Group privacy policy covering data collection, security practices, and user rights."
         path="/privacy"
+        structuredData={structuredData}
+        structuredDataId="privacy-structured-data"
       />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">

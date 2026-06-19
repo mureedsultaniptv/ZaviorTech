@@ -5,6 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { SeoHead } from "@/components/seo/seo-head";
 import { Cookie, Shield, Settings2, Trash2 } from "lucide-react";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 const sections = [
   {
@@ -34,12 +40,29 @@ const sections = [
 ];
 
 export default function CookiesPage() {
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    webPageJsonLd({
+      path: "/cookies",
+      name: "Cookie Policy",
+      description:
+        "Read the Zavior Group cookie policy and learn how cookie-related choices affect your experience.",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Cookie Policy", path: "/cookies" },
+    ]),
+  ]);
+
   return (
     <main className="min-h-screen bg-background">
       <SeoHead
         title="Cookie Policy | Zavior Group"
         description="Read the Zavior Group cookie policy and learn how cookie-related choices affect your experience."
         path="/cookies"
+        structuredData={structuredData}
+        structuredDataId="cookies-structured-data"
       />
 
       <section className="relative py-24 md:py-32 overflow-hidden">

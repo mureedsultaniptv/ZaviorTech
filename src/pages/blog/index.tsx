@@ -23,7 +23,9 @@ import {
   breadcrumbJsonLd,
   itemListJsonLd,
   jsonLdGraph,
+  localBusinessJsonLd,
   organizationJsonLd,
+  webPageJsonLd,
 } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
@@ -55,6 +57,15 @@ export default function BlogPage() {
     : [];
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: "/blog",
+      name: "Dubai ERP, AI Automation and Web Development Blog",
+      description:
+        "Read practical Dubai and UAE technology insights on Odoo ERP, AI automation, web development, cybersecurity, CRM, e-commerce, and digital transformation.",
+      pageType: "Blog",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Blog", path: "/blog" },
@@ -181,6 +192,7 @@ export default function BlogPage() {
                       src={featuredBlog.image}
                       alt={featuredBlog.title}
                       fill
+                      priority
                       sizes="(min-width: 1024px) 50vw, 100vw"
                       className="object-cover"
                     />

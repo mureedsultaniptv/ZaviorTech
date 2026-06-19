@@ -20,6 +20,15 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import {
+  breadcrumbJsonLd,
+  itemListJsonLd,
+  jobPostingJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 const benefits = [
   {
@@ -56,6 +65,29 @@ const benefits = [
 
 export default function CareersPage() {
   const { t, dir } = useLanguage();
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: "/careers",
+      name: "Careers at Zavior Group",
+      description:
+        "Explore current opportunities at Zavior Group and join a team working across technology, operations, and creative delivery.",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Careers", path: "/careers" },
+    ]),
+    itemListJsonLd(
+      "Current Zavior job openings",
+      jobOpenings.map((job) => ({
+        name: job.title,
+        path: `/careers/${job.id}`,
+      })),
+    ),
+    ...jobOpenings.map((job) => jobPostingJsonLd(job)),
+  ]);
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
@@ -63,6 +95,8 @@ export default function CareersPage() {
         title="Careers | Zavior Group"
         description="Explore current opportunities at Zavior Group and join a team working across technology, operations, and creative delivery."
         path="/careers"
+        structuredData={structuredData}
+        structuredDataId="careers-structured-data"
       />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">

@@ -12,7 +12,21 @@ import { blogs, sortedBlogs } from "@/lib/data/demo-data";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Linkedin, Twitter } from "lucide-react";
 import { ParsedUrlQuery } from "querystring";
 import { absoluteUrl } from "@/lib/site";
-import { breadcrumbJsonLd, jsonLdGraph, organizationJsonLd } from "@/lib/seo";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
+import {
+  getBlogDirectAnswer,
+  getBlogFaqs,
+  getRelatedBlogs,
+  getRelevantServicesForBlog,
+} from "@/lib/seo-content";
 
 interface BlogPost {
   id: string;
@@ -65,59 +79,40 @@ export default function BlogDetailPage({ blog }: Props) {
     );
   }
 
-  const relatedBlogs = blogs
-    .filter((b) => b.id !== blog.id && b.category === blog.category)
-    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
-    .slice(0, 2);
   const articleUrl = absoluteUrl(blog.canonical || `/blog/${blog.slug}`);
   const shareTitle = encodeURIComponent(blog.title);
   const shareUrl = encodeURIComponent(articleUrl);
+  const relatedBlogs = getRelatedBlogs(blog, 2);
+  const relevantServices = getRelevantServicesForBlog(blog, 3);
+  const blogFaqs = getBlogFaqs(blog);
+  const directAnswer = getBlogDirectAnswer(blog);
+  const pageTitle = blog.metaTitle || `${blog.title} | Zavior Technologies Blog`;
+  const pageDescription = blog.metaDescription || blog.excerpt;
 
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: `/blog/${blog.slug}`,
+      name: pageTitle,
+      description: pageDescription,
+      pageType: "Article",
+      speakableSelectors: ["h1", "#direct-answer p", "article p:first-of-type"],
+    }),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Blog", path: "/blog" },
       { name: blog.title, path: `/blog/${blog.slug}` },
     ]),
-    {
-      "@type": "BlogPosting",
-      "@id": `${articleUrl}#article`,
-      mainEntityOfPage: articleUrl,
-      headline: blog.title,
-      image: absoluteUrl(blog.image),
-      author: { "@type": "Person", name: blog.author.name },
-      publisher: { "@id": absoluteUrl("/#organization") },
-      datePublished: blog.publishedAt,
-      dateModified: blog.updatedAt || blog.publishedAt,
-      description: blog.excerpt,
-      articleSection: blog.category,
-      keywords: blog.tags.join(", "),
-      url: articleUrl,
-    },
-    ...(blog.faqs?.length
-      ? [
-          {
-            "@type": "FAQPage",
-            "@id": `${articleUrl}#faq`,
-            mainEntity: blog.faqs.map((faq) => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer,
-              },
-            })),
-          },
-        ]
-      : []),
+    articleJsonLd(blog),
+    faqPageJsonLd(blogFaqs, `/blog/${blog.slug}#faq`),
   ]);
 
   return (
     <>
       <SeoHead
-        title={blog.metaTitle || `${blog.title} | Zavior Technologies Blog`}
-        description={blog.metaDescription || blog.excerpt}
+        title={pageTitle}
+        description={pageDescription}
         canonical={blog.canonical}
         image={blog.image}
         path={`/blog/${blog.slug}`}
@@ -239,6 +234,22 @@ export default function BlogDetailPage({ blog }: Props) {
         </div>
       </section>
 
+      <section id="direct-answer" className="pb-10">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto rounded-lg border border-border bg-card p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-3">
+              Short Answer
+            </p>
+            <h2 className="text-2xl font-bold mb-3">
+              What should readers know first?
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              {directAnswer}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Image */}
       <section className="pb-12">
         <div className="container mx-auto px-4 lg:px-8">
@@ -254,6 +265,7 @@ export default function BlogDetailPage({ blog }: Props) {
               width={1200}
               height={600}
               sizes="(min-width: 1280px) 896px, (min-width: 768px) 100vw, 100vw"
+              priority
               className="w-full h-auto rounded-2xl object-cover"
             />
           </motion.div>
@@ -276,32 +288,57 @@ export default function BlogDetailPage({ blog }: Props) {
         </div>
       </section>
 
-      {blog.faqs?.length ? (
-        <section id="faq" className="py-12">
+      {relevantServices.length > 0 ? (
+        <section className="py-12 bg-muted/20">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl md:text-3xl font-bold mb-6">
-                Frequently Asked Questions
+                Related Services
               </h2>
-              <div className="space-y-4">
-                {blog.faqs.map((faq) => (
-                  <div
-                    key={faq.question}
-                    className="rounded-lg border border-border bg-card p-6"
+              <div className="grid gap-4">
+                {relevantServices.map((service) => (
+                  <Link
+                    key={service.slug}
+                    href={`/services/${service.slug}`}
+                    className="rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary/40"
                   >
-                    <h3 className="text-lg font-semibold mb-2">
-                      {faq.question}
-                    </h3>
+                    <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      {faq.answer}
+                      {service.description}
                     </p>
-                  </div>
+                  </Link>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section id="faq" className="py-12">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {blogFaqs.map((faq) => (
+                <div
+                  key={faq.question}
+                  className="rounded-lg border border-border bg-card p-6"
+                >
+                  <h3 className="text-lg font-semibold mb-2">
+                    {faq.question}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
               <div className="mt-8">
                 <Button asChild>
                   <Link href="/contact">
-                    Discuss Your ERP Project
+                    Discuss Your Project
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -309,7 +346,6 @@ export default function BlogDetailPage({ blog }: Props) {
             </div>
           </div>
         </section>
-      ) : null}
 
       {/* Tags */}
       <section className="py-12">

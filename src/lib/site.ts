@@ -1,12 +1,16 @@
-const FALLBACK_SITE_URL = "https://zavior.org";
+import { site } from "@/lib/data/demo-data";
 
-export const SITE_NAME = "Zavior Technologies";
-export const SITE_TITLE =
-  "Zavior Technologies | Odoo ERP, AI Automation & Web Development Dubai";
-export const SITE_DESCRIPTION =
-  "Dubai and UAE technology partner for Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, and digital transformation.";
+const CANONICAL_HOST = "www.zavior.org";
+const FALLBACK_SITE_URL = `https://${CANONICAL_HOST}`;
+
+export const SITE_NAME = site.name;
+export const SITE_TITLE = site.title;
+export const SITE_DESCRIPTION = site.description;
 export const DEFAULT_OG_IMAGE = "/zaviorlogo-dark.png";
-export const LEGACY_SITE_HOSTS = new Set(["zaviortech.vercel.app"]);
+export const SITE_EMAIL = site.email;
+export const SITE_TELEPHONE = site.telephone;
+export const SITE_HEADQUARTERS = site.headquarters;
+export const LEGACY_SITE_HOSTS = new Set(["zavior.org", "zaviortech.vercel.app"]);
 
 function normalizeSiteUrl(value?: string | null) {
   if (!value) {
@@ -14,7 +18,12 @@ function normalizeSiteUrl(value?: string | null) {
   }
 
   try {
-    return new URL(value).toString().replace(/\/$/, "");
+    const url = new URL(value);
+    if (url.hostname === "zavior.org") {
+      url.hostname = CANONICAL_HOST;
+    }
+
+    return url.toString().replace(/\/$/, "");
   } catch {
     return null;
   }

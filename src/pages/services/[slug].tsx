@@ -11,8 +11,21 @@ import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
-import { absoluteUrl } from "@/lib/site";
-import { breadcrumbJsonLd, jsonLdGraph, organizationJsonLd } from "@/lib/seo";
+import {
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  serviceJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
+import {
+  getRelatedBlogsForService,
+  getRelatedServices,
+  getServiceDirectAnswer,
+  getServiceFaqs,
+} from "@/lib/seo-content";
 
 // Define the shape of a service (adjust based on your actual data)
 interface Service {
@@ -62,53 +75,36 @@ export default function ServiceDetailPage({ service }: Props) {
   const metaKeywords = Array.isArray(service.metaKeywords)
     ? service.metaKeywords.join(", ")
     : service.metaKeywords || "";
+  const serviceFaqs = getServiceFaqs(service);
+  const relatedServices = getRelatedServices(service, 3);
+  const relatedBlogs = getRelatedBlogsForService(service, 3);
+  const directAnswer = getServiceDirectAnswer(service);
+  const pageTitle = service.metaTitle || `${service.title} | Zavior Technologies`;
+  const pageDescription = service.metaDescription || service.description;
 
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: `/services/${service.slug}`,
+      name: pageTitle,
+      description: pageDescription,
+      speakableSelectors: ["h1", "#direct-answer p", "#faq"],
+    }),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Services", path: "/services" },
       { name: service.title, path: `/services/${service.slug}` },
     ]),
-    {
-      "@type": "Service",
-      "@id": absoluteUrl(`/services/${service.slug}#service`),
-      name: service.title,
-      description: service.metaDescription || service.description,
-      serviceType: service.title,
-      provider: { "@id": absoluteUrl("/#organization") },
-      areaServed: [
-        { "@type": "City", name: "Dubai" },
-        { "@type": "City", name: "Sharjah" },
-        { "@type": "City", name: "Abu Dhabi" },
-        { "@type": "Country", name: "United Arab Emirates" },
-      ],
-      image: absoluteUrl(service.image),
-      url: absoluteUrl(`/services/${service.slug}`),
-    },
-    ...(service.faqs?.length
-      ? [
-          {
-            "@type": "FAQPage",
-            "@id": absoluteUrl(`/services/${service.slug}#faq`),
-            mainEntity: service.faqs.map((faq) => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer,
-              },
-            })),
-          },
-        ]
-      : []),
+    serviceJsonLd(service),
+    faqPageJsonLd(serviceFaqs, `/services/${service.slug}#faq`),
   ]);
 
   return (
     <>
       <SeoHead
-        title={service.metaTitle || `${service.title} | Zavior Technologies`}
-        description={service.metaDescription || service.description}
+        title={pageTitle}
+        description={pageDescription}
         image={service.image}
         path={`/services/${service.slug}`}
         keywords={metaKeywords}
@@ -122,6 +118,7 @@ export default function ServiceDetailPage({ service }: Props) {
             src={service.image}
             alt={service.title}
             fill
+            priority
             sizes="100vw"
             className="object-cover object-center opacity-30"
           />
@@ -144,6 +141,22 @@ export default function ServiceDetailPage({ service }: Props) {
               </Link>
             </Button>
           </motion.div>
+        </div>
+      </section>
+
+      <section id="direct-answer" className="py-12 border-y border-border/60">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-3">
+              Short Answer
+            </p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              What does {service.title} solve?
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              {directAnswer}
+            </p>
+          </div>
         </div>
       </section>
 
@@ -207,6 +220,8 @@ export default function ServiceDetailPage({ service }: Props) {
                 alt={service.title}
                 width={800}
                 height={500}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </Card>
@@ -214,40 +229,88 @@ export default function ServiceDetailPage({ service }: Props) {
         </div>
       </section>
 
-      {service.faqs?.length ? (
-        <section id="faq" className="py-20 bg-muted/20">
+      <section id="faq" className="py-20 bg-muted/20">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold mb-8">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {serviceFaqs.map((faq) => (
+                <div
+                  key={faq.question}
+                  className="rounded-lg border border-border bg-card p-6"
+                >
+                  <h3 className="text-lg font-semibold mb-2">
+                    {faq.question}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8">
+              <Button asChild>
+                <Link href="/contact">
+                  Talk to a Zavior Consultant
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {(relatedServices.length > 0 || relatedBlogs.length > 0) && (
+        <section className="py-20">
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">
-                Frequently Asked Questions
-              </h2>
-              <div className="space-y-4">
-                {service.faqs.map((faq) => (
-                  <div
-                    key={faq.question}
-                    className="rounded-lg border border-border bg-card p-6"
-                  >
-                    <h3 className="text-lg font-semibold mb-2">
-                      {faq.question}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {faq.answer}
-                    </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              {relatedServices.length > 0 ? (
+                <div>
+                  <h2 className="text-2xl font-bold mb-6">Related Services</h2>
+                  <div className="space-y-4">
+                    {relatedServices.map((relatedService) => (
+                      <Link
+                        key={relatedService.slug}
+                        href={`/services/${relatedService.slug}`}
+                        className="block rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/40"
+                      >
+                        <h3 className="font-semibold mb-2">
+                          {relatedService.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {relatedService.description}
+                        </p>
+                      </Link>
+                    ))}
                   </div>
-                ))}
-              </div>
-              <div className="mt-8">
-                <Button asChild>
-                  <Link href="/contact">
-                    Talk to an ERP Consultant
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
+                </div>
+              ) : null}
+
+              {relatedBlogs.length > 0 ? (
+                <div>
+                  <h2 className="text-2xl font-bold mb-6">Helpful Articles</h2>
+                  <div className="space-y-4">
+                    {relatedBlogs.map((blog) => (
+                      <Link
+                        key={blog.slug}
+                        href={`/blog/${blog.slug}`}
+                        className="block rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/40"
+                      >
+                        <h3 className="font-semibold mb-2">{blog.title}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {blog.excerpt}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
-      ) : null}
+      )}
 
       {/* Book Consultancy CTA */}
       <section className="py-20 bg-primary/10">

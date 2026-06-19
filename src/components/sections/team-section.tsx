@@ -40,6 +40,8 @@ export function TeamSection() {
                       className="w-full h-full object-cover"
                       width={300}
                       height={300}
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      loading="lazy"
                     />
                     {/* <span className="text-6xl font-bold text-primary/30">
                       {member.name.charAt(0)}

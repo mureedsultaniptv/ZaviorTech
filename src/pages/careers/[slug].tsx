@@ -1,5 +1,6 @@
 "use client";
 
+import { GetStaticPaths, GetStaticProps } from "next";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { SeoHead } from "@/components/seo/seo-head";
@@ -21,7 +22,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import {
+  breadcrumbJsonLd,
+  jobPostingJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 const MAX_RESUME_BYTES = 4 * 1024 * 1024;
 const ALLOWED_RESUME_TYPES = new Set([
@@ -30,12 +38,14 @@ const ALLOWED_RESUME_TYPES = new Set([
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ]);
 
-export default function CareerDetailPage() {
-  const router = useRouter();
-  const slug =
-    typeof router.query.slug === "string" ? router.query.slug : undefined;
+type JobOpening = (typeof jobOpenings)[number];
+
+type Props = {
+  job: JobOpening;
+};
+
+export default function CareerDetailPage({ job }: Props) {
   const { t, dir } = useLanguage();
-  const job = jobOpenings.find((j) => j.id === slug);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -149,10 +159,6 @@ export default function CareerDetailPage() {
     }
   };
 
-  if (!router.isReady) {
-    return null;
-  }
-
   if (!job)
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -172,20 +178,32 @@ export default function CareerDetailPage() {
       </div>
     );
 
+  const pageTitle = `${job.title} | Careers at Zavior Group`;
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: `/careers/${job.id}`,
+      name: pageTitle,
+      description: job.description,
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Careers", path: "/careers" },
+      { name: job.title, path: `/careers/${job.id}` },
+    ]),
+    jobPostingJsonLd(job),
+  ]);
+
   return (
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
-        title={`${job.title} | Careers at Zavior Group`}
+        title={pageTitle}
         description={job.description}
         path={`/careers/${job.id}`}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "JobPosting",
-          title: job.title,
-          description: job.description,
-          employmentType: job.type,
-          jobLocationType: job.location,
-        }}
+        structuredData={structuredData}
+        structuredDataId="career-detail-structured-data"
       />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
@@ -503,3 +521,30 @@ export default function CareerDetailPage() {
     </main>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: jobOpenings.map((job) => ({
+      params: { slug: job.id },
+    })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({
+  params,
+}) => {
+  const job = jobOpenings.find((item) => item.id === params?.slug);
+
+  if (!job) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      job,
+    },
+  };
+};

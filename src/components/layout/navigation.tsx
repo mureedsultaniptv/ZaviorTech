@@ -72,9 +72,10 @@ export function Navigation() {
           <Link href="/" className="flex items-center gap-2">
             <Image
               src={theme === "dark" ? "/zaviorlogo-dark.png" : "/zaviorlogo-light.png"}
-              alt="Zavior Logo"
+              alt="Zavior Technologies logo"
               width={150}
               height={40}
+              priority
             />
           </Link>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,17 +10,21 @@ import { SeoHead } from "@/components/seo/seo-head";
 import { SafeRichText } from "@/components/ui/safe-rich-text";
 import { Linkedin, Twitter, Github, Globe, Facebook, Instagram } from "lucide-react";
 import Image from "next/image";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  organizationJsonLd,
+  personJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
-export default function TeamMemberDetailPage() {
-  const router = useRouter();
-  const slug =
-    typeof router.query.slug === "string" ? router.query.slug : undefined;
-  const member = team.find((m) => m.slug === slug);
+type TeamMember = (typeof team)[number];
 
-  if (!router.isReady) {
-    return null;
-  }
+type Props = {
+  member: TeamMember;
+};
 
+export default function TeamMemberDetailPage({ member }: Props) {
   if (!member) {
     return(<div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
@@ -36,6 +40,22 @@ export default function TeamMemberDetailPage() {
   const relatedMembers = team
     .filter((m) => m.id !== member.id)
     .slice(0, 3); // show 3 related team members
+  const pageTitle = `${member.name} | Zavior Technologies Team`;
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    webPageJsonLd({
+      path: `/team/${member.slug}`,
+      name: pageTitle,
+      description: member.bio,
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Team", path: "/team" },
+      { name: member.name, path: `/team/${member.slug}` },
+    ]),
+    personJsonLd(member),
+  ]);
 
   const socialIcons = {
     linkedin: Linkedin,
@@ -49,17 +69,12 @@ export default function TeamMemberDetailPage() {
   return (
     <>
       <SeoHead
-        title={`${member.name} | Zavior Team`}
+        title={pageTitle}
         description={member.bio}
         image={member.image}
         path={`/team/${member.slug}`}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: member.name,
-          jobTitle: member.role,
-          description: member.bio,
-        }}
+        structuredData={structuredData}
+        structuredDataId="team-member-structured-data"
       />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
@@ -92,6 +107,8 @@ export default function TeamMemberDetailPage() {
                     alt={member.name}
                     width={400}
                     height={400}
+                    sizes="(min-width: 1024px) 33vw, 100vw"
+                    priority
                     className="object-cover w-full h-full"
                   />
                 </div>
@@ -179,6 +196,8 @@ export default function TeamMemberDetailPage() {
                           alt={relatedMember.name}
                           width={300}
                           height={300}
+                          sizes="(min-width: 768px) 33vw, 100vw"
+                          loading="lazy"
                           className="object-cover w-full h-full"
                         />
                       </div>
@@ -201,3 +220,30 @@ export default function TeamMemberDetailPage() {
     </>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: team.map((member) => ({
+      params: { slug: member.slug },
+    })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({
+  params,
+}) => {
+  const member = team.find((item) => item.slug === params?.slug);
+
+  if (!member) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      member,
+    },
+  };
+};

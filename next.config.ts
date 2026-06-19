@@ -73,7 +73,13 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         has: [{ type: "host", value: "zaviortech.vercel.app" }],
-        destination: "https://zavior.org/:path*",
+        destination: "https://www.zavior.org/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "zavior.org" }],
+        destination: "https://www.zavior.org/:path*",
         permanent: true,
       },
     ];
@@ -109,7 +115,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/robots.txt",
+        source: "/:path(robots.txt|llms.txt|ai.txt)",
         headers: [
           {
             key: "Cache-Control",

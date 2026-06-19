@@ -10,6 +10,13 @@ import { CTASection } from "@/components/sections/cta-section";
 import { SeoHead } from "@/components/seo/seo-head";
 import { absoluteUrl } from "@/lib/site";
 import { ArrowRight, Building2, ExternalLink, Globe, Layers3, BriefcaseBusiness } from "lucide-react";
+import {
+  breadcrumbJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 export default function CompaniesPage() {
   const { t } = useLanguage();
@@ -17,18 +24,33 @@ export default function CompaniesPage() {
   const serviceAreas = new Set(companies.flatMap((company) => company.services)).size;
   const publishedDomains = new Set(companies.map((company) => company.website)).size;
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Zavior Group",
-    url: absoluteUrl("/companies"),
-    subOrganization: companies.map((company) => ({
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: "/companies",
+      name: "Zavior Group Companies",
+      description:
+        "Explore the three branches of Zavior Group: Zavior Technologies, Zavior Furniture, and Zavior Maintenance Services.",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Companies", path: "/companies" },
+    ]),
+    {
       "@type": "Organization",
-      name: company.name,
-      description: company.description,
-      url: company.website,
-    })),
-  };
+      "@id": absoluteUrl("/companies#group"),
+      name: "Zavior Group",
+      url: absoluteUrl("/companies"),
+      subOrganization: companies.map((company) => ({
+        "@type": "Organization",
+        name: company.name,
+        description: company.description,
+        url: company.website,
+      })),
+    },
+  ]);
 
   return (
     <>

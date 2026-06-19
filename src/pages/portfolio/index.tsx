@@ -11,6 +11,14 @@ import { projects } from "@/lib/data/demo-data";
 import { CTASection } from "@/components/sections/cta-section";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import {
+  breadcrumbJsonLd,
+  itemListJsonLd,
+  jsonLdGraph,
+  localBusinessJsonLd,
+  organizationJsonLd,
+  webPageJsonLd,
+} from "@/lib/seo";
 
 export default function PortfolioPage() {
   const { t } = useLanguage();
@@ -18,6 +26,28 @@ export default function PortfolioPage() {
 
   const categories = ["all", ...new Set(projects.map((p) => p.category))];
   const filteredProjects = filter === "all" ? projects : projects.filter((p) => p.category === filter);
+  const structuredData = jsonLdGraph([
+    organizationJsonLd(),
+    localBusinessJsonLd(),
+    webPageJsonLd({
+      path: "/portfolio",
+      name: "Zavior Technologies Portfolio",
+      description:
+        "Review recent ERP, software, infrastructure, and digital delivery projects completed by Zavior Group.",
+      speakableSelectors: ["h1", "main p:first-of-type"],
+    }),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Portfolio", path: "/portfolio" },
+    ]),
+    itemListJsonLd(
+      "Zavior Technologies project portfolio",
+      projects.map((project) => ({
+        name: project.title,
+        path: `/portfolio/${project.slug}`,
+      })),
+    ),
+  ]);
 
   return (
     <>
@@ -25,6 +55,8 @@ export default function PortfolioPage() {
         title="Portfolio | Zavior Group"
         description="Review recent ERP, software, infrastructure, and digital delivery projects completed by Zavior Group."
         path="/portfolio"
+        structuredData={structuredData}
+        structuredDataId="portfolio-structured-data"
       />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">
@@ -97,7 +129,15 @@ export default function PortfolioPage() {
                     <Card className="group h-full overflow-hidden bg-card hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 border-border/50 hover:border-primary/30">
                       <div className="relative aspect-video overflow-hidden bg-muted">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                          <Image src={project.image} alt="Service Image" width={640} height={360} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            width={640}
+                            height={360}
+                            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                            loading="lazy"
+                            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                          />
                         
                           {/* <span className="text-6xl font-bold text-primary/30">
                             {project.title.charAt(0)}
