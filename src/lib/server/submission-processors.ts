@@ -1,11 +1,24 @@
 import { randomUUID } from "crypto";
 import nodemailer from "nodemailer";
-import { createClient } from "@sanity/client";
 import { escapeHtml } from "@/lib/server/form-validation";
 import type {
   JobApplicationSubmissionPayload,
   LeadSubmissionPayload,
 } from "@/lib/server/submission-queue";
+
+const DEFAULT_LEAD_NOTIFICATION_RECIPIENTS = [
+  "mureedsultangeni@gmail.com",
+  "mubeenbahuu11@gmail.com",
+];
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const VERCEL_REQUEST_CONTEXT_SYMBOL = Symbol.for("@vercel/request-context");
+const RETRY_DELAYS_MS = [400, 1200, 2500];
+
+type VercelRequestContextStore = {
+  get?: () => {
+    waitUntil?: (promise: Promise<unknown>) => void;
+  };
+};
 
 function getSanityConfig() {
   const projectId =
@@ -14,10 +27,11 @@ function getSanityConfig() {
     process.env.SANITY_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET;
   const apiVersion =
     process.env.SANITY_API_VERSION ||
-    process.env.NEXT_PUBLIC_SANITY_API_VERSION;
+    process.env.NEXT_PUBLIC_SANITY_API_VERSION ||
+    "2024-06-01";
   const token = process.env.SANITY_WRITE_TOKEN;
 
-  if (!projectId || !dataset || !apiVersion || !token) {
+  if (!projectId || !dataset || !token) {
     throw new Error("Sanity configuration is incomplete.");
   }
 
@@ -29,13 +43,89 @@ function getSanityConfig() {
   };
 }
 
-function getSanityClient() {
-  const config = getSanityConfig();
+function getSanityApiVersion(apiVersion: string) {
+  return apiVersion.startsWith("v") ? apiVersion : `v${apiVersion}`;
+}
 
-  return createClient({
-    ...config,
-    useCdn: false,
+function getSanityApiBaseUrl(config = getSanityConfig()) {
+  return `https://${config.projectId}.api.sanity.io/${getSanityApiVersion(
+    config.apiVersion,
+  )}`;
+}
+
+async function readResponseMessage(response: Response) {
+  const text = await response.text().catch(() => "");
+
+  if (!text) {
+    return `${response.status} ${response.statusText}`;
+  }
+
+  return text.slice(0, 500);
+}
+
+async function createSanityDocument(document: Record<string, unknown>) {
+  const config = getSanityConfig();
+  const response = await fetch(
+    `${getSanityApiBaseUrl(config)}/data/mutate/${encodeURIComponent(
+      config.dataset,
+    )}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${config.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        mutations: [
+          {
+            createOrReplace: document,
+          },
+        ],
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Sanity save failed: ${await readResponseMessage(response)}`);
+  }
+}
+
+async function uploadSanityFileAsset(
+  resume: JobApplicationSubmissionPayload["resume"],
+) {
+  const config = getSanityConfig();
+  const url = new URL(
+    `${getSanityApiBaseUrl(config)}/assets/files/${encodeURIComponent(
+      config.dataset,
+    )}`,
+  );
+  url.searchParams.set("filename", resume.filename);
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${config.token}`,
+      "Content-Type": resume.mimeType,
+    },
+    body: Buffer.from(resume.contentBase64, "base64"),
   });
+
+  if (!response.ok) {
+    throw new Error(`Sanity asset upload failed: ${await readResponseMessage(response)}`);
+  }
+
+  const result = (await response.json()) as {
+    document?: {
+      _id?: string;
+    };
+  };
+  const assetId = result.document?._id;
+
+  if (!assetId) {
+    throw new Error("Sanity asset upload did not return an asset id.");
+  }
+
+  return assetId;
 }
 
 function getEmailConfig() {
@@ -45,7 +135,7 @@ function getEmailConfig() {
   const pass = process.env.EMAIL_SERVER_PASSWORD;
   const from = process.env.EMAIL_FROM;
 
-  if (!host || !port || !user || !pass || !from) {
+  if (!host || !Number.isFinite(port) || port <= 0 || !user || !pass || !from) {
     throw new Error("Email configuration is incomplete.");
   }
 
@@ -58,9 +148,7 @@ function getEmailConfig() {
   };
 }
 
-function getTransporter() {
-  const config = getEmailConfig();
-
+function getTransporter(config = getEmailConfig()) {
   return nodemailer.createTransport({
     host: config.host,
     port: config.port,
@@ -70,6 +158,23 @@ function getTransporter() {
       pass: config.pass,
     },
   });
+}
+
+function getLeadNotificationRecipients() {
+  const configuredRecipients =
+    process.env.LEAD_NOTIFICATION_EMAILS || process.env.ADMIN_EMAIL_RECIPIENTS;
+  const recipients = (configuredRecipients
+    ? configuredRecipients.split(",")
+    : DEFAULT_LEAD_NOTIFICATION_RECIPIENTS
+  )
+    .map((recipient) => recipient.trim().toLowerCase())
+    .filter((recipient) => EMAIL_PATTERN.test(recipient));
+
+  if (!recipients.length) {
+    throw new Error("Lead notification recipients are not configured.");
+  }
+
+  return [...new Set(recipients)];
 }
 
 function formatServiceLabel(service: string) {
@@ -353,99 +458,190 @@ function formatSubject(firstName: string, lastName: string) {
   );
 }
 
-async function processLeadSubmission(data: LeadSubmissionPayload) {
-  const sanity = getSanityClient();
-  const transporter = getTransporter();
-  try {
-    await sanity.create({
-      _type: "leadzaviorForm",
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phone: data.phone,
-      company: data.company,
-      service: data.service,
-      message: data.message,
-      createdAt: data.createdAt,
-    });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`Sanity save failed: ${message}`);
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message) {
+    return error.message;
   }
 
-  const emailFrom = process.env.EMAIL_FROM!;
-  const adminRecipient = "mureedsultangeni@gmail.com";
+  return String(error);
+}
+
+function delay(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function withRetry<T>(label: string, task: () => Promise<T>) {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt += 1) {
+    try {
+      return await task();
+    } catch (error) {
+      lastError = error;
+
+      if (attempt === RETRY_DELAYS_MS.length) {
+        break;
+      }
+
+      await delay(RETRY_DELAYS_MS[attempt]);
+    }
+  }
+
+  throw new Error(`${label} failed: ${getErrorMessage(lastError)}`);
+}
+
+async function runRequiredTasks(
+  tasks: Array<{
+    label: string;
+    run: () => Promise<unknown>;
+  }>,
+) {
+  const results = await Promise.allSettled(
+    tasks.map((task) => withRetry(task.label, task.run)),
+  );
+  const failures = results
+    .map((result, index) =>
+      result.status === "rejected"
+        ? `${tasks[index].label}: ${getErrorMessage(result.reason)}`
+        : "",
+    )
+    .filter(Boolean);
+
+  if (failures.length) {
+    throw new Error(failures.join("; "));
+  }
+}
+
+function scheduleAfterResponse(label: string, task: () => Promise<void>) {
+  const promise = Promise.resolve()
+    .then(task)
+    .catch((error) => {
+      console.error(`${label} failed after response:`, error);
+    });
+  const requestContextStore = (
+    globalThis as unknown as Record<symbol, unknown>
+  )[VERCEL_REQUEST_CONTEXT_SYMBOL] as VercelRequestContextStore | undefined;
+  const waitUntil = requestContextStore?.get?.()?.waitUntil;
+
+  if (waitUntil) {
+    waitUntil(promise);
+    return;
+  }
+
+  void promise;
+}
+
+function assertLeadSubmissionConfig() {
+  getSanityConfig();
+  getEmailConfig();
+  getLeadNotificationRecipients();
+}
+
+function assertJobApplicationConfig() {
+  getSanityConfig();
+}
+
+async function processLeadSubmission(
+  data: LeadSubmissionPayload,
+  submissionId: string,
+) {
+  const emailConfig = getEmailConfig();
+  const transporter = getTransporter(emailConfig);
+  const adminRecipients = getLeadNotificationRecipients();
   const replyToAddress = process.env.EMAIL_REPLY_TO || "info@zavior.org";
+  const adminTemplate = createEmailTemplate("admin", data);
+  const userTemplate = createEmailTemplate("user", data);
 
-  try {
-    await transporter.sendMail({
-      from: `"Zavior Website" <${emailFrom}>`,
-      to: adminRecipient,
-      replyTo: data.email,
-      subject: formatSubject(data.firstName, data.lastName),
-      html: createEmailTemplate("admin", data),
-    });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`Admin email failed to send: ${message}`);
-  }
-
-  try {
-    await transporter.sendMail({
-      from: `"Zavior Group" <${emailFrom}>`,
-      to: data.email,
-      replyTo: replyToAddress,
-      subject: "Thank you for contacting Zavior Group",
-      html: createEmailTemplate("user", data),
-    });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`Customer email failed to send: ${message}`);
-  }
+  await runRequiredTasks([
+    {
+      label: "Sanity lead save",
+      run: () =>
+        createSanityDocument({
+          _id: `leadform-${submissionId}`,
+          _type: "leadzaviorForm",
+          submissionId,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          company: data.company,
+          service: data.service,
+          message: data.message,
+          createdAt: data.createdAt,
+          submissionSource: "website",
+        }),
+    },
+    ...adminRecipients.map((recipient) => ({
+      label: `Admin notification email to ${recipient}`,
+      run: () =>
+        transporter.sendMail({
+          from: `"Zavior Website" <${emailConfig.from}>`,
+          to: recipient,
+          replyTo: data.email,
+          subject: formatSubject(data.firstName, data.lastName),
+          html: adminTemplate,
+        }),
+    })),
+    {
+      label: "Customer confirmation email",
+      run: () =>
+        transporter.sendMail({
+          from: `"Zavior Group" <${emailConfig.from}>`,
+          to: data.email,
+          replyTo: replyToAddress,
+          subject: "Thank you for contacting Zavior Group",
+          html: userTemplate,
+        }),
+    },
+  ]);
 }
 
 async function processJobApplicationSubmission(
   data: JobApplicationSubmissionPayload,
+  submissionId: string,
 ) {
-  const sanity = getSanityClient();
-  const uploadedResume = await sanity.assets.upload(
-    "file",
-    Buffer.from(data.resume.contentBase64, "base64"),
-    {
-      filename: data.resume.filename,
-      contentType: data.resume.mimeType,
-    },
+  const assetId = await withRetry("Sanity resume upload", () =>
+    uploadSanityFileAsset(data.resume),
   );
 
-  await sanity.create({
-    _type: "jobApplication",
-    jobId: data.jobId,
-    name: data.name,
-    email: data.email,
-    phone: data.phone,
-    linkedin: data.linkedin,
-    portfolio: data.portfolio,
-    coverLetter: data.coverLetter,
-    resume: {
-      _type: "file",
-      asset: {
-        _type: "reference",
-        _ref: uploadedResume._id,
+  await withRetry("Sanity job application save", () =>
+    createSanityDocument({
+      _id: `jobApplication-${submissionId}`,
+      _type: "jobApplication",
+      submissionId,
+      jobId: data.jobId,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      linkedin: data.linkedin,
+      portfolio: data.portfolio,
+      coverLetter: data.coverLetter,
+      resume: {
+        _type: "file",
+        asset: {
+          _type: "reference",
+          _ref: assetId,
+        },
       },
-    },
-    submittedAt: data.submittedAt,
-    ip: data.ip,
-    submissionSource: "website",
-  });
+      submittedAt: data.submittedAt,
+      ip: data.ip,
+      submissionSource: "website",
+    }),
+  );
 }
 
 export async function queueLeadSubmission(payload: LeadSubmissionPayload) {
   const submission = {
     id: randomUUID(),
   };
-  // Serverless runtimes end after the response, so submission work must
-  // complete within the request instead of relying on in-process queues.
-  await processLeadSubmission(payload);
+
+  assertLeadSubmissionConfig();
+  scheduleAfterResponse(`Lead form submission ${submission.id}`, () =>
+    processLeadSubmission(payload, submission.id),
+  );
+
   return submission;
 }
 
@@ -455,6 +651,11 @@ export async function queueJobApplicationSubmission(
   const submission = {
     id: randomUUID(),
   };
-  await processJobApplicationSubmission(payload);
+
+  assertJobApplicationConfig();
+  scheduleAfterResponse(`Job application submission ${submission.id}`, () =>
+    processJobApplicationSubmission(payload, submission.id),
+  );
+
   return submission;
 }

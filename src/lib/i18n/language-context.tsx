@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useSyncExternalStore,
+  ReactNode,
+} from "react";
 import { translations, Language } from "./translations";
 
 type TranslationType = (typeof translations)[keyof typeof translations];
@@ -13,22 +19,47 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LANGUAGE_STORAGE_KEY = "zavior-language";
+const LANGUAGE_CHANGE_EVENT = "zavior-language-change";
+const DEFAULT_LANGUAGE: Language = "en";
+
+function toLanguage(value: string | null): Language {
+  return value === "ar" ? "ar" : DEFAULT_LANGUAGE;
+}
+
+function getStoredLanguage(): Language {
+  if (typeof window === "undefined") {
+    return DEFAULT_LANGUAGE;
+  }
+
+  return toLanguage(localStorage.getItem(LANGUAGE_STORAGE_KEY));
+}
+
+function subscribeToLanguageChange(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
+
+  const notify = () => onStoreChange();
+  window.addEventListener("storage", notify);
+  window.addEventListener(LANGUAGE_CHANGE_EVENT, notify);
+
+  return () => {
+    window.removeEventListener("storage", notify);
+    window.removeEventListener(LANGUAGE_CHANGE_EVENT, notify);
+  };
+}
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("zavior-language") as Language | null;
-      if (saved === "en" || saved === "ar") {
-        return saved;
-      }
-    }
-
-    return "en";
-  });
+  const language = useSyncExternalStore(
+    subscribeToLanguageChange,
+    getStoredLanguage,
+    () => DEFAULT_LANGUAGE,
+  );
 
   const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    localStorage.setItem("zavior-language", lang);
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+    window.dispatchEvent(new Event(LANGUAGE_CHANGE_EVENT));
   };
 
   const dir = language === "ar" ? "rtl" : "ltr";

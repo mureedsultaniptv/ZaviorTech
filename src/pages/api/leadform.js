@@ -26,10 +26,10 @@ export default async function handler(req, res) {
       createdAt: new Date().toISOString(),
     });
 
-    return res.status(200).json({
+    return res.status(202).json({
       success: true,
       submissionId: submission.id,
-      message: "Message received successfully.",
+      message: "Message received successfully. We are processing it now.",
     });
   } catch (error) {
     const statusCode =
