@@ -89,7 +89,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           content="DgJZYmiKANOgaq-k-_MY-dExp-x0YgIV_DM6YG4pKW8"
         />
       </Head>
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
         <LanguageProvider>
           <Navigation />
           <main className="min-h-screen font-sans antialiased">
