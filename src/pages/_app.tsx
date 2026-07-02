@@ -12,6 +12,7 @@ import { SeoHead } from "@/components/seo/seo-head";
 import { Analytics } from "@vercel/analytics/next";
 import { cleanPath, SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
 import { isIndexablePath } from "@/lib/routes";
+import Script from "next/script";
 import {
   jsonLdGraph,
   organizationJsonLd,
@@ -67,6 +68,24 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <Script
+    id="google-tag-manager"
+    strategy="afterInteractive"
+  >
+    {`
+      (function(w,d,s,l,i){
+        w[l]=w[l]||[];
+        w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});
+        var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),
+            dl=l!='dataLayer'?'&l='+l:'';
+        j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+        f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-TWLSP25R');
+    `}
+  </Script>
       <SeoHead
         title={SITE_TITLE}
         description={SITE_DESCRIPTION}
@@ -90,6 +109,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <noscript>
+    <iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-TWLSP25R"
+      height="0"
+      width="0"
+      style={{ display: "none", visibility: "hidden" }}
+    />
+  </noscript>
         <LanguageProvider>
           <Navigation />
           <main className="min-h-screen font-sans antialiased">
@@ -100,6 +127,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         </LanguageProvider>
         <Analytics />
       </ThemeProvider>
+      
     </>
   );
 }
