@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function HeroSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-visual">
       <div className="absolute inset-0 hero-visual__grid" aria-hidden="true" />
@@ -16,42 +19,40 @@ export function HeroSection() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
             </span>
             <span className="text-sm font-medium text-primary">
-              Dubai Odoo ERP, AI Automation & Web Systems
+              {t.hero.badge}
             </span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-balance">
-            <span className="block">Build a faster operating system</span>
-            <span className="text-primary">for your Dubai business</span>
+            <span className="block">{t.hero.headline1}</span>
+            <span className="text-primary">{t.hero.headline2}</span>
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-pretty">
-            Zavior Technologies implements Odoo ERP, AI automation, custom web
-            platforms, mobile apps, and IT infrastructure for UAE companies that
-            need cleaner operations, faster reporting, and reliable delivery.
+            {t.hero.subtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 hero-reveal">
             <Button asChild size="lg" className="group">
               <Link href="/contact">
-                Book a Dubai Consultation
+                {t.hero.primaryCta}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="group bg-transparent">
               <Link href="/portfolio">
                 <Play className="mr-2 h-4 w-4" />
-                View Case Studies
+                {t.hero.secondaryCta}
               </Link>
             </Button>
           </div>
 
           <div className="mt-16 pt-16 border-t border-border/50">
             <p className="text-sm text-muted-foreground mb-6">
-              Built for UAE operations across these high-demand sectors.
+              {t.hero.sectorsLabel}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-60">
-              {["Retail", "Manufacturing", "Logistics", "Facilities", "Professional Services"].map((sector) => (
+              {t.hero.sectors.map((sector) => (
                 <div key={sector} className="text-lg font-semibold text-muted-foreground">
                   {sector}
                 </div>

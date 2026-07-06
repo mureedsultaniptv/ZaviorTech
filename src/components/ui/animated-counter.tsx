@@ -14,7 +14,7 @@ export function AnimatedCounter({
   return (
     <span className={className}>
       {prefix}
-      {Math.floor(value).toLocaleString()}
+      {Math.floor(value).toLocaleString("en-US")}
       {suffix}
     </span>
   );

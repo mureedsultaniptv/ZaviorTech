@@ -48,7 +48,7 @@ export function Navigation() {
     { href: "/companies", label: t.nav.companies },
     { href: "/portfolio", label: t.nav.portfolio },
     { href: "/blog", label: t.nav.blog },
-    { href: "/careers", label: t.nav.careers },
+    // { href: "/careers", label: t.nav.careers },
     { href: "/contact", label: t.nav.contact },
   ];
 
@@ -61,9 +61,7 @@ export function Navigation() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
           ? "glass border-b border-border/50 shadow-lg"
-          : theme === "light"
-            ? "bg-black"
-            : "bg-white",
+          : "bg-white dark:bg-black",
       )}
     >
       <nav className="container mx-auto px-4 lg:px-8">
@@ -71,11 +69,20 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src={theme === "dark" ? "/zaviorlogo-dark.png" : "/zaviorlogo-light.png"}
+              src="/zaviorlogo-dark.png"
               alt="Zavior Technologies logo"
               width={150}
               height={40}
               priority
+              className="hidden dark:block"
+            />
+            <Image
+              src="/zaviorlogo-light.png"
+              alt="Zavior Technologies logo"
+              width={150}
+              height={40}
+              priority
+              className="dark:hidden"
             />
           </Link>
 

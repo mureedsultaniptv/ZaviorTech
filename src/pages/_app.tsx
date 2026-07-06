@@ -70,7 +70,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Script
     id="google-tag-manager"
-    strategy="afterInteractive"
+    strategy="lazyOnload"
   >
     {`
       (function(w,d,s,l,i){

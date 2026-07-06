@@ -13,11 +13,15 @@ export const translations = {
       faq: "FAQ",
     },
     hero: {
-      slogan: "Turning Ideas Into Digital Reality",
+      badge: "Dubai Odoo ERP, AI Automation & Web Systems",
+      headline1: "Build a faster operating system",
+      headline2: "for your Dubai business",
       subtitle:
-        "We are a collective of passionate technologists building innovative solutions that transform businesses worldwide.",
-      cta: "Explore Our Services",
-      ctaSecondary: "Get In Touch",
+        "Zavior Technologies implements Odoo ERP, AI automation, custom web platforms, mobile apps, and IT infrastructure for UAE companies that need cleaner operations, faster reporting, and reliable delivery.",
+      primaryCta: "Book a Dubai Consultation",
+      secondaryCta: "View Case Studies",
+      sectorsLabel: "Built for UAE operations across these high-demand sectors.",
+      sectors: ["Retail", "Manufacturing", "Logistics", "Facilities", "Professional Services"],
     },
     services: {
       badge: "What We Offer",
@@ -243,9 +247,9 @@ export const translations = {
     cta: {
       title: "Ready to Transform Your Business?",
       subtitle:
-        "Let's discuss how Zavior can help you achieve your digital goals and drive your business forward.",
-      button: "Start Your Journey",
-      buttonSecondary: "Learn More",
+        "Let's discuss how Zavior can help you achieve your digital transformation goals. Our experts are ready to guide you through every step of the journey.",
+      button: "Get In Touch",
+      buttonSecondary: "Explore Services",
     },
   },
   ar: {
@@ -262,11 +266,15 @@ export const translations = {
       faq: "الأسئلة الشائعة",
     },
     hero: {
-      slogan: "نحول الأفكار إلى واقع رقمي",
+      badge: "أنظمة أودو ERP والأتمتة بالذكاء الاصطناعي وحلول الويب في دبي",
+      headline1: "ابنِ نظام تشغيل أسرع",
+      headline2: "لأعمالك في دبي",
       subtitle:
-        "نحن مجموعة من المتخصصين في التقنية نبني حلولاً مبتكرة تحول الأعمال في جميع أنحاء العالم.",
-      cta: "استكشف خدماتنا",
-      ctaSecondary: "تواصل معنا",
+        "تقوم زافيور تكنولوجيز بتطبيق أنظمة أودو ERP والأتمتة بالذكاء الاصطناعي ومنصات الويب المخصصة وتطبيقات الجوال والبنية التحتية لتقنية المعلومات لشركات الإمارات التي تحتاج إلى عمليات أوضح وتقارير أسرع وتنفيذ موثوق.",
+      primaryCta: "احجز استشارة في دبي",
+      secondaryCta: "عرض دراسات الحالة",
+      sectorsLabel: "مصممة لعمليات الإمارات في هذه القطاعات عالية الطلب.",
+      sectors: ["التجزئة", "التصنيع", "اللوجستيات", "إدارة المرافق", "الخدمات المهنية"],
     },
     services: {
       badge: "ما نقدمه",
@@ -483,9 +491,9 @@ export const translations = {
     cta: {
       title: "هل أنت مستعد لتحويل أعمالك؟",
       subtitle:
-        "دعنا نناقش كيف يمكن لزافيور مساعدتك في تحقيق أهدافك الرقمية ودفع أعمالك للأمام.",
-      button: "ابدأ رحلتك",
-      buttonSecondary: "اعرف المزيد",
+        "دعنا نناقش كيف يمكن لزافيور مساعدتك في تحقيق أهداف التحول الرقمي الخاصة بك. خبراؤنا جاهزون لإرشادك في كل خطوة من هذه الرحلة.",
+      button: "تواصل معنا",
+      buttonSecondary: "استكشف خدماتنا",
     },
   },
 } as const;

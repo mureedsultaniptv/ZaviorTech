@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageSquare } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function CTASection() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-20 lg:py-32 bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 lg:px-8">
@@ -17,7 +20,7 @@ export function CTASection() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance"
           >
-            Ready to Transform Your Business?
+            {t.cta.title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -26,8 +29,7 @@ export function CTASection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-lg text-primary-foreground/80 mb-10 text-pretty"
           >
-            Let&apos;s discuss how Zavior can help you achieve your digital transformation goals. 
-            Our experts are ready to guide you through every step of the journey.
+            {t.cta.subtitle}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -44,14 +46,14 @@ export function CTASection() {
             >
               <Link href="/contact">
                 <MessageSquare className="mr-2 h-5 w-5" />
-                Get In Touch
+                {t.cta.button}
               </Link>
             </Button>
             <Link
               href="/services"
               className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-md border border-white bg-black px-6 text-sm font-medium text-white transition-colors hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
             >
-              Explore Services
+              {t.cta.buttonSecondary}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>

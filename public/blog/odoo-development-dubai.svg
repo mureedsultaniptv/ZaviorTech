@@ -1,0 +1,57 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="bg" x1="90" y1="80" x2="1496" y2="838" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111E"/>
+      <stop offset="0.5" stop-color="#123B66"/>
+      <stop offset="1" stop-color="#0F67C7"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F4FAFF" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#D8E8FF" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="918" y1="186" x2="1350" y2="670" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7ED7FF"/>
+      <stop offset="1" stop-color="#DDF4FF"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#8FE3FF"/>
+      <stop offset="1" stop-color="#3FA9FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <circle cx="1420" cy="144" r="150" fill="#79C9FF" fill-opacity="0.12"/>
+  <circle cx="128" cy="784" r="144" fill="#58BCFF" fill-opacity="0.1"/>
+  <rect x="76" y="74" width="1448" height="752" rx="34" fill="white" fill-opacity="0.03" stroke="white" stroke-opacity="0.08"/>
+
+  <rect x="120" y="132" width="228" height="44" rx="22" fill="white" fill-opacity="0.1" stroke="white" stroke-opacity="0.16"/>
+  <text x="154" y="160" fill="#E9F6FF" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Zavior Technologies</text>
+  <rect x="120" y="212" width="344" height="40" rx="20" fill="#1EC5FF" fill-opacity="0.18" stroke="#A6E8FF" stroke-opacity="0.28"/>
+  <text x="148" y="238" fill="#D7F7FF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">ERP &amp; ODOO SOLUTIONS</text>
+  <text x="120" y="340" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="800">Odoo ERP</text>
+  <text x="120" y="426" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="800">Built to Scale</text>
+  <text x="120" y="556" fill="#DCEBFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">A phased Odoo implementation roadmap for</text>
+  <text x="120" y="592" fill="#DCEBFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">growing companies across Dubai.</text>
+
+  <rect x="1082" y="172" width="398" height="620" rx="28" fill="url(#panel)" stroke="white" stroke-opacity="0.16"/>
+  <text x="1130" y="220" fill="#EAF8FF" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800">ROLLOUT PHASES</text>
+  <rect x="1130" y="328" width="330" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.12"/>
+  <circle cx="1166" cy="365" r="12" fill="url(#accent)"/>
+  <text x="1194" y="372" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">Discovery &amp; process mapping</text>
+  <rect x="1130" y="416" width="330" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.12"/>
+  <circle cx="1166" cy="453" r="12" fill="url(#accent)"/>
+  <text x="1194" y="460" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">Phased module rollout</text>
+  <rect x="1130" y="504" width="330" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.12"/>
+  <circle cx="1166" cy="541" r="12" fill="url(#accent)"/>
+  <text x="1194" y="548" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">Data migration &amp; integration</text>
+  <rect x="1130" y="592" width="330" height="74" rx="22" fill="#DDF4FF" fill-opacity="0.12"/>
+  <circle cx="1166" cy="629" r="12" fill="url(#accent)"/>
+  <text x="1194" y="636" fill="#F3FBFF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">Training &amp; adoption support</text>
+  <rect x="1130" y="710" width="40" height="30" rx="8" fill="url(#bar)" fill-opacity="0.85"/>
+  <rect x="1196" y="690" width="40" height="50" rx="8" fill="url(#bar)" fill-opacity="0.85"/>
+  <rect x="1262" y="702" width="40" height="38" rx="8" fill="url(#bar)" fill-opacity="0.85"/>
+  <rect x="1328" y="678" width="40" height="62" rx="8" fill="url(#bar)" fill-opacity="0.85"/>
+  <rect x="1394" y="694" width="40" height="46" rx="8" fill="url(#bar)" fill-opacity="0.85"/>
+
+  <text x="120" y="828" fill="#B9D8F4" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600">zavior.org  |  Odoo Implementation Dubai</text>
+</svg>

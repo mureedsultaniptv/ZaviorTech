@@ -334,14 +334,35 @@ export function jobPostingJsonLd(job: {
   type: string;
   location: string;
   postedAt?: string;
+  validThrough?: string;
+  salaryCurrency?: string;
+  salaryMin?: number;
+  salaryMax?: number;
+  salaryUnit?: string;
 }): JsonLdNode {
+  const employmentTypeMap: Record<string, string> = {
+    "full-time": "FULL_TIME",
+    "part-time": "PART_TIME",
+    contract: "CONTRACT",
+    contractor: "CONTRACTOR",
+    intern: "INTERN",
+    internship: "INTERN",
+    temporary: "TEMPORARY",
+    volunteer: "VOLUNTEER",
+    "per diem": "PER_DIEM",
+    other: "OTHER",
+  };
+  const employmentType =
+    employmentTypeMap[job.type.toLowerCase()] || job.type.toUpperCase().replace(/[\s-]+/g, "_");
+
   return {
     "@type": "JobPosting",
     "@id": absoluteUrl(`/careers/${job.id}#job`),
     title: job.title,
     description: job.description,
     datePosted: job.postedAt,
-    employmentType: job.type,
+    validThrough: job.validThrough,
+    employmentType,
     hiringOrganization: { "@id": absoluteUrl("/#organization") },
     jobLocationType: job.location.toLowerCase().includes("remote")
       ? "TELECOMMUTE"
@@ -349,6 +370,19 @@ export function jobPostingJsonLd(job: {
     applicantLocationRequirements: job.location.toLowerCase().includes("remote")
       ? { "@type": "Country", name: "United Arab Emirates" }
       : undefined,
+    baseSalary:
+      job.salaryCurrency && job.salaryMin && job.salaryMax
+        ? {
+            "@type": "MonetaryAmount",
+            currency: job.salaryCurrency,
+            value: {
+              "@type": "QuantitativeValue",
+              minValue: job.salaryMin,
+              maxValue: job.salaryMax,
+              unitText: job.salaryUnit || "MONTH",
+            },
+          }
+        : undefined,
   };
 }
 
