@@ -16,7 +16,6 @@ import {
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -76,7 +75,6 @@ Upon termination, your right to use the Service will immediately cease. All prov
 export default function TermsPage() {
   const { dir } = useLanguage();
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
     webPageJsonLd({
       path: "/terms",
       name: "Terms of Service",

@@ -17,8 +17,6 @@ import {
   breadcrumbJsonLd,
   faqPageJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   serviceJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
@@ -89,8 +87,6 @@ export default function ServiceDetailPage({ service }: Props) {
   const localizedTitle = getLocalizedTitle(service, language);
 
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: `/services/${service.slug}`,
       name: pageTitle,

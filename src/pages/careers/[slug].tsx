@@ -27,8 +27,6 @@ import {
   breadcrumbJsonLd,
   jobPostingJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -182,8 +180,6 @@ export default function CareerDetailPage({ job }: Props) {
   const pageTitle = `${job.title} | Careers at Zavior Group`;
   const localizedTitle = getLocalizedTitle(job, language);
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: `/careers/${job.id}`,
       name: pageTitle,

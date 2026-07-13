@@ -15,8 +15,6 @@ import {
   breadcrumbJsonLd,
   itemListJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -27,8 +25,6 @@ export default function PortfolioPage() {
   const categories = ["all", ...new Set(projects.map((p) => p.category))];
   const filteredProjects = filter === "all" ? projects : projects.filter((p) => p.category === filter);
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: "/portfolio",
       name: "Zavior Technologies Portfolio",

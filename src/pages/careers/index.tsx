@@ -25,8 +25,6 @@ import {
   itemListJsonLd,
   jobPostingJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -66,8 +64,6 @@ const benefits = [
 export default function CareersPage() {
   const { t, dir } = useLanguage();
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: "/careers",
       name: "Careers at Zavior Group",

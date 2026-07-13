@@ -14,7 +14,6 @@ import {
   breadcrumbJsonLd,
   itemListJsonLd,
   jsonLdGraph,
-  organizationJsonLd,
   personJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
@@ -37,7 +36,6 @@ export default function TeamPage() {
   );
   const otherTeam = team.filter((m) => !leadership.includes(m));
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
     webPageJsonLd({
       path: "/team",
       name: "Zavior Technologies Team",

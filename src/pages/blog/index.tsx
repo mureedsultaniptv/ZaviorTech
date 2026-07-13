@@ -24,8 +24,7 @@ import {
   breadcrumbJsonLd,
   itemListJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
+  PRIMARY_BUSINESS_SCHEMA_ID,
   webPageJsonLd,
 } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
@@ -57,8 +56,6 @@ export default function BlogPage() {
     ? filteredBlogs.filter((blog) => blog.id !== featuredBlog.id)
     : [];
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: "/blog",
       name: "Dubai ERP, AI Automation and Web Development Blog",
@@ -78,7 +75,7 @@ export default function BlogPage() {
       description:
         "Practical articles for Dubai and UAE businesses evaluating Odoo ERP, AI automation, web development, cybersecurity, and digital transformation.",
       url: absoluteUrl("/blog"),
-      publisher: { "@id": absoluteUrl("/#organization") },
+      publisher: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
       blogPost: sortedBlogs.slice(0, 12).map((blog) => ({
         "@type": "BlogPosting",
         headline: blog.title,

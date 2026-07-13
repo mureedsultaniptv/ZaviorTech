@@ -15,8 +15,7 @@ import { isIndexablePath } from "@/lib/routes";
 import Script from "next/script";
 import {
   jsonLdGraph,
-  organizationJsonLd,
-  technologyServiceJsonLd,
+  professionalServiceJsonLd,
   websiteJsonLd,
 } from "@/lib/seo";
 import "@/styles/globals.css";
@@ -96,9 +95,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             : "noindex,nofollow,noarchive,nosnippet,noimageindex"
         }
         structuredData={jsonLdGraph([
-          organizationJsonLd(),
+          professionalServiceJsonLd(),
           websiteJsonLd(),
-          technologyServiceJsonLd(),
         ])}
         structuredDataId="site-identity-structured-data"
       />

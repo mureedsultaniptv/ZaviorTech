@@ -8,7 +8,6 @@ import { Cookie, Shield, Settings2, Trash2 } from "lucide-react";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -41,7 +40,6 @@ const sections = [
 
 export default function CookiesPage() {
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
     webPageJsonLd({
       path: "/cookies",
       name: "Cookie Policy",

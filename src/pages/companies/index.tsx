@@ -13,8 +13,6 @@ import { ArrowRight, Building2, ExternalLink, Globe, Layers3, BriefcaseBusiness 
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -25,8 +23,6 @@ export default function CompaniesPage() {
   const publishedDomains = new Set(companies.map((company) => company.website)).size;
 
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: "/companies",
       name: "Zavior Group Companies",

@@ -20,8 +20,6 @@ import { faqs } from "@/lib/data/demo-data";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -78,8 +76,6 @@ export default function FAQPage() {
     }))
     .filter((category) => category.questions.length > 0);
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: "/faq",
       name: "Zavior Technologies FAQ",

@@ -13,8 +13,6 @@ import Image from "next/image";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   projectJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
@@ -74,8 +72,6 @@ export default function PortfolioDetailPage({ project }: Props) {
   const pageTitle = project.metaTitle || `${project.title} | Zavior Technologies`;
   const pageDescription = project.metaDescription || project.description;
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: `/portfolio/${project.slug}`,
       name: pageTitle,

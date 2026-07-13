@@ -31,9 +31,7 @@ import Link from "next/link";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
-  technologyServiceJsonLd,
+  PRIMARY_BUSINESS_SCHEMA_ID,
 } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
@@ -130,9 +128,6 @@ export default function ContactPage() {
   };
   const { t, dir } = useLanguage();
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
-    technologyServiceJsonLd(),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Contact", path: "/contact" },
@@ -141,7 +136,7 @@ export default function ContactPage() {
       "@type": "ContactPage",
       name: "Contact Zavior Technologies",
       url: absoluteUrl("/contact"),
-      about: { "@id": absoluteUrl("/#technology-service") },
+      about: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
     },
   ]);
 

@@ -19,8 +19,6 @@ import {
   faqPageJsonLd,
   itemListJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   serviceJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
@@ -38,8 +36,6 @@ export default function ServicesPage() {
   const { t, language } = useLanguage();
   const priorityServices = getPriorityServices(6);
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: "/services",
       name: "Complete IT, ERP & AI Services for Business Growth",

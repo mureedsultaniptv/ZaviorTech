@@ -13,7 +13,6 @@ import Image from "next/image";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  organizationJsonLd,
   personJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
@@ -42,7 +41,6 @@ export default function TeamMemberDetailPage({ member }: Props) {
     .slice(0, 3); // show 3 related team members
   const pageTitle = `${member.name} | Zavior Technologies Team`;
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
     webPageJsonLd({
       path: `/team/${member.slug}`,
       name: pageTitle,

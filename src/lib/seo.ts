@@ -2,15 +2,14 @@ import {
   absoluteUrl,
   DEFAULT_OG_IMAGE,
   SITE_DESCRIPTION,
-  SITE_EMAIL,
   SITE_NAME,
-  SITE_TELEPHONE,
   SITE_URL,
 } from "@/lib/site";
 
 export const SEO_LANGUAGE = "en-AE";
 export const SEO_LOCALE = "en_AE";
 export const UAE_MARKET_NAME = "Dubai and United Arab Emirates";
+export const PRIMARY_BUSINESS_SCHEMA_ID = "https://www.zavior.org/#localbusiness";
 
 type JsonLdNode = Record<string, unknown>;
 
@@ -21,38 +20,90 @@ export function jsonLdGraph(nodes: JsonLdNode[]) {
   };
 }
 
-export function organizationJsonLd(): JsonLdNode {
+export function professionalServiceJsonLd(): JsonLdNode {
   return {
-    "@type": "Organization",
-    "@id": absoluteUrl("/#organization"),
-    name: SITE_NAME,
-    alternateName: ["Zavior Group", "Zavior Technologies"],
-    url: SITE_URL,
-    logo: {
-      "@type": "ImageObject",
-      url: absoluteUrl("/zaviorlogo-dark.png"),
-    },
-    image: absoluteUrl(DEFAULT_OG_IMAGE),
-    description: SITE_DESCRIPTION,
-    email: SITE_EMAIL,
-    telephone: SITE_TELEPHONE,
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": PRIMARY_BUSINESS_SCHEMA_ID,
+    name: "Zavior Technologies",
+    url: "https://www.zavior.org/",
+    image: "https://www.zavior.org/zaviorlogo-dark.png",
+    logo: "https://www.zavior.org/zaviorlogo-dark.png",
+    telephone: "+971508185948",
+    email: "support@zaviortech.org",
+    description:
+      "Zavior Technologies is a Sharjah/Dubai-based company helping UAE companies implement Odoo ERP, AI automation, custom web platforms, mobile apps, and IT infrastructure solutions.",
+    priceRange: "AED AED",
+    currenciesAccepted: "AED",
+    paymentAccepted: [
+      "Cash",
+      "Credit Card",
+      "Debit Card",
+      "Bank Transfer",
+    ],
     address: {
       "@type": "PostalAddress",
       streetAddress: "SPC Freezone, Sheikh Mohammed Bin Zayed Rd",
       addressLocality: "Sharjah",
       addressRegion: "Sharjah",
+      postalCode: "00000",
       addressCountry: "AE",
     },
-    areaServed: [
-      { "@type": "City", name: "Dubai" },
-      { "@type": "AdministrativeArea", name: "Sharjah" },
-      { "@type": "Country", name: "United Arab Emirates" },
+    areaServed: {
+      "@type": "Country",
+      name: "United Arab Emirates",
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+        opens: "09:00",
+        closes: "21:00",
+      },
     ],
     sameAs: [
       "https://www.linkedin.com/company/zavior-tech",
       "https://www.youtube.com/@ZaviorTechnologiess",
       "https://github.com/Zavior-Technologies",
     ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Technology Services",
+      itemListElement: [
+        {
+          "@type": "OfferCatalog",
+          name: "Odoo ERP Services",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "AI Automation Solutions",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Web Development",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Custom Mobile App Development",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "IT Solutions",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "IT Infrastructure Services",
+        },
+      ],
+    },
   };
 }
 
@@ -64,78 +115,7 @@ export function websiteJsonLd(): JsonLdNode {
     name: SITE_NAME,
     description: SITE_DESCRIPTION,
     inLanguage: SEO_LANGUAGE,
-    publisher: { "@id": absoluteUrl("/#organization") },
-  };
-}
-
-export function localBusinessJsonLd(): JsonLdNode {
-  return {
-    "@type": ["LocalBusiness", "ProfessionalService"],
-    "@id": absoluteUrl("/#local-business"),
-    name: SITE_NAME,
-    url: SITE_URL,
-    image: absoluteUrl(DEFAULT_OG_IMAGE),
-    logo: absoluteUrl("/zaviorlogo-dark.png"),
-    description: SITE_DESCRIPTION,
-    telephone: SITE_TELEPHONE,
-    email: SITE_EMAIL,
-    priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "SPC Freezone, Sheikh Mohammed Bin Zayed Rd",
-      addressLocality: "Sharjah",
-      addressRegion: "Sharjah",
-      addressCountry: "AE",
-    },
-    areaServed: [
-      { "@type": "City", name: "Dubai" },
-      { "@type": "City", name: "Sharjah" },
-      { "@type": "City", name: "Abu Dhabi" },
-      { "@type": "Country", name: "United Arab Emirates" },
-    ],
-    parentOrganization: { "@id": absoluteUrl("/#organization") },
-  };
-}
-
-export function technologyServiceJsonLd(): JsonLdNode {
-  return {
-    "@type": "ProfessionalService",
-    "@id": absoluteUrl("/#technology-service"),
-    name: "Zavior Technologies",
-    url: SITE_URL,
-    image: absoluteUrl(DEFAULT_OG_IMAGE),
-    description:
-      "Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, and infrastructure services for Dubai and UAE businesses.",
-    telephone: SITE_TELEPHONE,
-    email: SITE_EMAIL,
-    priceRange: "$$",
-    parentOrganization: { "@id": absoluteUrl("/#organization") },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "SPC Freezone, Sheikh Mohammed Bin Zayed Rd",
-      addressLocality: "Sharjah",
-      addressRegion: "Sharjah",
-      addressCountry: "AE",
-    },
-    areaServed: [
-      { "@type": "City", name: "Dubai" },
-      { "@type": "Country", name: "United Arab Emirates" },
-    ],
-    makesOffer: [
-      "Odoo ERP implementation",
-      "AI automation",
-      "Web development",
-      "Mobile app development",
-      "IT solutions",
-      "Core IT infrastructure",
-    ].map((name) => ({
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name,
-        areaServed: UAE_MARKET_NAME,
-      },
-    })),
+    publisher: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
   };
 }
 
@@ -167,7 +147,7 @@ export function webPageJsonLd({
     description,
     inLanguage: SEO_LANGUAGE,
     isPartOf: { "@id": absoluteUrl("/#website") },
-    publisher: { "@id": absoluteUrl("/#organization") },
+    publisher: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
     speakable: speakableJsonLd(speakableSelectors),
   };
 }
@@ -202,7 +182,7 @@ export function serviceJsonLd(service: {
     name: service.title,
     description: service.metaDescription || service.description,
     serviceType: service.title,
-    provider: { "@id": absoluteUrl("/#organization") },
+    provider: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
     areaServed: [
       { "@type": "City", name: "Dubai" },
       { "@type": "City", name: "Sharjah" },
@@ -247,7 +227,7 @@ export function articleJsonLd(blog: {
     headline: blog.title,
     image: absoluteUrl(blog.image),
     author: { "@type": "Person", name: blog.author.name },
-    publisher: { "@id": absoluteUrl("/#organization") },
+    publisher: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
     datePublished: blog.publishedAt,
     dateModified: blog.updatedAt || blog.publishedAt,
     description: blog.excerpt,
@@ -295,7 +275,7 @@ export function projectJsonLd(project: {
     description: project.metaDescription || project.description,
     url: absoluteUrl(path),
     image: project.image ? absoluteUrl(project.image) : undefined,
-    creator: { "@id": absoluteUrl("/#organization") },
+    creator: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
     about: project.category,
     dateCreated: String(project.year),
     client: {
@@ -322,7 +302,7 @@ export function personJsonLd(member: {
     jobTitle: member.role,
     description: member.bio,
     image: member.image ? absoluteUrl(member.image) : undefined,
-    worksFor: { "@id": absoluteUrl("/#organization") },
+    worksFor: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
     sameAs,
   };
 }
@@ -363,7 +343,7 @@ export function jobPostingJsonLd(job: {
     datePosted: job.postedAt,
     validThrough: job.validThrough,
     employmentType,
-    hiringOrganization: { "@id": absoluteUrl("/#organization") },
+    hiringOrganization: { "@id": PRIMARY_BUSINESS_SCHEMA_ID },
     jobLocationType: job.location.toLowerCase().includes("remote")
       ? "TELECOMMUTE"
       : undefined,

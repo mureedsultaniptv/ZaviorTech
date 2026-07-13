@@ -13,11 +13,7 @@ import {
   breadcrumbJsonLd,
   faqPageJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
-  technologyServiceJsonLd,
   webPageJsonLd,
-  websiteJsonLd,
 } from "@/lib/seo";
 import { MessageCircle } from "lucide-react";
 import { faqs } from "@/lib/data/demo-data";
@@ -35,10 +31,6 @@ export default function HomePage() {
         description="Zavior Technologies helps Dubai and UAE companies implement Odoo ERP, AI automation, custom websites, mobile apps, IT solutions, and core infrastructure."
         path="/"
         structuredData={jsonLdGraph([
-          organizationJsonLd(),
-          localBusinessJsonLd(),
-          websiteJsonLd(),
-          technologyServiceJsonLd(),
           webPageJsonLd({
             path: "/",
             name: "Odoo ERP, AI Automation and Web Development Dubai",

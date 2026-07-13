@@ -12,8 +12,6 @@ import { Target, Eye, Heart, Globe, Award, Users } from "lucide-react";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  localBusinessJsonLd,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -29,8 +27,6 @@ export default function AboutPage() {
     { icon: Eye, title: "Vision", description: "Looking ahead to shape the future" },
   ];
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
-    localBusinessJsonLd(),
     webPageJsonLd({
       path: "/about",
       name: "About Zavior Group",

@@ -9,7 +9,6 @@ import { Shield, Eye, Lock, Database, UserCheck, Bell } from "lucide-react";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
-  organizationJsonLd,
   webPageJsonLd,
 } from "@/lib/seo";
 
@@ -74,7 +73,6 @@ const sections = [
 export default function PrivacyPage() {
   const { dir } = useLanguage();
   const structuredData = jsonLdGraph([
-    organizationJsonLd(),
     webPageJsonLd({
       path: "/privacy",
       name: "Privacy Policy",
