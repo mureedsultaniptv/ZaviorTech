@@ -31,7 +31,7 @@ export default function HomePage() {
   return (
     <>
       <SeoHead
-        title="Odoo ERP, AI Automation & Web Development Dubai | Zavior Technologies"
+        title="Odoo ERP, AI Automation & Web Development Dubai | Zavior"
         description="Zavior Technologies helps Dubai and UAE companies implement Odoo ERP, AI automation, custom websites, mobile apps, IT solutions, and core infrastructure."
         path="/"
         structuredData={jsonLdGraph([

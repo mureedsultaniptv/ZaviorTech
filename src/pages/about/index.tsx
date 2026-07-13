@@ -47,8 +47,8 @@ export default function AboutPage() {
   return (
     <>
       <SeoHead
-        title="About | Zavior Group"
-        description="Learn about Zavior Group, its mission, values, milestones, and the companies driving its growth."
+        title="About Zavior Technologies | ERP & AI Experts UAE"
+        description="Explore Zavior Group, its mission, values, milestones, and the companies powering innovation, digital transformation, business excellence, and growth."
         path="/about"
         structuredData={structuredData}
         structuredDataId="about-structured-data"

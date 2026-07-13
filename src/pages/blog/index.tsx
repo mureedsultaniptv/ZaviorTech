@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { getLocalizedTitle } from "@/lib/i18n/localized-content";
 import { SeoHead } from "@/components/seo/seo-head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -30,7 +31,7 @@ import {
 import { absoluteUrl } from "@/lib/site";
 
 export default function BlogPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [filter, setFilter] = useState("all");
   const [query, setQuery] = useState("");
 
@@ -190,7 +191,7 @@ export default function BlogPage() {
                   <div className="relative aspect-video lg:aspect-auto">
                     <Image
                       src={featuredBlog.image}
-                      alt={featuredBlog.title}
+                      alt={getLocalizedTitle(featuredBlog, language)}
                       fill
                       priority
                       sizes="(min-width: 1024px) 50vw, 100vw"
@@ -216,7 +217,7 @@ export default function BlogPage() {
                       </span>
                     </div>
                     <h2 className="text-2xl lg:text-3xl font-bold mb-4 group-hover:text-primary transition-colors">
-                      {featuredBlog.title}
+                      {getLocalizedTitle(featuredBlog, language)}
                     </h2>
                     <p className="text-muted-foreground mb-6 line-clamp-3">
                       {featuredBlog.excerpt}
@@ -293,7 +294,7 @@ export default function BlogPage() {
                       <div className="relative aspect-video overflow-hidden">
                         <Image
                           src={blog.image}
-                          alt={blog.title}
+                          alt={getLocalizedTitle(blog, language)}
                           fill
                           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                           className="object-cover"
@@ -317,7 +318,7 @@ export default function BlogPage() {
                           {blog.category}
                         </span>
                         <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                          {blog.title}
+                          {getLocalizedTitle(blog, language)}
                         </h3>
                         <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
                           {blog.excerpt}

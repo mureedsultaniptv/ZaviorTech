@@ -84,8 +84,8 @@ export default function TeamPage() {
   return (
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
-        title="Team | Zavior Technologies"
-        description="Meet the Zavior Technologies leadership and delivery team behind ERP, AI automation, web, mobile, and IT projects."
+        title="Terms & Conditions | Zavior Technologies UAE"
+        description="Read the Zavior Group terms of service to understand website usage, user responsibilities, service conditions, legal terms, and policy compliance."
         path="/team"
         structuredData={structuredData}
         structuredDataId="team-structured-data"

@@ -14,8 +14,8 @@ export const translations = {
     },
     hero: {
       badge: "Dubai Odoo ERP, AI Automation & Web Systems",
-      headline1: "Build a faster operating system",
-      headline2: "for your Dubai business",
+      headline1: "Odoo ERP, AI Automation & Software",
+      headline2: "Development Company in Dubai",
       subtitle:
         "Zavior Technologies implements Odoo ERP, AI automation, custom web platforms, mobile apps, and IT infrastructure for UAE companies that need cleaner operations, faster reporting, and reliable delivery.",
       primaryCta: "Book a Dubai Consultation",
@@ -25,37 +25,37 @@ export const translations = {
     },
     services: {
       badge: "What We Offer",
-      title: "Our Services",
+      title: "ERP, AI Automation & Digital Transformation Services",
       subtitle:
         "Our collection of tech services spans various needs at every stage of the transformation process.",
       learnMore: "Learn More",
       ai: {
-        title: "AI Automation",
+        title: "AI Automation Solutions for Businesses in Dubai",
         description:
           "Leverage cutting-edge artificial intelligence to automate processes and drive efficiency across your organization.",
       },
       erp: {
-        title: "ERP & Odoo Solutions",
+        title: "Odoo ERP Services Dubai for Smarter Business Management",
         description:
           "Comprehensive enterprise resource planning implementations tailored to streamline your business operations.",
       },
       web: {
-        title: "Web Development",
+        title: "Web Development Services Company in Dubai",
         description:
           "Custom websites and web applications built with modern technologies for optimal performance and user experience.",
       },
       mobile: {
-        title: "Mobile Applications",
+        title: "Custom Mobile App Development Dubai",
         description:
           "Native and cross-platform mobile apps designed to engage users and extend your digital presence.",
       },
       it: {
-        title: "IT Solutions",
+        title: "IT Solutions Company in Dubai",
         description:
           "End-to-end IT consulting and infrastructure solutions to power your digital transformation journey.",
       },
       coreit: {
-        title: "Core IT Infrastructure",
+        title: "IT Infrastructure Services Dubai for Reliable Business",
         description:
           "Delivering complete hardware and infrastructure solutions — from enterprise servers and networking to CCTV surveillance and workstation setup.",
       },
@@ -267,8 +267,8 @@ export const translations = {
     },
     hero: {
       badge: "أنظمة أودو ERP والأتمتة بالذكاء الاصطناعي وحلول الويب في دبي",
-      headline1: "ابنِ نظام تشغيل أسرع",
-      headline2: "لأعمالك في دبي",
+      headline1: "شركة أودو ERP والأتمتة بالذكاء الاصطناعي",
+      headline2: "وتطوير البرمجيات في دبي",
       subtitle:
         "تقوم زافيور تكنولوجيز بتطبيق أنظمة أودو ERP والأتمتة بالذكاء الاصطناعي ومنصات الويب المخصصة وتطبيقات الجوال والبنية التحتية لتقنية المعلومات لشركات الإمارات التي تحتاج إلى عمليات أوضح وتقارير أسرع وتنفيذ موثوق.",
       primaryCta: "احجز استشارة في دبي",
@@ -278,39 +278,39 @@ export const translations = {
     },
     services: {
       badge: "ما نقدمه",
-      title: "خدماتنا",
+      title: "خدمات ERP والأتمتة بالذكاء الاصطناعي والتحول الرقمي",
       subtitle:
         "تغطي مجموعة خدماتنا التقنية احتياجات متنوعة في كل مرحلة من مراحل التحول الرقمي.",
       learnMore: "اعرف المزيد",
       ai: {
-        title: "أتمتة الذكاء الاصطناعي",
+        title: "حلول أتمتة الذكاء الاصطناعي للشركات في دبي",
         description:
           "استفد من أحدث تقنيات الذكاء الاصطناعي لأتمتة العمليات وتعزيز الكفاءة في مؤسستك.",
       },
       erp: {
-        title: "حلول ERP وأودو",
+        title: "خدمات أودو ERP في دبي لإدارة أعمال أكثر ذكاء",
         description:
           "تطبيقات شاملة لتخطيط موارد المؤسسات مصممة لتبسيط عمليات أعمالك.",
       },
       web: {
-        title: "تطوير الويب",
+        title: "شركة خدمات تطوير الويب في دبي",
         description:
           "مواقع وتطبيقات ويب مخصصة مبنية بأحدث التقنيات للحصول على أفضل أداء وتجربة مستخدم.",
       },
       mobile: {
-        title: "تطبيقات الجوال",
+        title: "تطوير تطبيقات جوال مخصصة في دبي",
         description:
           "تطبيقات جوال أصلية ومتعددة المنصات مصممة لإشراك المستخدمين وتوسيع حضورك الرقمي.",
       },
       it: {
-        title: "حلول تقنية المعلومات",
+        title: "شركة حلول تقنية المعلومات في دبي",
         description:
           "استشارات وحلول بنية تحتية شاملة لتقنية المعلومات لدعم رحلة تحولك الرقمي.",
       },
       coreit: {
-        title: "الأمن السيبراني",
+        title: "خدمات البنية التحتية لتقنية المعلومات في دبي لأعمال موثوقة",
         description:
-          "احمِ أصولك الرقمية من خلال تقييماتنا الأمنية الشاملة وخدمات التنفيذ.",
+          "حلول أجهزة وبنية تحتية متكاملة تشمل الخوادم والشبكات وأنظمة المراقبة وإعداد محطات العمل.",
       },
     },
     companies: {

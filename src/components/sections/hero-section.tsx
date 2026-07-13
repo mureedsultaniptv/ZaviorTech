@@ -25,6 +25,7 @@ export function HeroSection() {
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-balance">
             <span className="block">{t.hero.headline1}</span>
+            {" "}
             <span className="text-primary">{t.hero.headline2}</span>
           </h1>
 

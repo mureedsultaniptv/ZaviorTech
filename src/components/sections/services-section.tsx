@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { getLocalizedTitle } from "@/lib/i18n/localized-content";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,7 +29,7 @@ const serviceLinks = {
 };
 
 export function ServicesSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const services = [
     { key: "erp" as const, ...t.services.erp },
@@ -91,7 +92,7 @@ export function ServicesSection() {
                 href={`/services/${service.slug}`}
                 className="rounded-md border border-border/70 p-4 text-sm transition-colors hover:border-primary/40 hover:text-primary"
               >
-                {service.title}
+                {getLocalizedTitle(service, language)}
               </Link>
             ))}
           </div>

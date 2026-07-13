@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { SeoHead } from "@/components/seo/seo-head";
 import { SafeRichText } from "@/components/ui/safe-rich-text";
 import { services } from "@/lib/data/demo-data";
+import { getLocalizedTitle } from "@/lib/i18n/localized-content";
+import { useLanguage } from "@/lib/i18n/language-context";
 import { CTASection } from "@/components/sections/cta-section";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import Image from "next/image";
@@ -31,6 +33,7 @@ import {
 interface Service {
   slug: string;
   title: string;
+  titleAr?: string;
   description: string;
   metaTitle?: string;
   metaDescription?: string;
@@ -50,6 +53,8 @@ interface Params extends ParsedUrlQuery {
 }
 
 export default function ServiceDetailPage({ service }: Props) {
+  const { language } = useLanguage();
+
   // If service is null (should be handled by getStaticProps notFound), but just in case:
   if (!service) {
     return (
@@ -81,6 +86,7 @@ export default function ServiceDetailPage({ service }: Props) {
   const directAnswer = getServiceDirectAnswer(service);
   const pageTitle = service.metaTitle || `${service.title} | Zavior Technologies`;
   const pageDescription = service.metaDescription || service.description;
+  const localizedTitle = getLocalizedTitle(service, language);
 
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
@@ -112,16 +118,18 @@ export default function ServiceDetailPage({ service }: Props) {
       />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32">
-        <div className="absolute inset-0 -z-10">
+      <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 pb-20 lg:pt-40 lg:pb-32">
+        <div className="absolute inset-0 -z-10" aria-hidden="true">
           <Image
             src={service.image}
             alt={service.title}
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center opacity-30"
+            className="object-cover object-center opacity-45"
           />
+          <div className="absolute inset-0 bg-gradient-to-br from-neutral-950/95 via-neutral-950/80 to-primary/70" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-neutral-950/60 to-transparent" />
         </div>
         <div className="container mx-auto px-4 lg:px-8 text-center">
           <motion.div
@@ -129,10 +137,10 @@ export default function ServiceDetailPage({ service }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4">
-              {service.title}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-sm mb-4">
+              {localizedTitle}
             </h1>
-            <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-sm">
               {service.description}
             </p>
             <Button asChild size="lg" className="mt-8">

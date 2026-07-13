@@ -52,8 +52,8 @@ export default function PortfolioPage() {
   return (
     <>
       <SeoHead
-        title="Portfolio | Zavior Group"
-        description="Review recent ERP, software, infrastructure, and digital delivery projects completed by Zavior Group."
+        title="Our Portfolio | ERP, AI & IT Projects by Zavior"
+        description="Explore recent ERP, software, infrastructure, and digital delivery projects by Zavior Group showcasing innovation, expertise, and successful outcomes."
         path="/portfolio"
         structuredData={structuredData}
         structuredDataId="portfolio-structured-data"

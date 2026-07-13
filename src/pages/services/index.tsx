@@ -5,6 +5,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { getLocalizedTitle } from "@/lib/i18n/localized-content";
 import { SeoHead } from "@/components/seo/seo-head";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent } from "@/components/ui/card";
@@ -34,14 +35,14 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Shield,
 };
 export default function ServicesPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const priorityServices = getPriorityServices(6);
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
     localBusinessJsonLd(),
     webPageJsonLd({
       path: "/services",
-      name: "Odoo ERP, AI Automation, Web and IT Services Dubai",
+      name: "Complete IT, ERP & AI Services for Business Growth",
       description:
         "Explore Dubai-focused Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, cybersecurity, and core infrastructure services.",
       speakableSelectors: ["h1", "#services-answer p"],
@@ -64,7 +65,7 @@ export default function ServicesPage() {
   return (
     <>
       <SeoHead
-        title="Odoo ERP, AI Automation, Web & IT Services Dubai | Zavior Technologies"
+        title="Complete IT, ERP & AI Services for Business Growth"
         description="Explore Dubai-focused Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, cybersecurity, and core infrastructure services."
         path="/services"
         structuredData={structuredData}
@@ -126,6 +127,7 @@ export default function ServicesPage() {
           <div className="space-y-16">
             {services.map((service, index) => {
               const Icon = iconMap[service.icon] || Globe;
+              const serviceTitle = getLocalizedTitle(service, language);
               return (
                 <motion.div
                   key={service.id}
@@ -141,7 +143,7 @@ export default function ServicesPage() {
                       <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
                         <Icon className="h-8 w-8 text-primary" />
                       </div>
-                      <h2 className="text-3xl font-bold mb-4">{service.title}</h2>
+                      <h2 className="text-3xl font-bold mb-4">{serviceTitle}</h2>
                       <p className="text-muted-foreground leading-relaxed mb-6">
                         {service.description}
                       </p>
@@ -169,7 +171,7 @@ export default function ServicesPage() {
                             {service.image ? (
                               <Image
                                 src={service.image}
-                                alt={service.title}
+                                alt={serviceTitle}
                                 className="w-full h-full object-cover"
                                 width={640}
                                 height={360}
@@ -225,7 +227,9 @@ export default function ServicesPage() {
                     href={`/services/${service.slug}`}
                     className="rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/40"
                   >
-                    <h3 className="font-semibold mb-2">{service.title}</h3>
+                    <h3 className="font-semibold mb-2">
+                      {getLocalizedTitle(service, language)}
+                    </h3>
                     <p className="text-sm text-muted-foreground">
                       {service.description}
                     </p>

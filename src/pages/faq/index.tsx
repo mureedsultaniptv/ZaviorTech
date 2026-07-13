@@ -60,7 +60,7 @@ const faqCategories = categoryOrder
   .filter((category) => category.questions.length > 0);
 
 export default function FAQPage() {
-  const { dir } = useLanguage();
+  const { t, dir } = useLanguage();
   const isRTL = dir === "rtl";
   const searchParams = useSearchParams();
   const searchQuery = searchParams?.get("query") || "";
@@ -84,7 +84,7 @@ export default function FAQPage() {
       path: "/faq",
       name: "Zavior Technologies FAQ",
       description:
-        "Find answers about Zavior Technologies services for Dubai and UAE businesses, including Odoo ERP, AI automation, web development, IT support, process, and pricing.",
+        "Find answers about Zavior Technologies services for Dubai and UAE businesses, including Odoo ERP, AI automation, web development, IT support, process.",
       pageType: "FAQPage",
       speakableSelectors: ["h1", "#faq-content"],
     }),
@@ -109,7 +109,7 @@ export default function FAQPage() {
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
         title="FAQ | Odoo ERP, AI Automation & Web Development Dubai | Zavior"
-        description="Find answers about Zavior Technologies services for Dubai and UAE businesses, including Odoo ERP, AI automation, web development, IT support, process, and pricing."
+        description="Find answers about Zavior Technologies services for Dubai and UAE businesses, including Odoo ERP, AI automation, web development, IT support, process."
         path="/faq"
         structuredData={structuredData}
         structuredDataId="faq-structured-data"
@@ -128,10 +128,10 @@ export default function FAQPage() {
               Frequently Asked Questions
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
-              Get Answers to Common Questions
+              {t.faq.title}
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
-              Explore our FAQ to learn more about our services, process, and pricing.
+              {t.faq.subtitle}
             </p>
 
             {/* Search Box */}

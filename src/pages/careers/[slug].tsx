@@ -2,6 +2,7 @@
 
 import { GetStaticPaths, GetStaticProps } from "next";
 import { motion } from "framer-motion";
+import { getLocalizedTitle } from "@/lib/i18n/localized-content";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { SeoHead } from "@/components/seo/seo-head";
 import { jobOpenings } from "@/lib/data/demo-data";
@@ -45,7 +46,7 @@ type Props = {
 };
 
 export default function CareerDetailPage({ job }: Props) {
-  const { t, dir } = useLanguage();
+  const { t, dir, language } = useLanguage();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -179,6 +180,7 @@ export default function CareerDetailPage({ job }: Props) {
     );
 
   const pageTitle = `${job.title} | Careers at Zavior Group`;
+  const localizedTitle = getLocalizedTitle(job, language);
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
     localBusinessJsonLd(),
@@ -229,7 +231,7 @@ export default function CareerDetailPage({ job }: Props) {
               {job.department}
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              {job.title}
+              {localizedTitle}
             </h1>
             <div className="flex flex-wrap gap-4">
               <Badge

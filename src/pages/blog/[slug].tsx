@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { SeoHead } from "@/components/seo/seo-head";
 import { SafeRichText } from "@/components/ui/safe-rich-text";
 import { blogs, sortedBlogs } from "@/lib/data/demo-data";
+import { getLocalizedTitle } from "@/lib/i18n/localized-content";
+import { useLanguage } from "@/lib/i18n/language-context";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Linkedin, Twitter } from "lucide-react";
 import { ParsedUrlQuery } from "querystring";
 import { absoluteUrl } from "@/lib/site";
@@ -32,6 +34,7 @@ interface BlogPost {
   id: string;
   slug: string;
   title: string;
+  titleAr?: string;
   excerpt: string;
   content: string;
   category: string;
@@ -58,6 +61,8 @@ interface Params extends ParsedUrlQuery {
 }
 
 export default function BlogDetailPage({ blog }: Props) {
+  const { language } = useLanguage();
+
   // If blog is null (should be handled by getStaticProps notFound), but just in case:
   if (!blog) {
     return (
@@ -88,6 +93,7 @@ export default function BlogDetailPage({ blog }: Props) {
   const directAnswer = getBlogDirectAnswer(blog);
   const pageTitle = blog.metaTitle || `${blog.title} | Zavior Technologies Blog`;
   const pageDescription = blog.metaDescription || blog.excerpt;
+  const localizedTitle = getLocalizedTitle(blog, language);
 
   const structuredData = jsonLdGraph([
     organizationJsonLd(),
@@ -166,7 +172,7 @@ export default function BlogDetailPage({ blog }: Props) {
                 {blog.category}
               </span>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
-                {blog.title}
+                {localizedTitle}
               </h1>
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <span className="flex items-center gap-2">

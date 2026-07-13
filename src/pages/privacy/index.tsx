@@ -91,8 +91,8 @@ export default function PrivacyPage() {
   return (
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
-        title="Privacy Policy | Zavior Group"
-        description="Read the Zavior Group privacy policy covering data collection, security practices, and user rights."
+        title="Privacy Policy for Data Protection & User Security"
+        description="Explore the Zavior Group privacy policy covering data collection, security, user rights, information handling, and privacy compliance practices."
         path="/privacy"
         structuredData={structuredData}
         structuredDataId="privacy-structured-data"

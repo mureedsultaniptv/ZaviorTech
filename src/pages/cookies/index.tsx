@@ -58,8 +58,8 @@ export default function CookiesPage() {
   return (
     <main className="min-h-screen bg-background">
       <SeoHead
-        title="Cookie Policy | Zavior Group"
-        description="Read the Zavior Group cookie policy and learn how cookie-related choices affect your experience."
+        title="Cookie Policy | Zavior Technologies UAE Official"
+        description="Read the Zavior Group cookie policy and discover how cookies support website performance, personalize your experience, and manage your preferences."
         path="/cookies"
         structuredData={structuredData}
         structuredDataId="cookies-structured-data"

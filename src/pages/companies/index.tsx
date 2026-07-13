@@ -55,8 +55,8 @@ export default function CompaniesPage() {
   return (
     <>
       <SeoHead
-        title="Zavior Group Companies"
-        description="Explore the three branches of Zavior Group: Zavior Technologies, Zavior Furniture, and Zavior Maintenance Services."
+        title="Zavior Group Companies in UAE | Explore Brands"
+        description="Discover the three branches of Zavior Group: Zavior Technologies, Zavior Furniture, and Zavior Maintenance Services, offering trusted industry expertise."
         path="/companies"
         structuredData={structuredData}
       />

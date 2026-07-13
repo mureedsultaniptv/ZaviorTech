@@ -148,8 +148,8 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
-        title="Contact Zavior Technologies Dubai | ERP, AI, Web & IT Consultation"
-        description="Contact Zavior Technologies for Dubai and UAE Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, and infrastructure projects."
+        title="Contact Zavior Technologies in Dubai, UAE Today"
+        description="Contact Zavior Technologies for Dubai and UAE Odoo ERP implementation, AI automation, web development, apps, IT solutions, and infrastructure projects."
         path="/contact"
         structuredData={structuredData}
         structuredDataId="contact-structured-data"
