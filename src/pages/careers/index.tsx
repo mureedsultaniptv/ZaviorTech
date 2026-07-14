@@ -200,7 +200,7 @@ export default function CareersPage() {
                         </Badge>
                       ))}
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col gap-3 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between">
                       <span className="text-lg font-semibold text-primary">{job.salary}</span>
                       <Link href={`/careers/${job.id}`}>
                         <Button variant="ghost" className="group/btn">

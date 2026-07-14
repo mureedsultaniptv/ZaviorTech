@@ -266,9 +266,9 @@ export default function CareerDetailPage({ job }: Props) {
       {/* Content Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div className="grid min-w-0 gap-8 lg:grid-cols-3 lg:gap-12">
             {/* Job Details */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="min-w-0 space-y-8 lg:col-span-2">
               {/* About Role */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -276,7 +276,7 @@ export default function CareerDetailPage({ job }: Props) {
                 transition={{ duration: 0.5 }}
               >
                 <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                  <CardContent className="p-8">
+                  <CardContent className="p-6 sm:p-8">
                     <h2 className="text-2xl font-bold text-foreground mb-4">
                       {t.careers.aboutRole}
                     </h2>
@@ -294,7 +294,7 @@ export default function CareerDetailPage({ job }: Props) {
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                  <CardContent className="p-8">
+                  <CardContent className="p-6 sm:p-8">
                     <h2 className="text-2xl font-bold text-foreground mb-4">
                       {t.careers.responsibilities}
                     </h2>
@@ -327,7 +327,7 @@ export default function CareerDetailPage({ job }: Props) {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                  <CardContent className="p-8">
+                  <CardContent className="p-6 sm:p-8">
                     <h2 className="text-2xl font-bold text-foreground mb-4">
                       {t.careers.requirements}
                     </h2>
@@ -359,7 +359,7 @@ export default function CareerDetailPage({ job }: Props) {
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                  <CardContent className="p-8">
+                  <CardContent className="p-6 sm:p-8">
                     <h2 className="text-2xl font-bold text-foreground mb-4">
                       {t.careers.skills}
                     </h2>
@@ -384,10 +384,10 @@ export default function CareerDetailPage({ job }: Props) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="lg:col-span-1"
+              className="min-w-0 lg:col-span-1"
             >
               <Card className="sticky top-24 bg-card/50 backdrop-blur-sm border-border/50">
-                <CardContent className="p-8">
+                <CardContent className="p-6 sm:p-8">
                   <h2 className="text-2xl font-bold text-foreground mb-6">
                     {t.careers.applyNow}
                   </h2>
@@ -456,7 +456,7 @@ export default function CareerDetailPage({ job }: Props) {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="resume">{t.careers.resume}</Label>
-                      <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
+                      <div className="min-w-0 rounded-lg border-2 border-dashed border-border p-4 text-center transition-colors hover:border-primary/50 sm:p-6">
                         <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
                         <Input
                           id="resume"
@@ -465,7 +465,7 @@ export default function CareerDetailPage({ job }: Props) {
                           onChange={handleFileChange}
                           required
                         />
-                        <p className="text-sm text-muted-foreground mt-2">
+                        <p className="mt-2 break-words text-sm text-muted-foreground">
                           {formData.resume
                             ? formData.resume.name
                             : t.careers.uploadResume}

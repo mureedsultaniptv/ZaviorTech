@@ -64,25 +64,25 @@ export function Navigation() {
           : "bg-white dark:bg-black",
       )}
     >
-      <nav className="container mx-auto px-4 lg:px-8">
+      <nav className="container mx-auto max-w-full px-3 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex min-w-0 shrink items-center gap-2">
             <Image
               src="/zaviorlogo-dark.png"
               alt="Zavior Technologies logo"
-              width={150}
-              height={40}
+              width={612}
+              height={408}
               priority
-              className="hidden dark:block"
+              className="hidden h-10 w-[clamp(6.75rem,38vw,9.375rem)] dark:block"
             />
             <Image
               src="/zaviorlogo-light.png"
               alt="Zavior Technologies logo"
-              width={150}
-              height={40}
+              width={1077}
+              height={371}
               priority
-              className="dark:hidden"
+              className="h-auto w-[clamp(6.75rem,38vw,9.375rem)] dark:hidden"
             />
           </Link>
 
@@ -105,7 +105,7 @@ export function Navigation() {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
             {/* Language Toggle */}
             <Button
               variant="ghost"

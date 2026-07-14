@@ -83,7 +83,7 @@ export default function ServicesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-balance"
+              className="text-3xl min-[360px]:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-balance break-words"
             >
               {t.services.title}
             </motion.h1>

@@ -170,7 +170,7 @@ export default function BlogDetailPage({ blog }: Props) {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
                 {localizedTitle}
               </h1>
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground sm:gap-6">
                 <span className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   {new Date(blog.publishedAt).toLocaleDateString("en-US", {
@@ -190,18 +190,18 @@ export default function BlogDetailPage({ blog }: Props) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex items-center justify-between py-6 border-y border-border"
+              className="flex flex-col gap-4 py-6 border-y border-border sm:flex-row sm:items-center sm:justify-between"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex min-w-0 items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
                   {blog.author.name.charAt(0)}
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="font-semibold">{blog.author.name}</div>
                   <div className="text-sm text-muted-foreground">{blog.author.role}</div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Button asChild variant="outline" size="icon" className="bg-transparent">
                   <a
                     href={`mailto:?subject=${shareTitle}&body=${shareUrl}`}
@@ -353,7 +353,7 @@ export default function BlogDetailPage({ blog }: Props) {
       <section className="py-12">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto">
-            <div className="flex items-center gap-4 py-6 border-t border-border">
+            <div className="flex flex-col gap-3 py-6 border-t border-border sm:flex-row sm:items-center sm:gap-4">
               <span className="text-sm font-medium">Tags:</span>
               <div className="flex flex-wrap gap-2">
                 {blog.tags.map((tag) => (
