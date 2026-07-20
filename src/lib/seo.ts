@@ -27,8 +27,8 @@ export function professionalServiceJsonLd(): JsonLdNode {
     "@id": PRIMARY_BUSINESS_SCHEMA_ID,
     name: "Zavior Technologies",
     url: "https://www.zavior.org/",
-    image: "https://www.zavior.org/zaviorlogo-dark.png",
-    logo: "https://www.zavior.org/zaviorlogo-dark.png",
+    image: "https://www.zavior.org/zaviorlogo-dark.webp",
+    logo: "https://www.zavior.org/zaviorlogo-dark.webp",
     telephone: "+971508185948",
     email: "support@zaviortech.org",
     description:

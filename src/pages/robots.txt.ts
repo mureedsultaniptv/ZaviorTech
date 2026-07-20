@@ -31,7 +31,7 @@ Allow: /
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.jpg$
-Allow: /*.png$
+Allow: /*.webp$
 Allow: /*.jpeg$
 Allow: /*.gif$
 Disallow: /*?=
@@ -84,7 +84,7 @@ Allow: /
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.jpg$
-Allow: /*.png$
+Allow: /*.webp$
 Allow: /*.jpeg$
 Allow: /*.gif$
 Disallow: /*?=
@@ -97,7 +97,7 @@ Allow: /
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.jpg$
-Allow: /*.png$
+Allow: /*.webp$
 Allow: /*.jpeg$
 Allow: /*.gif$
 Disallow: /*?=
@@ -108,7 +108,7 @@ Allow: /
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.jpg$
-Allow: /*.png$
+Allow: /*.webp$
 Allow: /*.jpeg$
 Allow: /*.gif$
 Disallow: /*?=
@@ -119,7 +119,7 @@ Allow: /
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.jpg$
-Allow: /*.png$
+Allow: /*.webp$
 Allow: /*.jpeg$
 Allow: /*.gif$
 Disallow: /*?=
@@ -130,7 +130,7 @@ Allow: /
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.jpg$
-Allow: /*.png$
+Allow: /*.webp$
 Allow: /*.jpeg$
 Allow: /*.gif$
 Disallow: /*?=
@@ -168,7 +168,7 @@ Allow: /
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.jpg$
-Allow: /*.png$
+Allow: /*.webp$
 Allow: /*.jpeg$
 Allow: /*.gif$
 Disallow: /*?=

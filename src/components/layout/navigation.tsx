@@ -69,15 +69,15 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" className="flex min-w-0 shrink items-center gap-2">
             <Image
-              src="/zaviorlogo-dark.png"
+              src="/zaviorlogo-dark.webp"
               alt="Zavior Technologies logo"
-              width={612}
-              height={408}
+              width={1077}
+              height={371}
               priority
-              className="hidden h-10 w-[clamp(6.75rem,38vw,9.375rem)] dark:block"
+              className="hidden w-[clamp(6.75rem,38vw,9.375rem)] dark:block"
             />
             <Image
-              src="/zaviorlogo-light.png"
+              src="/zaviorlogo-light.webp"
               alt="Zavior Technologies logo"
               width={1077}
               height={371}
