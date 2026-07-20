@@ -1019,7 +1019,7 @@ function parseGeminiKeys(configured: string) {
 }
 
 function getGeminiKeys() {
-  const configured = process.env.GEMINI_API_KEYS || process.env.GEMINI_API_KEY || "";
+  const configured = process.env.GEMINI_API_KEYS || "";
   return parseGeminiKeys(configured).filter(
     (key) => key && !isPlaceholderGeminiKey(key),
   );

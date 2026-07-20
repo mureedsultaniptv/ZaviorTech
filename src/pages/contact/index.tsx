@@ -345,7 +345,11 @@ export default function ContactPage() {
                       disabled={status === "loading"}
                     >
                       <Send className="w-4 h-4 mr-2" />
-                      {status === "loading" ? "Sending..." : t.contact.send}
+                      {status === "loading"
+                        ? "Sending..."
+                        : status === "success"
+                          ? "Message Sent"
+                          : t.contact.send}
                     </Button>
 
                     {status === "success" && (

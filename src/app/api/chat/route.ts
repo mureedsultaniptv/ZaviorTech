@@ -1,177 +1,82 @@
 import { NextRequest, NextResponse } from "next/server";
-import demoData from "@/lib/demo-data.json";
 import { ApiError } from "@/lib/server/api-errors";
 import {
-  appendChatExchange,
-  CHAT_LIMIT_REPLY,
-  consumeChatAllowance,
-  createChatMessagePayload,
-  createLeadCreatedPayload,
-  createLeadSession,
-  getGeminiSalesReply,
-  getLeadSession,
+  getChatLimits,
+  getOrCreateChatConversation,
   getRequestMeta,
-  getSalesFallbackReply,
-  isRecord,
-  sendToOdoo,
-  updateLeadQualification,
-  validateChatMessage,
-  validateLeadChatPayload,
-} from "@/lib/server/lead-chat";
-import {
-  buildSalesAgentPrompt,
-  buildSalesFallbackResponse,
-  findRelevantBusinessSolutions,
-  getSalesWhatsappUrl,
-  normalizeSalesAgentResponse,
-} from "@/lib/server/zavior-sales-agent";
+  loadChatConversation,
+  sendChatMessage,
+  serializeConversation,
+} from "@/lib/server/chat-service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function jsonResponse(body: Record<string, unknown>, status = 200) {
+function jsonResponse(body: Record<string, unknown>, status = 200, headers?: HeadersInit) {
   return NextResponse.json(body, {
     status,
-    headers: {
-      "Cache-Control": "no-store",
-    },
+    headers: { "Cache-Control": "no-store", ...headers },
   });
 }
 
-async function resolveSession(
-  body: Record<string, unknown>,
-  request: NextRequest,
-) {
-  const existingSession = getLeadSession(body.sessionId);
-  if (existingSession) {
-    return existingSession;
+function errorResponse(error: unknown) {
+  if (error instanceof ApiError) {
+    return jsonResponse(
+      { success: false, message: error.message, reply: error.message },
+      error.statusCode,
+      error.statusCode === 429 ? { "Retry-After": "10" } : undefined,
+    );
   }
 
-  const leadCandidate = isRecord(body.lead) ? body.lead : body;
+  console.error("Chat API error", {
+    message: error instanceof Error ? error.message : "unknown_error",
+  });
+  return jsonResponse(
+    {
+      success: false,
+      message: "Sorry, I’m having a little trouble responding right now. You can continue directly with our team on WhatsApp.",
+      reply: "Sorry, I’m having a little trouble responding right now. You can continue directly with our team on WhatsApp.",
+    },
+    503,
+  );
+}
 
+export async function GET(request: NextRequest) {
   try {
-    const lead = validateLeadChatPayload(leadCandidate);
-    const session = createLeadSession(
-      lead,
-      getRequestMeta(request),
-      body.sessionId,
-    );
-
-    await sendToOdoo(
-      createLeadCreatedPayload(session, {
-        restoredFromChatRequest: true,
-      }),
-    );
-
-    return session;
-  } catch {
-    throw new ApiError(403, "Please complete the lead form before chatting.");
+    const sessionId = request.nextUrl.searchParams.get("sessionId");
+    const conversation = sessionId ? await loadChatConversation(sessionId) : null;
+    return jsonResponse({ ...serializeConversation(conversation), limits: getChatLimits() });
+  } catch (error) {
+    return errorResponse(error);
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body: unknown = await request.json();
-
-    if (!isRecord(body)) {
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
       throw new ApiError(400, "Invalid chat request.");
     }
 
-    const message = validateChatMessage(body);
-    const requestMeta = getRequestMeta(request);
-    const session = await resolveSession(body, request);
-    const allowance = consumeChatAllowance(session, requestMeta.ipAddress);
+    const payload = body as Record<string, unknown>;
+    const message = typeof payload.message === "string" ? payload.message : "";
+    if (!message.trim()) throw new ApiError(400, "Please enter a message.");
+    if (message.length > 1000) throw new ApiError(400, "That message is a little too long. Please keep it under 1,000 characters.");
 
-    if (!allowance.allowed) {
-      appendChatExchange(session, message, CHAT_LIMIT_REPLY);
-      await sendToOdoo(
-        createChatMessagePayload(session, message, CHAT_LIMIT_REPLY, {
-          rateLimited: true,
-          limitReason: allowance.reason,
-        }),
-      );
-
-      return jsonResponse({
-        success: true,
-        reply: CHAT_LIMIT_REPLY,
-        limited: true,
-      });
-    }
-
-    updateLeadQualification(session, message);
-
-    const conversationHistory = session.messages.slice(-12);
-    const relevantItems = findRelevantBusinessSolutions(
-      message,
-      demoData,
-      conversationHistory,
-    );
-    const whatsappUrl = getSalesWhatsappUrl();
-    const fallbackResponse = buildSalesFallbackResponse(
-      message,
-      relevantItems,
-      conversationHistory,
-      whatsappUrl,
-    );
-    const prompt = buildSalesAgentPrompt(
-      demoData,
-      relevantItems,
-      conversationHistory,
-      {
-        lead: session.lead,
-        latestMessage: message,
-        whatsappUrl,
-      },
-    );
-    const geminiReply = await getGeminiSalesReply(session, message, prompt);
-    const salesResponse = geminiReply
-      ? normalizeSalesAgentResponse(
-          geminiReply,
-          fallbackResponse,
-          relevantItems,
-          whatsappUrl,
-        )
-      : fallbackResponse;
-    const reply = salesResponse.message || getSalesFallbackReply(session, message);
-
-    appendChatExchange(session, message, reply);
-    await sendToOdoo(
-      createChatMessagePayload(session, message, reply, {
-        responseSource: geminiReply ? "gemini" : "fallback",
-        recommendedLinks: salesResponse.recommendedLinks,
-        whatsappUrl: salesResponse.whatsappUrl,
-        leadIntent: salesResponse.leadIntent,
-      }),
-    );
-
+    const meta = getRequestMeta(request);
+    const conversation = await getOrCreateChatConversation(payload.sessionId, meta, payload.sourcePage);
+    const result = await sendChatMessage(conversation, message, meta);
     return jsonResponse({
       success: true,
-      reply,
-      message: reply,
-      recommendedLinks: salesResponse.recommendedLinks,
-      whatsappUrl: salesResponse.whatsappUrl,
-      leadIntent: salesResponse.leadIntent,
-      sessionId: session.sessionId,
+      message: result.message,
+      reply: result.message,
+      sessionId: result.sessionId,
+      remainingMessages: result.remainingMessages,
+      showWhatsApp: result.showWhatsApp,
+      whatsappUrl: result.whatsappUrl,
+      cooldownSeconds: result.cooldownSeconds,
     });
   } catch (error) {
-    if (error instanceof ApiError) {
-      return jsonResponse(
-        {
-          success: false,
-          reply: error.message,
-        },
-        error.statusCode,
-      );
-    }
-
-    console.error("Chat API error", error);
-
-    return jsonResponse(
-      {
-        success: false,
-        reply: "Sorry, something went wrong. Please try again.",
-      },
-      500,
-    );
+    return errorResponse(error);
   }
 }

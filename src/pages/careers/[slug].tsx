@@ -507,6 +507,8 @@ export default function CareerDetailPage({ job }: Props) {
                     >
                       {submitting
                         ? "Submitting..."
+                        : message?.type === "success"
+                          ? "Application Sent"
                         : t.careers.submitApplication}
                     </Button>
                   </form>

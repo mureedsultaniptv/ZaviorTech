@@ -2,7 +2,6 @@
 
 import React, { useEffect } from "react";
 import type { AppProps } from "next/app";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/lib/i18n/language-context";
@@ -21,16 +20,10 @@ import {
 import "@/styles/globals.css";
 import Head from "next/head";
 
-// const ChatWidget = dynamic(
-//   () => import("@/components/chatbot/ChatWidget").then((mod) => mod.ChatWidget),
-//   { ssr: false },
-// );
-
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const rawPath = router.asPath || "/";
   const currentPath = cleanPath(rawPath);
-  const isChatPage = currentPath === "/chat";
   const isIndexable = isIndexablePath(currentPath) && !rawPath.includes("?");
 
   useEffect(() => {
@@ -121,7 +114,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </main>
           <Footer />
-          {/* {!isChatPage ? <ChatWidget avoidWhatsApp={currentPath === "/"} /> : null} */}
         </LanguageProvider>
         <Analytics />
       </ThemeProvider>

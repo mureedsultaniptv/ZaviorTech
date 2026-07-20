@@ -39,6 +39,7 @@ export function SeoHead(props: SeoHeadProps) {
   } = props;
   const canonicalUrl = absoluteUrl(canonical || path);
   const imageUrl = absoluteUrl(image);
+  const logoUrl = absoluteUrl("/zaviorlogo-light.png");
 
   return (
     <Head>
@@ -66,6 +67,7 @@ export function SeoHead(props: SeoHeadProps) {
       <meta key="og:url" property="og:url" content={canonicalUrl} />
       <meta key="og:locale" property="og:locale" content={SEO_LOCALE} />
       <meta key="og:image" property="og:image" content={imageUrl} />
+      <meta key="og:logo" property="og:logo" content={logoUrl} />
       <meta key="og:image:alt" property="og:image:alt" content={`${title} - ${SITE_NAME}`} />
       <meta key="og:image:width" property="og:image:width" content="1200" />
       <meta key="og:image:height" property="og:image:height" content="630" />
