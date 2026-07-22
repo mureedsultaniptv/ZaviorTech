@@ -39,7 +39,8 @@ export function SeoHead(props: SeoHeadProps) {
   } = props;
   const canonicalUrl = absoluteUrl(canonical || path);
   const imageUrl = absoluteUrl(image);
-  const logoUrl = absoluteUrl("/zaviorlogo-light.png");
+  const logoUrl =
+    "https://www.zavior.org/_next/image?url=%2Fzaviorlogo-light.png&w=1080&q=75";
 
   return (
     <Head>

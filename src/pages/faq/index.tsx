@@ -25,34 +25,11 @@ import {
 
 const categoryOrder = ["Services", "Process", "Security", "Pricing"];
 
-function getFaqCategory(question: string) {
-  const text = question.toLowerCase();
-
-  if (text.includes("pricing")) {
-    return "Pricing";
-  }
-
-  if (
-    text.includes("project") ||
-    text.includes("timeline") ||
-    text.includes("management") ||
-    text.includes("training")
-  ) {
-    return "Process";
-  }
-
-  if (text.includes("security")) {
-    return "Security";
-  }
-
-  return "Services";
-}
-
 const faqCategories = categoryOrder
   .map((category) => ({
     category,
     questions: faqs
-      .filter((faq) => getFaqCategory(faq.question) === category)
+      .filter((faq) => faq.category === category)
       .map((faq) => ({ q: faq.question, a: faq.answer })),
   }))
   .filter((category) => category.questions.length > 0);

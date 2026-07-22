@@ -2236,36 +2236,84 @@
   ],
   "faqs": [
     {
+      "category": "Services",
       "question": "What industries does Zavior serve?",
-      "answer": "We serve a wide range of industries including finance, healthcare, manufacturing, retail, logistics, and technology. Our solutions are adaptable to meet the specific needs of each sector."
+      "answer": "We serve a wide range of industries, including manufacturing, healthcare, retail, finance, logistics, education, and technology. Our solutions are customized to address the unique operational challenges of each industry."
     },
     {
-      "question": "How long does a typical project take?",
-      "answer": "Project timelines vary based on scope and complexity. A simple web application might take 2-3 months, while a comprehensive ERP implementation could take 6-12 months. We provide detailed timelines during our initial consultation."
-    },
-    {
+      "category": "Services",
       "question": "Do you offer ongoing support and maintenance?",
-      "answer": "Yes, we offer comprehensive support and maintenance packages for all our solutions. This includes 24/7 technical support, regular updates, performance monitoring, and continuous optimization."
+      "answer": "Yes, we provide comprehensive support and maintenance services, including system monitoring, security updates, performance optimization, bug fixes, and technical assistance to ensure your solutions continue to perform efficiently."
     },
     {
-      "question": "What is your approach to project management?",
-      "answer": "We follow agile methodology with regular sprints, client reviews, and iterative development. You'll have a dedicated project manager as your single point of contact throughout the engagement."
-    },
-    {
+      "category": "Services",
       "question": "Can you work with our existing systems?",
-      "answer": "Absolutely. We specialize in integration and can work with most existing systems. Our team will assess your current infrastructure and design solutions that complement and enhance your existing investments."
+      "answer": "Yes, we can integrate our solutions with your existing ERP, CRM, accounting software, cloud platforms, and third-party applications to ensure seamless business operations."
     },
     {
-      "question": "What security measures do you implement?",
-      "answer": "Security is built into every solution we deliver. We follow industry best practices including encryption, secure coding standards, regular security audits, and compliance with relevant regulations like GDPR and HIPAA."
+      "category": "Services",
+      "question": "Do you provide Odoo ERP implementation services?",
+      "answer": "Yes, we provide end-to-end Odoo ERP implementation services, including business analysis, customization, module development, migration, deployment, user training, and ongoing support to help businesses streamline operations."
     },
     {
+      "category": "Services",
+      "question": "Do you develop custom software solutions?",
+      "answer": "Yes, we design and develop custom software tailored to your business requirements. Our solutions are scalable, secure, and built to improve productivity, efficiency, and long-term business growth."
+    },
+    {
+      "category": "Process",
+      "question": "How long does a typical project take?",
+      "answer": "Project timelines depend on the complexity, scope, and business requirements. After understanding your objectives, we provide a detailed implementation plan with clear milestones and delivery schedules."
+    },
+    {
+      "category": "Process",
+      "question": "What is your approach to project management?",
+      "answer": "We follow an agile project management approach that emphasizes collaboration, transparency, regular progress updates, and continuous improvements throughout the project lifecycle."
+    },
+    {
+      "category": "Process",
       "question": "Do you offer training for our team?",
-      "answer": "Yes, comprehensive training is included in all our implementations. We provide hands-on training sessions, documentation, and ongoing support to ensure your team can effectively use and maintain the solutions we deliver."
+      "answer": "Yes, we provide user training, technical documentation, and knowledge transfer sessions to ensure your team can confidently use and manage the implemented solution."
     },
     {
+      "category": "Process",
+      "question": "How do you manage Odoo ERP implementation projects?",
+      "answer": "Our implementation process includes requirement analysis, solution design, customization, testing, deployment, and post-launch support to ensure a smooth and successful ERP adoption."
+    },
+    {
+      "category": "Process",
+      "question": "Can your solutions scale as our business grows?",
+      "answer": "Yes, all our solutions are designed with scalability in mind, allowing businesses to add new users, modules, and features as their operational needs evolve."
+    },
+    {
+      "category": "Security",
+      "question": "What security measures do you implement?",
+      "answer": "We follow industry best practices, including data encryption, secure authentication, role-based access control, regular security audits, and continuous monitoring to protect business applications and sensitive data."
+    },
+    {
+      "category": "Security",
+      "question": "How do you ensure data privacy and compliance?",
+      "answer": "We implement secure development practices and follow industry compliance standards to safeguard business data while ensuring privacy, confidentiality, and regulatory compliance wherever applicable."
+    },
+    {
+      "category": "Security",
+      "question": "Do you provide secure cloud deployment solutions?",
+      "answer": "Yes, we deploy secure cloud-based solutions with automated backups, disaster recovery planning, access management, and continuous monitoring to ensure high availability and business continuity."
+    },
+    {
+      "category": "Pricing",
       "question": "What is your pricing model?",
-      "answer": "Our pricing varies based on project type and scope. We offer fixed-price projects for well-defined requirements, time and materials for flexible engagements, and retainer models for ongoing partnerships. Contact us for a customized quote."
+      "answer": "Our pricing is based on your project scope, business requirements, customization needs, and implementation complexity. We provide transparent quotations with no hidden costs."
+    },
+    {
+      "category": "Pricing",
+      "question": "Do you offer customized project pricing?",
+      "answer": "Yes, every business has unique requirements. We offer flexible pricing models tailored to your project size, technology stack, implementation timeline, and ongoing support needs."
+    },
+    {
+      "category": "Pricing",
+      "question": "Can I request a consultation before getting a quote?",
+      "answer": "Absolutely. We offer an initial consultation to understand your business goals, recommend the most suitable solution, and provide an accurate project estimate based on your requirements."
     }
   ],
   "stats": {
