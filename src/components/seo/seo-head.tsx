@@ -68,6 +68,8 @@ export function SeoHead(props: SeoHeadProps) {
       <meta key="og:url" property="og:url" content={canonicalUrl} />
       <meta key="og:locale" property="og:locale" content={SEO_LOCALE} />
       <meta key="og:image" property="og:image" content={imageUrl} />
+      <meta key="og:image:secure_url" property="og:image:secure_url" content={imageUrl} />
+      <meta key="og:image:type" property="og:image:type" content="image/png" />
       <meta key="og:logo" property="og:logo" content={logoUrl} />
       <meta key="og:image:alt" property="og:image:alt" content={`${title} - ${SITE_NAME}`} />
       <meta key="og:image:width" property="og:image:width" content="1200" />
