@@ -8,6 +8,7 @@ import { PortfolioSection } from "@/components/sections/portfolio-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { BlogSection } from "@/components/sections/blog-section";
 import { CTASection } from "@/components/sections/cta-section";
+import { HomepageSeoContent } from "@/components/sections/homepage-seo-content";
 import { SeoHead } from "@/components/seo/seo-head";
 import {
   breadcrumbJsonLd,
@@ -39,12 +40,13 @@ export default function HomePage() {
             speakableSelectors: ["h1", "main p:first-of-type"],
           }),
           breadcrumbJsonLd([{ name: "Home", path: "/" }]),
-          faqPageJsonLd(faqs.slice(0, 6), "/#faq"),
+          faqPageJsonLd(faqs.slice(0, 10), "/#faq"),
         ])}
         structuredDataId="home-structured-data"
       />
       <HeroSection />
       <ServicesSection />
+      <HomepageSeoContent />
       <CompaniesSection />
       <StatsSection />
       <PortfolioSection />
@@ -62,7 +64,7 @@ export default function HomePage() {
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {faqs.slice(0, 6).map((faq) => (
+              {faqs.slice(0, 10).map((faq) => (
                 <div
                   key={faq.question}
                   className="rounded-lg border border-border bg-card p-6"
