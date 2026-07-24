@@ -19,6 +19,12 @@ import {
 } from "@/lib/seo";
 import "@/styles/globals.css";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+
+const ChatWidget = dynamic(
+  () => import("@/components/chatbot/ChatWidget").then((module) => module.ChatWidget),
+  { ssr: false },
+);
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -114,6 +120,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </main>
           <Footer />
+          <ChatWidget />
         </LanguageProvider>
         <Analytics />
       </ThemeProvider>

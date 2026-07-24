@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ChatPanel } from "@/components/chatbot/ChatPanel";
+import { ChatPageExperience } from "@/components/chatbot/ChatPageExperience";
 
 export default function ChatPage() {
   return (
@@ -17,10 +17,7 @@ export default function ChatPage() {
               Chat with Zavior Technologies
             </h1>
           </section>
-          <ChatPanel
-            variant="page"
-            className="h-[min(720px,calc(100dvh-13rem))] min-h-[420px] w-full sm:min-h-[520px]"
-          />
+          <ChatPageExperience />
         </div>
       </div>
     </>

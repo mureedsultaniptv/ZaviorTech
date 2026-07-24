@@ -26,8 +26,9 @@ import {
   Building,
   Globe,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   breadcrumbJsonLd,
   jsonLdGraph,
@@ -76,11 +77,34 @@ const offices = [
 ];
 
 export default function ContactPage() {
+  const router = useRouter();
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [selectedService, setSelectedService] = useState("");
+  const [chatRequirement, setChatRequirement] = useState("");
+
+  useEffect(() => {
+    if (!router.isReady || router.query.chatbot !== "true") return;
+    const service = String(router.query.service || "").toLowerCase();
+    const mappedService =
+      service.includes("odoo") || service.includes("erp")
+        ? "erp"
+        : service.includes("automation") || service.includes("ai")
+          ? "ai"
+          : service.includes("mobile")
+            ? "mobile"
+            : service.includes("web")
+              ? "web"
+              : service.includes("it")
+                ? "it"
+                : service
+                  ? "other"
+                  : "";
+    setSelectedService(mappedService);
+    setChatRequirement(String(router.query.requirement || "").slice(0, 240));
+  }, [router.isReady, router.query.chatbot, router.query.requirement, router.query.service]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -304,6 +328,7 @@ export default function ContactPage() {
                       <Label htmlFor="service">{t.contact.service}</Label>
                       <Select
                         name="service"
+                        value={selectedService}
                         onValueChange={(val) => setSelectedService(val)}
                       >
                         <SelectTrigger>
@@ -331,6 +356,8 @@ export default function ContactPage() {
                       <Textarea
                         id="message"
                         name="message"
+                        defaultValue={chatRequirement}
+                        key={chatRequirement}
                         placeholder={t.contact.messagePlaceholder}
                         rows={5}
                         maxLength={2000}

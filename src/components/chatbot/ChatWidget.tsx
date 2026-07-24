@@ -16,6 +16,12 @@ export function ChatWidget({
 }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
+  function toggleChat() {
+    const next = !isOpen;
+    setIsOpen(next);
+    if (next) window.dataLayer?.push({ event: "chat_opened" });
+  }
+
   return (
     <div
       className={cn(
@@ -46,7 +52,7 @@ export function ChatWidget({
 
         <button
           type="button"
-          onClick={() => setIsOpen((current) => !current)}
+          onClick={toggleChat}
           className="inline-flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-xl shadow-black/20 transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           title={isOpen ? "Close chat" : "Open chat"}
         >

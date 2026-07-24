@@ -16,15 +16,10 @@ import {
   jsonLdGraph,
   webPageJsonLd,
 } from "@/lib/seo";
-import { MessageCircle } from "lucide-react";
 import { faqs } from "@/lib/data/demo-data";
 
 
 export default function HomePage() {
-  const whatsappNumber = "971508185948";
-  const message = encodeURIComponent("Tell me more about your services");
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
-
   return (
     <>
       <SeoHead
@@ -81,25 +76,6 @@ export default function HomePage() {
       </section>
       <CTASection />
 
-      <div
-        className="group fixed w-min bottom-6 right-6 z-50 flex flex-col items-end animate-float"
-      >
-        <div
-          className="pointer-events-none absolute -top-10 mb-2 w-max rounded-lg bg-green-600 px-3 py-1 text-center text-sm text-white opacity-0 shadow-lg transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100"
-        >
-          What help do you need?
-        </div>
-
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl flex items-center justify-center transition-transform duration-300 hover:scale-110"
-          aria-label="Chat on WhatsApp"
-        >
-          <MessageCircle className="w-6 h-6" />
-        </a>
-      </div>
     </>
   );
 }

@@ -75,6 +75,7 @@ export async function POST(request: NextRequest) {
       showWhatsApp: result.showWhatsApp,
       whatsappUrl: result.whatsappUrl,
       cooldownSeconds: result.cooldownSeconds,
+      actions: result.actions,
     });
   } catch (error) {
     return errorResponse(error);

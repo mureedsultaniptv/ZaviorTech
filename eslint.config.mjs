@@ -11,6 +11,7 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    "sanity-form-submission/**",
     "next-env.d.ts",
   ]),
 ]);

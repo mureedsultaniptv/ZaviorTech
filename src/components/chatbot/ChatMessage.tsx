@@ -18,6 +18,11 @@ export type ChatMessageData = {
   recommendedLinks?: ChatRecommendedLink[];
   whatsappUrl?: string;
   leadIntent?: boolean;
+  actions?: Array<{
+    type: "whatsapp" | "contact" | "service";
+    label: string;
+    url: string;
+  }>;
 };
 
 type ChatMessageProps = {
@@ -51,7 +56,9 @@ export function ChatMessage({ message, animate = false }: ChatMessageProps) {
   const showActions =
     !isUser &&
     !message.loading &&
-    (Boolean(message.recommendedLinks?.length) || Boolean(message.whatsappUrl));
+    (Boolean(message.recommendedLinks?.length) ||
+      Boolean(message.whatsappUrl) ||
+      Boolean(message.actions?.length));
 
   useEffect(() => {
     if (!shouldAnimate) {
@@ -110,6 +117,37 @@ export function ChatMessage({ message, animate = false }: ChatMessageProps) {
 
         {showActions ? (
           <div className="w-full space-y-2">
+            {message.actions?.map((action) => (
+              <a
+                key={`${action.type}-${action.url}`}
+                href={action.url}
+                target={action.type === "whatsapp" ? "_blank" : undefined}
+                rel={action.type === "whatsapp" ? "noopener noreferrer" : undefined}
+                onClick={() => {
+                  window.dataLayer?.push({
+                    event:
+                      action.type === "whatsapp"
+                        ? "whatsapp_clicked"
+                        : action.type === "contact"
+                          ? "contact_form_clicked"
+                          : "service_recommended",
+                  });
+                }}
+                className={cn(
+                  "inline-flex h-9 w-full items-center justify-center gap-2 rounded-[8px] px-3 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2",
+                  action.type === "whatsapp"
+                    ? "bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-500"
+                    : "border border-border bg-background text-foreground hover:border-primary/50 hover:bg-muted focus-visible:ring-ring",
+                )}
+              >
+                {action.type === "whatsapp" ? (
+                  <MessageCircle className="size-3.5" aria-hidden="true" />
+                ) : (
+                  <ExternalLink className="size-3.5" aria-hidden="true" />
+                )}
+                {action.label}
+              </a>
+            ))}
             {message.recommendedLinks?.length ? (
               <div className="grid gap-2">
                 {message.recommendedLinks.map((link) => (

@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import Link from "next/link";
-import { ExternalLink, Loader2, MessageCircle, Send, Sparkles } from "lucide-react";
+import { ExternalLink, Loader2, MessageCircle, RotateCcw, Send, Sparkles } from "lucide-react";
 import { ChatMessage, type ChatMessageData } from "@/components/chatbot/ChatMessage";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +21,8 @@ type ChatPanelProps = {
   className?: string;
   headerActions?: ReactNode;
   variant?: "floating" | "page";
+  initialSessionId?: string;
+  onReset?: () => void;
 };
 
 type ChatApiResponse = {
@@ -34,6 +36,7 @@ type ChatApiResponse = {
   whatsappUrl?: string | null;
   cooldownSeconds?: number;
   limits?: { session?: number; cooldown?: number };
+  actions?: ChatMessageData["actions"];
 };
 
 const quickStarts = [
@@ -87,7 +90,13 @@ function fromApiMessages(messages: ChatApiResponse["messages"]): ChatMessageData
   }));
 }
 
-export function ChatPanel({ className, headerActions, variant = "floating" }: ChatPanelProps) {
+export function ChatPanel({
+  className,
+  headerActions,
+  variant = "floating",
+  initialSessionId,
+  onReset,
+}: ChatPanelProps) {
   const [sessionId, setSessionId] = useState("");
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessageData[]>([welcomeMessage]);
@@ -105,7 +114,8 @@ export function ChatPanel({ className, headerActions, variant = "floating" }: Ch
   const cooldownRemaining = Math.max(0, Math.ceil((cooldownUntil - now) / 1000));
 
   useEffect(() => {
-    const id = getSessionId();
+    const id = initialSessionId || getSessionId();
+    if (initialSessionId) saveSessionId(initialSessionId);
     setSessionId(id);
     fetch(`/api/chat?sessionId=${encodeURIComponent(id)}`, { cache: "no-store" })
       .then((response) => response.json() as Promise<ChatApiResponse>)
@@ -122,7 +132,7 @@ export function ChatPanel({ className, headerActions, variant = "floating" }: Ch
       })
       .catch(() => undefined)
       .finally(() => setIsReady(true));
-  }, []);
+  }, [initialSessionId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -144,6 +154,30 @@ export function ChatPanel({ className, headerActions, variant = "floating" }: Ch
     setAnimatedMessageId(id);
   }
 
+  function resetConversation() {
+    if (onReset) {
+      try {
+        window.localStorage.removeItem(SESSION_STORAGE_KEY);
+      } catch {
+        // The parent still resets the gated page experience.
+      }
+      onReset();
+      return;
+    }
+    const nextSessionId = createId();
+    saveSessionId(nextSessionId);
+    setSessionId(nextSessionId);
+    setMessages([welcomeMessage]);
+    setInput("");
+    setRemainingMessages(DEFAULT_SESSION_LIMIT);
+    setShowWhatsApp(false);
+    setWhatsappUrl(null);
+    setCooldownUntil(0);
+    setAnimatedMessageId(null);
+    window.dataLayer?.push({ event: "chat_reset" });
+    window.setTimeout(() => inputRef.current?.focus(), 0);
+  }
+
   async function sendMessage(rawMessage: string) {
     const message = cleanMessage(rawMessage);
     if (!message || !sessionId || isLoading || cooldownRemaining > 0 || remainingMessages <= 0) return;
@@ -159,6 +193,7 @@ export function ChatPanel({ className, headerActions, variant = "floating" }: Ch
     ]);
 
     try {
+      window.dataLayer?.push({ event: "chat_message_sent" });
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -169,7 +204,7 @@ export function ChatPanel({ className, headerActions, variant = "floating" }: Ch
       setMessages((current) => current.filter((item) => item.id !== loadingId));
       if (reply) {
         addAssistantMessage(reply, {
-          whatsappUrl: data.showWhatsApp ? data.whatsappUrl || undefined : undefined,
+          actions: data.actions,
         });
       }
       if (!response.ok) {
@@ -229,7 +264,19 @@ export function ChatPanel({ className, headerActions, variant = "floating" }: Ch
             <p className="truncate text-xs text-muted-foreground">A practical starting point for your project</p>
           </div>
         </div>
-        {headerActions}
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={resetConversation}
+            disabled={isLoading}
+            className="inline-flex size-9 items-center justify-center rounded-[8px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+            title="Start a new conversation"
+          >
+            <RotateCcw className="size-4" aria-hidden="true" />
+            <span className="sr-only">Start a new conversation</span>
+          </button>
+          {headerActions}
+        </div>
       </header>
 
       <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
@@ -259,6 +306,7 @@ export function ChatPanel({ className, headerActions, variant = "floating" }: Ch
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => window.dataLayer?.push({ event: "whatsapp_clicked" })}
             className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-[8px] bg-green-600 px-3 text-xs font-medium text-white transition hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
           >
             <MessageCircle className="size-3.5" aria-hidden="true" />
@@ -268,10 +316,14 @@ export function ChatPanel({ className, headerActions, variant = "floating" }: Ch
       ) : null}
 
       <div className="flex items-center justify-between gap-3 border-t border-border bg-card px-3 pt-3 text-[11px] text-muted-foreground">
-        <Link href="/contact" className="inline-flex items-center gap-1 hover:text-foreground">
+        <Link
+          href="/contact?chatbot=true"
+          onClick={() => window.dataLayer?.push({ event: "contact_form_clicked" })}
+          className="inline-flex items-center gap-1 hover:text-foreground"
+        >
           <ExternalLink className="size-3" aria-hidden="true" /> Contact form
         </Link>
-        <span>{isAtLimit ? "WhatsApp is ready when you are" : `${remainingMessages} messages available`}</span>
+        <span>{isAtLimit ? "Continue with our project team" : "Concise project guidance"}</span>
       </div>
 
       <form onSubmit={handleSubmit} className="flex items-end gap-2 bg-card p-3">

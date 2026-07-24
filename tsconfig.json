@@ -7,6 +7,7 @@
       "esnext"
     ],
     "allowJs": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -41,6 +42,7 @@
   ],
   "exclude": [
     "node_modules",
-    ".next/dev"
+    ".next/dev",
+    "sanity-form-submission"
   ]
 }
