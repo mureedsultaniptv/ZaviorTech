@@ -55,7 +55,6 @@ export default function ServicesPage() {
       })),
     ),
     ...services.map((service) => serviceJsonLd(service)),
-    faqPageJsonLd(faqs.slice(0, 6), "/services#faq"),
   ]);
 
   return (
@@ -66,6 +65,15 @@ export default function ServicesPage() {
         path="/services"
         structuredData={structuredData}
         structuredDataId="services-index-structured-data"
+        additionalStructuredData={[
+          {
+            data: {
+              "@context": "https://schema.org",
+              ...faqPageJsonLd(faqs.slice(0, 6), "/services#faq"),
+            },
+            id: "services-faq-structured-data",
+          },
+        ]}
       />
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-32">

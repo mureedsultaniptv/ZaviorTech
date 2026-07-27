@@ -8,6 +8,10 @@ import {
 import { SEO_LANGUAGE, SEO_LOCALE } from "@/lib/seo";
 
 type SeoHeadProps = {
+  additionalStructuredData?: Array<{
+    data: Record<string, unknown> | Array<Record<string, unknown>>;
+    id: string;
+  }>;
   canonical?: string;
   description?: string;
   image?: string;
@@ -26,6 +30,7 @@ function safeJsonLd(data: unknown) {
 
 export function SeoHead(props: SeoHeadProps) {
   const {
+    additionalStructuredData = [],
     canonical,
     description = SITE_DESCRIPTION,
     image = DEFAULT_OG_IMAGE,
@@ -91,6 +96,16 @@ export function SeoHead(props: SeoHeadProps) {
           }}
         />
       ) : null}
+      {additionalStructuredData.map(({ data, id }) => (
+        <script
+          key={id}
+          id={id}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: safeJsonLd(data),
+          }}
+        />
+      ))}
     </Head>
   );
 }

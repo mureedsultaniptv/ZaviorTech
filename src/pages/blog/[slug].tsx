@@ -107,7 +107,6 @@ export default function BlogDetailPage({ blog }: Props) {
       { name: blog.title, path: `/blog/${blog.slug}` },
     ]),
     articleJsonLd(blog),
-    faqPageJsonLd(blogFaqs, `/blog/${blog.slug}#faq`),
   ]);
 
   return (
@@ -120,6 +119,15 @@ export default function BlogDetailPage({ blog }: Props) {
         path={`/blog/${blog.slug}`}
         keywords={blog.keywords}
         structuredData={structuredData}
+        additionalStructuredData={[
+          {
+            data: {
+              "@context": "https://schema.org",
+              ...faqPageJsonLd(blogFaqs, `/blog/${blog.slug}#faq`),
+            },
+            id: "blog-faq-structured-data",
+          },
+        ]}
         type="article"
       />
       <Head>

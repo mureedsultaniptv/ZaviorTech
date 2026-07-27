@@ -99,7 +99,6 @@ export default function ServiceDetailPage({ service }: Props) {
       { name: service.title, path: `/services/${service.slug}` },
     ]),
     serviceJsonLd(service),
-    faqPageJsonLd(serviceFaqs, `/services/${service.slug}#faq`),
   ]);
 
   return (
@@ -111,6 +110,15 @@ export default function ServiceDetailPage({ service }: Props) {
         path={`/services/${service.slug}`}
         keywords={metaKeywords}
         structuredData={structuredData}
+        additionalStructuredData={[
+          {
+            data: {
+              "@context": "https://schema.org",
+              ...faqPageJsonLd(serviceFaqs, `/services/${service.slug}#faq`),
+            },
+            id: "service-faq-structured-data",
+          },
+        ]}
       />
 
       {/* Hero Section */}

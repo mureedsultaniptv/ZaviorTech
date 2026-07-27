@@ -35,9 +35,17 @@ export default function HomePage() {
             speakableSelectors: ["h1", "main p:first-of-type"],
           }),
           breadcrumbJsonLd([{ name: "Home", path: "/" }]),
-          faqPageJsonLd(faqs.slice(0, 10), "/#faq"),
         ])}
         structuredDataId="home-structured-data"
+        additionalStructuredData={[
+          {
+            data: {
+              "@context": "https://schema.org",
+              ...faqPageJsonLd(faqs.slice(0, 10), "/#faq"),
+            },
+            id: "home-faq-structured-data",
+          },
+        ]}
       />
       <HeroSection />
       <ServicesSection />

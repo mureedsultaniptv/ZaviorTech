@@ -65,18 +65,19 @@ export default function FAQPage() {
       { name: "Home", path: "/" },
       { name: "FAQ", path: "/faq" },
     ]),
-    {
-      "@type": "FAQPage",
-      mainEntity: faqs.map((faq) => ({
-          "@type": "Question",
-          name: faq.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: faq.answer,
-          },
-        })),
-    },
   ]);
+  const faqStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
 
   return (
     <main className="min-h-screen bg-background" dir={dir}>
@@ -85,7 +86,10 @@ export default function FAQPage() {
         description="Find answers about Zavior Technologies services for Dubai and UAE businesses, including Odoo ERP, AI automation, web development, IT support, process."
         path="/faq"
         structuredData={structuredData}
-        structuredDataId="faq-structured-data"
+        structuredDataId="faq-page-structured-data"
+        additionalStructuredData={[
+          { data: faqStructuredData, id: "faq-structured-data" },
+        ]}
       />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
