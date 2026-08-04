@@ -56,3 +56,9 @@ export function cleanPath(pathname: string) {
   const [pathWithoutQuery] = pathWithoutHash.split("?");
   return pathWithoutQuery || "/";
 }
+
+export function whatsappUrl(message = "Hi Zavior, I would like to discuss a project with your team.") {
+  const rawNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || SITE_TELEPHONE;
+  const number = rawNumber.replace(/[^\d]/g, "");
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+}

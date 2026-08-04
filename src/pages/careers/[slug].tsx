@@ -177,7 +177,7 @@ export default function CareerDetailPage({ job }: Props) {
       </div>
     );
 
-  const pageTitle = `${job.title} | Careers at Zavior Group`;
+  const pageTitle = job.metaTitle || `${job.title} | Careers at Zavior Group`;
   const localizedTitle = getLocalizedTitle(job, language);
   const structuredData = jsonLdGraph([
     webPageJsonLd({

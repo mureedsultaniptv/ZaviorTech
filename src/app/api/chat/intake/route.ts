@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { ApiError } from "@/lib/server/api-errors";
 import {
   getOrCreateChatConversation,
+  getChatWhatsappUrl,
   getRequestMeta,
+  isAiProviderAvailable,
   submitChatIntake,
 } from "@/lib/server/chat-service";
 
@@ -32,11 +34,18 @@ export async function POST(request: NextRequest) {
     const conversation = await getOrCreateChatConversation(
       payload.sessionId,
       meta,
-      "/chat",
+      payload.sourcePage,
     );
     const result = await submitChatIntake(conversation, payload);
+    const aiAvailable = await isAiProviderAvailable();
+    const whatsappUrl = aiAvailable ? null : getChatWhatsappUrl(conversation);
 
-    return response({ success: true, ...result }, 201);
+    return response({
+      success: true,
+      ...result,
+      route: aiAvailable ? "ai" : "whatsapp",
+      whatsappUrl,
+    }, 201);
   } catch (error) {
     if (error instanceof ApiError) {
       return response({ success: false, message: error.message }, error.statusCode);

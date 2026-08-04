@@ -26,6 +26,7 @@ import {
   Building,
   Globe,
 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -34,7 +35,7 @@ import {
   jsonLdGraph,
   PRIMARY_BUSINESS_SCHEMA_ID,
 } from "@/lib/seo";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, whatsappUrl } from "@/lib/site";
 
 const contactInfo = [
   {
@@ -195,6 +196,16 @@ export default function ContactPage() {
             <p className="text-lg md:text-xl text-muted-foreground">
               {t.contact.subtitle}
             </p>
+            <Button asChild size="lg" className="mt-8 bg-green-600 text-white hover:bg-green-700">
+              <a
+                href={whatsappUrl("Hi Zavior, I am visiting your contact page and would like to discuss a project.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => window.dataLayer?.push({ event: "whatsapp_clicked", source: "contact_page" })}
+              >
+                <WhatsAppIcon className="size-5" /> Contact on WhatsApp
+              </a>
+            </Button>
           </motion.div>
         </div>
       </section>

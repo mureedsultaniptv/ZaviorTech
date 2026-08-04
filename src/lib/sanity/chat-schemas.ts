@@ -35,6 +35,8 @@ export const chatConversationSchema = {
       { name: "email", type: "string" },
       { name: "phone", type: "string" },
     ] },
+    { name: "subject", type: "string" },
+    { name: "description", type: "text" },
     { name: "qualification", type: "object", fields: [
       { name: "serviceInterest", type: "string" },
       { name: "company", type: "string" },

@@ -7,11 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
+import { whatsappUrl } from "@/lib/site";
 
 type IntakeResponse = {
   success?: boolean;
   message?: string;
   sessionId?: string;
+  route?: "ai" | "whatsapp";
+  whatsappUrl?: string | null;
 };
 
 const INTAKE_SESSION_STORAGE_KEY = "zavior-chat-intake-session-id";
@@ -52,11 +56,23 @@ export function ChatPageExperience() {
       const response = await fetch("/api/chat/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, sessionId: proposedSessionId }),
+        body: JSON.stringify({
+          ...data,
+          sessionId: proposedSessionId,
+          sourcePage: window.location.pathname,
+        }),
       });
       const result = (await response.json()) as IntakeResponse;
       if (!response.ok || !result.success || !result.sessionId) {
         throw new Error(result.message || "We couldn’t start the chat.");
+      }
+
+      if (result.route === "whatsapp") {
+        if (!result.whatsappUrl) {
+          throw new Error("WhatsApp is unavailable right now. Please use the contact form.");
+        }
+        window.location.assign(result.whatsappUrl);
+        return;
       }
 
       setSessionId(result.sessionId);
@@ -173,13 +189,24 @@ export function ChatPageExperience() {
 
           <div className="space-y-2">
             <Label htmlFor="chat-customer-subject">Subject</Label>
-            <Textarea
+            <Input
               id="chat-customer-subject"
               name="subject"
-              rows={3}
               maxLength={180}
               required
-              placeholder="Briefly tell us what you want to discuss"
+              placeholder="Website, ERP, AI automation…"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="chat-customer-description">Project description</Label>
+            <Textarea
+              id="chat-customer-description"
+              name="description"
+              rows={4}
+              maxLength={1000}
+              required
+              placeholder="Describe what you need, the current problem, and your expected outcome"
             />
           </div>
 
@@ -198,6 +225,21 @@ export function ChatPageExperience() {
               {error}
             </p>
           ) : null}
+
+          <Button asChild size="lg" className="w-full bg-green-600 text-white hover:bg-green-700">
+            <a
+              href={whatsappUrl("Hi Zavior, I would like to start a consultation with your team.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => window.dataLayer?.push({ event: "whatsapp_clicked", source: "chat_page" })}
+            >
+              <WhatsAppIcon className="size-5" /> Contact on WhatsApp
+            </a>
+          </Button>
+
+          <div className="flex items-center gap-3 text-xs text-muted-foreground" aria-hidden="true">
+            <span className="h-px flex-1 bg-border" /> or start AI chat <span className="h-px flex-1 bg-border" />
+          </div>
 
           <Button
             type="submit"

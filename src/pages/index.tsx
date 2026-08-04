@@ -25,6 +25,7 @@ export default function HomePage() {
       <SeoHead
         title="Odoo ERP, AI Automation & Web Development Dubai | Zavior"
         description="Zavior Technologies helps Dubai and UAE companies implement Odoo ERP, AI automation, custom websites, mobile apps, IT solutions, and core infrastructure."
+        keywords="Odoo ERP Services Dubai, AI Automation Services UAE, Custom Software Development Dubai, Web Development Company UAE, Digital Transformation Services UAE"
         path="/"
         structuredData={jsonLdGraph([
           webPageJsonLd({

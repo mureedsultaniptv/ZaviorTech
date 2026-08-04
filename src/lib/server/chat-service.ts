@@ -13,6 +13,7 @@ const DEFAULT_SESSION_LIMIT = 12;
 const DEFAULT_COOLDOWN_SECONDS = 10;
 const DEFAULT_SESSION_TTL_HOURS = 24;
 const GROQ_TIMEOUT_MS = 12000;
+const GROQ_HEALTH_TIMEOUT_MS = 5000;
 const MAX_PROVIDER_REPLY_LENGTH = 900;
 
 export type ChatAction = {
@@ -97,6 +98,7 @@ export type ChatConversation = {
   messageCount: number;
   contact: { name: string; email: string; phone: string };
   subject: string;
+  description: string;
 };
 
 export type ChatRequestMeta = {
@@ -268,6 +270,7 @@ export async function loadChatConversation(sessionId: string) {
       messageCount: conversation.messageCount || Math.floor((conversation.messages?.length || 0) / 2),
       contact: conversation.contact || { name: "", email: "", phone: "" },
       subject: conversation.subject || "",
+      description: conversation.description || "",
     };
     conversations.set(sessionId, normalized);
     return normalized;
@@ -318,6 +321,8 @@ async function persistConversation(conversation: ChatConversation) {
     messageCount: conversation.messageCount,
     qualification: conversation.qualification,
     contact: conversation.contact,
+    subject: conversation.subject,
+    description: conversation.description,
     messages: conversation.messages.map((message) => ({
       _type: "message",
       role: message.role,
@@ -349,6 +354,7 @@ async function persistSanityFormSubmission(conversation: ChatConversation) {
     email: conversation.contact.email,
     phone: conversation.contact.phone,
     subject: conversation.subject,
+    description: conversation.description,
     sessionId: conversation.sessionId,
     status:
       conversation.status === "converted"
@@ -436,6 +442,7 @@ export function createChatConversation(sessionId: unknown, meta: ChatRequestMeta
     messageCount: 0,
     contact: { name: "", email: "", phone: "" },
     subject: "",
+    description: "",
   };
   conversations.set(id, conversation);
   return conversation;
@@ -459,6 +466,7 @@ export async function submitChatIntake(
   const email = validateChatIntakeText(input.email, "Email", 160).toLowerCase();
   const phone = validateChatIntakeText(input.phone, "Phone number", 30);
   const subject = validateChatIntakeText(input.subject, "Subject", 180);
+  const description = validateChatIntakeText(input.description, "Project description", 1000);
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     throw new ApiError(400, "Please enter a valid email address.");
@@ -469,21 +477,40 @@ export async function submitChatIntake(
 
   conversation.contact = { name, email, phone };
   conversation.subject = subject;
+  conversation.description = description;
   conversation.lastMessageAt = new Date().toISOString();
   conversations.set(conversation.sessionId, conversation);
 
   const saved = await persistSanityFormSubmission(conversation);
-  if (!saved) {
-    throw new ApiError(
-      503,
-      "We couldn’t start the secure chat right now. Please try again shortly.",
-    );
-  }
 
   return {
     sessionId: conversation.sessionId,
-    customer: { name, email, phone, subject },
+    customer: { name, email, phone, subject, description },
+    persisted: saved,
   };
+}
+
+export async function isAiProviderAvailable() {
+  const key = process.env.GROQ_API_KEY?.trim();
+  if (!key) return false;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), GROQ_HEALTH_TIMEOUT_MS);
+  try {
+    const response = await fetch("https://api.groq.com/openai/v1/models", {
+      headers: { Authorization: `Bearer ${key}` },
+      cache: "no-store",
+      signal: controller.signal,
+    });
+    return response.ok;
+  } catch (error) {
+    console.warn("AI consultant availability check failed", {
+      reason: error instanceof Error ? error.name : "request_error",
+    });
+    return false;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function getBusinessType(text: string) {
@@ -734,10 +761,23 @@ function createWhatsappUrl(conversation: ChatConversation) {
   const rawNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || process.env.WHATSAPP_NUMBER || demoData.site.telephone;
   const number = rawNumber.replace(/[^\d]/g, "");
   if (!number) return null;
-  const summary = conversation.leadSummary || "I would like to discuss a project with Zavior.";
-  const service = conversation.serviceInterest || "a Zavior service";
-  const text = `Hi Zavior, I was speaking with your website AI consultant about ${service}.\n\n${summary}\n\nI would like to discuss the project.`;
+  const summary = conversation.leadSummary || conversation.description || "I would like to discuss a project with Zavior.";
+  const text = [
+    "Hi Zavior, I submitted a consultation request on your website.",
+    `Name: ${conversation.contact.name}`,
+    `Email: ${conversation.contact.email}`,
+    `Phone: ${conversation.contact.phone}`,
+    `Subject: ${conversation.subject}`,
+    `Description: ${conversation.description}`,
+    conversation.leadSummary && conversation.leadSummary !== summary
+      ? `Chat summary: ${conversation.leadSummary}`
+      : "",
+  ].filter(Boolean).join("\n");
   return `https://wa.me/${number}?text=${encodeURIComponent(text.slice(0, 1400))}`;
+}
+
+export function getChatWhatsappUrl(conversation: ChatConversation) {
+  return createWhatsappUrl(conversation);
 }
 
 function isExplicitHandoff(message: string) {

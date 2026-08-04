@@ -96,7 +96,7 @@ export default function BlogPage() {
   return (
     <>
       <SeoHead
-        title="Dubai ERP, AI Automation & Web Development Blog | Zavior Technologies"
+        title="Latest Insights on ERP, AI & Digital Transformation"
         description="Read practical Dubai and UAE technology insights on Odoo ERP, AI automation, web development, cybersecurity, CRM, e-commerce, and digital transformation."
         path="/blog"
         structuredData={structuredData}

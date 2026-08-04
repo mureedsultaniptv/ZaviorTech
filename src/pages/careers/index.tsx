@@ -88,8 +88,8 @@ export default function CareersPage() {
   return (
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
-        title="Careers | Zavior Group"
-        description="Explore current opportunities at Zavior Group and join a team working across technology, operations, and creative delivery."
+        title="Careers at Zavior Technologies in Dubai & UAE"
+        description="Explore current career opportunities at Zavior Group and join a team across technology, operations, creative delivery, innovation, and collaboration."
         path="/careers"
         structuredData={structuredData}
         structuredDataId="careers-structured-data"

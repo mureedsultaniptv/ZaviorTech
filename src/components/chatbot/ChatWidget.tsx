@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MessageCircle, X } from "lucide-react";
 import { ChatPanel } from "@/components/chatbot/ChatPanel";
+import { ChatIntakeForm } from "@/components/chatbot/ChatIntakeForm";
 import { cn } from "@/lib/utils";
 
 type ChatWidgetProps = {
@@ -15,6 +16,7 @@ export function ChatWidget({
   defaultOpen = false,
 }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   function toggleChat() {
     const next = !isOpen;
@@ -31,12 +33,35 @@ export function ChatWidget({
     >
       <div className="flex flex-col items-end gap-3">
         {isOpen ? (
-          <ChatPanel
-            className={cn(
-              "h-[min(620px,calc(100dvh-8rem))] w-[calc(100vw-2rem)]",
-              "sm:w-[390px]",
-            )}
-            headerActions={
+          sessionId ? (
+            <ChatPanel
+              initialSessionId={sessionId}
+              onReset={() => setSessionId(null)}
+              className={cn(
+                "h-[min(620px,calc(100dvh-8rem))] w-[calc(100vw-2rem)]",
+                "sm:w-[390px]",
+              )}
+              headerActions={
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="inline-flex size-9 shrink-0 items-center justify-center rounded-[8px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  title="Close chat"
+                >
+                  <X className="size-4" aria-hidden="true" />
+                  <span className="sr-only">Close chat</span>
+                </button>
+              }
+            />
+          ) : (
+            <ChatIntakeForm
+              compact
+              onAiReady={setSessionId}
+              className={cn(
+                "h-[min(650px,calc(100dvh-8rem))] w-[calc(100vw-2rem)]",
+                "sm:w-[390px]",
+              )}
+              headerActions={
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
@@ -46,8 +71,9 @@ export function ChatWidget({
                 <X className="size-4" aria-hidden="true" />
                 <span className="sr-only">Close chat</span>
               </button>
-            }
-          />
+              }
+            />
+          )
         ) : null}
 
         <button
