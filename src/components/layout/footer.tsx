@@ -1,154 +1,33 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { useLanguage } from "@/lib/i18n/language-context";
-import { Linkedin, Youtube, Github, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Send, ShieldCheck, Youtube } from "lucide-react";
+
+const quick = [["Home", "/"], ["About Us", "/about"], ["Services", "/services"], ["Companies", "/companies"], ["Case Studies", "/portfolio"], ["Blog", "/blog"], ["Careers", "/careers"], ["Contact Us", "/contact"]];
+const services = [["Odoo ERP Implementation", "/services/erp-odoo-dubai"], ["Odoo CRM", "/services/erp-odoo-dubai"], ["Custom Odoo Modules", "/services/odoo-services-dubai"], ["Odoo Consultation & Discovery", "/services/erp-odoo-dubai"], ["Odoo Integration Services", "/services/odoo-services-dubai"], ["Zoho CRM & Zoho One", "/services"], ["AI Automation Solutions", "/services/ai-automation-dubai"], ["Custom Software Development", "/services"]];
+const industries = ["Manufacturing", "Retail & eCommerce", "Healthcare", "Construction", "Logistics & Supply Chain", "Education", "Automotive", "Professional Services"];
 
 export function Footer() {
-  const { t } = useLanguage();
-  const currentYear = new Date().getFullYear();
-
-  const footerLinks = {
-    quickLinks: [
-      { href: "/about", label: t.nav.about },
-      { href: "/services", label: t.nav.services },
-      { href: "/companies", label: t.nav.companies },
-      { href: "/portfolio", label: t.nav.portfolio },
-      { href: "/blog", label: t.nav.blog },
-    ],
-    services: [
-      { href: "/services/ai-automation-dubai", label: t.services.ai.title },
-      { href: "/services/erp-odoo-dubai", label: t.services.erp.title },
-      { href: "/services/web-development-dubai", label: t.services.web.title },
-      { href: "/services/mobile-apps-dubai", label: t.services.mobile.title },
-      { href: "/services/it-solutions-dubai", label: t.services.it.title },
-    ],
-    legal: [
-      { href: "/privacy", label: t.footer.privacy },
-      { href: "/terms", label: t.footer.terms },
-      { href: "/cookies", label: t.footer.cookies },
-      { href: "/faq", label: t.nav.faq },
-    ],
-  };
-
-  const socialLinks = [
-    { href: "https://www.linkedin.com/company/zavior-tech", icon: Linkedin, label: "LinkedIn" },
-    { href: "https://www.youtube.com/@ZaviorTechnologiess", icon: Youtube, label: "YouTube" },
-    { href: "https://github.com/Zavior-Technologies", icon: Github, label: "GitHub" },
-    // { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
-  ];
-
-  return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Main Footer */}
-        <div className="py-12 lg:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-4">
-              <span className="text-2xl font-bold text-primary">Zavior</span>
-            </Link>
-            <p className="text-muted-foreground mb-6 max-w-sm">
-              {t.footer.description}
-            </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-sm">Sharjah, UAE - Serving Dubai</span>
-              </div>
-              <a
-                href="tel:+971508185948"
-                className="flex items-center gap-3 text-muted-foreground"
-              >
-                <Phone className="h-4 w-4 text-primary" />
-                <span className="text-sm">+971 50 818 5948</span>
-              </a>
-              <a
-                href="mailto:support@zaviortech.org"
-                className="flex items-center gap-3 text-muted-foreground"
-              >
-                <Mail className="h-4 w-4 text-primary" />
-                <span className="text-sm">support@zaviortech.org</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h2 className="font-semibold mb-4">{t.footer.quickLinks}</h2>
-            <ul className="space-y-3">
-              {footerLinks.quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h2 className="font-semibold mb-4">{t.footer.services}</h2>
-            <ul className="space-y-3">
-              {footerLinks.services.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h2 className="font-semibold mb-4">{t.footer.legal}</h2>
-            <ul className="space-y-3">
-              {footerLinks.legal.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom Footer */}
-        <div className="py-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            © {currentYear} Zavior. {t.footer.rights}
-          </p>
-          <div className="flex items-center gap-4">
-            {socialLinks.map((social) => (
-              <motion.a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                <social.icon className="h-5 w-5" />
-                <span className="sr-only">{social.label}</span>
-              </motion.a>
-            ))}
-          </div>
-        </div>
+  return <footer className="v2-footer">
+    <div className="v2-footer-main">
+      <div className="v2-footer-brand">
+        <Image src="/zaviorlogo-dark.webp" alt="Zavior Technologies" width={1077} height={371} />
+        <p>Zavior is an Odoo, Zoho and AI solutions partner serving Dubai and the UAE with ERP, CRM, automation and custom software that helps businesses grow smarter.</p>
+        <a href="tel:+971508185948"><Phone /> +971 50 818 5948</a>
+        <a href="mailto:support@zaviortech.org"><Mail /> support@zaviortech.org</a>
+        <span><MapPin /> Dubai & Sharjah, UAE</span>
       </div>
-    </footer>
-  );
+      <FooterColumn title="Quick Links" links={quick} />
+      <FooterColumn title="Our Services" links={services} />
+      <div className="v2-footer-col"><h2>Industries We Serve</h2><ul>{industries.map(x => <li key={x}>{x}</li>)}</ul></div>
+      <div className="v2-footer-news"><h2>Stay Updated</h2><p>Get the latest insights, updates and offers.</p><form><label className="sr-only" htmlFor="footer-email">Email address</label><input id="footer-email" type="email" placeholder="Enter your email" /><button type="submit" aria-label="Subscribe"><Send /></button></form><h2>Follow Us</h2><div><a href="https://www.linkedin.com/company/zavior-tech" aria-label="LinkedIn"><Linkedin /></a><a href="#" aria-label="Facebook"><Facebook /></a><a href="https://www.youtube.com/@ZaviorTechnologiess" aria-label="YouTube"><Youtube /></a><a href="#" aria-label="Instagram"><Instagram /></a></div></div>
+    </div>
+    <div className="v2-footer-assurance"><div><ShieldCheck /><span><b>Business-first delivery</b><small>Solutions aligned to outcomes</small></span></div><div><ShieldCheck /><span><b>Data security</b><small>Industry best practices</small></span></div><div><ShieldCheck /><span><b>Dedicated support</b><small>Here beyond go-live</small></span></div></div>
+    <div className="v2-footer-bottom"><span>© {new Date().getFullYear()} Zavior Technologies. All rights reserved.</span><div><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms & Conditions</Link><Link href="/sitemap.xml">Sitemap</Link></div><span>🇦🇪 Made with care in UAE</span></div>
+  </footer>;
+}
+
+function FooterColumn({ title, links }: { title: string; links: string[][] }) {
+  return <div className="v2-footer-col"><h2>{title}</h2><ul>{links.map(([label, href]) => <li key={label}><Link href={href}>{label}</Link></li>)}</ul></div>;
 }

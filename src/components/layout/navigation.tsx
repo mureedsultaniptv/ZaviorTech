@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Moon, Sun, Globe } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X, Moon, Sun, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/lib/i18n/language-context";
@@ -44,7 +44,7 @@ export function Navigation() {
   const navLinks = [
     { href: "/", label: t.nav.home },
     { href: "/about", label: t.nav.about },
-    { href: "/services", label: t.nav.services },
+    { href: "/services", label: t.nav.services, dropdown: true },
     { href: "/companies", label: t.nav.companies },
     { href: "/portfolio", label: t.nav.portfolio },
     { href: "/blog", label: t.nav.blog },
@@ -58,7 +58,7 @@ export function Navigation() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "zavior-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
           ? "glass border-b border-border/50 shadow-lg"
           : "bg-white dark:bg-black",
@@ -74,7 +74,7 @@ export function Navigation() {
               width={1077}
               height={371}
               priority
-              className="hidden w-[clamp(6.75rem,38vw,9.375rem)] dark:block"
+              className="hidden w-[clamp(7.5rem,38vw,10.5rem)] dark:block"
             />
             <Image
               src="/zaviorlogo-light.webp"
@@ -82,7 +82,7 @@ export function Navigation() {
               width={1077}
               height={371}
               priority
-              className="h-auto w-[clamp(6.75rem,38vw,9.375rem)] dark:hidden"
+              className="h-auto w-[clamp(7.5rem,38vw,10.5rem)] dark:hidden"
             />
           </Link>
 
@@ -93,13 +93,13 @@ export function Navigation() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                  "flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                   router.pathname === link.href
                     ? "text-primary bg-primary/10"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted",
                 )}
               >
-                {link.label}
+                {link.label}{link.dropdown && <ChevronDown className="h-3.5 w-3.5" />}
               </Link>
             ))}
           </div>
@@ -142,8 +142,8 @@ export function Navigation() {
             </Button>
 
             {/* CTA Button */}
-            <Button asChild className="hidden lg:flex">
-              <Link href="/contact">{t.nav.contact}</Link>
+            <Button asChild className="nav-consult hidden lg:flex">
+              <Link href="/contact">Free Consultation <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
         </div>

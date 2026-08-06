@@ -116,7 +116,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   </noscript>
         <LanguageProvider>
           <Navigation />
-          <main className="min-h-screen font-sans antialiased">
+          <main className="site-shell-v2 min-h-screen font-sans antialiased">
             <Component {...pageProps} />
           </main>
           <Footer />
