@@ -4,6 +4,7 @@ import { HomeV1 } from "@/components/sections/home-v1";
 import { SeoHead } from "@/components/seo/seo-head";
 import { breadcrumbJsonLd, faqPageJsonLd, jsonLdGraph, webPageJsonLd } from "@/lib/seo";
 import { faqs } from "@/lib/data/demo-data";
+import { HomeV2 } from "@/components/sections/home-v2";
 
 export default function HomePage() {
   return (
@@ -28,7 +29,7 @@ export default function HomePage() {
           id: "home-faq-structured-data",
         }]}
       />
-      <HomeV1 />
+      <HomeV2 />
     </>
   );
 }
