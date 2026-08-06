@@ -20,6 +20,11 @@ const services = [
   [Settings2, "Zoho Books & Automation", "Automate accounting and financial workflows with Zoho Books.", "/services"],
   [Bot, "AI Automation", "Automate repetitive processes, predict trends and boost efficiency.", "/services/ai-automation-dubai"],
   [Code2, "Custom Software Development", "Secure, scalable software built around your business.", "/services"],
+  [Code2, "Web Application Development", "Modern web apps built with scalable technologies and best practices.", "/services/web-development-dubai"],
+  [Code2, "Mobile App Development", "Native and cross-platform mobile experiences for your customers.", "/services/mobile-apps-dubai"],
+  [Workflow, "API Development & Integration", "Connect systems, automate data flow and improve operational efficiency.", "/services"],
+  [Settings2, "Zoho Consultation & Optimization", "Optimize your Zoho tools for maximum team productivity.", "/services"],
+  [Workflow, "Zoho Workflows & API Integration", "Connect Zoho with your business applications and processes.", "/services"],
 ];
 
 const industries = [
@@ -65,7 +70,7 @@ export function HomeV2() {
         <div className="v2-container v2-hero-grid">
           <div className="v2-hero-copy">
             <div className="v2-pill"><span /> Odoo & Zoho Experts in Dubai, UAE</div>
-            <h1>Odoo ERP, Zoho CRM & <em>AI Automation Solutions</em> for Growing Businesses</h1>
+            <h1><span>Odoo ERP, Zoho CRM &</span><em>AI Automation Solutions</em><span>for Growing Businesses</span></h1>
             <p>Helping businesses across Dubai, UAE and the GCC streamline operations with Odoo ERP Implementation, Zoho CRM, custom software development, AI automation and business process optimization.</p>
             <div className="v2-actions">
               <Link className="v2-button" href="/contact">Book Free Consultation <ArrowRight /></Link>
@@ -78,11 +83,13 @@ export function HomeV2() {
               <div><strong>UAE · GCC</strong><span>Global Presence</span></div>
             </div>
           </div>
-          <div className="v2-dashboard" aria-label="Business analytics dashboard preview">
-            <div className="v2-dashboard-top"><b>Business Overview</b><span>Live dashboard</span></div>
-            <div className="v2-kpis"><div><small>Revenue</small><b>AED 8.64M</b><i>+12.5%</i></div><div><small>Orders</small><b>1,820</b><i>+8.3%</i></div><div><small>Customers</small><b>980</b><i>+6.1%</i></div></div>
-            <Image src="/projects/crm_analytics.webp" alt="CRM and ERP analytics dashboard" width={900} height={560} priority />
-            <div className="v2-float-card zoho"><b>Zoho CRM</b><span>Pipeline +25%</span></div>
+          <div className="v2-dashboard" aria-label="Odoo and Zoho business analytics dashboard preview">
+            <div className="v2-dash-side"><b>odoo</b>{["Dashboard","Sales","Purchase","Inventory","Accounting","Employees","Reports"].map((x,i)=><span className={i===0?"active":""} key={x}>{i===0&&<BarChart3/>}{x}</span>)}</div>
+            <div className="v2-dash-main"><div className="v2-dashboard-top"><b>Overview</b><span>Live dashboard</span></div>
+              <div className="v2-kpis"><div><small>Total Revenue</small><b>AED 8.64M</b><i>+12.5%</i></div><div><small>Total Orders</small><b>1,820</b><i>+8.3%</i></div><div><small>Total Customers</small><b>980</b><i>+6.1%</i></div></div>
+              <div className="v2-chart"><div className="v2-chart-line"><i/><i/><i/><i/><i/><i/><i/><i/></div><div className="v2-donut"><span>60%</span></div></div>
+            </div>
+            <div className="v2-float-card zoho"><b>Zoho CRM</b><span>Pipeline +25%</span><div className="mini-bars"><i/><i/><i/><i/></div></div>
             <div className="v2-float-card ai"><Bot /><b>AI Automation</b><span>Efficiency +22.6%</span></div>
           </div>
         </div>
@@ -94,7 +101,7 @@ export function HomeV2() {
       </section>
 
       <section className="v2-section" id="services">
-        <Header eyebrow="Our services" title="Comprehensive Solutions for Business Growth" text="One experienced team for ERP, CRM, automation and custom product delivery." />
+        <Header eyebrow="Our services" title="Comprehensive Solutions for Your Business Growth" text="One experienced team for ERP, CRM, automation and custom product delivery." />
         <div className="v2-service-grid">{services.map(([Icon, title, text, href]) => <Link href={href as string} className="v2-service-card" key={title as string}><span className="v2-icon"><Icon /></span><h3>{title as string}</h3><p>{text as string}</p><span className="learn">Learn more <ArrowRight /></span></Link>)}</div>
       </section>
 

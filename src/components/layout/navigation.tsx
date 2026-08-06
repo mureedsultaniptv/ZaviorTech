@@ -54,7 +54,7 @@ export function Navigation() {
 
   return (
     <motion.header
-      initial={{ y: -100 }}
+      initial={false}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={cn(
