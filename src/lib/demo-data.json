@@ -1,18 +1,20 @@
 {
   "site": {
     "name": "Zavior Technologies",
-    "title": "Odoo ERP, AI Automation & Web Development Dubai | Zavior",
-    "description": "Zavior Technologies helps Dubai and UAE companies implement Odoo ERP, AI automation, custom websites, mobile apps, IT solutions, and core infrastructure.",
+    "title": "Official Odoo & Zoho Partner in Dubai | Zavior",
+    "description": "Zavior Technologies is an official Odoo and Zoho partner helping UAE companies implement connected ERP, CRM, finance, automation, and custom software solutions.",
     "url": "https://zavior.org",
     "email": "info@zavior.org",
     "telephone": "+971508185948",
     "headquarters": "Sharjah, United Arab Emirates",
-    "service": "Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, and infrastructure services",
+    "service": "Odoo ERP, Zoho CRM and Zoho One implementation, AI automation, custom software, IT solutions, and infrastructure services",
     "category": "Company Information",
     "keywords": [
       "Zavior Technologies",
       "Zavior Group",
       "Odoo ERP",
+      "Zoho CRM",
+      "Zoho One",
       "AI Automation",
       "Web Development",
       "Mobile Apps",
@@ -118,6 +120,45 @@
       "metaTitle": "Odoo ERP Solutions for Business Management in Dubai",
       "metaDescription": "Zavior Technologies delivers ERP and Odoo solutions in Dubai with custom modules, seamless integrations, user training, support, and implementation ",
       "metaKeywords": "Odoo ERP Implementation Dubai, Odoo ERP Services UAE, Odoo ERP Consultant Dubai, Odoo ERP Customization UAE, ERP Software Company Dubai, Odoo ERP Solutions Dubai, Odoo Development Company UAE"
+    },
+    {
+      "id": "zoho-solutions",
+      "slug": "zoho-solutions-dubai",
+      "title": "Zoho CRM & Zoho One Solutions in Dubai",
+      "titleAr": "حلول Zoho CRM وZoho One في دبي",
+      "description": "Official Zoho partner services for CRM, Zoho One, finance workflows, automation, integration, training, and ongoing optimization across the UAE.",
+      "longDescription": "\n      <p>As an <strong>official Zoho partner</strong>, Zavior Technologies helps Dubai and UAE businesses turn Zoho into a practical operating platform rather than another collection of disconnected apps. We begin with your customer journey, team responsibilities, reporting needs, and current systems before recommending the right Zoho applications.</p>\n\n      <h2>Zoho CRM and Zoho One Implementation</h2>\n      <p>We configure Zoho CRM around your sales process, from lead capture and qualification to pipeline management, forecasting, follow-up, and management reporting. For organizations that need a broader connected suite, we plan and deploy Zoho One across customer, finance, marketing, service, and operational workflows.</p>\n\n      <h2>Zoho Books, Automation, and Integration</h2>\n      <p>Our work includes Zoho Books setup, approval flows, recurring processes, custom functions, dashboards, and API integrations. We connect Zoho with websites, ERP platforms, communication tools, payment services, and existing databases so teams can work with reliable information instead of duplicating data.</p>\n\n      <ul>\n        <li>Zoho CRM discovery, configuration, migration, and rollout</li>\n        <li>Zoho One application selection and phased deployment</li>\n        <li>Zoho Books and finance workflow automation</li>\n        <li>Blueprints, approval rules, dashboards, and custom functions</li>\n        <li>API integration with ERP, websites, and third-party platforms</li>\n        <li>User training, adoption support, and continuous optimization</li>\n      </ul>\n\n      <p><strong>Planning a Zoho rollout or improving an existing setup?</strong> <a href=\"/contact\">Book a consultation</a> with Zavior Technologies.</p>\n    ",
+      "icon": "Globe",
+      "image": "/images/enterprise-transformation-hero-v2.webp",
+      "features": [
+        "Zoho CRM Implementation",
+        "Zoho One Setup & Deployment",
+        "Zoho Books Automation",
+        "Blueprints & Custom Workflows",
+        "API & ERP Integration",
+        "Training & Optimization"
+      ],
+      "faqs": [
+        {
+          "question": "Is Zavior an official Zoho partner?",
+          "answer": "Yes. Zavior Technologies is an official Zoho partner supporting CRM, Zoho One, Zoho Books, workflow automation, integrations, training, and optimization."
+        },
+        {
+          "question": "Can you migrate our existing CRM data into Zoho?",
+          "answer": "Yes. We can assess, clean, map, test, and migrate customer, lead, deal, activity, and related business data into the selected Zoho applications."
+        },
+        {
+          "question": "Can Zoho integrate with Odoo or another ERP?",
+          "answer": "Yes. We design API-based integrations between Zoho and Odoo or other ERP platforms so customer, order, finance, and operational data can move through controlled workflows."
+        },
+        {
+          "question": "Do you provide support after Zoho goes live?",
+          "answer": "Yes. We provide user training, launch support, issue resolution, workflow improvements, reporting enhancements, and phased optimization after go-live."
+        }
+      ],
+      "metaTitle": "Official Zoho Partner Dubai | CRM & Zoho One Services",
+      "metaDescription": "Official Zoho partner in Dubai for Zoho CRM, Zoho One, Zoho Books, workflow automation, migration, integration, training, and UAE support.",
+      "metaKeywords": "Official Zoho Partner Dubai, Zoho CRM Implementation UAE, Zoho One Partner Dubai, Zoho Books Setup UAE, Zoho Consultant Dubai, Zoho Integration Services"
     },
     {
       "id": "web-development",
@@ -2318,10 +2359,10 @@
     }
   ],
   "stats": {
-    "projects": 100,
+    "projects": 120,
     "clients": 50,
-    "countries": 4,
-    "team": 5
+    "countries": 5,
+    "team": 10
   },
   "milestones": [
     {

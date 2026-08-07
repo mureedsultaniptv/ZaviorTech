@@ -107,6 +107,8 @@ export default function ServiceDetailPage({ service }: Props) {
         title={pageTitle}
         description={pageDescription}
         image={service.image}
+        imageWidth={service.image === "/images/enterprise-transformation-hero-v2.webp" ? 1717 : undefined}
+        imageHeight={service.image === "/images/enterprise-transformation-hero-v2.webp" ? 916 : undefined}
         path={`/services/${service.slug}`}
         keywords={metaKeywords}
         structuredData={structuredData}

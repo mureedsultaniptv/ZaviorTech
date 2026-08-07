@@ -905,7 +905,7 @@ function fallbackReply(
       answers.push("I don’t have a verified current developer headcount in the approved company data.");
     }
     if (/\b(?:official .*partner|gold partner|partner status)\b/i.test(message)) {
-      answers.push("I can’t verify an official Odoo partner level from the approved company data.");
+      answers.push("Zavior is an official Odoo and Zoho partner. I don’t have verified information for a specific tier such as Gold, so I won’t claim a partner level that has not been confirmed.");
     }
     return answers.join("\n\n") || "I don’t have verified information confirming that company claim, so I won’t present it as fact.";
   }

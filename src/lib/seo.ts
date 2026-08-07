@@ -2,7 +2,9 @@ import {
   absoluteUrl,
   DEFAULT_OG_IMAGE,
   SITE_DESCRIPTION,
+  SITE_EMAIL,
   SITE_NAME,
+  SITE_TELEPHONE,
   SITE_URL,
 } from "@/lib/site";
 
@@ -29,10 +31,9 @@ export function professionalServiceJsonLd(): JsonLdNode {
     url: "https://www.zavior.org/",
     image: "https://www.zavior.org/zaviorlogo-dark.webp",
     logo: "https://www.zavior.org/zaviorlogo-dark.webp",
-    telephone: "+971508185948",
-    email: "support@zaviortech.org",
-    description:
-      "Zavior Technologies is a Sharjah/Dubai-based company helping UAE companies implement Odoo ERP, AI automation, custom web platforms, mobile apps, and IT infrastructure solutions.",
+    telephone: SITE_TELEPHONE,
+    email: SITE_EMAIL,
+    description: SITE_DESCRIPTION,
     priceRange: "AED AED",
     currenciesAccepted: "AED",
     paymentAccepted: [
@@ -81,6 +82,10 @@ export function professionalServiceJsonLd(): JsonLdNode {
         {
           "@type": "OfferCatalog",
           name: "Odoo ERP Services",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Zoho CRM and Zoho One Services",
         },
         {
           "@type": "OfferCatalog",

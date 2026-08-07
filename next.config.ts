@@ -73,6 +73,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/v1",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/home2",
+        destination: "/",
+        permanent: true,
+      },
+      {
         source: "/:path*",
         has: [{ type: "host", value: "zaviortech.vercel.app" }],
         destination: "https://www.zavior.org/:path*",

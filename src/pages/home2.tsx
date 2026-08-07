@@ -1,6 +1,5 @@
 "use client";
 
-import { HomeV1 } from "@/components/sections/home-v1";
 import { SeoHead } from "@/components/seo/seo-head";
 import { breadcrumbJsonLd, faqPageJsonLd, jsonLdGraph, webPageJsonLd } from "@/lib/seo";
 import { faqs } from "@/lib/data/demo-data";

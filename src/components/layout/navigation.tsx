@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,6 +14,8 @@ import Image from "next/image";
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
@@ -41,6 +43,49 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const focusFrame = window.requestAnimationFrame(() => {
+      mobileMenuRef.current?.querySelector<HTMLElement>("a[href], button:not([disabled])")?.focus();
+    });
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  const handleMobileMenuKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setIsOpen(false);
+      window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+
+    const focusable = Array.from(
+      mobileMenuRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [],
+    );
+    const first = focusable.at(0);
+    const last = focusable.at(-1);
+
+    if (!first || !last) return;
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
   const navLinks = [
     { href: "/", label: t.nav.home },
     { href: "/about", label: t.nav.about },
@@ -58,7 +103,7 @@ export function Navigation() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={cn(
-        "zavior-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "zavior-nav fixed top-0 left-0 right-0 z-[80] transition-all duration-300",
         scrolled
           ? "glass border-b border-border/50 shadow-lg"
           : "bg-white dark:bg-black",
@@ -71,10 +116,10 @@ export function Navigation() {
             <Image
               src="/zaviorlogo-dark.webp"
               alt="Zavior Technologies logo"
-              width={1077}
-              height={371}
+              width={612}
+              height={408}
               priority
-              className="hidden w-[clamp(7.5rem,38vw,10.5rem)] dark:block"
+              className="hidden h-auto w-[clamp(7.5rem,38vw,10.5rem)] dark:block"
             />
             <Image
               src="/zaviorlogo-light.webp"
@@ -130,10 +175,13 @@ export function Navigation() {
 
             {/* Mobile Menu Button */}
             <Button
+              ref={menuButtonRef}
               variant="ghost"
               size="icon"
               className="lg:hidden"
               onClick={() => setIsOpen(!isOpen)}
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               <span className="sr-only">
@@ -143,7 +191,7 @@ export function Navigation() {
 
             {/* CTA Button */}
             <Button asChild className="nav-consult hidden lg:flex">
-              <Link href="/contact">Free Consultation <ArrowRight className="h-4 w-4" /></Link>
+              <Link href="/contact">Book a consultation <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
         </div>
@@ -152,11 +200,15 @@ export function Navigation() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              ref={mobileMenuRef}
+              onKeyDown={handleMobileMenuKeyDown}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden overflow-hidden"
+              className="h-[calc(100dvh-4rem)] overflow-y-auto bg-white dark:bg-black lg:hidden"
+              id="mobile-navigation"
+              aria-label="Mobile navigation"
             >
               <div className="py-4 space-y-1">
                 {navLinks.map((link, index) => (

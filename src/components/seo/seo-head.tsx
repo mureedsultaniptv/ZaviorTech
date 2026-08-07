@@ -15,6 +15,9 @@ type SeoHeadProps = {
   canonical?: string;
   description?: string;
   image?: string;
+  imageHeight?: number;
+  imageType?: string;
+  imageWidth?: number;
   keywords?: string;
   path?: string;
   robots?: string;
@@ -34,6 +37,9 @@ export function SeoHead(props: SeoHeadProps) {
     canonical,
     description = SITE_DESCRIPTION,
     image = DEFAULT_OG_IMAGE,
+    imageHeight,
+    imageType,
+    imageWidth,
     keywords,
     path = "/",
     robots = "index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1",
@@ -44,6 +50,15 @@ export function SeoHead(props: SeoHeadProps) {
   } = props;
   const canonicalUrl = absoluteUrl(canonical || path);
   const imageUrl = absoluteUrl(image);
+  const imagePath = image.split("?")[0].toLowerCase();
+  const resolvedImageType = imageType || (
+    imagePath.endsWith(".webp") ? "image/webp" :
+    imagePath.endsWith(".jpg") || imagePath.endsWith(".jpeg") ? "image/jpeg" :
+    imagePath.endsWith(".svg") ? "image/svg+xml" :
+    "image/png"
+  );
+  const resolvedImageWidth = imageWidth ?? (image === DEFAULT_OG_IMAGE ? 1200 : undefined);
+  const resolvedImageHeight = imageHeight ?? (image === DEFAULT_OG_IMAGE ? 630 : undefined);
   const logoUrl =
     "https://www.zavior.org/_next/image?url=%2Fzaviorlogo-light.png&w=1080&q=75";
 
@@ -74,11 +89,11 @@ export function SeoHead(props: SeoHeadProps) {
       <meta key="og:locale" property="og:locale" content={SEO_LOCALE} />
       <meta key="og:image" property="og:image" content={imageUrl} />
       <meta key="og:image:secure_url" property="og:image:secure_url" content={imageUrl} />
-      <meta key="og:image:type" property="og:image:type" content="image/png" />
+      <meta key="og:image:type" property="og:image:type" content={resolvedImageType} />
       <meta key="og:logo" property="og:logo" content={logoUrl} />
       <meta key="og:image:alt" property="og:image:alt" content={`${title} - ${SITE_NAME}`} />
-      <meta key="og:image:width" property="og:image:width" content="1200" />
-      <meta key="og:image:height" property="og:image:height" content="630" />
+      {resolvedImageWidth ? <meta key="og:image:width" property="og:image:width" content={String(resolvedImageWidth)} /> : null}
+      {resolvedImageHeight ? <meta key="og:image:height" property="og:image:height" content={String(resolvedImageHeight)} /> : null}
       <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
       <meta key="twitter:title" name="twitter:title" content={title} />
       <meta

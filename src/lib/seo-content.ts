@@ -98,6 +98,7 @@ function scoreAgainst(source: string, candidate: string) {
 export function getPriorityServices(limit = 6) {
   const prioritySlugs = [
     "odoo-services-dubai",
+    "zoho-solutions-dubai",
     "odoo-erp-implementation-dubai",
     "erp-software-dubai",
     "ai-automation-dubai",
