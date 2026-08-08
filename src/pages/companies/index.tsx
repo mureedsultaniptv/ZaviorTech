@@ -203,7 +203,7 @@ export default function CompaniesPage() {
                     </Card>
                   </a>
                 ) : (
-                  <Link href={company.href} className="block h-full">
+                  <Link href={company?.href||"#"} className="block h-full">
                     <Card className="group h-full bg-card hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 border-border/50 hover:border-primary/30 overflow-hidden">
                       <CardContent className="p-8">
                         <div className="flex items-start justify-between mb-6">
@@ -211,7 +211,7 @@ export default function CompaniesPage() {
                             className="w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-2xl"
                             style={{ backgroundColor: company.color }}
                           >
-                            {company.name.charAt(0)}
+                            {company?.name?.charAt(0)}
                           </div>
                           <ArrowRight className="h-5 w-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
@@ -228,7 +228,7 @@ export default function CompaniesPage() {
                           {company.description}
                         </p>
                         <div className="flex flex-wrap gap-2 mb-6">
-                          {company.services.map((service) => (
+                          {company?.services?.map((service) => (
                             <span
                               key={service}
                               className="px-3 py-1 text-xs rounded-full bg-muted text-muted-foreground"

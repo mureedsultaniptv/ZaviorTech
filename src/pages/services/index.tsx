@@ -24,6 +24,34 @@ import {
 } from "@/lib/seo";
 import { getPriorityServices } from "@/lib/seo-content";
 
+const coreServiceSlugs = [
+  "erp-odoo-dubai",
+  "zoho-solutions-dubai",
+  "ai-automation-dubai",
+  "web-development-dubai",
+  "mobile-apps-dubai",
+  "it-solutions-dubai",
+  "core-it-infrastructure-dubai",
+];
+
+const zohoServiceSlugs = [
+  "zoho-crm-implementation-dubai",
+  "zoho-one-implementation-dubai",
+  "zoho-books-automation-dubai",
+  "zoho-integration-dubai",
+];
+
+const zohoCapabilities = [
+  "Zoho CRM setup, migration and pipeline design",
+  "Zoho One discovery and phased deployment",
+  "Zoho Books finance workflows and approvals",
+  "Zoho Creator custom applications and portals",
+  "Deluge custom functions, blueprints and automations",
+  "Zoho Analytics dashboards and reporting",
+  "API, website, payment gateway and Odoo integrations",
+  "Training, governance and continuous optimization",
+];
+
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Brain,
   Building,
@@ -35,6 +63,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 export default function ServicesPage() {
   const { t, language } = useLanguage();
   const priorityServices = getPriorityServices(6);
+  const coreServices = services.filter((service) => coreServiceSlugs.includes(service.slug));
+  const zohoServices = services.filter((service) => zohoServiceSlugs.includes(service.slug));
   const structuredData = jsonLdGraph([
     webPageJsonLd({
       path: "/services",
@@ -128,8 +158,8 @@ export default function ServicesPage() {
       {/* Services Grid */}
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="space-y-16">
-            {services.map((service, index) => {
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {coreServices.map((service) => {
               const Icon = iconMap[service.icon] || Globe;
               const serviceTitle = getLocalizedTitle(service, language);
               return (
@@ -142,58 +172,68 @@ export default function ServicesPage() {
                   transition={{ duration: 0.5 }}
                   className="scroll-mt-32"
                 >
-                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? "lg:flex-row-reverse" : ""}`}>
-                    <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                      <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
-                        <Icon className="h-8 w-8 text-primary" />
-                      </div>
-                      <h2 className="text-3xl font-bold mb-4">{serviceTitle}</h2>
-                      <p className="text-muted-foreground leading-relaxed mb-6">
-                        {service.description}
-                      </p>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                        {service.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 text-sm">
-                            <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                              <Check className="h-3 w-3 text-primary" />
-                            </div>
-                            {feature}
-                          </li>
+                  <Card className="flex h-full flex-col overflow-hidden border-border/60 bg-card">
+                    <div className="aspect-[16/8] bg-gradient-to-br from-primary/20 to-accent/20">
+                      {service.image ? (
+                        <Image src={service.image} alt={serviceTitle} className="h-full w-full object-cover" width={640} height={320} sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" loading="lazy" />
+                      ) : (
+                        <div className="grid h-full place-items-center"><Icon className="h-16 w-16 text-primary/30" /></div>
+                      )}
+                    </div>
+                    <CardContent className="flex flex-1 flex-col p-6">
+                      <span className="mb-4 grid size-11 place-items-center rounded-xl bg-primary/10 text-primary"><Icon className="size-5" /></span>
+                      <h2 className="mb-3 text-2xl font-bold">{serviceTitle}</h2>
+                      <p className="mb-5 line-clamp-3 leading-relaxed text-muted-foreground">{service.description}</p>
+                      <ul className="mb-6 space-y-2">
+                        {service.features.slice(0, 3).map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-sm"><Check className="size-4 shrink-0 text-primary" />{feature}</li>
                         ))}
                       </ul>
-                      <Button asChild>
-                        <Link href={`/services/${service.slug}`}>
-                          Get Started
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </div>
-                    <div className={index % 2 === 1 ? "lg:order-1" : ""}>
-                      <Card className="bg-card border-border/50 overflow-hidden">
-                        <CardContent className="p-0">
-                          <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                            {service.image ? (
-                              <Image
-                                src={service.image}
-                                alt={serviceTitle}
-                                className="w-full h-full object-cover"
-                                width={640}
-                                height={360}
-                                sizes="(min-width: 1024px) 50vw, 100vw"
-                                loading="lazy"
-                              />
-                            ) : (
-                              <Icon className="h-24 w-24 text-primary/30" />
-                            )}
-                            {/* <Icon className="h-24 w-24 text-primary/30" /> */}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </div>
+                      <Button asChild variant="outline" className="mt-auto w-full justify-between"><Link href={`/services/${service.slug}`}>View service <ArrowRight className="size-4" /></Link></Button>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section id="zoho-services" className="bg-sky-50/70 dark:bg-slate-950/40">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="grid items-start gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+            <div>
+              <Image src="/brands/zoho-logo.svg" alt="Zoho" width={132} height={56} className="mb-5 h-10 w-auto" />
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary">Zoho services</p>
+              <h2 className="mb-4 text-3xl font-bold tracking-tight">Build, customize and connect the Zoho tools your business needs.</h2>
+              <p className="max-w-xl leading-relaxed text-muted-foreground">
+                From a focused CRM rollout to a connected Zoho One environment, we configure the standard products and build the custom workflows, apps and integrations around them.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Button asChild><Link href="/services/zoho-solutions-dubai">Explore Zoho solutions <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
+                <Button asChild variant="outline"><Link href="/contact">Discuss your Zoho project</Link></Button>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {zohoServices.map((service) => (
+                <Link key={service.slug} href={`/services/${service.slug}`} className="group rounded-xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-md">
+                  <h3 className="text-lg font-semibold transition-colors group-hover:text-primary">{getLocalizedTitle(service, language)}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+                  <span className="mt-4 inline-flex items-center text-sm font-semibold text-primary">Explore service <ArrowRight className="ml-1.5 h-4 w-4" /></span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 rounded-xl border border-sky-100 bg-white/80 p-6 dark:border-slate-800 dark:bg-card lg:p-8">
+            <h3 className="text-xl font-semibold">Custom Zoho capability</h3>
+            <p className="mt-2 max-w-3xl leading-relaxed text-muted-foreground">Need more than standard configuration? We can extend Zoho safely around your actual process while keeping the platform maintainable for your team.</p>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {zohoCapabilities.map((capability) => (
+                <li key={capability} className="flex gap-2 text-sm leading-relaxed text-foreground"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />{capability}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>

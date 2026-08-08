@@ -26,9 +26,6 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
-      "framer-motion": [
-        "./src/lib/light-motion.tsx"
       ]
     }
   },

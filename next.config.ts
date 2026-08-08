@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -57,19 +56,6 @@ const nextConfig: NextConfig = {
   },
   reactCompiler: true,
   poweredByHeader: false,
-  turbopack: {
-   resolveAlias: {
-      "framer-motion": "./src/lib/light-motion.tsx",
-    },
-  },
-  webpack(config) {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "framer-motion": path.resolve(process.cwd(), "./src/lib/light-motion.tsx"),
-    };
-
-    return config;
-  },
   async redirects() {
     return [
       {

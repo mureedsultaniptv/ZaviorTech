@@ -88,10 +88,29 @@ export function Navigation() {
 
   const navLinks = [
     { href: "/", label: t.nav.home },
-    { href: "/about", label: t.nav.about },
-    { href: "/services", label: t.nav.services, dropdown: true },
-    { href: "/companies", label: t.nav.companies },
-    { href: "/portfolio", label: t.nav.portfolio },
+    {
+      href: "/about",
+      label: t.nav.about,
+      children: [
+        { href: "/about", label: "About Zavior", description: "Our mission, values and team." },
+        { href: "/why-zavior", label: "Why Zavior", description: "How we deliver measurable outcomes." },
+        { href: "/companies", label: "Our Companies", description: "Zavior Technologies, Furniture and Fix." },
+        { href: "/portfolio", label: "Case Studies", description: "Selected work and delivery outcomes." },
+      ],
+    },
+    {
+      href: "/services",
+      label: t.nav.services,
+      children: [
+        { href: "/services/erp-odoo-dubai", label: "Odoo ERP", description: "Implementation and custom modules." },
+        { href: "/services/zoho-solutions-dubai", label: "Zoho Solutions", description: "CRM, Zoho One, Books and integrations." },
+        { href: "/services/ai-automation-dubai", label: "AI Automation", description: "Practical workflow automation." },
+        { href: "/services/web-development-dubai", label: "Web Development", description: "Conversion-focused business websites." },
+        { href: "/services/mobile-apps-dubai", label: "Mobile Apps", description: "Native and cross-platform products." },
+        { href: "/services/it-solutions-dubai", label: "IT Solutions", description: "Reliable systems and support." },
+        { href: "/services/core-it-infrastructure-dubai", label: "Core IT Infrastructure", description: "Networks, hardware and security." },
+      ],
+    },
     { href: "/blog", label: t.nav.blog },
     // { href: "/careers", label: t.nav.careers },
     { href: "/contact", label: t.nav.contact },
@@ -133,20 +152,40 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                  router.pathname === link.href
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
-                )}
-              >
-                {link.label}{link.dropdown && <ChevronDown className="h-3.5 w-3.5" />}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = router.pathname === link.href
+                || (link.href === "/services" && router.pathname.startsWith("/services"))
+                || link.children?.some((child) => router.pathname === child.href);
+              const linkClassName = cn(
+                "flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                isActive
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted",
+              );
+
+              if (!link.children) {
+                return <Link key={link.href} href={link.href} className={linkClassName}>{link.label}</Link>;
+              }
+
+              return (
+                <div key={link.href} className="group relative">
+                  <Link href={link.href} className={linkClassName} aria-haspopup="menu">
+                    {link.label}<ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
+                  </Link>
+                  <div className={cn(
+                    "invisible absolute left-0 top-full z-50 mt-2 translate-y-1 rounded-xl border border-border bg-card p-2 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100",
+                    link.href === "/services" ? "grid w-[36rem] grid-cols-2 gap-1" : "w-80",
+                  )} role="menu">
+                    {link.children.map((child) => (
+                      <Link key={child.href} href={child.href} className="block rounded-lg px-3 py-2.5 transition-colors hover:bg-muted focus:bg-muted" role="menuitem">
+                        <span className="block text-sm font-semibold text-foreground">{child.label}</span>
+                        <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">{child.description}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {/* Actions */}
@@ -223,13 +262,27 @@ export function Navigation() {
                       onClick={() => setIsOpen(false)}
                       className={cn(
                         "block px-4 py-3 text-base font-medium rounded-lg transition-colors",
-                        router.pathname === link.href
+                        router.pathname === link.href || (link.href === "/services" && router.pathname.startsWith("/services"))
                           ? "text-primary bg-primary/10"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted",
                       )}
                     >
-                      {link.label}
+                      <span className="flex items-center justify-between gap-3">{link.label}{link.children && <ChevronDown className="h-4 w-4" />}</span>
                     </Link>
+                    {link.children ? (
+                      <div className="ml-4 mt-1 space-y-1 border-l border-border pl-3">
+                        {link.children.map((child) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            onClick={() => setIsOpen(false)}
+                            className="block rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
                   </motion.div>
                 ))}
                 <motion.div

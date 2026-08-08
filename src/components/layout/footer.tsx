@@ -25,11 +25,12 @@ const companyLinks = [
 
 const solutionLinks = [
   ["Odoo ERP Implementation", "/services/erp-odoo-dubai"],
-  ["Odoo CRM & Modules", "/services/odoo-services-dubai"],
   ["Zoho CRM & Zoho One", "/services/zoho-solutions-dubai"],
   ["AI Automation", "/services/ai-automation-dubai"],
-  ["Web Applications", "/services/web-development-dubai"],
+  ["Web Development", "/services/web-development-dubai"],
   ["Mobile Apps", "/services/mobile-apps-dubai"],
+  ["IT Solutions", "/services/it-solutions-dubai"],
+  ["Core IT Infrastructure", "/services/core-it-infrastructure-dubai"],
 ];
 
 const industryLinks = [

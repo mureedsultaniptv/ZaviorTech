@@ -76,10 +76,10 @@
     },
     {
       "id": "zavior-maintenance-services",
-      "name": "Zavior Maintenance Services",
+      "name": "Zavior Fix",
       "slug": "zavior-maintenance-services",
-      "description": "Building maintenance and facilities support brand focused on reliable scheduled, corrective, and emergency service delivery.",
-      "shortDescription": "Facilities & Maintenance Services",
+      "description": "Hardware, plumbing and property maintenance services for homes, offices and facilities, delivered through zaviorfix.online.",
+      "shortDescription": "Hardware, Plumbing & Maintenance",
       "color": "#0f766e",
       "sector": "Maintenance",
       "headquarters": "United Arab Emirates",
@@ -87,19 +87,71 @@
       "websiteLabel": "www.zaviorfix.online",
       "href": "https://www.zaviorfix.online/",
       "isExternal": true,
-      "overview": "Zavior Maintenance Services provides responsive maintenance support for property owners, operators, and facility teams, combining field execution with structured service communication through zaviorfix.online.",
+      "overview": "Zavior Fix provides responsive hardware, plumbing and maintenance support for property owners, offices and facilities, with structured service communication through zaviorfix.online.",
       "relatedProjectSlugs": [
         "maintainit-dubai"
       ],
       "services": [
+        "Hardware Supplies",
+        "Plumbing Services",
         "General Maintenance",
-        "Preventive Maintenance",
-        "MEP Support",
         "Facility Service Coordination"
       ]
     }
   ],
   "services": [
+    {
+      "id": "zoho-crm-implementation-dubai",
+      "slug": "zoho-crm-implementation-dubai",
+      "title": "Zoho CRM Implementation Services in Dubai",
+      "description": "Configure Zoho CRM around your sales process, customer data, pipeline reporting, follow-up and team adoption.",
+      "longDescription": "\n<p>Zavior delivers <strong>Zoho CRM implementation in Dubai</strong> for teams that need consistent lead handling, stronger pipeline visibility, and a dependable customer record. We begin by mapping how leads enter the business, how sales teams qualify and follow up, and what management needs to see.</p>\n<h2>A CRM your team can actually use</h2>\n<p>Our delivery covers CRM configuration, field and layout design, data migration, pipeline stages, assignment rules, dashboards, blueprints, automations, testing and user training. The aim is a clean working system rather than a CRM that becomes another manual task.</p>\n<ul><li>Lead capture, routing and qualification</li><li>Sales pipeline, tasks and follow-up automation</li><li>Data migration and duplicate-data cleanup</li><li>Dashboards, forecasts and management reporting</li><li>User training and post-launch optimization</li></ul>\n<p><strong>Need a better CRM process?</strong> <a href=\"/contact\">Talk to Zavior</a> about Zoho CRM implementation.</p>\n",
+      "icon": "Globe",
+      "image": "/images/zoho-crm-kanban-pipeline.png",
+      "features": ["CRM discovery and configuration", "Lead routing and sales workflows", "Data migration and cleanup", "Dashboards and forecasting", "Training and optimization"],
+      "metaTitle": "Zoho CRM Implementation Dubai | Zavior Technologies",
+      "metaDescription": "Zoho CRM implementation in Dubai for lead management, sales pipelines, data migration, workflow automation, dashboards and user adoption.",
+      "metaKeywords": "Zoho CRM implementation Dubai, Zoho CRM consultant UAE, Zoho sales automation Dubai, CRM migration UAE"
+    },
+    {
+      "id": "zoho-one-implementation-dubai",
+      "slug": "zoho-one-implementation-dubai",
+      "title": "Zoho One Implementation & Consulting in Dubai",
+      "description": "Plan and deploy a connected Zoho One setup across sales, finance, service, marketing and operational teams.",
+      "longDescription": "\n<p><strong>Zoho One implementation</strong> works best when applications are introduced around clear operating needs rather than switched on all at once. Zavior helps UAE businesses choose the right applications, define ownership, and connect data between sales, finance, service and operations.</p>\n<h2>Phased Zoho One delivery</h2>\n<p>We create a practical rollout plan, configure the priority apps, establish shared data rules and automate handoffs. Each phase includes testing, training and a clear measure of adoption before the next phase begins.</p>\n<ul><li>Application selection and rollout roadmap</li><li>Shared customer, product and finance data</li><li>Cross-team workflows and approval controls</li><li>Role-based dashboards and reporting</li><li>Training, governance and adoption support</li></ul>\n<p><strong>Planning a connected Zoho One rollout?</strong> <a href=\"/contact\">Book a discovery session</a>.</p>\n",
+      "icon": "Globe",
+      "image": "/images/enterprise-transformation-hero-v2.webp",
+      "features": ["Zoho One roadmap", "Application setup", "Cross-app workflows", "Role-based reporting", "Training and governance"],
+      "metaTitle": "Zoho One Implementation Dubai | Zavior Technologies",
+      "metaDescription": "Zoho One implementation and consulting in Dubai for connected sales, finance, service and operations workflows.",
+      "metaKeywords": "Zoho One implementation Dubai, Zoho One consultant UAE, Zoho deployment Dubai"
+    },
+    {
+      "id": "zoho-books-automation-dubai",
+      "slug": "zoho-books-automation-dubai",
+      "title": "Zoho Books Automation Services in Dubai",
+      "description": "Streamline invoicing, approvals, recurring finance tasks and reporting with a Zoho Books setup built for your team.",
+      "longDescription": "\n<p>Zavior helps finance teams use <strong>Zoho Books</strong> to reduce repetitive processing and improve visibility. We review the current invoice, approval, expense and reporting flow before configuring the controls and automations that fit your operating model.</p>\n<h2>Cleaner finance workflows</h2>\n<p>Our Zoho Books delivery can include chart-of-accounts setup, invoice and estimate templates, approval rules, recurring transactions, bank workflows, custom functions, reporting and integrations with CRM or operational systems.</p>\n<ul><li>Zoho Books setup and configuration</li><li>Invoicing, approvals and recurring workflows</li><li>Customer and sales data connection</li><li>Financial dashboards and management reports</li><li>Training and ongoing optimization</li></ul>\n<p><strong>Ready to reduce manual finance work?</strong> <a href=\"/contact\">Talk to our consultants</a>.</p>\n",
+      "icon": "Building",
+      "image": "/images/zoho-crm-kanban-pipeline.png",
+      "features": ["Zoho Books setup", "Invoice and approval automation", "Recurring finance workflows", "Reporting dashboards", "CRM and ERP data connection"],
+      "metaTitle": "Zoho Books Automation Dubai | Zavior Technologies",
+      "metaDescription": "Zoho Books automation in Dubai for invoicing, approvals, recurring finance tasks, reporting and connected customer data.",
+      "metaKeywords": "Zoho Books Dubai, Zoho Books automation UAE, Zoho finance consultant Dubai"
+    },
+    {
+      "id": "zoho-integration-dubai",
+      "slug": "zoho-integration-dubai",
+      "title": "Zoho Integration & Workflow Automation Services",
+      "description": "Connect Zoho with websites, Odoo, payment services and business applications through secure, maintainable workflows.",
+      "longDescription": "\n<p>Disconnected systems create duplicate data, delayed follow-up and unreliable reporting. Zavior designs <strong>Zoho integrations</strong> that move the right information between CRM, finance, websites, ERP and third-party tools with clear error handling and ownership.</p>\n<h2>Integrations that support the full workflow</h2>\n<p>We define the data flow first, then configure APIs, custom functions, webhooks and automation rules. Every integration is tested against real business scenarios so teams know what happens when data is missing, changed or delayed.</p>\n<ul><li>Zoho CRM and website lead capture</li><li>Zoho to Odoo and ERP integrations</li><li>Custom functions, APIs and webhooks</li><li>Approval and notification automation</li><li>Monitoring, documentation and support</li></ul>\n<p><strong>Need Zoho to work with the rest of your stack?</strong> <a href=\"/contact\">Discuss your integration</a>.</p>\n",
+      "icon": "Globe",
+      "image": "/images/enterprise-transformation-hero-v2.webp",
+      "features": ["Website lead integrations", "Zoho and Odoo data flows", "APIs and webhooks", "Custom functions", "Workflow monitoring"],
+      "metaTitle": "Zoho Integration Services Dubai | Zavior Technologies",
+      "metaDescription": "Zoho integration services in Dubai for CRM, Zoho Books, Odoo ERP, websites, APIs, custom functions and workflow automation.",
+      "metaKeywords": "Zoho integration Dubai, Zoho Odoo integration UAE, Zoho API consultant Dubai, Zoho workflow automation"
+    },
     {
       "id": "erp-odoo",
       "slug": "erp-odoo-dubai",
@@ -2093,6 +2145,44 @@
       "metaDescription": "Discover how AI automation helps Dubai businesses transform customer support and lead management with chatbots, lead scoring, and automated follow-ups.",
       "keywords": "AI automation Dubai, AI customer support UAE, AI lead management, AI chatbot Dubai business, Zavior Technologies",
       "canonical": "https://zavior.org/blog/ai-automation-customer-support-dubai"
+    },
+    {
+      "id": "zoho-crm-implementation-guide-dubai",
+      "title": "Zoho CRM Implementation in Dubai: A Practical Guide for Growing Teams",
+      "slug": "zoho-crm-implementation-guide-dubai",
+      "excerpt": "A practical guide to planning Zoho CRM implementation in Dubai, from data cleanup and pipeline design to automations, dashboards and team adoption.",
+      "content": "\n<p>Zoho CRM implementation succeeds when it reflects how your team actually sells. Before configuring fields or automations, clarify how leads arrive, what makes them qualified, who owns the next action, and which reports management needs to make decisions.</p>\n<h2>Start with the sales process</h2>\n<p>Map the stages from first enquiry to closed deal, including handoffs, approvals and follow-up expectations. A short, agreed process is more valuable than a complex CRM full of unused fields.</p>\n<h2>Prepare the data before migration</h2>\n<p>Clean duplicates, standardize key fields and decide which contacts, deals and historical activity must move. Testing a small data sample prevents common migration problems before the full import.</p>\n<h2>Automate only the repeatable work</h2>\n<p>Use assignment rules, reminders, blueprints and notifications for predictable actions. Keep exceptions visible to people rather than hiding them inside a long automation chain.</p>\n<h2>Make reporting useful</h2>\n<p>Start with lead source, response time, pipeline value, conversion rate and activity visibility. Each dashboard should answer a decision question for a sales rep, manager or leadership team.</p>\n<p>Zavior provides <a href=\"/services/zoho-crm-implementation-dubai\">Zoho CRM implementation services</a> covering discovery, setup, migration, automations and adoption support. For broader connected delivery, explore our <a href=\"/services/zoho-one-implementation-dubai\">Zoho One implementation</a> service.</p>\n<p><strong>Planning a Zoho CRM rollout?</strong> <a href=\"/contact\">Book a consultation</a> with Zavior Technologies.</p>\n",
+      "image": "/images/zoho-crm-kanban-pipeline.png",
+      "imageAlt": "Zoho CRM pipeline board for a Dubai sales team",
+      "author": { "name": "Zavior Editorial Team", "role": "CRM & Automation Practice" },
+      "category": "Zoho CRM & Automation",
+      "readTime": "7 min read",
+      "publishedAt": "2026-08-08",
+      "updatedAt": "2026-08-08",
+      "featured": false,
+      "tags": ["Zoho CRM Dubai", "CRM Implementation UAE", "Sales Automation", "Zoho Consultant"],
+      "metaTitle": "Zoho CRM Implementation Dubai: Practical Guide | Zavior",
+      "metaDescription": "Plan a successful Zoho CRM implementation in Dubai with practical guidance on sales processes, migration, automations, reporting and adoption.",
+      "keywords": "Zoho CRM implementation Dubai, Zoho CRM guide UAE, CRM automation Dubai"
+    },
+    {
+      "id": "zoho-one-vs-disconnected-tools-uae",
+      "title": "When Zoho One Makes Sense for UAE Businesses",
+      "slug": "zoho-one-vs-disconnected-tools-uae",
+      "excerpt": "Learn when Zoho One is a good fit for UAE businesses replacing disconnected sales, finance, service and operational tools.",
+      "content": "\n<p>Businesses often outgrow the mix of spreadsheets, inboxes and separate subscriptions that once felt manageable. Zoho One can be a strong option when teams need connected customer, finance and operational workflows without building every tool from scratch.</p>\n<h2>Look for repeated handoffs and duplicate data</h2>\n<p>If sales re-enters customer details into finance, support cannot see a customer’s deal history, or managers consolidate reports manually, a connected application suite can remove friction.</p>\n<h2>Choose the first phase carefully</h2>\n<p>Do not enable every Zoho app at once. Start with the workflow that has the clearest operational cost—often CRM, lead follow-up, invoicing or service—and build a stable shared data model around it.</p>\n<h2>Plan governance and adoption</h2>\n<p>Connected software still needs ownership. Define who manages fields, workflows, permissions and reporting. Train users around their daily tasks and review adoption after each rollout phase.</p>\n<p>Zavior helps businesses plan and deliver <a href=\"/services/zoho-one-implementation-dubai\">Zoho One implementation</a>, including <a href=\"/services/zoho-books-automation-dubai\">Zoho Books automation</a> and <a href=\"/services/zoho-integration-dubai\">integration services</a> when other business systems must remain connected.</p>\n<p><strong>Not sure if Zoho One fits your operating model?</strong> <a href=\"/contact\">Speak with our team</a>.</p>\n",
+      "image": "/images/enterprise-transformation-hero-v2.webp",
+      "imageAlt": "Connected business systems supporting a Zoho One rollout",
+      "author": { "name": "Zavior Editorial Team", "role": "Business Systems Practice" },
+      "category": "Zoho CRM & Automation",
+      "readTime": "6 min read",
+      "publishedAt": "2026-08-07",
+      "updatedAt": "2026-08-07",
+      "featured": false,
+      "tags": ["Zoho One Dubai", "Business Automation UAE", "Zoho Consultant", "Digital Transformation"],
+      "metaTitle": "When Zoho One Makes Sense for UAE Businesses | Zavior",
+      "metaDescription": "Learn when Zoho One is the right fit for UAE businesses that need connected sales, finance, service and operational workflows.",
+      "keywords": "Zoho One Dubai, Zoho One UAE, Zoho consultant Dubai, business automation UAE"
     },
     {
       "id": "custom-crm-vs-ready-made-crm-dubai",

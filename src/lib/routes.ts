@@ -14,6 +14,7 @@ export type SitemapEntry = {
 export const staticSiteRoutes = [
   "/",
   "/about",
+  "/why-zavior",
   "/services",
   "/companies",
   "/portfolio",
