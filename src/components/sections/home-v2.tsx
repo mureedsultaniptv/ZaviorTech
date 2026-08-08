@@ -8,29 +8,20 @@ import {
   BarChart3,
   Bot,
   Boxes,
-  BriefcaseBusiness,
-  Car,
   Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
   Code2,
-  Construction,
-  Factory,
-  GraduationCap,
-  HeartPulse,
   Headphones,
-  Hotel,
   Lightbulb,
   PackageCheck,
   Play,
   Rocket,
   Settings2,
   ShieldCheck,
-  ShoppingCart,
   Sparkles,
-  Truck,
   Users,
   Workflow,
 } from "lucide-react";
@@ -54,15 +45,15 @@ const services = [
 ];
 
 const industries = [
-  [Factory, "Manufacturing"],
-  [ShoppingCart, "Retail"],
-  [HeartPulse, "Healthcare"],
-  [Construction, "Construction"],
-  [GraduationCap, "Education"],
-  [Hotel, "Hospitality"],
-  [Truck, "Logistics"],
-  [Car, "Automotive"],
-  [BriefcaseBusiness, "Professional Services"],
+  { icon: "/icons/industries/industry-manufacturing.svg", label: "Manufacturing" },
+  { icon: "/icons/industries/industry-retail.svg", label: "Retail" },
+  { icon: "/icons/industries/industry-healthcare.svg", label: "Healthcare" },
+  { icon: "/icons/industries/industry-construction.svg", label: "Construction" },
+  { icon: "/icons/industries/industry-education.svg", label: "Education" },
+  { icon: "/icons/industries/industry-hospitality.svg", label: "Hospitality" },
+  { icon: "/icons/industries/industry-logistics.svg", label: "Logistics" },
+  { icon: "/icons/industries/industry-automotive.svg", label: "Automotive" },
+  { icon: "/icons/industries/industry-professional-services.svg", label: "Professional Services" },
 ];
 
 const benefits = [
@@ -310,7 +301,14 @@ export function HomeV2() {
 
       <section className="v2-section v2-industries-section">
         <Header eyebrow="Industries we serve" title="Solutions for Every Industry" text="Focused business systems for the operating realities of each sector." />
-        <div className="v2-industry-grid">{industries.map(([Icon, label]) => <div key={label as string}><Icon /><span>{label as string}</span></div>)}</div>
+        <div className="v2-industry-grid">
+          {industries.map(({ icon, label }) => (
+            <div key={label}>
+              <span className="v2-industry-art"><Image src={icon} alt="" width={52} height={52} /></span>
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="v2-why-section">
@@ -369,7 +367,38 @@ export function HomeV2() {
         </div>
       </section>
 
-      <section className="v2-section v2-faq" id="faq"><Header eyebrow="FAQ" title="Frequently Asked Questions" text="Clear answers for teams planning Odoo, Zoho and connected automation." /><div className="v2-faq-list">{faqItems.map(([question, answer], index) => <details key={question} open={index === 0}><summary>{question}<ChevronDown /></summary><p>{answer}</p></details>)}</div></section>
+      <section className="v2-section v2-faq" id="faq">
+        <Header eyebrow="FAQ" title="Frequently Asked Questions" text="Clear answers for teams planning Odoo, Zoho and connected automation." />
+        <div className="v2-faq-two-col">
+          <article className="v2-faq-panel v2-faq-panel--odoo" aria-labelledby="odoo-faq-title">
+            <div className="v2-faq-panel-head">
+              <Image src="/brands/odoo-logo.svg" alt="Odoo" width={88} height={38} />
+              <h3 id="odoo-faq-title">Odoo ERP Questions</h3>
+            </div>
+            {faqItems.slice(0, 4).map(([question, answer], index) => (
+              <details key={question} open={index === 0}>
+                <summary>{question}<ChevronDown /></summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </article>
+
+          <div className="v2-faq-divider" aria-hidden="true" />
+
+          <article className="v2-faq-panel v2-faq-panel--zoho" aria-labelledby="zoho-faq-title">
+            <div className="v2-faq-panel-head">
+              <Image src="/brands/zoho-logo.svg" alt="Zoho" width={88} height={38} />
+              <h3 id="zoho-faq-title">Zoho &amp; Platform Questions</h3>
+            </div>
+            {faqItems.slice(4).map(([question, answer], index) => (
+              <details key={question} open={index === 0}>
+                <summary>{question}<ChevronDown /></summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </article>
+        </div>
+      </section>
 
       <section className="v2-final-cta"><div className="v2-container"><div><span>Ready to transform your business?</span><h2>Let’s Build Something Amazing Together</h2><p>Whether you’re implementing Odoo ERP, optimizing Zoho CRM or building custom business software, our consultants are ready to help.</p></div><div><div className="v2-actions"><Link className="v2-button light" href="/contact">Book Free Consultation <ArrowRight /></Link><a className="v2-button outline-light" href="https://wa.me/971508185948">WhatsApp</a><a className="v2-button outline-light" href="tel:+971508185948">Call Now</a></div><div className="v2-promises"><span><Check /> No commitment</span><span><Check /> Expert consultation</span><span><Check /> Quick response</span></div></div></div></section>
     </div>

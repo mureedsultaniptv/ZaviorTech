@@ -38,7 +38,7 @@ export function ChatWidget({
               initialSessionId={sessionId}
               onReset={() => setSessionId(null)}
               className={cn(
-                "h-[min(620px,calc(100dvh-8rem))] w-[calc(100vw-2rem)]",
+                "h-[min(620px,calc(100dvh-8rem))] max-h-[calc(100dvh-5.5rem)] w-[calc(100vw-2rem)]",
                 "sm:w-[390px]",
               )}
               headerActions={
@@ -58,7 +58,7 @@ export function ChatWidget({
               compact
               onAiReady={setSessionId}
               className={cn(
-                "h-[min(650px,calc(100dvh-8rem))] w-[calc(100vw-2rem)]",
+                "h-[min(650px,calc(100dvh-8rem))] max-h-[calc(100dvh-5.5rem)] w-[calc(100vw-2rem)]",
                 "sm:w-[390px]",
               )}
               headerActions={

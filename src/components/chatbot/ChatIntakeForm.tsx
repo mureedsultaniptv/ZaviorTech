@@ -115,7 +115,7 @@ export function ChatIntakeForm({
         {headerActions}
       </header>
 
-      <form onSubmit={handleSubmit} className="flex-1 space-y-3 overflow-y-auto p-4">
+      <form onSubmit={handleSubmit} className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain p-4">
         <p className="text-xs leading-relaxed text-muted-foreground">
           Complete these details before starting. If our AI consultant is unavailable,
           we’ll continue your enquiry directly on WhatsApp.
