@@ -20,6 +20,7 @@ import {
 import "@/styles/globals.css";
 import Head from "next/head";
 import dynamic from "next/dynamic";
+import { MotionConfig } from "framer-motion";
 
 const ChatWidget = dynamic(
   () => import("@/components/chatbot/ChatWidget").then((module) => module.ChatWidget),
@@ -105,7 +106,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           content="DgJZYmiKANOgaq-k-_MY-dExp-x0YgIV_DM6YG4pKW8"
         />
       </Head>
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <noscript>
     <iframe
       src="https://www.googletagmanager.com/ns.html?id=GTM-TWLSP25R"
@@ -114,14 +115,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       style={{ display: "none", visibility: "hidden" }}
     />
   </noscript>
-        <LanguageProvider>
-          <Navigation />
-          <main className="site-shell-v2 min-h-screen font-sans antialiased">
-            <Component {...pageProps} />
-          </main>
-          <Footer />
-          <ChatWidget />
-        </LanguageProvider>
+        <MotionConfig reducedMotion="user">
+          <LanguageProvider>
+            <Navigation />
+            <main className="site-shell-v2 min-h-screen font-sans antialiased">
+              <Component {...pageProps} />
+            </main>
+            <Footer />
+            <ChatWidget />
+          </LanguageProvider>
+        </MotionConfig>
         <Analytics />
       </ThemeProvider>
       

@@ -118,10 +118,11 @@ export default function ContactPage() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetch("/api/leadform", {
+      const res = await fetch("/zavior/form", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
           "x-zavior-form": "leadform",
         },
         body: JSON.stringify(data),

@@ -8,11 +8,13 @@ import {
   useLanguage,
 } from "@/lib/i18n/language-context";
 import { cn } from "@/lib/utils";
+import type { Language } from "@/lib/i18n/translations";
 
 type LanguageSwitcherProps = {
   className?: string;
   label?: string;
   showLabel?: boolean;
+  onLanguageChange?: (language: Language) => void;
 };
 
 /**
@@ -23,6 +25,7 @@ export function LanguageSwitcher({
   className,
   label = "Language",
   showLabel = false,
+  onLanguageChange,
 }: LanguageSwitcherProps) {
   const id = useId();
   const { language, setLanguage } = useLanguage();
@@ -47,6 +50,7 @@ export function LanguageSwitcher({
           const nextLanguage = event.target.value;
           if (isLanguage(nextLanguage)) {
             setLanguage(nextLanguage);
+            onLanguageChange?.(nextLanguage);
           }
         }}
       >

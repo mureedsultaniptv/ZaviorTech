@@ -4,7 +4,7 @@ import {
   applyRateLimit,
   requireTrustedFormRequest,
 } from "@/lib/server/request-security";
-import { queueLeadSubmission } from "@/lib/server/submission-processors";
+import { submitLeadFormToOdoo } from "@/lib/server/odoo-form";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -12,6 +12,13 @@ export default async function handler(req, res) {
   }
 
   try {
+    res.setHeader("Cache-Control", "no-store");
+
+    const contentType = req.headers["content-type"] || "";
+    if (!contentType.includes("application/json")) {
+      return res.status(415).json({ message: "Content type must be application/json." });
+    }
+
     if (!requireTrustedFormRequest(req, res, "leadform")) {
       return;
     }
@@ -21,15 +28,15 @@ export default async function handler(req, res) {
     }
 
     const data = validateLeadPayload(req.body || {});
-    const submission = await queueLeadSubmission({
+    const submission = await submitLeadFormToOdoo({
       ...data,
       createdAt: new Date().toISOString(),
     });
 
-    return res.status(202).json({
+    return res.status(200).json({
       success: true,
       submissionId: submission.id,
-      message: "Message received successfully. We are processing it now.",
+      message: submission.message || "Message received successfully.",
     });
   } catch (error) {
     const statusCode =

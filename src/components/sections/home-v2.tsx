@@ -3,7 +3,9 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
+  ArrowLeft,
   ArrowRight,
   BarChart3,
   Bot,
@@ -22,121 +24,78 @@ import {
   Settings2,
   ShieldCheck,
   Sparkles,
+  type LucideIcon,
   Users,
   Workflow,
 } from "lucide-react";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
+import { useLanguage } from "@/lib/i18n/language-context";
+import { getMarketingContent, marketingContent } from "@/lib/i18n/marketing-content";
 
-const services = [
-  { icon: Boxes, title: "Odoo ERP Implementation", text: "End-to-end Odoo ERP implementation tailored to your operations.", href: "/services/erp-odoo-dubai" },
-  { icon: Users, title: "Odoo CRM", text: "Connect sales, marketing and customer follow-up in one system.", href: "/services/erp-odoo-dubai", secondary: true },
-  { icon: Code2, title: "Custom Odoo Modules", text: "Purpose-built modules that match your workflows and controls.", href: "/services/odoo-services-dubai" },
-  { icon: Lightbulb, title: "Odoo Consultation & Discovery", text: "Clarify requirements, scope and the right Odoo rollout plan.", href: "/services/odoo-erp-implementation-dubai" },
-  { icon: Workflow, title: "Odoo Integration Services", text: "Connect Odoo with commerce, payments and business systems.", href: "/services/odoo-services-dubai" },
-  { icon: BarChart3, title: "Zoho CRM", text: "Build a clearer sales pipeline and more consistent customer engagement.", href: "/services/zoho-solutions-dubai" },
-  { icon: PackageCheck, title: "Zoho One Setup & Deployment", text: "Deploy the right Zoho applications through a phased plan.", href: "/services/zoho-solutions-dubai" },
-  { icon: Settings2, title: "Zoho Books Automation", text: "Streamline finance workflows, approvals and recurring processes.", href: "/services/zoho-solutions-dubai" },
-  { icon: Settings2, title: "Zoho Consultation & Optimization", text: "Improve adoption, reporting and performance across your Zoho setup.", href: "/services/zoho-solutions-dubai", secondary: true },
-  { icon: Workflow, title: "Zoho Workflow Automation", text: "Create blueprints, custom functions and reliable API connections.", href: "/services/zoho-solutions-dubai" },
-  { icon: Bot, title: "AI Automation", text: "Automate repetitive processes and accelerate decision-making.", href: "/services/ai-automation-dubai", secondary: true },
-  { icon: Code2, title: "Custom Software Development", text: "Secure software designed around your operating model.", href: "/services", secondary: true },
-  { icon: Code2, title: "Web Applications", text: "Modern, scalable web platforms built for real business use.", href: "/services/web-development-dubai", secondary: true },
-  { icon: Code2, title: "Mobile Apps", text: "Native and cross-platform experiences for teams and customers.", href: "/services/mobile-apps-dubai", secondary: true },
-  { icon: Workflow, title: "API Development", text: "Move data safely between ERP, CRM and third-party platforms.", href: "/services", secondary: true },
+const serviceDefinitions: Array<{
+  icon: LucideIcon;
+  href: string;
+  secondary?: boolean;
+}> = [
+  { icon: Boxes, href: "/services/erp-odoo-dubai" },
+  { icon: Users, href: "/services/erp-odoo-dubai", secondary: true },
+  { icon: Code2, href: "/services/odoo-services-dubai" },
+  { icon: Lightbulb, href: "/services/odoo-erp-implementation-dubai" },
+  { icon: Workflow, href: "/services/odoo-services-dubai" },
+  { icon: BarChart3, href: "/services/zoho-solutions-dubai" },
+  { icon: PackageCheck, href: "/services/zoho-solutions-dubai" },
+  { icon: Settings2, href: "/services/zoho-solutions-dubai" },
+  { icon: Settings2, href: "/services/zoho-solutions-dubai", secondary: true },
+  { icon: Workflow, href: "/services/zoho-solutions-dubai" },
+  { icon: Bot, href: "/services/ai-automation-dubai", secondary: true },
+  { icon: Code2, href: "/services", secondary: true },
+  { icon: Code2, href: "/services/web-development-dubai", secondary: true },
+  { icon: Code2, href: "/services/mobile-apps-dubai", secondary: true },
+  { icon: Workflow, href: "/services", secondary: true },
 ];
 
-const industries = [
-  { icon: "/icons/industries/industry-manufacturing.svg", label: "Manufacturing" },
-  { icon: "/icons/industries/industry-retail.svg", label: "Retail" },
-  { icon: "/icons/industries/industry-healthcare.svg", label: "Healthcare" },
-  { icon: "/icons/industries/industry-construction.svg", label: "Construction" },
-  { icon: "/icons/industries/industry-education.svg", label: "Education" },
-  { icon: "/icons/industries/industry-hospitality.svg", label: "Hospitality" },
-  { icon: "/icons/industries/industry-logistics.svg", label: "Logistics" },
-  { icon: "/icons/industries/industry-automotive.svg", label: "Automotive" },
-  { icon: "/icons/industries/industry-professional-services.svg", label: "Professional Services" },
-];
+const industryAssets = [
+  "/icons/industries/industry-manufacturing.svg",
+  "/icons/industries/industry-retail.svg",
+  "/icons/industries/industry-healthcare.svg",
+  "/icons/industries/industry-construction.svg",
+  "/icons/industries/industry-education.svg",
+  "/icons/industries/industry-hospitality.svg",
+  "/icons/industries/industry-logistics.svg",
+  "/icons/industries/industry-automotive.svg",
+  "/icons/industries/industry-professional-services.svg",
+] as const;
 
-const benefits = [
-  [CircleCheck, "Official Partnerships", "Official Odoo and Zoho partner delivery."],
-  [ShieldCheck, "Business First", "We solve business problems—not just software."],
-  [Code2, "Custom Development", "Business-specific modules and integrations."],
-  [Headphones, "Dedicated Support", "Implementation, training and maintenance."],
-  [Rocket, "Faster Delivery", "Agile implementation with measurable outcomes."],
-  [Sparkles, "AI Automation", "Modern workflows powered by practical AI."],
-];
+const benefitIcons = [
+  CircleCheck,
+  ShieldCheck,
+  Code2,
+  Headphones,
+  Rocket,
+  Sparkles,
+] as const;
 
-const solutions = {
+const solutionDefinitions = {
   odoo: {
-    label: "Odoo ERP",
     logo: "/brands/odoo-logo.svg",
-    eyebrow: "Odoo ERP solutions",
-    title: "Odoo ERP Implementation Services",
     image: "/services/odoo-erp.webp",
-    copy: [
-      "Zavior plans and delivers Odoo ERP Implementation around the way your teams actually work. We begin with Odoo Consultation & Discovery, map the processes that affect revenue, cost and service, then configure the right applications before introducing custom development.",
-      "Our delivery covers Odoo CRM, finance, inventory, purchasing, manufacturing and reporting. Where standard workflows stop short, we build Custom Odoo Modules and Odoo Integration Services that connect commerce, payments, logistics and existing business systems. Migration, testing, user training and post-launch support are part of the same accountable rollout.",
-    ],
-    items: ["Odoo ERP Implementation", "Odoo CRM", "Custom Odoo Modules", "Odoo Consultation & Discovery", "Odoo Integration Services"],
     href: "/services/erp-odoo-dubai",
   },
   zoho: {
-    label: "Zoho",
     logo: "/brands/zoho-logo.svg",
-    eyebrow: "Zoho solutions",
-    title: "Zoho CRM & Zoho One Experts",
     image: "/images/enterprise-transformation-hero-v2.webp",
-    copy: [
-      "As an official Zoho partner, Zavior helps businesses turn Zoho CRM into a dependable system for lead capture, qualification, pipeline management, forecasting and customer follow-up. We also plan Zoho One Setup & Deployment so each application supports a clear operating need.",
-      "Our consultants configure Zoho Books & Financial Automation, blueprints, approval rules, dashboards and custom functions. Through Zoho Consultation & Optimization and Zoho Custom Workflows & API Integration, we connect Zoho with Odoo, websites, payment services and existing databases—then train users and improve the system after go-live.",
-    ],
-    items: ["Zoho CRM", "Zoho One Setup & Deployment", "Zoho Books & Financial Automation", "Zoho Consultation & Optimization", "Zoho Custom Workflows & API Integration"],
     href: "/services/zoho-solutions-dubai",
   },
-};
+} as const;
 
-const process = [
-  ["Discover", "Understand your goals"],
-  ["Consult", "Define scope and priorities"],
-  ["Design", "Map the right solution"],
-  ["Develop", "Configure and integrate"],
-  ["Deploy", "Test, train and launch"],
-  ["Support", "Continuously improve"],
-];
+type SolutionKey = keyof typeof solutionDefinitions;
 
-const caseStudies = [
-  {
-    category: "Dubai · Odoo ERP",
-    title: "Multi-Branch Beauty Salon ERP",
-    description: "Connected appointments, POS, inventory, staff scheduling and customer loyalty across eight branches.",
-    image: "/projects/odoo-nbeauty-erp.webp",
-    href: "/portfolio/odoo-beauty-salon-erp",
-    results: [["40%", "Faster bookings"], ["25%", "Fewer no-shows"]],
-  },
-  {
-    category: "Manufacturing · Odoo ERP",
-    title: "Manufacturing ERP & CRM Platform",
-    description: "Unified sales, production and inventory with real-time reporting and controlled approvals.",
-    image: "/projects/manuf-erp.webp",
-    href: "/portfolio/manufacturing-erp-crm",
-    results: [["30%", "Faster order cycle"], ["18%", "Lower holding cost"]],
-  },
-  {
-    category: "Finance · Automation",
-    title: "Finance & Accounting Automation",
-    description: "Consolidated multi-company reporting, reconciliation and repeatable month-end workflows.",
-    image: "/projects/finance-automation.webp",
-    href: "/portfolio/finance-automation-system",
-    results: [["15 → 3", "Days to close"], ["One view", "Group reporting"]],
-  },
-  {
-    category: "UAE · AI Automation",
-    title: "AI Lead Management & CRM",
-    description: "Connected lead capture, prioritization, follow-up and pipeline reporting for a B2B sales team.",
-    image: "/projects/ai-lead-management-crm-automation-platform.svg",
-    href: "/portfolio/ai-lead-management-crm-automation-platform",
-    results: [["AI", "Lead scoring"], ["Always-on", "Follow-up"]],
-  },
-];
+const caseStudyAssets = [
+  { image: "/projects/odoo-nbeauty-erp.webp", href: "/portfolio/odoo-beauty-salon-erp" },
+  { image: "/projects/manuf-erp.webp", href: "/portfolio/manufacturing-erp-crm" },
+  { image: "/projects/finance-automation.webp", href: "/portfolio/finance-automation-system" },
+  { image: "/projects/ai-lead-management-crm-automation-platform.svg", href: "/portfolio/ai-lead-management-crm-automation-platform" },
+] as const;
 
 const technologies = [
   { name: "Odoo", logo: "/brands/odoo-logo.svg" },
@@ -149,63 +108,81 @@ const technologies = [
   { name: "Docker", logo: "/brands/tech/docker.svg" },
   { name: "AWS", logo: "/brands/tech/aws.svg" },
   { name: "OpenAI", logo: "/brands/tech/openai.svg" },
-];
+] as const;
 
-const homepageTestimonials = [
-  {
-    id: "operations-manager",
-    quote: "Zavior implemented our Odoo ERP seamlessly. Their expertise and support made the process smooth and efficient.",
-    author: "Operations Manager",
-    role: "Operations",
-    company: "Manufacturing Company, UAE",
-  },
-  {
-    id: "trading-ceo",
-    quote: "The Zoho CRM implementation improved pipeline visibility and customer engagement significantly.",
-    author: "Chief Executive Officer",
-    role: "Executive Leadership",
-    company: "Trading Company, Dubai",
-  },
-  {
-    id: "finance-manager",
-    quote: "Their custom modules and integration services perfectly fit our business requirements.",
-    author: "Finance Manager",
-    role: "Finance",
-    company: "Retail Company, UAE",
-  },
+export const homeFaqs = [
+  ...marketingContent.en.home.faq.odooItems,
+  ...marketingContent.en.home.faq.zohoItems,
 ];
-
-const faqItems = [
-  ["What is Odoo ERP Implementation?", "Odoo ERP Implementation is the process of mapping requirements, configuring applications, migrating data, integrating systems, testing workflows and training users around one operating model."],
-  ["Why choose Odoo ERP?", "Odoo brings CRM, sales, accounting, inventory, manufacturing, projects and other core operations into one flexible platform that can expand in phases."],
-  ["How long does Odoo implementation take?", "A focused rollout can take several weeks. Larger multi-team implementations are delivered in phases based on modules, migration, integrations, testing and training."],
-  ["Can Odoo integrate with Shopify?", "Yes. Odoo can connect with Shopify and other commerce, payment, logistics and business platforms through appropriate connectors or custom APIs."],
-  ["What is Zoho CRM?", "Zoho CRM is a customer relationship platform for managing leads, deals, communications, follow-up, forecasts and sales reporting."],
-  ["Why use Zoho One?", "Zoho One combines applications for sales, finance, marketing, service, HR and operations with shared data and cross-team automation."],
-  ["Can Zoho integrate with ERP?", "Yes. Zoho Custom Workflows & API Integration can connect Zoho with Odoo and other ERP systems through controlled data flows."],
-  ["How much does ERP implementation cost?", "Cost depends on users, applications, customization, data migration, integrations, training and support. A discovery session is the right first step for an accurate scope."],
-];
-
-export const homeFaqs = faqItems.map(([question, answer]) => ({ question, answer }));
 
 export function HomeV2() {
-  const [activeSolution, setActiveSolution] = useState<keyof typeof solutions>("odoo");
+  const [activeSolution, setActiveSolution] = useState<SolutionKey>("odoo");
   const [showAllServices, setShowAllServices] = useState(false);
   const caseTrackRef = useRef<HTMLDivElement>(null);
   const testimonialTrackRef = useRef<HTMLDivElement>(null);
-  const solution = solutions[activeSolution];
-  const visibleServices = showAllServices ? services : services.filter((service) => !service.secondary);
+  const shouldReduceMotion = useReducedMotion();
+  const { language, dir } = useLanguage();
+  const content = getMarketingContent(language).home;
+  const solution = content.platforms[activeSolution];
+  const solutionDefinition = solutionDefinitions[activeSolution];
+  const ArrowForward = dir === "rtl" ? ArrowLeft : ArrowRight;
+  const PreviousArrow = dir === "rtl" ? ChevronRight : ChevronLeft;
+  const NextArrow = dir === "rtl" ? ChevronLeft : ChevronRight;
+
+  const revealProps = shouldReduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 22 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.13 },
+        transition: { duration: 0.56, ease: [0.22, 1, 0.36, 1] as const },
+      };
+  const itemVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 18 },
+    visible: { opacity: 1, y: 0 },
+  };
+  const heroItemVariants = {
+    hidden: { y: shouldReduceMotion ? 0 : 16 },
+    visible: { y: 0 },
+  };
+  const staggerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.055,
+        delayChildren: shouldReduceMotion ? 0 : 0.06,
+      },
+    },
+  };
+  const serviceItems = content.services.items.map((item, index) => ({
+    ...item,
+    ...serviceDefinitions[index],
+  }));
+  const coreServices = serviceItems.filter((service) => !service.secondary);
+  const additionalServices = serviceItems.filter((service) => service.secondary);
+  const visibleServices = showAllServices
+    ? [...coreServices, ...additionalServices]
+    : coreServices;
+
+  const getScrollOffset = (direction: -1 | 1, track: HTMLDivElement) =>
+    (dir === "rtl" ? -direction : direction) * track.clientWidth * 0.82;
 
   const moveCases = (direction: -1 | 1) => {
-    caseTrackRef.current?.scrollBy({
-      left: direction * caseTrackRef.current.clientWidth * 0.82,
+    const track = caseTrackRef.current;
+    if (!track) return;
+
+    track.scrollBy({
+      left: getScrollOffset(direction, track),
       behavior: "smooth",
     });
   };
 
   const moveTestimonials = (direction: -1 | 1) => {
-    testimonialTrackRef.current?.scrollBy({
-      left: direction * testimonialTrackRef.current.clientWidth * 0.82,
+    const track = testimonialTrackRef.current;
+    if (!track) return;
+
+    track.scrollBy({
+      left: getScrollOffset(direction, track),
       behavior: "smooth",
     });
   };
@@ -214,78 +191,155 @@ export function HomeV2() {
     <div className="home-v2">
       <section className="v2-hero" aria-labelledby="v2-hero-title">
         <div className="v2-container v2-hero-grid">
-          <div className="v2-hero-copy">
-            <div className="v2-pill"><span /> Official Odoo &amp; Zoho Partner · Dubai, UAE</div>
-            <h1 id="v2-hero-title"><span>Odoo ERP, Zoho CRM &amp;</span><em>AI Automation Solutions</em><span>for Growing Businesses</span></h1>
-            <p>Helping businesses across Dubai, UAE and the GCC streamline operations with Odoo ERP Implementation, Zoho CRM, Custom Software Development, AI Automation and Business Process Optimization.</p>
-            <div className="v2-actions">
-              <Link className="v2-button" href="/contact">Book Free Consultation <ArrowRight /></Link>
-              <Link className="v2-button secondary" href="/portfolio"><Play /> View Case Studies</Link>
-            </div>
-            <div className="v2-mini-stats">
-              <div><strong>120+</strong><span>Successful Projects</span></div>
-              <div><strong>5+</strong><span>Years of Excellence</span></div>
-              <div><strong>50+</strong><span>Happy Clients</span></div>
-              <div><strong>UAE · GCC</strong><span>Regional Delivery</span></div>
-            </div>
-          </div>
+          <motion.div
+            className="v2-hero-copy"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: { staggerChildren: shouldReduceMotion ? 0 : 0.09 },
+              },
+            }}
+          >
+            <motion.div variants={heroItemVariants} transition={{ duration: 0.45 }} className="v2-pill">
+              <span /> {content.hero.eyebrow}
+            </motion.div>
+            <motion.h1
+              id="v2-hero-title"
+              variants={heroItemVariants}
+              transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span>{content.hero.heading[0]}</span>
+              <em>{content.hero.heading[1]}</em>
+              <span>{content.hero.heading[2]}</span>
+            </motion.h1>
+            <motion.p variants={heroItemVariants} transition={{ duration: 0.56 }}>
+              {content.hero.description}
+            </motion.p>
+            <motion.div variants={heroItemVariants} transition={{ duration: 0.5 }} className="v2-actions">
+              <Link className="v2-button" href="/contact">
+                {content.hero.primaryCta} <ArrowForward />
+              </Link>
+              <Link className="v2-button secondary" href="/portfolio">
+                <Play /> {content.hero.secondaryCta}
+              </Link>
+            </motion.div>
+            <motion.div variants={heroItemVariants} transition={{ duration: 0.5 }} className="v2-mini-stats">
+              {content.hero.stats.map((stat) => (
+                <div key={stat.label}>
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
 
-          <div className="v2-dashboard v2-product-showcase" role="group" aria-label="Authentic Odoo and Zoho CRM product screens">
-            <figure className="v2-product-screen odoo">
+          <motion.div
+            className="v2-dashboard v2-product-showcase"
+            role="group"
+            aria-label={content.hero.productGroupLabel}
+            initial={shouldReduceMotion ? false : { scale: 0.96, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.72, delay: shouldReduceMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <motion.figure
+              className="v2-product-screen odoo"
+              initial={shouldReduceMotion ? false : { x: 26 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.64, delay: shouldReduceMotion ? 0 : 0.28 }}
+            >
               <figcaption>
                 <Image src="/brands/odoo-logo.svg" alt="Odoo" width={92} height={50} />
-                <span><strong>Odoo 19</strong> ERP dashboard</span>
-                <i>Official product UI</i>
+                <span><strong>Odoo 19</strong> {content.hero.odooDashboardLabel}</span>
+                <i>{content.hero.productUiLabel}</i>
               </figcaption>
               <Image
                 className="v2-product-shot"
                 src="/images/odoo-19-leads-dashboard.png"
-                alt="Odoo 19 dashboard showing lead KPIs, monthly trends, countries and tags"
+                alt={`Odoo 19 ${content.hero.odooDashboardLabel}`}
                 width={1449}
                 height={1066}
                 sizes="(max-width: 960px) calc(100vw - 40px), (max-width: 1200px) 47vw, 590px"
                 priority
               />
-            </figure>
-            <figure className="v2-product-screen zoho">
+            </motion.figure>
+            <motion.figure
+              className="v2-product-screen zoho"
+              initial={shouldReduceMotion ? false : { y: 22, x: 14 }}
+              animate={{ opacity: 1, y: 0, x: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.62, delay: shouldReduceMotion ? 0 : 0.43 }}
+            >
               <figcaption>
                 <Image src="/brands/zoho-logo.svg" alt="Zoho" width={88} height={39} />
-                <span><strong>Zoho CRM</strong> Kanban pipeline</span>
-                <i>Official product UI</i>
+                <span><strong>Zoho CRM</strong> {content.hero.zohoPipelineLabel}</span>
+                <i>{content.hero.productUiLabel}</i>
               </figcaption>
               <Image
                 className="v2-product-shot"
                 src="/images/zoho-crm-kanban-pipeline.png"
-                alt="Zoho CRM Kanban pipeline with deals organized by sales stage"
+                alt={`Zoho CRM ${content.hero.zohoPipelineLabel}`}
                 width={1834}
                 height={827}
                 sizes="(max-width: 520px) 86vw, (max-width: 960px) 560px, 440px"
                 priority
               />
-            </figure>
-          </div>
+            </motion.figure>
+          </motion.div>
         </div>
       </section>
 
-      <section className="v2-partner-strip" aria-labelledby="partner-strip-title">
+      <motion.section {...revealProps} className="v2-partner-strip" aria-labelledby="partner-strip-title">
         <div className="v2-container">
-          <div><span>Official partnerships</span><p id="partner-strip-title">Two leading platforms. One accountable implementation team.</p></div>
+          <div>
+            <span>{content.partners.eyebrow}</span>
+            <p id="partner-strip-title">{content.partners.statement}</p>
+          </div>
           <div className="v2-partner-logos">
-            <article><Image src="/brands/odoo-logo.svg" alt="Odoo" width={112} height={60} /><span><CircleCheck /> Official Partner</span></article>
-            <article><Image src="/brands/zoho-logo.svg" alt="Zoho" width={112} height={49} /><span><CircleCheck /> Official Partner</span></article>
+            <article>
+              <Image src="/brands/odoo-logo.svg" alt="Odoo" width={112} height={60} />
+              <span><CircleCheck /> {content.partners.officialPartner}</span>
+            </article>
+            <article>
+              <Image src="/brands/zoho-logo.svg" alt="Zoho" width={112} height={49} />
+              <span><CircleCheck /> {content.partners.officialPartner}</span>
+            </article>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="v2-section" id="services">
-        <Header eyebrow="Our services" title="Comprehensive Solutions for Your Business Growth" text="One experienced team for ERP, CRM, automation and custom product delivery." />
-        <div className="v2-service-grid" id="homepage-services-grid">
-          {visibleServices.map(({ icon: Icon, title, text, href }) => (
-            <Link href={href} className="v2-service-card" key={title}>
-              <span className="v2-icon"><Icon /></span><h3>{title}</h3><p>{text}</p><span className="learn">Learn more <ArrowRight /></span>
-            </Link>
+      <motion.section {...revealProps} className="v2-section" id="services">
+        <Header
+          eyebrow={content.services.eyebrow}
+          title={content.services.title}
+          text={content.services.description}
+        />
+        <motion.div
+          className="v2-service-grid"
+          id="homepage-services-grid"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.08 }}
+          variants={staggerVariants}
+        >
+          {visibleServices.map(({ icon: Icon, href, title, text, secondary }) => (
+            <motion.div
+              key={title}
+              layout="position"
+              variants={secondary ? undefined : itemVariants}
+              initial={secondary ? (shouldReduceMotion ? false : { opacity: 0, y: 18 }) : undefined}
+              animate={secondary ? { opacity: 1, y: 0 } : undefined}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.42 }}
+            >
+              <Link href={href} className="v2-service-card">
+                <span className="v2-icon"><Icon /></span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+                <span className="learn">{content.services.learnMore} <ArrowForward /></span>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
         <div className="v2-service-toggle">
           <button
             type="button"
@@ -293,92 +347,243 @@ export function HomeV2() {
             aria-controls="homepage-services-grid"
             onClick={() => setShowAllServices((current) => !current)}
           >
-            {showAllServices ? "Show fewer services" : "Show 7 more services"}
+            {showAllServices ? content.services.showFewer : content.services.showMore}
             <ChevronDown className={showAllServices ? "open" : ""} />
           </button>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="v2-section v2-industries-section">
-        <Header eyebrow="Industries we serve" title="Solutions for Every Industry" text="Focused business systems for the operating realities of each sector." />
-        <div className="v2-industry-grid">
-          {industries.map(({ icon, label }) => (
-            <div key={label}>
+      <motion.section {...revealProps} className="v2-section v2-industries-section">
+        <Header
+          eyebrow={content.industries.eyebrow}
+          title={content.industries.title}
+          text={content.industries.description}
+        />
+        <motion.div
+          className="v2-industry-grid"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.08 }}
+          variants={staggerVariants}
+        >
+          {industryAssets.map((icon, index) => (
+            <motion.div key={content.industries.items[index]} variants={itemVariants} transition={{ duration: 0.38 }}>
               <span className="v2-industry-art"><Image src={icon} alt="" width={52} height={52} /></span>
-              <span>{label}</span>
-            </div>
+              <span>{content.industries.items[index]}</span>
+            </motion.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <section className="v2-why-section">
+      <motion.section {...revealProps} className="v2-why-section">
         <div className="v2-container">
-          <Header eyebrow="Why choose Zavior" title="Your Success is Our Mission" text="Official partnerships, accountable delivery and support beyond go-live." />
-          <div className="v2-benefit-grid">{benefits.map(([Icon, title, text]) => <div key={title as string}><Icon /><span><b>{title as string}</b><small>{text as string}</small></span></div>)}</div>
+          <Header
+            eyebrow={content.benefits.eyebrow}
+            title={content.benefits.title}
+            text={content.benefits.description}
+          />
+          <motion.div
+            className="v2-benefit-grid"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={staggerVariants}
+          >
+            {content.benefits.items.map((item, index) => {
+              const Icon = benefitIcons[index];
+              return (
+                <motion.div key={item.title} variants={itemVariants} transition={{ duration: 0.4 }}>
+                  <Icon />
+                  <span><b>{item.title}</b><small>{item.text}</small></span>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="v2-section v2-solution-section" aria-labelledby="solution-tabs-title">
-        <Header eyebrow="Platform expertise" title="Official Partner Delivery Across Odoo and Zoho" text="Choose a platform to explore the implementation scope." />
-        <div className="v2-solution-tabs" role="tablist" aria-label="Platform solutions" id="solution-tabs-title">
-          {(Object.keys(solutions) as Array<keyof typeof solutions>).map((key) => (
-            <button key={key} role="tab" aria-selected={activeSolution === key} aria-controls="v2-solution-panel" onClick={() => setActiveSolution(key)}>
-              <Image src={solutions[key].logo} alt="" width={88} height={42} />{solutions[key].label}
+      <motion.section {...revealProps} className="v2-section v2-solution-section" aria-labelledby="solution-tabs-title">
+        <Header
+          eyebrow={content.platforms.eyebrow}
+          title={content.platforms.title}
+          text={content.platforms.description}
+        />
+        <div className="v2-solution-tabs" role="tablist" aria-label={content.platforms.title} id="solution-tabs-title">
+          {(Object.keys(solutionDefinitions) as SolutionKey[]).map((key) => (
+            <button
+              key={key}
+              type="button"
+              role="tab"
+              id={`v2-solution-tab-${key}`}
+              aria-selected={activeSolution === key}
+              aria-controls="v2-solution-panel"
+              tabIndex={activeSolution === key ? 0 : -1}
+              onClick={() => setActiveSolution(key)}
+            >
+              <Image src={solutionDefinitions[key].logo} alt="" width={88} height={42} />
+              {content.platforms[key].label}
             </button>
           ))}
         </div>
-        <article className={`v2-solution ${activeSolution}`} id="v2-solution-panel" role="tabpanel">
-          <Image src={solution.image} alt={solution.title} width={760} height={520} />
-          <div><span>{solution.eyebrow}</span><h2>{solution.title}</h2><div className="v2-solution-copy">{solution.copy.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div><ul>{solution.items.map((item) => <li key={item}><Check /> {item}</li>)}</ul><Link className="v2-button small" href={solution.href}>Explore {solution.label} Services <ArrowRight /></Link></div>
-        </article>
-      </section>
+        <AnimatePresence initial={false} mode="wait">
+          <motion.article
+            key={activeSolution}
+            className={`v2-solution ${activeSolution}`}
+            id="v2-solution-panel"
+            role="tabpanel"
+            aria-labelledby={`v2-solution-tab-${activeSolution}`}
+            tabIndex={0}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Image src={solutionDefinition.image} alt={solution.title} width={760} height={520} />
+            <div>
+              <span>{solution.eyebrow}</span>
+              <h2>{solution.title}</h2>
+              <div className="v2-solution-copy">
+                {solution.copy.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
+              <ul>{solution.items.map((item) => <li key={item}><Check /> {item}</li>)}</ul>
+              <Link className="v2-button small" href={solutionDefinition.href}>
+                {solution.explore} <ArrowForward />
+              </Link>
+            </div>
+          </motion.article>
+        </AnimatePresence>
+      </motion.section>
 
-      <section className="v2-section v2-process"><Header eyebrow="Our process" title="A Proven Implementation Process" /><div className="v2-timeline">{process.map(([step, description], index) => <div key={step}><span>{String(index + 1).padStart(2, "0")}</span><b>{step}</b><small>{description}</small></div>)}</div></section>
+      <motion.section {...revealProps} className="v2-section v2-process">
+        <Header eyebrow={content.process.eyebrow} title={content.process.title} />
+        <motion.div
+          className="v2-timeline"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.12 }}
+          variants={staggerVariants}
+        >
+          {content.process.items.map((item, index) => (
+            <motion.div key={item.title} variants={itemVariants} transition={{ duration: 0.42 }}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <b>{item.title}</b>
+              <small>{item.text}</small>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.section>
 
-      <section className="v2-section v2-cases" aria-labelledby="case-study-title">
-        <div className="v2-case-heading"><Header eyebrow="Case studies" title="Real Results for Real Businesses" text="Challenge, solution and measurable outcomes from focused delivery." align="left" /><div><button onClick={() => moveCases(-1)} aria-label="Previous case studies"><ChevronLeft /></button><button onClick={() => moveCases(1)} aria-label="Next case studies"><ChevronRight /></button></div></div>
+      <motion.section {...revealProps} className="v2-section v2-cases" aria-labelledby="case-study-title">
+        <div className="v2-case-heading">
+          <Header
+            eyebrow={content.cases.eyebrow}
+            title={content.cases.title}
+            text={content.cases.description}
+            align="left"
+          />
+          <div>
+            <button type="button" onClick={() => moveCases(-1)} aria-label={content.cases.previous}><PreviousArrow /></button>
+            <button type="button" onClick={() => moveCases(1)} aria-label={content.cases.next}><NextArrow /></button>
+          </div>
+        </div>
         <div className="v2-case-grid" ref={caseTrackRef} id="case-study-title">
-          {caseStudies.map((study) => (
-            <Link href={study.href} className="v2-case-card" key={study.title}>
-              <Image src={study.image} alt="" width={620} height={350} />
-              <div className="v2-case-copy"><span>{study.category}</span><h3>{study.title}</h3><p>{study.description}</p><div>{study.results.map(([value, label]) => <strong key={label}>{value}<small>{label}</small></strong>)}</div></div>
-            </Link>
+          {caseStudyAssets.map((asset, index) => {
+            const study = content.cases.items[index];
+            return (
+              <Link href={asset.href} className="v2-case-card" key={study.title}>
+                <Image src={asset.image} alt={study.title} width={620} height={350} />
+                <div className="v2-case-copy">
+                  <span>{study.category}</span>
+                  <h3>{study.title}</h3>
+                  <p>{study.description}</p>
+                  <div>
+                    {study.results.map((result) => (
+                      <strong key={result.label}>{result.value}<small>{result.label}</small></strong>
+                    ))}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </motion.section>
+
+      <motion.section {...revealProps} className="v2-stats">
+        <div className="v2-container">
+          {content.stats.map((stat) => (
+            <div key={stat.label}>
+              <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+              <span>{stat.label}</span>
+            </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      <section className="v2-stats"><div className="v2-container">{[["120+", "Projects"], ["98%", "Client Satisfaction"], ["20+", "Industries"], ["5+", "Countries"], ["10+", "Experts"]].map(([value, label]) => <div key={label}><b>{value}</b><span>{label}</span></div>)}</div></section>
+      <motion.section {...revealProps} className="v2-section v2-tech">
+        <Header eyebrow={content.technologies.eyebrow} title={content.technologies.title} />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={staggerVariants}
+        >
+          {technologies.map(({ name, logo }) => (
+            <motion.span key={name} title={name} variants={itemVariants} transition={{ duration: 0.35 }}>
+              <Image src={logo} alt={name} width={86} height={38} />
+              <b className="sr-only">{name}</b>
+            </motion.span>
+          ))}
+        </motion.div>
+      </motion.section>
 
-      <section className="v2-section v2-tech"><Header eyebrow="Technology stack" title="Technologies We Work With" /><div>{technologies.map(({ name, logo }) => <span key={name} title={name}><Image src={logo} alt={name} width={86} height={38} /><b className="sr-only">{name}</b></span>)}</div></section>
-
-      <section className="v2-section v2-testimonial-section">
-        <div className="v2-testimonial-heading"><Header eyebrow="Testimonials" title="What Our Clients Say" text="Perspectives from teams we have helped transform." /><div><button onClick={() => moveTestimonials(-1)} aria-label="Previous testimonials"><ChevronLeft /></button><button onClick={() => moveTestimonials(1)} aria-label="Next testimonials"><ChevronRight /></button></div></div>
-        <div className="v2-testimonials" ref={testimonialTrackRef}>
-          {homepageTestimonials.map((testimonial) => (
-            <blockquote key={testimonial.id}>
+      <motion.section {...revealProps} className="v2-section v2-testimonial-section">
+        <div className="v2-testimonial-heading">
+          <Header
+            eyebrow={content.testimonials.eyebrow}
+            title={content.testimonials.title}
+            text={content.testimonials.description}
+          />
+          <div>
+            <button type="button" onClick={() => moveTestimonials(-1)} aria-label={content.testimonials.previous}><PreviousArrow /></button>
+            <button type="button" onClick={() => moveTestimonials(1)} aria-label={content.testimonials.next}><NextArrow /></button>
+          </div>
+        </div>
+        <motion.div
+          className="v2-testimonials"
+          ref={testimonialTrackRef}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={staggerVariants}
+        >
+          {content.testimonials.items.map((testimonial) => (
+            <motion.blockquote key={testimonial.author} variants={itemVariants} transition={{ duration: 0.46 }}>
               <div className="v2-quote-mark" aria-hidden="true">“</div>
               <p>{testimonial.quote}</p>
               <cite className="v2-testimonial-author">
                 <span aria-hidden="true">{getInitials(testimonial.author)}</span>
-                <span className="v2-testimonial-author-copy"><b>{testimonial.author}</b><small>{testimonial.role} · {testimonial.company}</small></span>
+                <span className="v2-testimonial-author-copy">
+                  <b>{testimonial.author}</b>
+                  <small>{testimonial.role} · {testimonial.company}</small>
+                </span>
               </cite>
-            </blockquote>
+            </motion.blockquote>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <section className="v2-section v2-faq" id="faq">
-        <Header eyebrow="FAQ" title="Frequently Asked Questions" text="Clear answers for teams planning Odoo, Zoho and connected automation." />
+      <motion.section {...revealProps} className="v2-section v2-faq" id="faq">
+        <Header eyebrow={content.faq.eyebrow} title={content.faq.title} text={content.faq.description} />
         <div className="v2-faq-two-col">
           <article className="v2-faq-panel v2-faq-panel--odoo" aria-labelledby="odoo-faq-title">
             <div className="v2-faq-panel-head">
               <Image src="/brands/odoo-logo.svg" alt="Odoo" width={88} height={38} />
-              <h3 id="odoo-faq-title">Odoo ERP Questions</h3>
+              <h3 id="odoo-faq-title">{content.faq.odooTitle}</h3>
             </div>
-            {faqItems.slice(0, 4).map(([question, answer], index) => (
-              <details key={question} open={index === 0}>
-                <summary>{question}<ChevronDown /></summary>
-                <p>{answer}</p>
+            {content.faq.odooItems.map((item, index) => (
+              <details key={item.question} open={index === 0}>
+                <summary>{item.question}<ChevronDown /></summary>
+                <p>{item.answer}</p>
               </details>
             ))}
           </article>
@@ -388,27 +593,66 @@ export function HomeV2() {
           <article className="v2-faq-panel v2-faq-panel--zoho" aria-labelledby="zoho-faq-title">
             <div className="v2-faq-panel-head">
               <Image src="/brands/zoho-logo.svg" alt="Zoho" width={88} height={38} />
-              <h3 id="zoho-faq-title">Zoho &amp; Platform Questions</h3>
+              <h3 id="zoho-faq-title">{content.faq.zohoTitle}</h3>
             </div>
-            {faqItems.slice(4).map(([question, answer], index) => (
-              <details key={question} open={index === 0}>
-                <summary>{question}<ChevronDown /></summary>
-                <p>{answer}</p>
+            {content.faq.zohoItems.map((item, index) => (
+              <details key={item.question} open={index === 0}>
+                <summary>{item.question}<ChevronDown /></summary>
+                <p>{item.answer}</p>
               </details>
             ))}
           </article>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="v2-final-cta"><div className="v2-container"><div><span>Ready to transform your business?</span><h2>Let’s Build Something Amazing Together</h2><p>Whether you’re implementing Odoo ERP, optimizing Zoho CRM or building custom business software, our consultants are ready to help.</p></div><div><div className="v2-actions"><Link className="v2-button light" href="/contact">Book Free Consultation <ArrowRight /></Link><a className="v2-button outline-light" href="https://wa.me/971508185948">WhatsApp</a><a className="v2-button outline-light" href="tel:+971508185948">Call Now</a></div><div className="v2-promises"><span><Check /> No commitment</span><span><Check /> Expert consultation</span><span><Check /> Quick response</span></div></div></div></section>
+      <motion.section {...revealProps} className="v2-final-cta">
+        <div className="v2-container">
+          <div>
+            <span>{content.cta.eyebrow}</span>
+            <h2>{content.cta.title}</h2>
+            <p>{content.cta.description}</p>
+          </div>
+          <div>
+            <div className="v2-actions">
+              <Link className="v2-button light" href="/contact">{content.cta.primaryCta} <ArrowForward /></Link>
+              <a className="v2-button outline-light" href="https://wa.me/971508185948">{content.cta.whatsapp}</a>
+              <a className="v2-button outline-light" href="tel:+971508185948">{content.cta.call}</a>
+            </div>
+            <div className="v2-promises">
+              {content.cta.promises.map((promise) => <span key={promise}><Check /> {promise}</span>)}
+            </div>
+          </div>
+        </div>
+      </motion.section>
     </div>
   );
 }
 
-function Header({ eyebrow, title, text, align = "center" }: { eyebrow: string; title: string; text?: string; align?: "left" | "center" }) {
-  return <div className={`v2-header ${align}`}><span>{eyebrow}</span><h2>{title}</h2>{text && <p>{text}</p>}</div>;
+function Header({
+  eyebrow,
+  title,
+  text,
+  align = "center",
+}: {
+  eyebrow: string;
+  title: string;
+  text?: string;
+  align?: "left" | "center";
+}) {
+  return (
+    <div className={`v2-header ${align}`}>
+      <span>{eyebrow}</span>
+      <h2>{title}</h2>
+      {text && <p>{text}</p>}
+    </div>
+  );
 }
 
 function getInitials(name: string) {
-  return name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
+  return name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
 }

@@ -4,21 +4,101 @@ import { useState, useEffect, useRef, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ChevronDown, Menu, X, Moon, Sun, Globe } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
+
+const mobileFocusableSelector = [
+  "a[href]",
+  "button:not([disabled])",
+  "select:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(", ");
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
-  const { language, setLanguage, t } = useLanguage();
+  const { resolvedTheme, setTheme } = useTheme();
+  const { language, dir, t } = useLanguage();
+
+  const navCopy = language === "ar"
+    ? {
+        aboutZavior: "عن زافيور",
+        aboutDescription: "مهمتنا وقيمنا وفريقنا.",
+        whyZavior: "لماذا زافيور",
+        whyDescription: "كيف نحقق نتائج قابلة للقياس.",
+        companies: "شركاتنا",
+        companiesDescription: "زافيور تكنولوجيز وفيرنتشر آند فيكس.",
+        caseStudies: "دراسات الحالة",
+        casesDescription: "أعمال مختارة ونتائج تنفيذ.",
+        odoo: "Odoo ERP",
+        odooDescription: "تنفيذ ووحدات مخصصة.",
+        zoho: "حلول Zoho",
+        zohoDescription: "CRM وZoho One وBooks والتكاملات.",
+        ai: "الأتمتة بالذكاء الاصطناعي",
+        aiDescription: "أتمتة عملية وموثوقة للإجراءات.",
+        web: "تطوير الويب",
+        webDescription: "مواقع أعمال مصممة للتحويل.",
+        mobile: "تطبيقات الجوال",
+        mobileDescription: "منتجات أصلية ومتعددة المنصات.",
+        it: "حلول تقنية المعلومات",
+        itDescription: "أنظمة ودعم موثوقان.",
+        coreIt: "البنية التحتية الأساسية",
+        coreItDescription: "شبكات وأجهزة وأمن.",
+        consultation: "احجز استشارة",
+        themeToDark: "التبديل إلى الوضع الداكن",
+        themeToLight: "التبديل إلى الوضع الفاتح",
+        language: "اللغة",
+        mobileNavigation: "التنقل على الجوال",
+        openNavigation: "فتح قائمة التنقل",
+        closeNavigation: "إغلاق قائمة التنقل",
+      }
+    : {
+        aboutZavior: "About Zavior",
+        aboutDescription: "Our mission, values and team.",
+        whyZavior: "Why Zavior",
+        whyDescription: "How we deliver measurable outcomes.",
+        companies: "Our Companies",
+        companiesDescription: "Zavior Technologies, Furniture and Fix.",
+        caseStudies: "Case Studies",
+        casesDescription: "Selected work and delivery outcomes.",
+        odoo: "Odoo ERP",
+        odooDescription: "Implementation and custom modules.",
+        zoho: "Zoho Solutions",
+        zohoDescription: "CRM, Zoho One, Books and integrations.",
+        ai: "AI Automation",
+        aiDescription: "Practical workflow automation.",
+        web: "Web Development",
+        webDescription: "Conversion-focused business websites.",
+        mobile: "Mobile Apps",
+        mobileDescription: "Native and cross-platform products.",
+        it: "IT Solutions",
+        itDescription: "Reliable systems and support.",
+        coreIt: "Core IT Infrastructure",
+        coreItDescription: "Networks, hardware and security.",
+        consultation: "Book a consultation",
+        themeToDark: "Switch to dark mode",
+        themeToLight: "Switch to light mode",
+        language: "Language",
+        mobileNavigation: "Mobile navigation",
+        openNavigation: "Open navigation menu",
+        closeNavigation: "Close navigation menu",
+      };
+  const isDark = mounted && resolvedTheme === "dark";
+  const ArrowForward = dir === "rtl" ? ArrowLeft : ArrowRight;
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setMounted(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -48,7 +128,7 @@ export function Navigation() {
 
     const previousOverflow = document.body.style.overflow;
     const focusFrame = window.requestAnimationFrame(() => {
-      mobileMenuRef.current?.querySelector<HTMLElement>("a[href], button:not([disabled])")?.focus();
+      mobileMenuRef.current?.querySelector<HTMLElement>(mobileFocusableSelector)?.focus();
     });
 
     document.body.style.overflow = "hidden";
@@ -70,7 +150,7 @@ export function Navigation() {
     if (event.key !== "Tab") return;
 
     const focusable = Array.from(
-      mobileMenuRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [],
+      mobileMenuRef.current?.querySelectorAll<HTMLElement>(mobileFocusableSelector) ?? [],
     );
     const first = focusable.at(0);
     const last = focusable.at(-1);
@@ -92,23 +172,23 @@ export function Navigation() {
       href: "/about",
       label: t.nav.about,
       children: [
-        { href: "/about", label: "About Zavior", description: "Our mission, values and team." },
-        { href: "/why-zavior", label: "Why Zavior", description: "How we deliver measurable outcomes." },
-        { href: "/companies", label: "Our Companies", description: "Zavior Technologies, Furniture and Fix." },
-        { href: "/portfolio", label: "Case Studies", description: "Selected work and delivery outcomes." },
+        { href: "/about", label: navCopy.aboutZavior, description: navCopy.aboutDescription },
+        { href: "/why-zavior", label: navCopy.whyZavior, description: navCopy.whyDescription },
+        { href: "/companies", label: navCopy.companies, description: navCopy.companiesDescription },
+        { href: "/portfolio", label: navCopy.caseStudies, description: navCopy.casesDescription },
       ],
     },
     {
       href: "/services",
       label: t.nav.services,
       children: [
-        { href: "/services/erp-odoo-dubai", label: "Odoo ERP", description: "Implementation and custom modules." },
-        { href: "/services/zoho-solutions-dubai", label: "Zoho Solutions", description: "CRM, Zoho One, Books and integrations." },
-        { href: "/services/ai-automation-dubai", label: "AI Automation", description: "Practical workflow automation." },
-        { href: "/services/web-development-dubai", label: "Web Development", description: "Conversion-focused business websites." },
-        { href: "/services/mobile-apps-dubai", label: "Mobile Apps", description: "Native and cross-platform products." },
-        { href: "/services/it-solutions-dubai", label: "IT Solutions", description: "Reliable systems and support." },
-        { href: "/services/core-it-infrastructure-dubai", label: "Core IT Infrastructure", description: "Networks, hardware and security." },
+        { href: "/services/erp-odoo-dubai", label: navCopy.odoo, description: navCopy.odooDescription },
+        { href: "/services/zoho-solutions-dubai", label: navCopy.zoho, description: navCopy.zohoDescription },
+        { href: "/services/ai-automation-dubai", label: navCopy.ai, description: navCopy.aiDescription },
+        { href: "/services/web-development-dubai", label: navCopy.web, description: navCopy.webDescription },
+        { href: "/services/mobile-apps-dubai", label: navCopy.mobile, description: navCopy.mobileDescription },
+        { href: "/services/it-solutions-dubai", label: navCopy.it, description: navCopy.itDescription },
+        { href: "/services/core-it-infrastructure-dubai", label: navCopy.coreIt, description: navCopy.coreItDescription },
       ],
     },
     { href: "/blog", label: t.nav.blog },
@@ -125,7 +205,7 @@ export function Navigation() {
         "zavior-nav fixed top-0 left-0 right-0 z-[80] transition-all duration-300",
         scrolled
           ? "glass border-b border-border/50 shadow-lg"
-          : "bg-white dark:bg-black",
+          : "bg-background/95",
       )}
     >
       <nav className="container mx-auto max-w-full px-3 sm:px-4 lg:px-8">
@@ -173,7 +253,7 @@ export function Navigation() {
                     {link.label}<ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
                   </Link>
                   <div className={cn(
-                    "invisible absolute left-0 top-full z-50 mt-2 translate-y-1 rounded-xl border border-border bg-card p-2 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100",
+                    "invisible absolute start-0 top-full z-50 mt-2 translate-y-1 rounded-xl border border-border bg-card p-2 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100",
                     link.href === "/services" ? "grid w-[36rem] grid-cols-2 gap-1" : "w-80",
                   )} role="menu">
                     {link.children.map((child) => (
@@ -190,26 +270,21 @@ export function Navigation() {
 
           {/* Actions */}
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-            {/* Language Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setLanguage(language === "en" ? "ar" : "en")}
-              className="hidden sm:flex"
-            >
-              <Globe className="h-5 w-5" />
-              <span className="sr-only">Toggle language</span>
-            </Button>
+            <LanguageSwitcher label={navCopy.language} className="hidden sm:inline-flex h-9" />
 
             {/* Theme Toggle */}
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              className="relative"
+              aria-label={isDark ? navCopy.themeToLight : navCopy.themeToDark}
+              aria-pressed={isDark}
+              title={isDark ? navCopy.themeToLight : navCopy.themeToDark}
             >
               <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
+              <span className="sr-only">{isDark ? navCopy.themeToLight : navCopy.themeToDark}</span>
             </Button>
 
             {/* Mobile Menu Button */}
@@ -221,16 +296,17 @@ export function Navigation() {
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
               aria-controls="mobile-navigation"
+              aria-label={isOpen ? navCopy.closeNavigation : navCopy.openNavigation}
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               <span className="sr-only">
-                {isOpen ? "Close navigation menu" : "Open navigation menu"}
+                {isOpen ? navCopy.closeNavigation : navCopy.openNavigation}
               </span>
             </Button>
 
             {/* CTA Button */}
             <Button asChild className="nav-consult hidden lg:flex">
-              <Link href="/contact">Book a consultation <ArrowRight className="h-4 w-4" /></Link>
+              <Link href="/contact">{navCopy.consultation} <ArrowForward className="h-4 w-4" /></Link>
             </Button>
           </div>
         </div>
@@ -245,9 +321,9 @@ export function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="h-[calc(100dvh-4rem)] overflow-y-auto bg-white dark:bg-black lg:hidden"
+              className="h-[calc(100dvh-4rem)] overflow-y-auto bg-background lg:hidden"
               id="mobile-navigation"
-              aria-label="Mobile navigation"
+              aria-label={navCopy.mobileNavigation}
             >
               <div className="py-4 space-y-1">
                 {navLinks.map((link, index) => (
@@ -270,7 +346,7 @@ export function Navigation() {
                       <span className="flex items-center justify-between gap-3">{link.label}{link.children && <ChevronDown className="h-4 w-4" />}</span>
                     </Link>
                     {link.children ? (
-                      <div className="ml-4 mt-1 space-y-1 border-l border-border pl-3">
+                      <div className="ms-4 mt-1 space-y-1 border-s border-border ps-3">
                         {link.children.map((child) => (
                           <Link
                             key={child.href}
@@ -291,17 +367,12 @@ export function Navigation() {
                   transition={{ delay: navLinks.length * 0.05 }}
                   className="pt-4 px-4"
                 >
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start bg-transparent"
-                    onClick={() => {
-                      setLanguage(language === "en" ? "ar" : "en");
-                      setIsOpen(false);
-                    }}
-                  >
-                    <Globe className="h-4 w-4 mr-2" />
-                    {language === "en" ? "العربية" : "English"}
-                  </Button>
+                  <LanguageSwitcher
+                    label={navCopy.language}
+                    showLabel
+                    className="w-full justify-between"
+                    onLanguageChange={() => setIsOpen(false)}
+                  />
                 </motion.div>
               </div>
             </motion.div>

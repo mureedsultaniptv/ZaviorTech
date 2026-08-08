@@ -82,6 +82,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/zavior/form",
+        destination: "/api/leadform",
+      },
+    ];
+  },
   async headers() {
     return [
       {
