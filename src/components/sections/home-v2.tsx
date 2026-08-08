@@ -8,6 +8,7 @@ import {
   ArrowLeft,
   ArrowRight,
   BarChart3,
+  Braces,
   Bot,
   Boxes,
   Check,
@@ -16,16 +17,22 @@ import {
   ChevronRight,
   CircleCheck,
   Code2,
+  ContactRound,
+  Gauge,
+  GitBranch,
   Headphones,
-  Lightbulb,
+  Network,
   PackageCheck,
+  PanelsTopLeft,
   Play,
+  PlugZap,
   Rocket,
-  Settings2,
+  SearchCheck,
   ShieldCheck,
+  Smartphone,
   Sparkles,
   type LucideIcon,
-  Users,
+  Wrench,
   Workflow,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
@@ -35,23 +42,25 @@ import { getMarketingContent, marketingContent } from "@/lib/i18n/marketing-cont
 const serviceDefinitions: Array<{
   icon: LucideIcon;
   href: string;
+  tone: string;
+  logo?: string;
   secondary?: boolean;
 }> = [
-  { icon: Boxes, href: "/services/erp-odoo-dubai" },
-  { icon: Users, href: "/services/erp-odoo-dubai", secondary: true },
-  { icon: Code2, href: "/services/odoo-services-dubai" },
-  { icon: Lightbulb, href: "/services/odoo-erp-implementation-dubai" },
-  { icon: Workflow, href: "/services/odoo-services-dubai" },
-  { icon: BarChart3, href: "/services/zoho-solutions-dubai" },
-  { icon: PackageCheck, href: "/services/zoho-solutions-dubai" },
-  { icon: Settings2, href: "/services/zoho-solutions-dubai" },
-  { icon: Settings2, href: "/services/zoho-solutions-dubai", secondary: true },
-  { icon: Workflow, href: "/services/zoho-solutions-dubai" },
-  { icon: Bot, href: "/services/ai-automation-dubai", secondary: true },
-  { icon: Code2, href: "/services", secondary: true },
-  { icon: Code2, href: "/services/web-development-dubai", secondary: true },
-  { icon: Code2, href: "/services/mobile-apps-dubai", secondary: true },
-  { icon: Workflow, href: "/services", secondary: true },
+  { icon: PackageCheck, href: "/services/erp-odoo-dubai", tone: "odoo", logo: "/brands/odoo-logo.svg" },
+  { icon: ContactRound, href: "/services/erp-odoo-dubai", tone: "crm", logo: "/brands/odoo-logo.svg", secondary: true },
+  { icon: Wrench, href: "/services/odoo-services-dubai", tone: "addon", logo: "/brands/odoo-logo.svg" },
+  { icon: SearchCheck, href: "/services/odoo-erp-implementation-dubai", tone: "discovery", logo: "/brands/odoo-logo.svg" },
+  { icon: PlugZap, href: "/services/odoo-services-dubai", tone: "integration", logo: "/brands/odoo-logo.svg" },
+  { icon: BarChart3, href: "/services/zoho-solutions-dubai", tone: "zoho", logo: "/brands/zoho-logo.svg" },
+  { icon: Boxes, href: "/services/zoho-solutions-dubai", tone: "setup", logo: "/brands/zoho-logo.svg" },
+  { icon: Workflow, href: "/services/zoho-solutions-dubai", tone: "books", logo: "/brands/zoho-logo.svg" },
+  { icon: Gauge, href: "/services/zoho-solutions-dubai", tone: "optimize", logo: "/brands/zoho-logo.svg", secondary: true },
+  { icon: GitBranch, href: "/services/zoho-solutions-dubai", tone: "workflow", logo: "/brands/zoho-logo.svg" },
+  { icon: Bot, href: "/services/ai-automation-dubai", tone: "ai", secondary: true },
+  { icon: Braces, href: "/services", tone: "software", secondary: true },
+  { icon: PanelsTopLeft, href: "/services/web-development-dubai", tone: "web", secondary: true },
+  { icon: Smartphone, href: "/services/mobile-apps-dubai", tone: "mobile", secondary: true },
+  { icon: Network, href: "/services", tone: "api", secondary: true },
 ];
 
 const industryAssets = [
@@ -322,7 +331,7 @@ export function HomeV2() {
           viewport={{ once: true, amount: 0.08 }}
           variants={staggerVariants}
         >
-          {visibleServices.map(({ icon: Icon, href, title, text, secondary }) => (
+          {visibleServices.map(({ icon: Icon, href, title, text, tone, logo, secondary }) => (
             <motion.div
               key={title}
               layout="position"
@@ -332,7 +341,14 @@ export function HomeV2() {
               transition={{ duration: shouldReduceMotion ? 0 : 0.42 }}
             >
               <Link href={href} className="v2-service-card">
-                <span className="v2-icon"><Icon /></span>
+                <span className={`v2-icon v2-icon-${tone}`}>
+                  {logo ? (
+                    <>
+                      <Image className="v2-platform-mark" src={logo} alt="" width={72} height={32} />
+                      <span className="v2-service-action"><Icon /></span>
+                    </>
+                  ) : <Icon />}
+                </span>
                 <h3>{title}</h3>
                 <p>{text}</p>
                 <span className="learn">{content.services.learnMore} <ArrowForward /></span>
@@ -512,8 +528,8 @@ export function HomeV2() {
         <div className="v2-container">
           {content.stats.map((stat) => (
             <div key={stat.label}>
-              <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-              <span>{stat.label}</span>
+              <AnimatedCounter className="v2-stat-value" value={stat.value} suffix={stat.suffix} />
+              <span className="v2-stat-label">{stat.label}</span>
             </div>
           ))}
         </div>
