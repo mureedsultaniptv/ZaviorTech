@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { ApiError } from "@/lib/server/api-errors";
 
 type LeadFormPayload = {
@@ -12,13 +11,13 @@ type LeadFormPayload = {
 };
 
 type OdooFormResponse = {
-  success?: boolean;
+  success: boolean;
   id?: string | number;
-  submissionId?: string;
+  submissionId?: string | number;
   message?: string;
 };
 
-const LOCAL_ODOO_FORM_ENDPOINT = "http://localhost:8069/zavior/formsubmit";
+const LOCAL_ODOO_FORM_ENDPOINT = "http://localhost:8019/zavior/formsubmit";
 const ODOO_FORM_TIMEOUT_MS = 8_000;
 
 function getAllowedInsecureHttpHosts() {
@@ -77,18 +76,55 @@ function getOdooFormToken() {
   return token;
 }
 
-async function parseOdooResponse(response: Response): Promise<OdooFormResponse> {
-  const contentType = response.headers.get("content-type") || "";
-  if (!contentType.includes("application/json")) {
-    return {};
-  }
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+async function parseOdooResponse(
+  response: Response,
+): Promise<OdooFormResponse | null> {
+  let body: unknown;
 
   try {
-    const body = await response.json();
-    return body && typeof body === "object" ? body as OdooFormResponse : {};
+    body = JSON.parse(await response.text());
   } catch {
-    return {};
+    return null;
   }
+
+  if (!isRecord(body) || ("error" in body && body.error)) {
+    return null;
+  }
+
+  const payload = isRecord(body.result) ? body.result : body;
+  if (("error" in payload && payload.error) || payload.success !== true) {
+    return null;
+  }
+
+  const id = payload.id;
+  const submissionId = payload.submissionId;
+  const message = payload.message;
+
+  return {
+    success: true,
+    ...(typeof id === "string" || typeof id === "number" ? { id } : {}),
+    ...(typeof submissionId === "string" || typeof submissionId === "number"
+      ? { submissionId }
+      : {}),
+    ...(typeof message === "string" ? { message } : {}),
+  };
+}
+
+function getSubmissionId(result: OdooFormResponse | null) {
+  const id = result?.submissionId ?? result?.id;
+  if (typeof id === "number" && Number.isFinite(id)) {
+    return String(id);
+  }
+
+  if (typeof id === "string" && id.trim()) {
+    return id;
+  }
+
+  return null;
 }
 
 export async function submitLeadFormToOdoo(payload: LeadFormPayload) {
@@ -115,21 +151,23 @@ export async function submitLeadFormToOdoo(payload: LeadFormPayload) {
         service: payload.service,
         source: "website",
       }),
+      redirect: "error",
       signal: controller.signal,
     });
     const result = await parseOdooResponse(response);
+    const submissionId = getSubmissionId(result);
 
-    if (!response.ok || result.success === false) {
+    if (!response.ok || !result?.success || !submissionId) {
       console.error("Odoo form submission failed", {
         status: response.status,
-        success: result.success,
+        success: result?.success,
       });
       throw new ApiError(502, "We could not submit your message right now. Please try again later.");
     }
 
     return {
-      id: String(result.submissionId || result.id || randomUUID()),
-      message: typeof result.message === "string" ? result.message : undefined,
+      id: submissionId,
+      message: result.message,
     };
   } catch (error) {
     if (error instanceof ApiError) {

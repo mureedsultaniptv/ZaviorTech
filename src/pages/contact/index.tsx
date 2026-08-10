@@ -118,7 +118,7 @@ export default function ContactPage() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetch("/zavior/form", {
+      const res = await fetch("/zavior/formsubmit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -85,7 +85,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/zavior/form",
+        source: "/zavior/formsubmit",
         destination: "/api/leadform",
       },
     ];
