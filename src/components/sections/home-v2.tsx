@@ -10,30 +10,28 @@ import {
   BarChart3,
   Braces,
   Bot,
-  Boxes,
   Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
+  CloudUpload,
   Code2,
   ContactRound,
   Gauge,
-  GitBranch,
   Headphones,
+  Link2,
   Network,
   PackageCheck,
   PanelsTopLeft,
   Play,
-  PlugZap,
+  Puzzle,
   Rocket,
-  SearchCheck,
   ShieldCheck,
   Smartphone,
   Sparkles,
   type LucideIcon,
-  Wrench,
-  Workflow,
+  UsersRound,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { useLanguage } from "@/lib/i18n/language-context";
@@ -47,15 +45,15 @@ const serviceDefinitions: Array<{
   secondary?: boolean;
 }> = [
   { icon: PackageCheck, href: "/services/erp-odoo-dubai", tone: "odoo", logo: "/brands/odoo-logo.svg" },
-  { icon: ContactRound, href: "/services/erp-odoo-dubai", tone: "crm", logo: "/brands/odoo-logo.svg", secondary: true },
-  { icon: Wrench, href: "/services/odoo-services-dubai", tone: "addon", logo: "/brands/odoo-logo.svg" },
-  { icon: SearchCheck, href: "/services/odoo-erp-implementation-dubai", tone: "discovery", logo: "/brands/odoo-logo.svg" },
-  { icon: PlugZap, href: "/services/odoo-services-dubai", tone: "integration", logo: "/brands/odoo-logo.svg" },
-  { icon: BarChart3, href: "/services/zoho-solutions-dubai", tone: "zoho", logo: "/brands/zoho-logo.svg" },
-  { icon: Boxes, href: "/services/zoho-solutions-dubai", tone: "setup", logo: "/brands/zoho-logo.svg" },
-  { icon: Workflow, href: "/services/zoho-solutions-dubai", tone: "books", logo: "/brands/zoho-logo.svg" },
-  { icon: Gauge, href: "/services/zoho-solutions-dubai", tone: "optimize", logo: "/brands/zoho-logo.svg", secondary: true },
-  { icon: GitBranch, href: "/services/zoho-solutions-dubai", tone: "workflow", logo: "/brands/zoho-logo.svg" },
+  { icon: ContactRound, href: "/services/erp-odoo-dubai", tone: "crm", secondary: true },
+  { icon: Puzzle, href: "/services/odoo-services-dubai", tone: "addon" },
+  { icon: UsersRound, href: "/services/odoo-erp-implementation-dubai", tone: "discovery" },
+  { icon: Link2, href: "/services/odoo-services-dubai", tone: "integration" },
+  { icon: UsersRound, href: "/services/zoho-solutions-dubai", tone: "zoho" },
+  { icon: CloudUpload, href: "/services/zoho-solutions-dubai", tone: "setup" },
+  { icon: BarChart3, href: "/services/zoho-solutions-dubai", tone: "books" },
+  { icon: Gauge, href: "/services/zoho-solutions-dubai", tone: "optimize", secondary: true },
+  { icon: Braces, href: "/services/zoho-solutions-dubai", tone: "workflow" },
   { icon: Bot, href: "/services/ai-automation-dubai", tone: "ai", secondary: true },
   { icon: Braces, href: "/services", tone: "software", secondary: true },
   { icon: PanelsTopLeft, href: "/services/web-development-dubai", tone: "web", secondary: true },
@@ -317,55 +315,69 @@ export function HomeV2() {
         </div>
       </motion.section>
 
-      <motion.section {...revealProps} className="v2-section" id="services">
-        <Header
-          eyebrow={content.services.eyebrow}
-          title={content.services.title}
-          text={content.services.description}
-        />
-        <motion.div
-          className="v2-service-grid"
-          id="homepage-services-grid"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.08 }}
-          variants={staggerVariants}
-        >
-          {visibleServices.map(({ icon: Icon, href, title, text, tone, logo, secondary }) => (
-            <motion.div
-              key={title}
-              layout="position"
-              variants={secondary ? undefined : itemVariants}
-              initial={secondary ? (shouldReduceMotion ? false : { opacity: 0, y: 18 }) : undefined}
-              animate={secondary ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.42 }}
-            >
-              <Link href={href} className="v2-service-card">
-                <span className={`v2-icon v2-icon-${tone}`}>
-                  {logo ? (
-                    <>
-                      <Image className="v2-platform-mark" src={logo} alt="" width={72} height={32} />
-                      <span className="v2-service-action"><Icon /></span>
-                    </>
-                  ) : <Icon />}
-                </span>
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <span className="learn">{content.services.learnMore} <ArrowForward /></span>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-        <div className="v2-service-toggle">
-          <button
-            type="button"
-            aria-expanded={showAllServices}
-            aria-controls="homepage-services-grid"
-            onClick={() => setShowAllServices((current) => !current)}
+      <motion.section {...revealProps} className="v2-section v2-services-section" id="services">
+        <div className="v2-services-inner">
+          <Header
+            eyebrow={content.services.eyebrow}
+            title={content.services.title}
+            text={content.services.description}
+            accent={language === "ar" ? "لنمو أعمالك" : "Business Growth"}
+          />
+          <motion.div
+            className="v2-service-grid"
+            id="homepage-services-grid"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.08 }}
+            variants={staggerVariants}
           >
-            {showAllServices ? content.services.showFewer : content.services.showMore}
-            <ChevronDown className={showAllServices ? "open" : ""} />
-          </button>
+            {visibleServices.map(({ icon: Icon, href, title, text, tone, logo, secondary }) => (
+              <motion.div
+                key={title}
+                layout="position"
+                variants={secondary ? undefined : itemVariants}
+                initial={secondary ? (shouldReduceMotion ? false : { opacity: 0, y: 18 }) : undefined}
+                animate={secondary ? { opacity: 1, y: 0 } : undefined}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.42 }}
+              >
+                <Link href={href} className="v2-service-card">
+                  <span className={`v2-icon v2-icon-${tone}`}>
+                    {logo ? (
+                      <Image className="v2-platform-mark" src={logo} alt="" width={72} height={32} />
+                    ) : <Icon />}
+                  </span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                  <span className="learn">{content.services.learnMore} <ArrowForward /></span>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+          <div className="v2-service-toggle">
+            <button
+              type="button"
+              aria-expanded={showAllServices}
+              aria-controls="homepage-services-grid"
+              onClick={() => setShowAllServices((current) => !current)}
+            >
+              {showAllServices ? content.services.showFewer : content.services.showMore}
+              <ChevronDown className={showAllServices ? "open" : ""} />
+            </button>
+          </div>
+        </div>
+      </motion.section>
+
+      <motion.section {...revealProps} className="v2-mid-cta" aria-labelledby="services-cta-title">
+        <div className="v2-container">
+          <div>
+            <span>{content.services.cta.eyebrow}</span>
+            <h2 id="services-cta-title">{content.services.cta.title}</h2>
+            <p>{content.services.cta.description}</p>
+          </div>
+          <div className="v2-actions">
+            <Link className="v2-button light" href="/contact">{content.services.cta.primaryCta} <ArrowForward /></Link>
+            <Link className="v2-button outline-light" href="/services">{content.services.cta.secondaryCta}</Link>
+          </div>
         </div>
       </motion.section>
 
@@ -631,8 +643,7 @@ export function HomeV2() {
           <div>
             <div className="v2-actions">
               <Link className="v2-button light" href="/contact">{content.cta.primaryCta} <ArrowForward /></Link>
-              <a className="v2-button outline-light" href="https://wa.me/971508185948">{content.cta.whatsapp}</a>
-              <a className="v2-button outline-light" href="tel:+971508185948">{content.cta.call}</a>
+              <a className="v2-button outline-light" href="https://wa.me/971508185948" target="_blank" rel="noopener noreferrer">{content.cta.whatsapp}</a>
             </div>
             <div className="v2-promises">
               {content.cta.promises.map((promise) => <span key={promise}><Check /> {promise}</span>)}
@@ -649,16 +660,24 @@ function Header({
   title,
   text,
   align = "center",
+  accent,
 }: {
   eyebrow: string;
   title: string;
   text?: string;
   align?: "left" | "center";
+  accent?: string;
 }) {
+  const canAccent = accent && title.endsWith(accent);
+
   return (
     <div className={`v2-header ${align}`}>
       <span>{eyebrow}</span>
-      <h2>{title}</h2>
+      <h2>
+        {canAccent ? (
+          <>{title.slice(0, -accent.length).trimEnd()} <em>{accent}</em></>
+        ) : title}
+      </h2>
       {text && <p>{text}</p>}
     </div>
   );

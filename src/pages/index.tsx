@@ -8,15 +8,16 @@ export default function HomePage() {
   return (
     <>
       <SeoHead
-        title="Official Odoo & Zoho Partner in Dubai | Zavior"
-        description="Zavior is an official Odoo and Zoho partner delivering connected ERP, CRM, finance and automation solutions across Dubai, the UAE and GCC."
-        keywords="Odoo ERP Implementation, Odoo CRM, Custom Odoo Modules, Odoo Integration Services, Zoho CRM, Zoho One, AI Automation Dubai"
+        title="Odoo ERP, AI Automation & Web Development Dubai | Zavior"
+        description="Zavior Technologies helps Dubai and UAE companies implement Odoo ERP, AI automation, custom websites, mobile apps, IT solutions, and core infrastructure."
+        keywords="Odoo ERP Services Dubai, AI Automation Services UAE, Custom Software Development Dubai, Web Development Company UAE, Digital Transformation Services UAE"
         path="/"
         structuredData={jsonLdGraph([
           webPageJsonLd({
             path: "/",
-            name: "Official Odoo and Zoho Partner in Dubai",
-            description: "Business-first Odoo ERP, Zoho CRM, automation and custom software solutions for companies in Dubai, the UAE and GCC.",
+            name: "Odoo ERP, AI Automation and Web Development Dubai",
+            description:
+              "Zavior Technologies helps Dubai and UAE companies implement Odoo ERP, AI automation, custom websites, mobile apps, IT solutions, and core infrastructure.",
             speakableSelectors: ["h1", "main p:first-of-type"],
           }),
           breadcrumbJsonLd([{ name: "Home", path: "/" }]),

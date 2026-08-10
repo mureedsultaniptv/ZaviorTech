@@ -51,6 +51,13 @@ export type MarketingContent = {
       showMore: string;
       showFewer: string;
       items: MarketingService[];
+      cta: {
+        eyebrow: string;
+        title: string;
+        description: string;
+        primaryCta: string;
+        secondaryCta: string;
+      };
     };
     industries: {
       eyebrow: string;
@@ -208,6 +215,13 @@ export const marketingContent: Record<Language, MarketingContent> = {
           { title: "Mobile Apps", text: "Native and cross-platform experiences for teams and customers." },
           { title: "API Development", text: "Move data safely between ERP, CRM and third-party platforms." },
         ],
+        cta: {
+          eyebrow: "Need a clear starting point?",
+          title: "Turn the right platform into a practical growth plan.",
+          description: "Tell us where operations are slowing down. We’ll map the best-fit Odoo, Zoho or automation path for your team.",
+          primaryCta: "Plan your solution",
+          secondaryCta: "Explore all services",
+        },
       },
       industries: {
         eyebrow: "Industries we serve",
@@ -402,6 +416,13 @@ export const marketingContent: Record<Language, MarketingContent> = {
           { title: "تطبيقات الجوال", text: "تجارب أصلية ومتعددة المنصات للفرق والعملاء." },
           { title: "تطوير API", text: "انقل البيانات بأمان بين ERP وCRM والمنصات الخارجية." },
         ],
+        cta: {
+          eyebrow: "هل تحتاج إلى نقطة بداية واضحة؟",
+          title: "حوّل المنصة المناسبة إلى خطة نمو عملية.",
+          description: "أخبرنا أين تتباطأ العمليات، وسنحدد مسار Odoo أو Zoho أو الأتمتة الأنسب لفريقك.",
+          primaryCta: "خطط لحلك",
+          secondaryCta: "استكشف جميع الخدمات",
+        },
       },
       industries: {
         eyebrow: "القطاعات التي نخدمها",

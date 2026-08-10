@@ -68,9 +68,9 @@ export default function ServicesPage() {
   const structuredData = jsonLdGraph([
     webPageJsonLd({
       path: "/services",
-      name: "Odoo, Zoho, AI & Software Services for Business Growth",
+      name: "Complete IT, ERP & AI Services for Business Growth",
       description:
-        "Explore Dubai-focused Odoo ERP, Zoho CRM and Zoho One, AI automation, software development, IT solutions, and infrastructure services.",
+        "Explore Dubai-focused Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, cybersecurity, and core infrastructure services.",
       speakableSelectors: ["h1", "#services-answer p"],
     }),
     breadcrumbJsonLd([
@@ -90,8 +90,8 @@ export default function ServicesPage() {
   return (
     <>
       <SeoHead
-        title="Odoo, Zoho, AI & Software Services in Dubai"
-        description="Explore Dubai-focused Odoo ERP, Zoho CRM and Zoho One, AI automation, software development, IT solutions, and infrastructure services."
+        title="Complete IT, ERP & AI Services for Business Growth"
+        description="Explore Dubai-focused Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, cybersecurity, and core infrastructure services."
         path="/services"
         structuredData={structuredData}
         structuredDataId="services-index-structured-data"
@@ -148,8 +148,8 @@ export default function ServicesPage() {
             </h2>
             <p className="text-muted-foreground leading-relaxed">
               Zavior Technologies helps Dubai and UAE businesses implement Odoo
-              ERP and Zoho CRM, automate workflows with AI, build modern software,
-              improve IT operations, and modernize core infrastructure.
+              ERP, automate workflows with AI, build fast websites and mobile
+              apps, improve IT operations, and modernize core infrastructure.
             </p>
           </div>
         </div>
