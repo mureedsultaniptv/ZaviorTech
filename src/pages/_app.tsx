@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/lib/i18n/language-context";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
+import { SocialSidebar } from "@/components/layout/social-sidebar";
 import { SeoHead } from "@/components/seo/seo-head";
 import { Analytics } from "@vercel/analytics/next";
 import { cleanPath, SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
@@ -123,6 +124,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             </main>
             <Footer />
             <ChatWidget />
+            <SocialSidebar />
           </LanguageProvider>
         </MotionConfig>
         <Analytics />

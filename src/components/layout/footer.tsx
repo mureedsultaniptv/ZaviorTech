@@ -11,6 +11,8 @@ import {
   Phone,
   ShieldCheck,
   Youtube,
+  Instagram,
+  Facebook,
 } from "lucide-react";
 import { SITE_EMAIL, SITE_HEADQUARTERS, SITE_TELEPHONE } from "@/lib/site";
 import { useLanguage } from "@/lib/i18n/language-context";
@@ -69,7 +71,8 @@ export function Footer() {
           </address>
           <div className="v2-footer-socials">
             <a href="https://www.linkedin.com/company/zavior-tech" aria-label={language === "ar" ? "زافيور على لينكدإن" : "Zavior on LinkedIn"}><Linkedin /></a>
-            <a href="https://www.youtube.com/@ZaviorTechnologiess" aria-label={language === "ar" ? "زافيور على يوتيوب" : "Zavior on YouTube"}><Youtube /></a>
+            <a href="https://www.instagram.com/zaviortechnologiess" aria-label={language === "ar" ? "زافيور على يوتيوب" : "Zavior on Instagram"}><Instagram /></a>
+            <a href="https://www.facebook.com/zaviortechnologies" aria-label={language === "ar" ? "زافيور على إنستغرام" : "Zavior on Facebook"}><Facebook /></a>
           </div>
         </div>
       </div>
