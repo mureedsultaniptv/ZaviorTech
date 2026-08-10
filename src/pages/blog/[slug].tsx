@@ -8,10 +8,22 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SeoHead } from "@/components/seo/seo-head";
 import { SafeRichText } from "@/components/ui/safe-rich-text";
+import { CTASection } from "@/components/sections/cta-section";
 import { blogs, sortedBlogs } from "@/lib/data/demo-data";
 import { getLocalizedTitle } from "@/lib/i18n/localized-content";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Linkedin, Twitter } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  Clock,
+  ExternalLink,
+  Github,
+  Linkedin,
+  Share2,
+  Twitter,
+  Youtube,
+} from "lucide-react";
 import { ParsedUrlQuery } from "querystring";
 import { absoluteUrl } from "@/lib/site";
 import {
@@ -59,6 +71,30 @@ interface Params extends ParsedUrlQuery {
   slug: string;
 }
 
+const ODOO_IMPLEMENTATION_SERVICES_SLUG =
+  "odoo-implementation-guide-growing-companies-dubai";
+
+const zaviorSocialLinks = [
+  {
+    label: "LinkedIn",
+    handle: "@zavior-tech",
+    href: "https://www.linkedin.com/company/zavior-tech",
+    icon: Linkedin,
+  },
+  {
+    label: "YouTube",
+    handle: "@ZaviorTechnologiess",
+    href: "https://www.youtube.com/@ZaviorTechnologiess",
+    icon: Youtube,
+  },
+  {
+    label: "GitHub",
+    handle: "@Zavior-Technologies",
+    href: "https://github.com/Zavior-Technologies",
+    icon: Github,
+  },
+] as const;
+
 export default function BlogDetailPage({ blog }: Props) {
   const { language } = useLanguage();
 
@@ -93,6 +129,7 @@ export default function BlogDetailPage({ blog }: Props) {
   const pageTitle = blog.metaTitle || `${blog.title} | Zavior Technologies Blog`;
   const pageDescription = blog.metaDescription || blog.excerpt;
   const localizedTitle = getLocalizedTitle(blog, language);
+  const showOdooEngagementSections = blog.slug === ODOO_IMPLEMENTATION_SERVICES_SLUG;
 
   const structuredData = jsonLdGraph([
     webPageJsonLd({
@@ -286,16 +323,90 @@ export default function BlogDetailPage({ blog }: Props) {
       {/* Content */}
       <section className="py-12">
         <div className="container mx-auto px-4 lg:px-8">
-          <motion.article
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="max-w-3xl mx-auto"
+          <div
+            className={
+              showOdooEngagementSections
+                ? "mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,48rem)_16rem] lg:items-start lg:justify-center"
+                : "mx-auto max-w-3xl"
+            }
           >
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              <SafeRichText html={blog.content} />
-            </div>
-          </motion.article>
+            <motion.article
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="min-w-0"
+            >
+              <div className="prose prose-lg dark:prose-invert max-w-none">
+                <SafeRichText html={blog.content} />
+              </div>
+            </motion.article>
+
+            {showOdooEngagementSections ? (
+              <motion.aside
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                aria-labelledby="blog-social-title"
+                className="mt-4 border-t border-border pt-8 lg:sticky lg:top-28 lg:mt-0 lg:border-0 lg:pt-0"
+              >
+                <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                    Follow &amp; share
+                  </p>
+                  <h2 id="blog-social-title" className="text-xl font-bold">
+                    Connect with Zavior
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    Get practical ERP insights, product demos, and company updates.
+                  </p>
+
+                  <nav aria-label="Zavior Technologies social media" className="mt-5 space-y-2">
+                    {zaviorSocialLinks.map((social) => {
+                      const Icon = social.icon;
+                      return (
+                        <a
+                          key={social.label}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex min-h-11 items-center gap-3 rounded-xl border border-border px-3 py-2.5 transition-colors hover:border-primary/40 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Zavior Technologies on ${social.label}`}
+                        >
+                          <Icon aria-hidden="true" className="h-5 w-5 text-primary" />
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-sm font-semibold">{social.label}</span>
+                            <span className="block truncate text-xs text-muted-foreground">
+                              {social.handle}
+                            </span>
+                          </span>
+                          <ExternalLink
+                            aria-hidden="true"
+                            className="h-3.5 w-3.5 text-muted-foreground transition-colors group-hover:text-primary"
+                          />
+                        </a>
+                      );
+                    })}
+                  </nav>
+
+                  <div className="mt-5 border-t border-border pt-5">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      Share this guide
+                    </p>
+                    <a
+                      href={`https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex min-h-11 items-center gap-3 rounded-xl bg-foreground px-3 py-2.5 text-sm font-semibold text-background transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      aria-label="Share this guide on X or Twitter"
+                    >
+                      <Twitter aria-hidden="true" className="h-5 w-5" />
+                      Share on X / Twitter
+                    </a>
+                  </div>
+                </div>
+              </motion.aside>
+            ) : null}
+          </div>
         </div>
       </section>
 
@@ -388,6 +499,8 @@ export default function BlogDetailPage({ blog }: Props) {
           </div>
         </div>
       </section>
+
+      {showOdooEngagementSections ? <CTASection /> : null}
 
       {/* Related Articles */}
       {relatedBlogs.length > 0 && (
