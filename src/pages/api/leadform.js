@@ -28,10 +28,7 @@ export default async function handler(req, res) {
     }
 
     const data = validateLeadPayload(req.body || {});
-    const submission = await submitLeadFormToOdoo({
-      ...data,
-      createdAt: new Date().toISOString(),
-    });
+    const submission = await submitLeadFormToOdoo(data);
 
     return res.status(200).json({
       success: true,

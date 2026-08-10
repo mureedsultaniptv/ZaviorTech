@@ -9,7 +9,6 @@ type LeadFormPayload = {
   company: string;
   service: string;
   message: string;
-  createdAt: string;
 };
 
 type OdooFormResponse = {
@@ -19,8 +18,17 @@ type OdooFormResponse = {
   message?: string;
 };
 
-const LOCAL_ODOO_FORM_ENDPOINT = "http://localhost:8069/zavior/form";
+const LOCAL_ODOO_FORM_ENDPOINT = "http://localhost:8069/zavior/formsubmit";
 const ODOO_FORM_TIMEOUT_MS = 8_000;
+
+function getAllowedInsecureHttpHosts() {
+  return new Set(
+    (process.env.ODOO_FORM_INSECURE_HTTP_HOSTS || "")
+      .split(",")
+      .map((host) => host.trim().toLowerCase())
+      .filter(Boolean),
+  );
+}
 
 function getOdooFormEndpoint() {
   const configuredEndpoint = process.env.ODOO_FORM_API_URL?.trim()
@@ -43,8 +51,15 @@ function getOdooFormEndpoint() {
     process.env.NODE_ENV !== "production"
     && endpoint.protocol === "http:"
     && ["localhost", "127.0.0.1", "::1"].includes(endpoint.hostname);
+  const isExplicitlyAllowedHttpEndpoint =
+    endpoint.protocol === "http:"
+    && getAllowedInsecureHttpHosts().has(endpoint.hostname.toLowerCase());
 
-  if (!usesSecureTransport && !isLocalDevelopmentEndpoint) {
+  if (
+    !usesSecureTransport
+    && !isLocalDevelopmentEndpoint
+    && !isExplicitlyAllowedHttpEndpoint
+  ) {
     throw new ApiError(503, "The form delivery service is not configured.");
   }
 
@@ -55,7 +70,7 @@ function getOdooFormToken() {
   const token = process.env.ODOO_FORM_API_TOKEN?.trim()
     || process.env.ODOO_LEAD_API_TOKEN?.trim();
 
-  if (process.env.NODE_ENV === "production" && !token) {
+  if (!token) {
     throw new ApiError(503, "The form delivery service is not configured.");
   }
 
@@ -88,10 +103,16 @@ export async function submitLeadFormToOdoo(payload: LeadFormPayload) {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        ...payload,
+        company: payload.company,
+        email: payload.email,
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        message: payload.message,
+        phone: payload.phone,
+        service: payload.service,
         source: "website",
       }),
       signal: controller.signal,
