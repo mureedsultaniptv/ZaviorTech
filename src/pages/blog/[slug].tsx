@@ -35,6 +35,7 @@ interface BlogPost {
   titleAr?: string;
   excerpt: string;
   content: string;
+  postFaqContent?: string;
   category: string;
   author: { name: string; role: string };
   publishedAt: string;
@@ -356,6 +357,16 @@ export default function BlogDetailPage({ blog }: Props) {
             </div>
           </div>
         </section>
+
+      {blog.postFaqContent ? (
+        <section className="pb-12">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="prose prose-lg dark:prose-invert max-w-3xl mx-auto">
+              <SafeRichText html={blog.postFaqContent} />
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Tags */}
       <section className="py-12">
