@@ -261,7 +261,7 @@ export function ChatPanel({
           </span>
           <div className="min-w-0">
             <h2 className="truncate text-sm font-semibold">Zavior Consultant</h2>
-            <p className="truncate text-xs text-muted-foreground">A practical starting point for your project</p>
+            <p className="truncate text-xs text-muted-foreground">Your conversation is linked to your project request</p>
           </div>
         </div>
         <div className="flex items-center gap-1">

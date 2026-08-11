@@ -25,8 +25,10 @@ import {
   MessageSquare,
   Building,
   Globe,
+  CalendarCheck,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
+import { ConsultationModal } from "@/components/consultation/ConsultationModal";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -85,6 +87,7 @@ export default function ContactPage() {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [selectedService, setSelectedService] = useState("");
   const [chatRequirement, setChatRequirement] = useState("");
+  const [consultationOpen, setConsultationOpen] = useState(false);
 
   useEffect(() => {
     if (!router.isReady || router.query.chatbot !== "true") return;
@@ -106,6 +109,12 @@ export default function ContactPage() {
     setSelectedService(mappedService);
     setChatRequirement(String(router.query.requirement || "").slice(0, 240));
   }, [router.isReady, router.query.chatbot, router.query.requirement, router.query.service]);
+
+  useEffect(() => {
+    if (router.isReady && router.query.consultation === "1") {
+      setConsultationOpen(true);
+    }
+  }, [router.isReady, router.query.consultation]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -197,16 +206,21 @@ export default function ContactPage() {
             <p className="text-lg md:text-xl text-muted-foreground">
               {t.contact.subtitle}
             </p>
-            <Button asChild size="lg" className="mt-8 bg-green-600 text-white hover:bg-green-700">
-              <a
-                href={whatsappUrl("Hi Zavior, I am visiting your contact page and would like to discuss a project.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => window.dataLayer?.push({ event: "whatsapp_clicked", source: "contact_page" })}
-              >
-                <WhatsAppIcon className="size-5" /> Contact on WhatsApp
-              </a>
-            </Button>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <Button type="button" size="lg" onClick={() => setConsultationOpen(true)}>
+                <CalendarCheck className="size-5" /> Book Consultation
+              </Button>
+              <Button asChild size="lg" className="bg-green-600 text-white hover:bg-green-700">
+                <a
+                  href={whatsappUrl("Hi Zavior, I am visiting your contact page and would like to discuss a project.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => window.dataLayer?.push({ event: "whatsapp_clicked", source: "contact_page" })}
+                >
+                  <WhatsAppIcon className="size-5" /> Contact on WhatsApp
+                </a>
+              </Button>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -463,46 +477,39 @@ export default function ContactPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24">
+      <section className="bg-primary py-20 text-primary-foreground lg:py-32">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center max-w-2xl mx-auto"
+            className="mx-auto max-w-3xl text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              {t.contact.ctaTitle}
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              {t.contact.ctaSubtitle}
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-primary-foreground/75">
+              Start your project conversation
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <h2 className="mb-6 text-3xl font-bold text-balance md:text-4xl lg:text-5xl">
+              Build a practical plan for your next project.
+            </h2>
+            <p className="mb-10 text-lg text-pretty text-primary-foreground/80">
+              Tell us where you need support. Our consultants will help define the right next step for your business.
+            </p>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button
-                onClick={() => {
-                  window.location.href = "tel:+971508185948";
-                }}
+                onClick={() => setConsultationOpen(true)}
                 size="lg"
+                variant="secondary"
                 className="px-8"
               >
-                <Phone className="w-4 h-4 mr-2" />
-                {t.contact.callNow}
+                <CalendarCheck className="size-5" />
+                Book a consultation
               </Button>
-              <Button
-                onClick={() => {
-                  window.location.href = "mailto:info@zavior.org";
-                }}
-                size="lg"
-                variant="outline"
-                className="px-8 bg-transparent"
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                {t.contact.emailUs}
-              </Button>
+              <a href={whatsappUrl("Hi Zavior, I would like help planning my project.")} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-md border border-white bg-black px-6 text-sm font-medium text-white transition-colors hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"><WhatsAppIcon className="size-4" /> Contact on WhatsApp</a>
             </div>
           </motion.div>
         </div>
       </section>
+      <ConsultationModal open={consultationOpen} onOpenChange={setConsultationOpen} />
     </main>
   );
 }

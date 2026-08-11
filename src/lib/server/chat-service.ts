@@ -4,6 +4,7 @@ import demoData from "@/lib/demo-data.json";
 import { searchKnowledge, type ChatSearchMatch } from "@/lib/chat-search";
 import { ApiError } from "@/lib/server/api-errors";
 import { analyzeChatMessage, type MessageAnalysis } from "@/lib/server/chat-intent";
+import { syncChatTranscriptToOdoo } from "@/lib/server/odoo-form";
 
 const MAX_MESSAGE_LENGTH = 1000;
 const MAX_SOURCE_PAGE_LENGTH = 240;
@@ -99,6 +100,7 @@ export type ChatConversation = {
   contact: { name: string; email: string; phone: string };
   subject: string;
   description: string;
+  odooLeadId: string;
 };
 
 export type ChatRequestMeta = {
@@ -271,6 +273,7 @@ export async function loadChatConversation(sessionId: string) {
       contact: conversation.contact || { name: "", email: "", phone: "" },
       subject: conversation.subject || "",
       description: conversation.description || "",
+      odooLeadId: conversation.odooLeadId || "",
     };
     conversations.set(sessionId, normalized);
     return normalized;
@@ -323,6 +326,7 @@ async function persistConversation(conversation: ChatConversation) {
     contact: conversation.contact,
     subject: conversation.subject,
     description: conversation.description,
+    odooLeadId: conversation.odooLeadId,
     messages: conversation.messages.map((message) => ({
       _type: "message",
       role: message.role,
@@ -443,6 +447,7 @@ export function createChatConversation(sessionId: unknown, meta: ChatRequestMeta
     contact: { name: "", email: "", phone: "" },
     subject: "",
     description: "",
+    odooLeadId: "",
   };
   conversations.set(id, conversation);
   return conversation;
@@ -465,8 +470,9 @@ export async function submitChatIntake(
   const name = validateChatIntakeText(input.name, "Name", 120);
   const email = validateChatIntakeText(input.email, "Email", 160).toLowerCase();
   const phone = validateChatIntakeText(input.phone, "Phone number", 30);
-  const subject = validateChatIntakeText(input.subject, "Subject", 180);
+  const serviceRequired = validateChatIntakeText(input.serviceRequired, "Service needed", 180);
   const description = validateChatIntakeText(input.description, "Project description", 1000);
+  const odooLeadId = sanitizeText(input.odooLeadId, 120);
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     throw new ApiError(400, "Please enter a valid email address.");
@@ -476,16 +482,20 @@ export async function submitChatIntake(
   }
 
   conversation.contact = { name, email, phone };
-  conversation.subject = subject;
+  // Keep the legacy Sanity field populated for existing documents while the
+  // customer-facing consultant form uses the clearer service field.
+  conversation.subject = serviceRequired;
   conversation.description = description;
+  conversation.odooLeadId = odooLeadId || conversation.odooLeadId;
   conversation.lastMessageAt = new Date().toISOString();
   conversations.set(conversation.sessionId, conversation);
 
+  await persistConversation(conversation);
   const saved = await persistSanityFormSubmission(conversation);
 
   return {
     sessionId: conversation.sessionId,
-    customer: { name, email, phone, subject, description },
+    customer: { name, email, phone, serviceRequired, description },
     persisted: saved,
   };
 }
@@ -767,7 +777,7 @@ function createWhatsappUrl(conversation: ChatConversation) {
     `Name: ${conversation.contact.name}`,
     `Email: ${conversation.contact.email}`,
     `Phone: ${conversation.contact.phone}`,
-    `Subject: ${conversation.subject}`,
+    `Service needed: ${conversation.subject}`,
     `Description: ${conversation.description}`,
     conversation.leadSummary && conversation.leadSummary !== summary
       ? `Chat summary: ${conversation.leadSummary}`
@@ -1277,6 +1287,27 @@ async function persistLead(conversation: ChatConversation, contact: { name: stri
   });
 }
 
+async function syncConversationToOdoo(conversation: ChatConversation) {
+  if (!conversation.odooLeadId || !conversation.contact.email) return;
+
+  try {
+    await syncChatTranscriptToOdoo({
+      leadId: conversation.odooLeadId,
+      sessionId: conversation.sessionId,
+      email: conversation.contact.email,
+      summary: conversation.leadSummary,
+      messages: conversation.messages,
+    });
+  } catch (error) {
+    // The lead was created before the chat begins. Do not interrupt a visitor's
+    // conversation if an individual transcript update needs a later retry.
+    console.warn("Odoo chat transcript update failed", {
+      sessionId: conversation.sessionId,
+      message: error instanceof Error ? error.message : "unknown_error",
+    });
+  }
+}
+
 async function loadPersistedRateRecord(key: string) {
   const config = sanityConfig();
   if (!config) return null;
@@ -1420,6 +1451,7 @@ export async function sendChatMessage(conversation: ChatConversation, message: s
   }
   await persistConversation(conversation);
   await persistLead(conversation, extracted.contact);
+  await syncConversationToOdoo(conversation);
   return {
     message: reply,
     sessionId: conversation.sessionId,

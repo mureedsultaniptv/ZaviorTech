@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { whatsappUrl } from "@/lib/site";
+import { consultationServices, otherServiceValue } from "@/lib/consultation";
+import { submitConsultantIntake } from "@/lib/consultant-intake";
 
 type IntakeResponse = {
   success?: boolean;
@@ -32,6 +34,8 @@ export function ChatPageExperience() {
   const [isReady, setIsReady] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [error, setError] = useState("");
+  const [service, setService] = useState("");
+  const [otherService, setOtherService] = useState("");
 
   useEffect(() => {
     try {
@@ -53,11 +57,19 @@ export function ChatPageExperience() {
     const proposedSessionId = createSessionId();
 
     try {
+      const consultation = await submitConsultantIntake({
+        name: data.name, email: data.email, phone: data.phone, service,
+        otherService, description: data.description, website: data.website,
+        sourcePage: window.location.pathname,
+      });
+
       const response = await fetch("/api/chat/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
+          serviceRequired: service === otherServiceValue ? otherService : service,
+          odooLeadId: consultation.submissionId,
           sessionId: proposedSessionId,
           sourcePage: window.location.pathname,
         }),
@@ -188,15 +200,15 @@ export function ChatPageExperience() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="chat-customer-subject">Subject</Label>
-            <Input
-              id="chat-customer-subject"
-              name="subject"
-              maxLength={180}
-              required
-              placeholder="Website, ERP, AI automation…"
-            />
+            <Label htmlFor="chat-customer-service">Service needed</Label>
+            <select id="chat-customer-service" value={service} onChange={(event) => setService(event.target.value)} required className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50">
+              <option value="">Select a service</option>
+              {consultationServices.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+              <option value={otherServiceValue}>Other Services</option>
+            </select>
           </div>
+
+          {service === otherServiceValue ? <div className="space-y-2"><Label htmlFor="chat-customer-other-service">Please specify the service</Label><Input id="chat-customer-other-service" value={otherService} onChange={(event) => setOtherService(event.target.value)} maxLength={160} required /></div> : null}
 
           <div className="space-y-2">
             <Label htmlFor="chat-customer-description">Project description</Label>
@@ -226,21 +238,6 @@ export function ChatPageExperience() {
             </p>
           ) : null}
 
-          <Button asChild size="lg" className="w-full bg-green-600 text-white hover:bg-green-700">
-            <a
-              href={whatsappUrl("Hi Zavior, I would like to start a consultation with your team.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => window.dataLayer?.push({ event: "whatsapp_clicked", source: "chat_page" })}
-            >
-              <WhatsAppIcon className="size-5" /> Contact on WhatsApp
-            </a>
-          </Button>
-
-          <div className="flex items-center gap-3 text-xs text-muted-foreground" aria-hidden="true">
-            <span className="h-px flex-1 bg-border" /> or start AI chat <span className="h-px flex-1 bg-border" />
-          </div>
-
           <Button
             type="submit"
             size="lg"
@@ -258,6 +255,16 @@ export function ChatPageExperience() {
                 <ArrowRight aria-hidden="true" />
               </>
             )}
+          </Button>
+          <Button asChild size="lg" variant="outline" className="w-full border-green-600/40 text-green-700 hover:bg-green-600 hover:text-white dark:text-green-400">
+            <a
+              href={whatsappUrl("Hi Zavior, I would like to start a consultation with your team.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => window.dataLayer?.push({ event: "whatsapp_clicked", source: "chat_page" })}
+            >
+              <WhatsAppIcon className="size-5" /> Contact on WhatsApp
+            </a>
           </Button>
         </form>
       </div>

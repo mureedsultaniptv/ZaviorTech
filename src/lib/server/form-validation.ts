@@ -1,6 +1,7 @@
 import { fileTypeFromBuffer } from "file-type";
 import { careers } from "@/lib/data/demo-data";
 import { ApiError } from "@/lib/server/api-errors";
+import { getConsultationService, otherServiceValue } from "@/lib/consultation";
 
 export const FORM_HONEYPOT_FIELD = "website";
 
@@ -102,6 +103,77 @@ export function validateLeadPayload(input: Record<string, unknown>) {
   };
 }
 
+export function validateConsultationPayload(input: Record<string, unknown>) {
+  if (readOptionalText(input[FORM_HONEYPOT_FIELD], 200)) {
+    throw new ApiError(400, "Invalid form submission.");
+  }
+
+  const name = readRequiredText(input.name, "Name", 120);
+  const email = readRequiredText(input.email, "Email", 160).toLowerCase();
+  const phone = readRequiredText(input.phone, "Phone number", 30);
+  const service = readRequiredText(input.service, "Service needed", 80);
+  const otherService = readOptionalText(input.otherService, 160);
+  const projectDescription = readRequiredText(
+    input.projectDescription,
+    "Tell us about your project",
+    2000,
+  );
+  const source = readOptionalText(input.source, 120) || "website_consultation";
+  const sourcePage = readOptionalText(input.sourcePage, 240) || "/contact";
+
+  if (!EMAIL_PATTERN.test(email)) {
+    throw new ApiError(400, "Email is invalid.");
+  }
+  if (!PHONE_PATTERN.test(phone)) {
+    throw new ApiError(400, "Phone number is invalid.");
+  }
+  const selectedService = getConsultationService(service);
+  if (service !== otherServiceValue && !selectedService) {
+    throw new ApiError(400, "Selected service is invalid.");
+  }
+  if (service === otherServiceValue && !otherService) {
+    throw new ApiError(400, "Please specify the service you need.");
+  }
+
+  const rawAnswers = input.serviceQuestions;
+  if (rawAnswers !== undefined && (typeof rawAnswers !== "object" || rawAnswers === null || Array.isArray(rawAnswers))) {
+    throw new ApiError(400, "Service questions are invalid.");
+  }
+  const serviceQuestions = Object.fromEntries(
+    Object.entries((rawAnswers || {}) as Record<string, unknown>)
+      .slice(0, 5)
+      .map(([key, value]) => [readOptionalText(key, 80), readOptionalText(value, 2000)])
+      .filter(([key]) => key),
+  );
+
+  if (source === "website_consultation") selectedService?.questions.forEach((question) => {
+    const isVisible = !question.showWhen || serviceQuestions[question.showWhen.questionId] === question.showWhen.equals;
+    if (isVisible && question.required && !serviceQuestions[question.id]) {
+      throw new ApiError(400, `${question.label} is required.`);
+    }
+    if (isVisible && question.type === "url" && serviceQuestions[question.id]) {
+      try {
+        const url = new URL(serviceQuestions[question.id]);
+        if (!['http:', 'https:'].includes(url.protocol)) throw new Error("Unsupported protocol");
+      } catch {
+        throw new ApiError(400, `${question.label} is invalid.`);
+      }
+    }
+  });
+
+  return {
+    name,
+    email,
+    phone,
+    service,
+    otherService,
+    projectDescription,
+    serviceQuestions,
+    source,
+    sourcePage,
+  };
+}
+
 export function validateJobApplicationPayload(input: Record<string, unknown>) {
   if (readOptionalText(input[FORM_HONEYPOT_FIELD], 200)) {
     throw new ApiError(400, "Invalid form submission.");
@@ -176,4 +248,3 @@ export async function validateResumeFile(file: {
     mimeType: detectedType?.mime || providedType || "application/octet-stream",
   };
 }
-

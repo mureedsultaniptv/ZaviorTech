@@ -216,11 +216,11 @@ export const marketingContent: Record<Language, MarketingContent> = {
           { title: "API Development", text: "Move data safely between ERP, CRM and third-party platforms." },
         ],
         cta: {
-          eyebrow: "Need a clear starting point?",
-          title: "Turn the right platform into a practical growth plan.",
-          description: "Tell us where operations are slowing down. We’ll map the best-fit Odoo, Zoho or automation path for your team.",
-          primaryCta: "Plan your solution",
-          secondaryCta: "Explore all services",
+          eyebrow: "Plan with confidence",
+          title: "Turn your business priorities into a clear technology roadmap.",
+          description: "Share your operational goals with our team and get a focused path for Odoo, Zoho, automation, or custom software delivery.",
+          primaryCta: "Book a strategy call",
+          secondaryCta: "Explore our capabilities",
         },
       },
       industries: {
@@ -417,11 +417,11 @@ export const marketingContent: Record<Language, MarketingContent> = {
           { title: "تطوير API", text: "انقل البيانات بأمان بين ERP وCRM والمنصات الخارجية." },
         ],
         cta: {
-          eyebrow: "هل تحتاج إلى نقطة بداية واضحة؟",
-          title: "حوّل المنصة المناسبة إلى خطة نمو عملية.",
-          description: "أخبرنا أين تتباطأ العمليات، وسنحدد مسار Odoo أو Zoho أو الأتمتة الأنسب لفريقك.",
-          primaryCta: "خطط لحلك",
-          secondaryCta: "استكشف جميع الخدمات",
+          eyebrow: "خطط بثقة",
+          title: "حوّل أولويات أعمالك إلى خارطة طريق تقنية واضحة.",
+          description: "شارك أهدافك التشغيلية مع فريقنا واحصل على مسار عملي لـ Odoo أو Zoho أو الأتمتة أو البرمجيات المخصصة.",
+          primaryCta: "احجز مكالمة استراتيجية",
+          secondaryCta: "استكشف قدراتنا",
         },
       },
       industries: {

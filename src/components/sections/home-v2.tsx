@@ -170,6 +170,9 @@ export function HomeV2() {
   const visibleServices = showAllServices
     ? [...coreServices, ...additionalServices]
     : coreServices;
+  const serviceCtaPromises = language === "ar"
+    ? ["دون التزام", "إرشاد من خبراء", "خطوات واضحة"]
+    : ["No obligation", "Expert guidance", "Clear next steps"];
 
   const getScrollOffset = (direction: -1 | 1, track: HTMLDivElement) =>
     (dir === "rtl" ? -direction : direction) * track.clientWidth * 0.82;
@@ -374,9 +377,14 @@ export function HomeV2() {
             <h2 id="services-cta-title">{content.services.cta.title}</h2>
             <p>{content.services.cta.description}</p>
           </div>
-          <div className="v2-actions">
-            <Link className="v2-button light" href="/contact">{content.services.cta.primaryCta} <ArrowForward /></Link>
-            <Link className="v2-button outline-light" href="/services">{content.services.cta.secondaryCta}</Link>
+          <div>
+            <div className="v2-actions">
+              <Link className="v2-button light" href="/contact">{content.services.cta.primaryCta} <ArrowForward /></Link>
+              <Link className="v2-button outline-light" href="/services">{content.services.cta.secondaryCta}</Link>
+            </div>
+            <div className="v2-promises">
+              {serviceCtaPromises.map((promise) => <span key={promise}><Check /> {promise}</span>)}
+            </div>
           </div>
         </div>
       </motion.section>

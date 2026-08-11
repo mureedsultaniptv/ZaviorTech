@@ -306,7 +306,7 @@ export function Navigation() {
 
             {/* CTA Button */}
             <Button asChild className="nav-consult hidden lg:flex">
-              <Link href="/contact">{navCopy.consultation} <ArrowForward className="h-4 w-4" /></Link>
+              <Link href="/contact?consultation=1">{navCopy.consultation} <ArrowForward className="h-4 w-4" /></Link>
             </Button>
           </div>
         </div>

@@ -37,6 +37,7 @@ export const chatConversationSchema = {
     ] },
     { name: "subject", type: "string" },
     { name: "description", type: "text" },
+    { name: "odooLeadId", type: "string" },
     { name: "qualification", type: "object", fields: [
       { name: "serviceInterest", type: "string" },
       { name: "company", type: "string" },
