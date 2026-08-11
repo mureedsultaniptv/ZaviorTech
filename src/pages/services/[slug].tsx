@@ -5,6 +5,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SeoHead } from "@/components/seo/seo-head";
 import { SafeRichText } from "@/components/ui/safe-rich-text";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { services } from "@/lib/data/demo-data";
 import { getLocalizedTitle } from "@/lib/i18n/localized-content";
 import { useLanguage } from "@/lib/i18n/language-context";
@@ -274,21 +280,24 @@ export default function ServiceDetailPage({ service }: Props) {
             <h2 className="text-3xl font-bold mb-8">
               Frequently Asked Questions
             </h2>
-            <div className="space-y-4">
-              {serviceFaqs.map((faq) => (
-                <div
+            <Accordion type="single" collapsible className="space-y-3">
+              {serviceFaqs.map((faq, index) => (
+                <AccordionItem
                   key={faq.question}
-                  className="rounded-lg border border-border bg-card p-6"
+                  value={`faq-${index}`}
+                  className="overflow-hidden rounded-xl border border-border bg-card px-5 shadow-sm transition-colors data-[state=open]:border-primary/30"
                 >
-                  <h3 className="text-lg font-semibold mb-2">
+                  <AccordionTrigger className="py-5 text-base font-semibold hover:text-primary hover:no-underline sm:text-lg">
                     {faq.question}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5 pr-8">
+                    <p className="text-muted-foreground leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
             <div className="mt-8">
               <Button asChild>
                 <Link href="/contact">

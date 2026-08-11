@@ -2,7 +2,11 @@ import demoData from "@/lib/demo-data.json";
 
 export const site = demoData.site;
 export const companies = demoData.companies;
-export const services = demoData.services;
+export const services = demoData.services.map((service) =>
+  "documentFaqs" in service
+    ? { ...service, faqs: service.documentFaqs }
+    : service,
+);
 export const projects = demoData.projects;
 export const blogs = demoData.blogs;
 export const sortedBlogs = [...demoData.blogs].sort(
