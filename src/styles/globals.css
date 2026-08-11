@@ -141,6 +141,98 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Long-form service content is supplied as safe HTML. Keep it readable without
+   forcing it into the narrow half-column layout used by the previous template. */
+.service-rich-content {
+  color: var(--muted-foreground);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.service-rich-content > :first-child {
+  margin-top: 0;
+}
+
+.service-rich-content p {
+  margin: 0 0 1.35rem;
+}
+
+.service-rich-content h2,
+.service-rich-content h3,
+.service-rich-content h4 {
+  color: var(--foreground);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.service-rich-content h2 {
+  margin: 3.5rem 0 1rem;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+}
+
+.service-rich-content h3 {
+  margin: 2rem 0 0.7rem;
+  font-size: 1.25rem;
+}
+
+.service-rich-content h4 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.service-rich-content ul,
+.service-rich-content ol {
+  margin: 1.25rem 0 1.75rem;
+  padding-left: 1.35rem;
+}
+
+.service-rich-content ul {
+  list-style: disc;
+}
+
+.service-rich-content ol {
+  list-style: decimal;
+}
+
+.service-rich-content li {
+  margin: 0.55rem 0;
+  padding-left: 0.35rem;
+}
+
+.service-rich-content li::marker {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.service-rich-content strong {
+  color: var(--foreground);
+  font-weight: 650;
+}
+
+.service-rich-content a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.service-rich-content a:hover {
+  text-decoration-color: currentColor;
+}
+
+@media (max-width: 767px) {
+  .service-rich-content {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .service-rich-content h2 {
+    margin-top: 2.75rem;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   body,
   .site-shell-v2,

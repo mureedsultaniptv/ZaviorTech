@@ -26,6 +26,13 @@ import { getPriorityServices } from "@/lib/seo-content";
 
 const coreServiceSlugs = [
   "erp-odoo-dubai",
+  "odoo-consultation-dubai",
+  "odoo-erp-implementation-dubai",
+  "odoo-crm-implementation-dubai",
+  "odoo-services-dubai",
+  "odoo-integration-dubai",
+  "custom-software-development-dubai",
+  "api-development-integration-dubai",
   "zoho-solutions-dubai",
   "ai-automation-dubai",
   "web-development-dubai",
@@ -39,6 +46,7 @@ const zohoServiceSlugs = [
   "zoho-one-implementation-dubai",
   "zoho-books-automation-dubai",
   "zoho-integration-dubai",
+  "zoho-consultation-optimization-dubai",
 ];
 
 const zohoCapabilities = [

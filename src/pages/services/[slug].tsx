@@ -2,7 +2,6 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SeoHead } from "@/components/seo/seo-head";
 import { SafeRichText } from "@/components/ui/safe-rich-text";
@@ -10,7 +9,7 @@ import { services } from "@/lib/data/demo-data";
 import { getLocalizedTitle } from "@/lib/i18n/localized-content";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { CTASection } from "@/components/sections/cta-section";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, MessageSquare } from "lucide-react";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import {
@@ -122,7 +121,7 @@ export default function ServiceDetailPage({ service }: Props) {
       />
 
       {/* Hero Section */}
-      <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 pb-20 lg:pt-40 lg:pb-32">
+      <section className="relative isolate overflow-hidden bg-neutral-950 pt-28 pb-16 lg:pt-36 lg:pb-20">
         <div className="absolute inset-0 -z-10" aria-hidden="true">
           <Image
             src={service.image}
@@ -135,109 +134,137 @@ export default function ServiceDetailPage({ service }: Props) {
           <div className="absolute inset-0 bg-gradient-to-br from-neutral-950/95 via-neutral-950/80 to-primary/70" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-neutral-950/60 to-transparent" />
         </div>
-        <div className="container mx-auto px-4 lg:px-8 text-center">
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="mx-auto max-w-4xl text-center"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-sm mb-4">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+              Zavior Technologies · Dubai &amp; UAE
+            </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-sm mb-5 text-balance">
               {localizedTitle}
             </h1>
-            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow-sm">
+            <p className="text-lg md:text-xl text-white/85 max-w-3xl mx-auto drop-shadow-sm text-pretty">
               {service.description}
             </p>
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/contact">
-                Book Consultancy <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
-      <section id="direct-answer" className="py-12 border-y border-border/60">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-3">
-              Short Answer
-            </p>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              What does {service.title} solve?
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {directAnswer}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Key Features Section */}
-      <section className="py-20 bg-muted/20">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold text-center mb-12"
-          >
-            Key Features of {service.title}
-          </motion.h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {service.features.map((feature, index) => (
-              <motion.div
-                key={feature}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex items-start gap-4 p-6 bg-white dark:bg-card rounded-xl shadow hover:shadow-lg transition-shadow"
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button asChild size="lg">
+                <Link href="/contact">
+                  Discuss your requirements <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <a
+                href="#service-details"
+                className="inline-flex h-10 items-center justify-center rounded-md border border-white/30 px-5 text-sm font-medium text-white transition-colors hover:bg-white/10"
               >
-                <Check className="h-6 w-6 text-primary mt-1" />
-                <p className="text-muted-foreground font-medium">{feature}</p>
-              </motion.div>
-            ))}
-          </div>
+                Explore the service
+              </a>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
-          <motion.div
-            className="lg:w-1/2"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl font-bold mb-6">About This Service</h2>
-            <SafeRichText
-              className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed"
-              html={service.longDescription}
-            />
-          </motion.div>
+      <section id="service-details" className="py-14 lg:py-20">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] xl:grid-cols-[minmax(0,48rem)_22rem] xl:justify-center xl:gap-16">
+            <main className="min-w-0">
+              <div id="direct-answer" className="mb-12 rounded-2xl border border-primary/15 bg-primary/[0.045] p-6 sm:p-8">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                  How we help
+                </p>
+                <h2 className="mb-3 text-2xl font-bold tracking-tight sm:text-3xl">
+                  What does this service solve?
+                </h2>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  {directAnswer}
+                </p>
+              </div>
 
-          <motion.div
-            className="lg:w-1/2"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <Card className="overflow-hidden rounded-xl shadow-lg">
-              <Image
-                src={service.image}
-                alt={service.title}
-                width={800}
-                height={500}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </Card>
-          </motion.div>
+              <div className="mb-12">
+                <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                      Capabilities
+                    </p>
+                    <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+                      What we deliver
+                    </h2>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Tailored to your processes and systems.
+                  </p>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {service.features.map((feature, index) => (
+                    <motion.div
+                      key={feature}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.35, delay: index * 0.05 }}
+                      className="flex items-start gap-3 rounded-xl border border-border bg-card p-4 shadow-sm"
+                    >
+                      <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                        <Check className="size-3.5" strokeWidth={3} />
+                      </span>
+                      <p className="font-medium leading-snug">{feature}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="border-t border-border pt-10">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                  Service overview
+                </p>
+                <SafeRichText
+                  className="service-rich-content"
+                  html={service.longDescription}
+                />
+              </div>
+            </main>
+
+            <aside className="lg:sticky lg:top-28">
+              <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    sizes="(min-width: 1280px) 22rem, (min-width: 1024px) 20rem, 100vw"
+                    loading="lazy"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/60 via-transparent to-transparent" />
+                  <p className="absolute bottom-4 left-5 text-xs font-semibold uppercase tracking-[0.16em] text-white">
+                    Built for your operations
+                  </p>
+                </div>
+                <div className="p-6">
+                  <p className="text-sm font-semibold text-foreground">Plan your Odoo project</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    Tell us about your workflows, modules, and connected systems. We’ll help you identify the practical next step.
+                  </p>
+                  <Button asChild className="mt-5 w-full">
+                    <Link href="/contact">
+                      <MessageSquare className="mr-2 size-4" />
+                      Talk to a consultant
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+              <Link
+                href="/services"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              >
+                <ArrowLeft className="size-4" />
+                Browse all services
+              </Link>
+            </aside>
+          </div>
         </div>
       </section>
 

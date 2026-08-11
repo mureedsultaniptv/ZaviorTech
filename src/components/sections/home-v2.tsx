@@ -44,21 +44,21 @@ const serviceDefinitions: Array<{
   logo?: string;
   secondary?: boolean;
 }> = [
-  { icon: PackageCheck, href: "/services/erp-odoo-dubai", tone: "odoo", logo: "/brands/odoo-logo.svg" },
-  { icon: ContactRound, href: "/services/erp-odoo-dubai", tone: "crm", secondary: true },
+  { icon: PackageCheck, href: "/services/odoo-erp-implementation-dubai", tone: "odoo", logo: "/brands/odoo-logo.svg" },
+  { icon: ContactRound, href: "/services/odoo-crm-implementation-dubai", tone: "crm", secondary: true },
   { icon: Puzzle, href: "/services/odoo-services-dubai", tone: "addon" },
-  { icon: UsersRound, href: "/services/odoo-erp-implementation-dubai", tone: "discovery" },
-  { icon: Link2, href: "/services/odoo-services-dubai", tone: "integration" },
-  { icon: UsersRound, href: "/services/zoho-solutions-dubai", tone: "zoho" },
-  { icon: CloudUpload, href: "/services/zoho-solutions-dubai", tone: "setup" },
-  { icon: BarChart3, href: "/services/zoho-solutions-dubai", tone: "books" },
-  { icon: Gauge, href: "/services/zoho-solutions-dubai", tone: "optimize", secondary: true },
+  { icon: UsersRound, href: "/services/odoo-consultation-dubai", tone: "discovery" },
+  { icon: Link2, href: "/services/odoo-integration-dubai", tone: "integration" },
+  { icon: UsersRound, href: "/services/zoho-crm-implementation-dubai", tone: "zoho" },
+  { icon: CloudUpload, href: "/services/zoho-one-implementation-dubai", tone: "setup" },
+  { icon: BarChart3, href: "/services/zoho-books-automation-dubai", tone: "books" },
+  { icon: Gauge, href: "/services/zoho-consultation-optimization-dubai", tone: "optimize", secondary: true },
   { icon: Braces, href: "/services/zoho-solutions-dubai", tone: "workflow" },
   { icon: Bot, href: "/services/ai-automation-dubai", tone: "ai", secondary: true },
-  { icon: Braces, href: "/services", tone: "software", secondary: true },
+  { icon: Braces, href: "/services/custom-software-development-dubai", tone: "software", secondary: true },
   { icon: PanelsTopLeft, href: "/services/web-development-dubai", tone: "web", secondary: true },
   { icon: Smartphone, href: "/services/mobile-apps-dubai", tone: "mobile", secondary: true },
-  { icon: Network, href: "/services", tone: "api", secondary: true },
+  { icon: Network, href: "/services/api-development-integration-dubai", tone: "api", secondary: true },
 ];
 
 const industryAssets = [
