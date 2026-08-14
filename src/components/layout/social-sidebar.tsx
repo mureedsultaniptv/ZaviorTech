@@ -27,7 +27,7 @@ export function SocialSidebar() {
           exit={{ opacity: 0, x: isRtl ? 20 : -20, scale: 0.96 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
           className={cn(
-            "group fixed top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-4 rounded-2xl border border-border/80 bg-card/85 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md md:flex",
+            "group fixed top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-4 rounded-2xl border border-border/80 bg-card/85 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md min-[112rem]:flex",
             isRtl ? "right-5" : "left-5",
           )}
           aria-label={isRtl ? "روابط زافيور الاجتماعية" : "Zavior social links"}

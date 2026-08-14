@@ -189,7 +189,7 @@ export default function BlogDetailPage({ blog }: Props) {
       {/* Hero Section */}
       <section className="pt-32 pb-12 lg:pt-40">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl mx-auto">
+          <div className="w-full">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -213,7 +213,7 @@ export default function BlogDetailPage({ blog }: Props) {
               <span className="inline-block px-3 py-1 text-sm rounded-full bg-primary/10 text-primary mb-4">
                 {blog.category}
               </span>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
+              <h1 className="max-w-6xl text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance">
                 {localizedTitle}
               </h1>
               <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground sm:gap-6">
@@ -284,7 +284,7 @@ export default function BlogDetailPage({ blog }: Props) {
 
       <section id="direct-answer" className="pb-10">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl mx-auto rounded-lg border border-border bg-card p-6">
+          <div className="w-full rounded-lg border border-border bg-card p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-3">
               Short Answer
             </p>
@@ -305,7 +305,7 @@ export default function BlogDetailPage({ blog }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="max-w-4xl mx-auto rounded-2xl overflow-hidden"
+            className="w-full rounded-2xl overflow-hidden"
           >
             <Image
               src={blog.image}
@@ -326,8 +326,8 @@ export default function BlogDetailPage({ blog }: Props) {
           <div
             className={
               showOdooEngagementSections
-                ? "mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,48rem)_16rem] lg:items-start lg:justify-center"
-                : "mx-auto max-w-3xl"
+                ? "grid w-full gap-8 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start"
+                : "w-full"
             }
           >
             <motion.article
@@ -413,11 +413,11 @@ export default function BlogDetailPage({ blog }: Props) {
       {relevantServices.length > 0 ? (
         <section className="py-12 bg-muted/20">
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-3xl mx-auto">
+            <div className="w-full">
               <h2 className="text-2xl md:text-3xl font-bold mb-6">
                 Related Services
               </h2>
-              <div className="grid gap-4">
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {relevantServices.map((service) => (
                   <Link
                     key={service.slug}
@@ -438,11 +438,11 @@ export default function BlogDetailPage({ blog }: Props) {
 
       <section id="faq" className="py-12">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl mx-auto">
+          <div className="w-full">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">
               Frequently Asked Questions
             </h2>
-            <div className="space-y-4">
+            <div className="grid gap-4 lg:grid-cols-2">
               {blogFaqs.map((faq) => (
                 <div
                   key={faq.question}
@@ -472,7 +472,7 @@ export default function BlogDetailPage({ blog }: Props) {
       {blog.postFaqContent ? (
         <section className="pb-12">
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="prose prose-lg dark:prose-invert max-w-3xl mx-auto">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
               <SafeRichText html={blog.postFaqContent} />
             </div>
           </div>
@@ -482,7 +482,7 @@ export default function BlogDetailPage({ blog }: Props) {
       {/* Tags */}
       <section className="py-12">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl mx-auto">
+          <div className="w-full">
             <div className="flex flex-col gap-3 py-6 border-t border-border sm:flex-row sm:items-center sm:gap-4">
               <span className="text-sm font-medium">Tags:</span>
               <div className="flex flex-wrap gap-2">
@@ -506,7 +506,7 @@ export default function BlogDetailPage({ blog }: Props) {
       {relatedBlogs.length > 0 && (
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-4xl mx-auto">
+            <div className="w-full">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-2xl font-bold">Related Articles</h2>
                 <Button asChild variant="outline" className="bg-transparent">

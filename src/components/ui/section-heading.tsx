@@ -24,7 +24,7 @@ export function SectionHeading({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="text-2xl min-[360px]:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-balance break-words"
+        className="section-heading-title font-bold tracking-tight text-balance break-words"
       >
         {title}
       </motion.h2>

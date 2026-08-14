@@ -221,7 +221,7 @@ export default function PortfolioDetailPage({ project }: Props) {
       {/* Project Details */}
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl">
+          <div className="w-full">
             <h2 className="text-2xl font-bold mb-6">Project Overview</h2>
             <SafeRichText
               className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed"

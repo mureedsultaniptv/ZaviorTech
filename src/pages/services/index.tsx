@@ -147,7 +147,7 @@ export default function ServicesPage() {
 
       <section id="services-answer" className="pb-12">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-4xl rounded-lg border border-border bg-card p-6 text-center">
+          <div className="w-full rounded-lg border border-border bg-card p-6 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-3">
               Short Answer
             </p>
@@ -248,7 +248,7 @@ export default function ServicesPage() {
 
       <section id="faq" className="py-20 bg-muted/20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-4xl">
+          <div className="w-full">
             <h2 className="text-3xl font-bold mb-8">Service Questions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {faqs.slice(0, 6).map((faq) => (
@@ -268,7 +268,7 @@ export default function ServicesPage() {
       {priorityServices.length > 0 ? (
         <section className="py-20">
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="mx-auto max-w-4xl">
+            <div className="w-full">
               <h2 className="text-3xl font-bold mb-8">
                 Priority Service Pages
               </h2>

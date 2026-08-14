@@ -145,12 +145,12 @@ export default function ServiceDetailPage({ service }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mx-auto max-w-4xl text-center"
+            className="w-full text-center"
           >
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
               Zavior Technologies · Dubai &amp; UAE
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-sm mb-5 text-balance">
+            <h1 className="mx-auto max-w-6xl text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-sm mb-5 text-balance">
               {localizedTitle}
             </h1>
             <p className="text-lg md:text-xl text-white/85 max-w-3xl mx-auto drop-shadow-sm text-pretty">
@@ -175,7 +175,7 @@ export default function ServiceDetailPage({ service }: Props) {
 
       <section id="service-details" className="py-14 lg:py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] xl:grid-cols-[minmax(0,48rem)_22rem] xl:justify-center xl:gap-16">
+          <div className="grid w-full items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] xl:grid-cols-[minmax(0,1fr)_24rem] xl:gap-16">
             <main className="min-w-0">
               <div id="direct-answer" className="mb-12 rounded-2xl border border-primary/15 bg-primary/[0.045] p-6 sm:p-8">
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
@@ -203,7 +203,7 @@ export default function ServiceDetailPage({ service }: Props) {
                     Tailored to your processes and systems.
                   </p>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
                   {service.features.map((feature, index) => (
                     <motion.div
                       key={feature}
@@ -276,7 +276,7 @@ export default function ServiceDetailPage({ service }: Props) {
 
       <section id="faq" className="py-20 bg-muted/20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl mx-auto">
+          <div className="w-full">
             <h2 className="text-3xl font-bold mb-8">
               Frequently Asked Questions
             </h2>
