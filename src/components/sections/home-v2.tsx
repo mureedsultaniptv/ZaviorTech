@@ -90,7 +90,7 @@ const solutionDefinitions = {
   },
   zoho: {
     logo: "/brands/zoho-logo.svg",
-    image: "/images/enterprise-transformation-hero-v2.webp",
+    image: "/images/zoho.webp",
     href: "/services/zoho-solutions-dubai",
   },
 } as const;

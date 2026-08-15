@@ -1363,6 +1363,13 @@ body {
   object-fit: cover;
 }
 
+/* Keep the square Zoho artwork fully visible inside the wider solution panel. */
+.home-v2 .v2-solution.zoho > img {
+  object-fit: contain;
+  object-position: center;
+  background: #fff;
+}
+
 .home-v2 .v2-solution > div {
   align-self: center;
   padding: clamp(30px, 4vw, 58px);
