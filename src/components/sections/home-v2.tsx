@@ -102,6 +102,10 @@ const caseStudyAssets = [
   { image: "/projects/manuf-erp.webp", href: "/portfolio/manufacturing-erp-crm" },
   { image: "/projects/finance-automation.webp", href: "/portfolio/finance-automation-system" },
   { image: "/projects/ai-lead-management-crm-automation-platform.svg", href: "/portfolio/ai-lead-management-crm-automation-platform" },
+  { image: "/projects/platinum-pharma.webp", href: "/portfolio/pharma-erp-system" },
+  { image: "/projects/zero_waste.webp", href: "/portfolio/zero-waste-industrial-erp" },
+  { image: "/projects/ai-dashboard.webp", href: "/portfolio/ai-insights-dashboard" },
+  { image: "/projects/crm_analytics.webp", href: "/portfolio/crm-analytics-dashboard" },
 ] as const;
 
 const technologies = [
@@ -181,9 +185,31 @@ export function HomeV2() {
     const track = caseTrackRef.current;
     if (!track) return;
 
-    track.scrollBy({
-      left: getScrollOffset(direction, track),
-      behavior: "smooth",
+    const cards = Array.from(track.children) as HTMLElement[];
+    const trackBounds = track.getBoundingClientRect();
+    const trackStart = dir === "rtl" ? trackBounds.right : trackBounds.left;
+    const closestIndex = cards.reduce((closest, card, index) => {
+      const cardBounds = card.getBoundingClientRect();
+      const cardStart = dir === "rtl" ? cardBounds.right : cardBounds.left;
+      const closestBounds = cards[closest].getBoundingClientRect();
+      const closestStart = dir === "rtl" ? closestBounds.right : closestBounds.left;
+
+      return Math.abs(cardStart - trackStart) < Math.abs(closestStart - trackStart) ? index : closest;
+    }, 0);
+    const firstCardBounds = cards[0].getBoundingClientRect();
+    const lastCardBounds = cards[cards.length - 1].getBoundingClientRect();
+    const edgeTolerance = 24;
+    const atBeginning = firstCardBounds.left >= trackBounds.left - edgeTolerance && firstCardBounds.right <= trackBounds.right + edgeTolerance;
+    const atEnd = lastCardBounds.left >= trackBounds.left - edgeTolerance && lastCardBounds.right <= trackBounds.right + edgeTolerance;
+    const nextIndex = direction === 1
+      ? (atEnd ? 0 : Math.min(closestIndex + 1, cards.length - 1))
+      : (atBeginning ? cards.length - 1 : Math.max(closestIndex - 1, 0));
+    const nextCard = cards[nextIndex];
+
+    nextCard?.scrollIntoView({
+      behavior: shouldReduceMotion ? "auto" : "smooth",
+      block: "nearest",
+      inline: "start",
     });
   };
 
@@ -512,21 +538,34 @@ export function HomeV2() {
       <motion.section {...revealProps} className="v2-section v2-cases" aria-labelledby="case-study-title">
         <div className="v2-case-heading">
           <Header
+            id="case-study-title"
             eyebrow={content.cases.eyebrow}
             title={content.cases.title}
             text={content.cases.description}
             align="left"
           />
           <div>
-            <button type="button" onClick={() => moveCases(-1)} aria-label={content.cases.previous}><PreviousArrow /></button>
-            <button type="button" onClick={() => moveCases(1)} aria-label={content.cases.next}><NextArrow /></button>
+            <button type="button" onClick={() => moveCases(-1)} aria-label={content.cases.previous} aria-controls="case-study-carousel"><PreviousArrow /></button>
+            <button type="button" onClick={() => moveCases(1)} aria-label={content.cases.next} aria-controls="case-study-carousel"><NextArrow /></button>
           </div>
         </div>
-        <div className="v2-case-grid" ref={caseTrackRef} id="case-study-title">
+        <div
+          className="v2-case-grid"
+          ref={caseTrackRef}
+          id="case-study-carousel"
+          role="region"
+          aria-labelledby="case-study-title"
+          aria-roledescription="carousel"
+        >
           {caseStudyAssets.map((asset, index) => {
             const study = content.cases.items[index];
             return (
-              <Link href={asset.href} className="v2-case-card" key={study.title}>
+              <Link
+                href={asset.href}
+                className="v2-case-card"
+                key={study.title}
+                aria-label={`${study.title} (${index + 1} / ${caseStudyAssets.length})`}
+              >
                 <Image src={asset.image} alt={study.title} width={620} height={350} />
                 <div className="v2-case-copy">
                   <span>{study.category}</span>
@@ -669,19 +708,21 @@ function Header({
   text,
   align = "center",
   accent,
+  id,
 }: {
   eyebrow: string;
   title: string;
   text?: string;
   align?: "left" | "center";
   accent?: string;
+  id?: string;
 }) {
   const canAccent = accent && title.endsWith(accent);
 
   return (
     <div className={`v2-header ${align}`}>
       <span>{eyebrow}</span>
-      <h2>
+      <h2 id={id}>
         {canAccent ? (
           <>{title.slice(0, -accent.length).trimEnd()} <em>{accent}</em></>
         ) : title}

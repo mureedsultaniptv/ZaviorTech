@@ -21,6 +21,7 @@ const mobileFocusableSelector = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -139,6 +140,16 @@ export function Navigation() {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const closeMenus = () => {
+      setIsOpen(false);
+      setOpenDesktopMenu(null);
+    };
+
+    router.events.on("routeChangeStart", closeMenus);
+    return () => router.events.off("routeChangeStart", closeMenus);
+  }, [router.events]);
+
   const handleMobileMenuKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
       event.preventDefault();
@@ -248,16 +259,34 @@ export function Navigation() {
               }
 
               return (
-                <div key={link.href} className="group relative">
-                  <Link href={link.href} className={linkClassName} aria-haspopup="menu">
-                    {link.label}<ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
+                <div
+                  key={link.href}
+                  className="relative"
+                  onMouseEnter={() => setOpenDesktopMenu(link.href)}
+                  onMouseLeave={() => setOpenDesktopMenu((current) => current === link.href ? null : current)}
+                  onFocusCapture={() => setOpenDesktopMenu(link.href)}
+                  onBlurCapture={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                      setOpenDesktopMenu((current) => current === link.href ? null : current);
+                    }
+                  }}
+                >
+                  <Link
+                    href={link.href}
+                    className={linkClassName}
+                    aria-haspopup="menu"
+                    aria-expanded={openDesktopMenu === link.href}
+                    onClick={() => setOpenDesktopMenu(null)}
+                  >
+                    {link.label}<ChevronDown className={cn("h-3.5 w-3.5 transition-transform", openDesktopMenu === link.href && "rotate-180")} />
                   </Link>
                   <div className={cn(
-                    "invisible absolute start-0 top-full z-50 mt-2 translate-y-1 rounded-xl border border-border bg-card p-2 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100",
+                    "invisible absolute start-0 top-full z-50 mt-2 translate-y-1 rounded-xl border border-border bg-card p-2 opacity-0 shadow-xl transition-all duration-150",
+                    openDesktopMenu === link.href && "visible translate-y-0 opacity-100",
                     link.href === "/services" ? "grid w-[36rem] grid-cols-2 gap-1" : "w-80",
                   )} role="menu">
                     {link.children.map((child) => (
-                      <Link key={child.href} href={child.href} className="block rounded-lg px-3 py-2.5 transition-colors hover:bg-muted focus:bg-muted" role="menuitem">
+                      <Link key={child.href} href={child.href} onClick={() => setOpenDesktopMenu(null)} className="block rounded-lg px-3 py-2.5 transition-colors hover:bg-muted focus:bg-muted" role="menuitem">
                         <span className="block text-sm font-semibold text-foreground">{child.label}</span>
                         <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">{child.description}</span>
                       </Link>

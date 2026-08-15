@@ -1483,14 +1483,17 @@ body {
   border-radius: 7px;
   background: var(--v2-card);
   color: var(--v2-ink);
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 
 .home-v2 .v2-case-heading button svg { width: 16px; height: 16px; }
+.home-v2 .v2-case-heading button:active { transform: scale(0.94); }
 
 .home-v2 .v2-case-grid {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(300px, calc((100% - 24px) / 2.35));
+  grid-auto-columns: calc((100% - 36px) / 4);
   gap: 12px;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
@@ -1508,6 +1511,7 @@ body {
   min-width: 0;
   overflow: hidden;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   border: 1px solid var(--v2-line);
   border-radius: 9px;
   background: var(--v2-card);
@@ -1760,10 +1764,18 @@ body {
 .home-v2 .v2-testimonials b {
   display: block;
   color: var(--v2-ink);
-  font-size: 11px;
+  font-size: 0.9375rem;
+  line-height: 1.35;
 }
 
-.home-v2 .v2-testimonials small { display: block; margin-top: 3px; color: var(--v2-muted); font-size: 8px; line-height: 1.4; }
+.home-v2 .v2-testimonials small {
+  display: block;
+  margin-top: 4px;
+  color: var(--v2-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
 
 .home-v2 .v2-faq {
   width: 100%;

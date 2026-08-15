@@ -201,15 +201,15 @@ export default function PortfolioDetailPage({ project }: Props) {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <Card className="overflow-hidden bg-card border-border/50">
-                <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                <div className="aspect-[3/2] bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                   <Image
                     src={project.image}
                     alt={`${project.title} project image`}
-                    width={600}
+                    width={900}
                     height={600}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     priority
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </Card>

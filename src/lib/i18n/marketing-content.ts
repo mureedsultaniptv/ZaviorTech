@@ -292,6 +292,10 @@ export const marketingContent: Record<Language, MarketingContent> = {
           { category: "Manufacturing · Odoo ERP", title: "Manufacturing ERP & CRM Platform", description: "Unified sales, production and inventory with real-time reporting and controlled approvals.", results: [{ value: "30%", label: "Faster order cycle" }, { value: "18%", label: "Lower holding cost" }] },
           { category: "Finance · Automation", title: "Finance & Accounting Automation", description: "Consolidated multi-company reporting, reconciliation and repeatable month-end workflows.", results: [{ value: "15 → 3", label: "Days to close" }, { value: "One view", label: "Group reporting" }] },
           { category: "UAE · AI Automation", title: "AI Lead Management & CRM", description: "Connected lead capture, prioritization, follow-up and pipeline reporting for a B2B sales team.", results: [{ value: "AI", label: "Lead scoring" }, { value: "Always-on", label: "Follow-up" }] },
+          { category: "Pharma · Odoo ERP", title: "Pharmaceutical Manufacturing ERP", description: "Unified manufacturing, batch traceability, quality control and regulatory reporting across the operation.", results: [{ value: "99%", label: "Inventory accuracy" }, { value: "5K+", label: "Daily transactions" }] },
+          { category: "Sustainability · Odoo ERP", title: "Zero Waste Industrial ERP", description: "Tracked waste collection, processing and recycled-material sales with connected weighbridge data.", results: [{ value: "500+", label: "Tons monthly" }, { value: "30 hrs", label: "Saved weekly" }] },
+          { category: "Analytics · AI Automation", title: "AI Insights & Reporting Dashboard", description: "Automated data pipelines, predictive insights and executive summaries for enterprise reporting.", results: [{ value: "70%", label: "Less analyst work" }, { value: "50+", label: "Enterprise clients" }] },
+          { category: "Enterprise · CRM Analytics", title: "Enterprise CRM & Analytics", description: "Created a unified customer view with real-time analytics, segmentation and churn intelligence.", results: [{ value: "10%", label: "Higher retention" }, { value: "18%", label: "Better win rate" }] },
         ],
       },
       stats: [
@@ -493,6 +497,10 @@ export const marketingContent: Record<Language, MarketingContent> = {
           { category: "التصنيع · Odoo ERP", title: "منصة ERP وCRM للتصنيع", description: "توحيد المبيعات والإنتاج والمخزون مع تقارير فورية وموافقات محكومة.", results: [{ value: "30%", label: "دورة طلب أسرع" }, { value: "18%", label: "تكلفة احتفاظ أقل" }] },
           { category: "المالية · أتمتة", title: "أتمتة المالية والمحاسبة", description: "توحيد تقارير الشركات المتعددة والمطابقة وإجراءات الإغلاق الشهرية المتكررة.", results: [{ value: "15 ← 3", label: "أيام للإغلاق" }, { value: "رؤية واحدة", label: "تقارير المجموعة" }] },
           { category: "الإمارات · الذكاء الاصطناعي", title: "إدارة العملاء المحتملين وCRM بالذكاء الاصطناعي", description: "ربط جمع العملاء المحتملين وتحديد الأولويات والمتابعة وتقارير المسار لفريق مبيعات B2B.", results: [{ value: "AI", label: "تقييم العملاء" }, { value: "دائم", label: "متابعة" }] },
+          { category: "الأدوية · Odoo ERP", title: "نظام ERP لتصنيع الأدوية", description: "توحيد التصنيع وتتبع الدفعات ومراقبة الجودة والتقارير التنظيمية عبر العمليات.", results: [{ value: "99%", label: "دقة المخزون" }, { value: "+5K", label: "معاملة يومية" }] },
+          { category: "الاستدامة · Odoo ERP", title: "نظام ERP صناعي للنفايات الصفرية", description: "تتبع جمع النفايات ومعالجتها وبيع المواد المعاد تدويرها مع بيانات الموازين المتصلة.", results: [{ value: "+500", label: "طن شهريًا" }, { value: "30 ساعة", label: "موفرة أسبوعيًا" }] },
+          { category: "التحليلات · أتمتة ذكية", title: "لوحة رؤى وتقارير بالذكاء الاصطناعي", description: "أتمتة تدفقات البيانات والرؤى التنبؤية والملخصات التنفيذية لتقارير المؤسسات.", results: [{ value: "70%", label: "عمل تحليلي أقل" }, { value: "+50", label: "عميل مؤسسي" }] },
+          { category: "المؤسسات · تحليلات CRM", title: "CRM وتحليلات للمؤسسات", description: "إنشاء رؤية موحدة للعملاء مع تحليلات فورية وتقسيم ذكي وتوقع مخاطر فقد العملاء.", results: [{ value: "10%", label: "احتفاظ أعلى" }, { value: "18%", label: "معدل فوز أفضل" }] },
         ],
       },
       stats: [
