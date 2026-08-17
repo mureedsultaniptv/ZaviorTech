@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "@/lib/light-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { stats } from "@/lib/data/demo-data";

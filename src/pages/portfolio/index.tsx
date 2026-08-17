@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "@/lib/light-motion";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { SeoHead } from "@/components/seo/seo-head";

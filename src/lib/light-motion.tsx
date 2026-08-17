@@ -66,6 +66,14 @@ export function AnimatePresence({
   return <>{children}</>;
 }
 
+export function MotionConfig({ children }: { children?: React.ReactNode }) {
+  return <>{children}</>;
+}
+
+export function useReducedMotion() {
+  return true;
+}
+
 export function useInView(...args: unknown[]) {
   void args;
   return true;

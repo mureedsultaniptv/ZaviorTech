@@ -1,7 +1,7 @@
 "use client";
 
 import { GetStaticPaths, GetStaticProps } from "next";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/light-motion";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { team } from "@/lib/data/demo-data";

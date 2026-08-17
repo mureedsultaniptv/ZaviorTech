@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "@/lib/light-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/language-context";

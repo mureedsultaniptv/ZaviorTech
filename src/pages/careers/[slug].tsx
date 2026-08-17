@@ -1,7 +1,7 @@
 "use client";
 
 import { GetStaticPaths, GetStaticProps } from "next";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/light-motion";
 import { getLocalizedTitle } from "@/lib/i18n/localized-content";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { SeoHead } from "@/components/seo/seo-head";

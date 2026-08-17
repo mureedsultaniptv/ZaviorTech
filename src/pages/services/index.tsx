@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { motion } from "framer-motion";
+import { motion } from "@/lib/light-motion";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { getLocalizedTitle } from "@/lib/i18n/localized-content";

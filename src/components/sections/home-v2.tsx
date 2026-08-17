@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "@/lib/light-motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -254,10 +254,10 @@ export function HomeV2() {
               {content.hero.description}
             </motion.p>
             <motion.div variants={heroItemVariants} transition={{ duration: 0.5 }} className="v2-actions">
-              <Link className="v2-button" href="/contact">
+              <Link className="v2-button" href="/contact" prefetch={false}>
                 {content.hero.primaryCta} <ArrowForward />
               </Link>
-              <Link className="v2-button secondary" href="/portfolio">
+              <Link className="v2-button secondary" href="/portfolio" prefetch={false}>
                 <Play /> {content.hero.secondaryCta}
               </Link>
             </motion.div>
@@ -488,7 +488,7 @@ export function HomeV2() {
           ))}
         </div>
         <AnimatePresence initial={false} mode="wait">
-          <motion.article
+          <motion.div
             key={activeSolution}
             className={`v2-solution ${activeSolution}`}
             id="v2-solution-panel"
@@ -512,7 +512,7 @@ export function HomeV2() {
                 {solution.explore} <ArrowForward />
               </Link>
             </div>
-          </motion.article>
+          </motion.div>
         </AnimatePresence>
       </motion.section>
 
@@ -564,7 +564,6 @@ export function HomeV2() {
                 href={asset.href}
                 className="v2-case-card"
                 key={study.title}
-                aria-label={`${study.title} (${index + 1} / ${caseStudyAssets.length})`}
               >
                 <Image src={asset.image} alt={study.title} width={620} height={350} />
                 <div className="v2-case-copy">

@@ -49,7 +49,7 @@ export function Footer() {
       <div className="v2-footer-container">
         <div className="v2-footer-main">
           <div className="v2-footer-brand">
-            <Image src="/zaviorlogo-dark.webp" alt="Zavior Technologies" width={612} height={408} />
+            <Image src="/zaviorlogo-dark.webp" alt="Zavior Technologies" width={612} height={408} sizes="180px" />
             <p>{footer.description}</p>
             <div className="v2-footer-partners" aria-label={footer.officialPartner}>
               <span><Image src="/brands/odoo-logo.svg" alt="Odoo" width={82} height={38} /> {footer.officialPartner}</span>

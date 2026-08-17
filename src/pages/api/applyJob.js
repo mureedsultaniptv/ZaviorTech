@@ -6,11 +6,10 @@ import {
 } from "@/lib/server/form-validation";
 import {
   applyRateLimit,
-  getClientIp,
   requireTrustedFormRequest,
   sanitizeFilename,
 } from "@/lib/server/request-security";
-import { queueJobApplicationSubmission } from "@/lib/server/submission-processors";
+import { submitJobApplicationToOdoo } from "@/lib/server/odoo-form";
 
 const MAX_REQUEST_BYTES = 4.5 * 1024 * 1024;
 
@@ -133,7 +132,7 @@ export default async function handler(req, res) {
     const { fields, resumeFile } = await parseMultipartForm(req);
     const data = validateJobApplicationPayload(fields);
     const validatedResume = await validateResumeFile(resumeFile);
-    const submission = await queueJobApplicationSubmission({
+    const submission = await submitJobApplicationToOdoo({
       ...data,
       resume: {
         filename: validatedResume.filename,
@@ -141,13 +140,12 @@ export default async function handler(req, res) {
         contentBase64: validatedResume.content.toString("base64"),
       },
       submittedAt: new Date().toISOString(),
-      ip: getClientIp(req),
     });
 
-    return res.status(202).json({
+    return res.status(200).json({
       success: true,
       submissionId: submission.id,
-      message: "Application received successfully. We are processing it now.",
+      message: submission.message || "Application received successfully.",
     });
   } catch (error) {
     const statusCode =

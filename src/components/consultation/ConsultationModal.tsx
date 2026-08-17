@@ -3,11 +3,12 @@
 import {
   type FormEvent,
   type KeyboardEvent,
+  type MouseEvent,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "@/lib/light-motion";
 import { ArrowLeft, ArrowRight, CheckCircle2, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -198,7 +199,7 @@ export function ConsultationModal({ open, onOpenChange }: ConsultationModalProps
   return (
     <AnimatePresence>
       {open ? (
-        <motion.div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/55 p-0 backdrop-blur-sm sm:items-center sm:p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event) => { if (event.target === event.currentTarget) closeModal(); }}>
+        <motion.div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/55 p-0 backdrop-blur-sm sm:items-center sm:p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event: MouseEvent<HTMLDivElement>) => { if (event.target === event.currentTarget) closeModal(); }}>
           <motion.div ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="consultation-title" aria-describedby="consultation-description" onKeyDown={handleKeyDown} initial={{ opacity: 0, y: 24, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 24, scale: 0.98 }} transition={{ duration: 0.2 }} className="flex max-h-[min(760px,100dvh)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-border bg-background shadow-2xl sm:max-h-[calc(100dvh-3rem)] sm:rounded-2xl">
             <header className="flex items-start justify-between gap-4 border-b border-border bg-card px-5 py-4 sm:px-7">
               <div>

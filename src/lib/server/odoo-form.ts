@@ -30,6 +30,22 @@ type ChatTranscriptPayload = {
   messages: Array<{ role: "user" | "assistant"; content: string; timestamp: string }>;
 };
 
+type JobApplicationPayload = {
+  name: string;
+  email: string;
+  phone: string;
+  linkedin: string;
+  portfolio: string;
+  coverLetter: string;
+  jobId: string;
+  submittedAt: string;
+  resume: {
+    filename: string;
+    mimeType: string;
+    contentBase64: string;
+  };
+};
+
 type OdooFormResponse = {
   success: boolean;
   id?: string | number;
@@ -44,6 +60,7 @@ type ParsedOdooResponse = {
 
 const LOCAL_ODOO_FORM_ENDPOINT = "http://localhost:8019/zavior/formsubmit";
 const ODOO_FORM_TIMEOUT_MS = 8_000;
+const ODOO_FILE_UPLOAD_TIMEOUT_MS = 20_000;
 
 function getAllowedInsecureHttpHosts() {
   return new Set(
@@ -177,12 +194,15 @@ function getSubmissionId(result: OdooFormResponse | null) {
 
 async function submitToOdoo(
   body: Record<string, unknown>,
-  options: { requireSubmissionId?: boolean } = {},
+  options: { requireSubmissionId?: boolean; timeoutMs?: number } = {},
 ) {
   const endpoint = getOdooFormEndpoint();
   const token = getOdooFormToken();
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), ODOO_FORM_TIMEOUT_MS);
+  const timeout = setTimeout(
+    () => controller.abort(),
+    options.timeoutMs ?? ODOO_FORM_TIMEOUT_MS,
+  );
 
   try {
     const response = await fetch(endpoint, {
@@ -279,6 +299,52 @@ export async function submitConsultationToOdoo(payload: ConsultationPayload) {
     submitted_at: consultationPayload.submitted_at,
     consultation_payload: consultationPayload,
   });
+}
+
+export async function submitJobApplicationToOdoo(payload: JobApplicationPayload) {
+  const [firstName, ...lastNameParts] = payload.name.trim().split(/\s+/);
+  const lastName = lastNameParts.join(" ") || "-";
+  const application = {
+    job_id: payload.jobId,
+    name: payload.name,
+    email: payload.email,
+    phone: payload.phone,
+    linkedin: payload.linkedin,
+    portfolio: payload.portfolio,
+    cover_letter: payload.coverLetter,
+    submitted_at: payload.submittedAt,
+    resume: {
+      filename: payload.resume.filename,
+      mime_type: payload.resume.mimeType,
+      content_base64: payload.resume.contentBase64,
+    },
+  };
+
+  return submitToOdoo(
+    {
+      operation: "job_application",
+      form_type: "job_application",
+      source: "website",
+      firstName,
+      lastName,
+      name: payload.name,
+      company: "",
+      email: payload.email,
+      phone: payload.phone,
+      service: "Career Application",
+      message: payload.coverLetter,
+      job_id: payload.jobId,
+      linkedin: payload.linkedin,
+      portfolio: payload.portfolio,
+      cover_letter: payload.coverLetter,
+      submitted_at: payload.submittedAt,
+      resume_filename: payload.resume.filename,
+      resume_mime_type: payload.resume.mimeType,
+      resume_content_base64: payload.resume.contentBase64,
+      job_application_payload: application,
+    },
+    { timeoutMs: ODOO_FILE_UPLOAD_TIMEOUT_MS },
+  );
 }
 
 export async function syncChatTranscriptToOdoo(payload: ChatTranscriptPayload) {

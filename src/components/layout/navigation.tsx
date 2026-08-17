@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "@/lib/light-motion";
 import { ArrowLeft, ArrowRight, ChevronDown, Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
@@ -228,7 +228,7 @@ export function Navigation() {
               alt="Zavior Technologies logo"
               width={612}
               height={408}
-              priority
+              sizes="168px"
               className="hidden h-auto w-[clamp(7.5rem,38vw,10.5rem)] dark:block"
             />
             <Image
@@ -236,7 +236,7 @@ export function Navigation() {
               alt="Zavior Technologies logo"
               width={1077}
               height={371}
-              priority
+              sizes="168px"
               className="h-auto w-[clamp(7.5rem,38vw,10.5rem)] dark:hidden"
             />
           </Link>

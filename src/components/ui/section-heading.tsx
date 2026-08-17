@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "@/lib/light-motion";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {

@@ -37,10 +37,6 @@ function normalizeIp(value?: string | string[]) {
   return ip === "::1" ? "127.0.0.1" : ip;
 }
 
-export function getClientIp(req: NextApiRequest) {
-  return normalizeIp(req.headers["x-forwarded-for"]) || req.socket.remoteAddress;
-}
-
 export function requireTrustedFormRequest(
   req: NextApiRequest,
   res: NextApiResponse,

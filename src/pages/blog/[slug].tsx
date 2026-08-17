@@ -1,7 +1,7 @@
 // /src/pages/blog/[slug].tsx
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/light-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";

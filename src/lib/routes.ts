@@ -1,4 +1,7 @@
 import { blogs, careers, projects, services, team } from "@/lib/data/demo-data";
+import { isIndexablePath } from "@/lib/route-indexing";
+
+export { isIndexablePath } from "@/lib/route-indexing";
 
 const STATIC_LASTMOD = "2026-06-18";
 
@@ -27,18 +30,6 @@ export const staticSiteRoutes = [
   "/privacy",
   "/terms",
 ];
-
-const blockedPathPrefixes = ["/api", "/admin", "/private", "/chat", "/search"];
-
-export function isIndexablePath(path: string) {
-  if (!path || path.includes("?") || path.includes("#")) {
-    return false;
-  }
-
-  return !blockedPathPrefixes.some(
-    (prefix) => path === prefix || path.startsWith(`${prefix}/`),
-  );
-}
 
 function uniqueIndexableEntries(entries: SitemapEntry[]) {
   const seen = new Set<string>();

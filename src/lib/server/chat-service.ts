@@ -202,7 +202,7 @@ export function getRequestMeta(request: Request): ChatRequestMeta {
 }
 
 function hashIp(ipAddress: string) {
-  const salt = process.env.CHAT_IP_HASH_SALT || process.env.SANITY_PROJECT_ID || "zavior-chat-ip";
+  const salt = process.env.CHAT_IP_HASH_SALT || "zavior-chat-ip";
   return createHash("sha256").update(`${salt}:${ipAddress}`).digest("hex");
 }
 
@@ -211,175 +211,15 @@ function normalizeSessionId(value: unknown) {
   return /^[a-zA-Z0-9-]{16,80}$/.test(candidate) ? candidate : randomUUID();
 }
 
-function sanityConfig() {
-  const projectId = process.env.SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-  const dataset = process.env.SANITY_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET;
-  const apiVersion = process.env.SANITY_API_VERSION || process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2024-06-01";
-  const token = process.env.SANITY_WRITE_TOKEN;
-  return projectId && dataset && token ? { projectId, dataset, apiVersion, token } : null;
-}
-
-function sanityBaseUrl(config: NonNullable<ReturnType<typeof sanityConfig>>) {
-  const version = config.apiVersion.startsWith("v") ? config.apiVersion : `v${config.apiVersion}`;
-  return `https://${config.projectId}.api.sanity.io/${version}`;
-}
-
-async function sanityRequest<T>(path: string, init?: RequestInit): Promise<T> {
-  const config = sanityConfig();
-  if (!config) throw new Error("Sanity configuration is incomplete");
-  const response = await fetch(`${sanityBaseUrl(config)}${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${config.token}`,
-      "Content-Type": "application/json",
-      ...(init?.headers || {}),
-    },
-    cache: "no-store",
-  });
-  if (!response.ok) throw new Error(`Sanity request failed with status ${response.status}`);
-  return (await response.json()) as T;
-}
-
-function conversationId(sessionId: string) {
-  return `chatConversation-${sessionId}`;
-}
-
-function leadId(sessionId: string) {
-  return `chatLead-${sessionId}`;
-}
-
 export async function loadChatConversation(sessionId: string) {
   cleanupMemory();
   const memoryValue = conversations.get(sessionId);
   if (memoryValue && !isExpired(memoryValue)) return memoryValue;
-
-  const config = sanityConfig();
-  if (!config) return null;
-
-  try {
-    const query = `*[_type == "chatConversation" && sessionId == $sessionId][0]`;
-    const params = new URLSearchParams({ query, "$sessionId": sessionId });
-    const result = await sanityRequest<{ result?: ChatConversation }>(
-      `/data/query/${encodeURIComponent(config.dataset)}?${params.toString()}`,
-    );
-    const conversation = result.result;
-    if (!conversation || isExpired(conversation)) return null;
-    const normalized: ChatConversation = {
-      ...conversation,
-      messages: Array.isArray(conversation.messages) ? conversation.messages : [],
-      qualification: { ...emptyQualification(), ...(conversation.qualification || {}) },
-      lastUserMessageAt: conversation.lastUserMessageAt || conversation.lastMessageAt,
-      messageCount: conversation.messageCount || Math.floor((conversation.messages?.length || 0) / 2),
-      contact: conversation.contact || { name: "", email: "", phone: "" },
-      subject: conversation.subject || "",
-      description: conversation.description || "",
-      odooLeadId: conversation.odooLeadId || "",
-    };
-    conversations.set(sessionId, normalized);
-    return normalized;
-  } catch (error) {
-    console.warn("Chat conversation load unavailable", {
-      sessionId,
-      message: error instanceof Error ? error.message : "unknown_error",
-    });
-    return null;
-  }
-}
-
-async function saveSanityDocument(document: Record<string, unknown>) {
-  const config = sanityConfig();
-  if (!config) return false;
-  try {
-    await sanityRequest(`/data/mutate/${encodeURIComponent(config.dataset)}`, {
-      method: "POST",
-      body: JSON.stringify({ mutations: [{ createOrReplace: document }] }),
-    });
-    return true;
-  } catch (error) {
-    console.warn("Chat Sanity persistence unavailable", {
-      type: document._type,
-      message: error instanceof Error ? error.message : "unknown_error",
-    });
-    return false;
-  }
+  return null;
 }
 
 async function persistConversation(conversation: ChatConversation) {
   conversations.set(conversation.sessionId, conversation);
-  await saveSanityDocument({
-    _id: conversationId(conversation.sessionId),
-    _type: "chatConversation",
-    sessionId: conversation.sessionId,
-    visitorId: conversation.visitorId,
-    ipHash: conversation.ipHash,
-    startedAt: conversation.startedAt,
-    lastMessageAt: conversation.lastMessageAt,
-    lastUserMessageAt: conversation.lastUserMessageAt,
-    status: conversation.status,
-    sourcePage: conversation.sourcePage,
-    serviceInterest: conversation.serviceInterest,
-    leadScore: conversation.leadScore,
-    leadSummary: conversation.leadSummary,
-    whatsappRedirected: conversation.whatsappRedirected,
-    messageCount: conversation.messageCount,
-    qualification: conversation.qualification,
-    contact: conversation.contact,
-    subject: conversation.subject,
-    description: conversation.description,
-    odooLeadId: conversation.odooLeadId,
-    messages: conversation.messages.map((message) => ({
-      _type: "message",
-      role: message.role,
-      content: message.content,
-      timestamp: message.timestamp,
-    })),
-  });
-  await persistSanityFormSubmission(conversation);
-}
-
-function sanityFormSubmissionId(sessionId: string) {
-  return `sanityFormSubmission-${sessionId}`;
-}
-
-async function persistSanityFormSubmission(conversation: ChatConversation) {
-  if (
-    !conversation.contact.name ||
-    !conversation.contact.email ||
-    !conversation.contact.phone ||
-    !conversation.subject
-  ) {
-    return false;
-  }
-
-  const saved = await saveSanityDocument({
-    _id: sanityFormSubmissionId(conversation.sessionId),
-    _type: "sanityFormSubmission",
-    name: conversation.contact.name,
-    email: conversation.contact.email,
-    phone: conversation.contact.phone,
-    subject: conversation.subject,
-    description: conversation.description,
-    sessionId: conversation.sessionId,
-    status:
-      conversation.status === "converted"
-        ? "converted"
-        : conversation.status === "qualified"
-          ? "qualified"
-          : conversation.messages.length
-            ? "chatting"
-            : "new",
-    chatHistory: conversation.messages.map((message, index) => ({
-      _key: `${message.timestamp.replace(/[^a-zA-Z0-9]/g, "")}-${index}`,
-      _type: "chatHistoryMessage",
-      role: message.role,
-      content: message.content,
-      timestamp: message.timestamp,
-    })),
-    createdAt: conversation.startedAt,
-    updatedAt: conversation.lastMessageAt,
-  });
-
-  return saved;
 }
 
 function emptyQualification(): ChatQualification {
@@ -482,8 +322,6 @@ export async function submitChatIntake(
   }
 
   conversation.contact = { name, email, phone };
-  // Keep the legacy Sanity field populated for existing documents while the
-  // customer-facing consultant form uses the clearer service field.
   conversation.subject = serviceRequired;
   conversation.description = description;
   conversation.odooLeadId = odooLeadId || conversation.odooLeadId;
@@ -491,12 +329,11 @@ export async function submitChatIntake(
   conversations.set(conversation.sessionId, conversation);
 
   await persistConversation(conversation);
-  const saved = await persistSanityFormSubmission(conversation);
 
   return {
     sessionId: conversation.sessionId,
     customer: { name, email, phone, serviceRequired, description },
-    persisted: saved,
+    persisted: true,
   };
 }
 
@@ -1263,30 +1100,6 @@ function validateAssistantReply(
   return validated.replace(/\s{2,}/g, " ").trim() || recommendationReply(conversation, false);
 }
 
-async function persistLead(conversation: ChatConversation, contact: { name: string; email: string; phone: string }) {
-  const q = conversation.qualification;
-  if (q.leadScore < 30 && !contact.email && !contact.phone) return;
-  await saveSanityDocument({
-    _id: leadId(conversation.sessionId),
-    _type: "chatLead",
-    name: contact.name,
-    email: contact.email,
-    phone: contact.phone,
-    company: q.company || q.companyType,
-    serviceInterest: q.serviceInterest,
-    requirement: q.requirement,
-    budget: q.budget,
-    timeline: q.timeline,
-    location: q.location,
-    leadScore: q.leadScore,
-    leadSummary: conversation.leadSummary,
-    conversationReference: { _type: "reference", _ref: conversationId(conversation.sessionId) },
-    sourcePage: conversation.sourcePage,
-    createdAt: conversation.startedAt,
-    status: q.wantsConsultation || q.wantsQuote ? "qualified" : "active",
-  });
-}
-
 async function syncConversationToOdoo(conversation: ChatConversation) {
   if (!conversation.odooLeadId || !conversation.contact.email) return;
 
@@ -1308,32 +1121,13 @@ async function syncConversationToOdoo(conversation: ChatConversation) {
   }
 }
 
-async function loadPersistedRateRecord(key: string) {
-  const config = sanityConfig();
-  if (!config) return null;
-  try {
-    const query = `*[_type == "chatRateLimit" && _id == $id][0]{count, resetAt}`;
-    const params = new URLSearchParams({ query, "$id": `chatRateLimit-${key}` });
-    const result = await sanityRequest<{ result?: RateRecord }>(
-      `/data/query/${encodeURIComponent(config.dataset)}?${params.toString()}`,
-    );
-    return result.result || null;
-  } catch (error) {
-    console.warn("Chat rate-limit persistence unavailable", {
-      message: error instanceof Error ? error.message : "unknown_error",
-    });
-    return null;
-  }
-}
-
 async function reserveAllowance(conversation: ChatConversation, ipHash: string) {
   const limits = getChatLimits();
   const now = Date.now();
   const dateKey = new Date(now).toISOString().slice(0, 10);
   const key = `${dateKey}:${ipHash}`;
   const record = rateLimits.get(key) || { count: 0, resetAt: Date.UTC(new Date(now).getUTCFullYear(), new Date(now).getUTCMonth(), new Date(now).getUTCDate() + 1) };
-  const persisted = await loadPersistedRateRecord(key);
-  const countBeforeRequest = Math.max(record.count, persisted?.count || 0);
+  const countBeforeRequest = record.count;
   if (countBeforeRequest >= limits.daily) return { allowed: false, reason: "daily_limit" as const, remaining: 0 };
   if (conversation.messageCount >= limits.session) return { allowed: false, reason: "session_limit" as const, remaining: 0 };
   const previous = Date.parse(conversation.lastUserMessageAt);
@@ -1342,14 +1136,6 @@ async function reserveAllowance(conversation: ChatConversation, ipHash: string) 
   }
   record.count = countBeforeRequest + 1;
   rateLimits.set(key, record);
-  await saveSanityDocument({
-    _id: `chatRateLimit-${key}`,
-    _type: "chatRateLimit",
-    ipHash,
-    date: dateKey,
-    count: record.count,
-    resetAt: new Date(record.resetAt).toISOString(),
-  });
   conversation.messageCount += 1;
   conversation.lastUserMessageAt = new Date(now).toISOString();
   return { allowed: true, reason: "allowed" as const, remaining: limits.session - conversation.messageCount };
@@ -1450,7 +1236,6 @@ export async function sendChatMessage(conversation: ChatConversation, message: s
     conversation.whatsappRedirected = true;
   }
   await persistConversation(conversation);
-  await persistLead(conversation, extracted.contact);
   await syncConversationToOdoo(conversation);
   return {
     message: reply,

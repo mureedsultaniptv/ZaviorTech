@@ -423,9 +423,27 @@ body {
   color: var(--v2-ink);
 }
 
+/* Skip paint and layout work for distant homepage sections until the browser
+   approaches them. The remembered intrinsic size prevents scroll jumps. */
+.home-v2 > section:nth-child(n + 3) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .dark .home-v2 {
   --v2-red: #ff777d;
-  --v2-red-strong: #bd2d38;
+  --v2-red-strong: #ff9298;
   --v2-orange: #ff9a67;
   --v2-gold: #e7b65f;
   --v2-ink: #f7f8fa;
@@ -874,8 +892,10 @@ body {
 
 .home-v2 .v2-services-section::before {
   z-index: -2;
-  background: url("/images/home-services-dubai-bg.webp") center 44% / cover no-repeat;
-  filter: saturate(0.78) contrast(0.94);
+  background:
+    radial-gradient(circle at 15% 24%, rgb(180 138 82 / 12%), transparent 28%),
+    radial-gradient(circle at 82% 72%, rgb(111 76 47 / 9%), transparent 32%),
+    linear-gradient(135deg, #f9f4eb, #fffdf9 52%, #f5eee4);
 }
 
 .home-v2 .v2-services-section::after {
@@ -890,7 +910,10 @@ body {
 }
 
 .dark .home-v2 .v2-services-section::before {
-  filter: grayscale(0.25) saturate(0.58) brightness(0.48);
+  background:
+    radial-gradient(circle at 15% 24%, rgb(180 138 82 / 9%), transparent 28%),
+    radial-gradient(circle at 82% 72%, rgb(117 84 61 / 8%), transparent 32%),
+    #15171c;
 }
 
 .dark .home-v2 .v2-services-section::after {
@@ -2335,6 +2358,13 @@ body {
 .v2-footer-contact a,
 .v2-footer-bottom a {
   transition: color 160ms ease;
+}
+
+.v2-footer-col a,
+.v2-footer-contact address > a {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .v2-footer-col a:hover,
