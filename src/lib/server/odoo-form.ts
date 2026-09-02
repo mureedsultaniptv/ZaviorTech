@@ -27,7 +27,11 @@ type ChatTranscriptPayload = {
   sessionId: string;
   email: string;
   summary: string;
-  messages: Array<{ role: "user" | "assistant"; content: string; timestamp: string }>;
+  messages: Array<{
+    role: "user" | "assistant";
+    content: string;
+    timestamp: string;
+  }>;
 };
 
 type JobApplicationPayload = {
@@ -72,9 +76,10 @@ function getAllowedInsecureHttpHosts() {
 }
 
 function getOdooFormEndpoint() {
-  const configuredEndpoint = process.env.ODOO_FORM_API_URL?.trim()
-    || process.env.ODOO_LEAD_API_URL?.trim()
-    || (process.env.NODE_ENV !== "production" ? LOCAL_ODOO_FORM_ENDPOINT : "");
+  const configuredEndpoint =
+    process.env.ODOO_FORM_API_URL?.trim() ||
+    process.env.ODOO_LEAD_API_URL?.trim() ||
+    (process.env.NODE_ENV !== "production" ? LOCAL_ODOO_FORM_ENDPOINT : "");
 
   if (!configuredEndpoint) {
     throw new ApiError(503, "The form delivery service is not configured.");
@@ -89,17 +94,17 @@ function getOdooFormEndpoint() {
 
   const usesSecureTransport = endpoint.protocol === "https:";
   const isLocalDevelopmentEndpoint =
-    process.env.NODE_ENV !== "production"
-    && endpoint.protocol === "http:"
-    && ["localhost", "127.0.0.1", "::1"].includes(endpoint.hostname);
+    process.env.NODE_ENV !== "production" &&
+    endpoint.protocol === "http:" &&
+    ["localhost", "127.0.0.1", "::1"].includes(endpoint.hostname);
   const isExplicitlyAllowedHttpEndpoint =
-    endpoint.protocol === "http:"
-    && getAllowedInsecureHttpHosts().has(endpoint.hostname.toLowerCase());
+    endpoint.protocol === "http:" &&
+    getAllowedInsecureHttpHosts().has(endpoint.hostname.toLowerCase());
 
   if (
-    !usesSecureTransport
-    && !isLocalDevelopmentEndpoint
-    && !isExplicitlyAllowedHttpEndpoint
+    !usesSecureTransport &&
+    !isLocalDevelopmentEndpoint &&
+    !isExplicitlyAllowedHttpEndpoint
   ) {
     throw new ApiError(503, "The form delivery service is not configured.");
   }
@@ -108,14 +113,25 @@ function getOdooFormEndpoint() {
 }
 
 function getOdooFormToken() {
-  const token = process.env.ODOO_FORM_API_TOKEN?.trim()
-    || process.env.ODOO_LEAD_API_TOKEN?.trim();
+  const token =
+    process.env.ODOO_FORM_API_TOKEN?.trim() ||
+    process.env.ODOO_LEAD_API_TOKEN?.trim();
 
   if (!token) {
     throw new ApiError(503, "The form delivery service is not configured.");
   }
 
   return token;
+}
+
+function getOdooDatabase() {
+  const database = process.env.ODOO_DATABASE?.trim();
+
+  if (!database) {
+    throw new ApiError(503, "The Odoo database is not configured.");
+  }
+
+  return database;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -130,7 +146,10 @@ async function parseOdooResponse(
   try {
     rawBody = await response.text();
   } catch {
-    return { result: null, errorDetail: "Odoo response body could not be read." };
+    return {
+      result: null,
+      errorDetail: "Odoo response body could not be read.",
+    };
   }
 
   let body: unknown;
@@ -146,9 +165,10 @@ async function parseOdooResponse(
   if (!isRecord(body) || ("error" in body && body.error)) {
     return {
       result: null,
-      errorDetail: typeof body === "object" && body && "error" in body
-        ? String(body.error).slice(0, 240)
-        : "Odoo returned an invalid response.",
+      errorDetail:
+        typeof body === "object" && body && "error" in body
+          ? String(body.error).slice(0, 240)
+          : "Odoo returned an invalid response.",
     };
   }
 
@@ -156,9 +176,10 @@ async function parseOdooResponse(
   if (("error" in payload && payload.error) || payload.success !== true) {
     return {
       result: null,
-      errorDetail: typeof payload.error === "string"
-        ? payload.error.slice(0, 240)
-        : "Odoo did not confirm the request.",
+      errorDetail:
+        typeof payload.error === "string"
+          ? payload.error.slice(0, 240)
+          : "Odoo did not confirm the request.",
     };
   }
 
@@ -198,6 +219,7 @@ async function submitToOdoo(
 ) {
   const endpoint = getOdooFormEndpoint();
   const token = getOdooFormToken();
+  const database = getOdooDatabase();
   const controller = new AbortController();
   const timeout = setTimeout(
     () => controller.abort(),
@@ -211,6 +233,7 @@ async function submitToOdoo(
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
+        "X-Odoo-Database": database,
       },
       body: JSON.stringify(body),
       redirect: "error",
@@ -230,7 +253,10 @@ async function submitToOdoo(
         success: result?.success,
         reason: parsed.errorDetail || "Odoo did not return a lead identifier.",
       });
-      throw new ApiError(502, "We could not submit your message right now. Please try again later.");
+      throw new ApiError(
+        502,
+        "We could not submit your message right now. Please try again later.",
+      );
     }
 
     return {
@@ -245,7 +271,10 @@ async function submitToOdoo(
     console.error("Odoo form submission request failed", {
       reason: error instanceof Error ? error.name : "request_error",
     });
-    throw new ApiError(502, "We could not submit your message right now. Please try again later.");
+    throw new ApiError(
+      502,
+      "We could not submit your message right now. Please try again later.",
+    );
   } finally {
     clearTimeout(timeout);
   }
@@ -301,7 +330,9 @@ export async function submitConsultationToOdoo(payload: ConsultationPayload) {
   });
 }
 
-export async function submitJobApplicationToOdoo(payload: JobApplicationPayload) {
+export async function submitJobApplicationToOdoo(
+  payload: JobApplicationPayload,
+) {
   const [firstName, ...lastNameParts] = payload.name.trim().split(/\s+/);
   const lastName = lastNameParts.join(" ") || "-";
   const application = {
@@ -355,23 +386,26 @@ export async function syncChatTranscriptToOdoo(payload: ChatTranscriptPayload) {
     content: message.content,
     timestamp: message.timestamp,
   }));
-  return submitToOdoo({
-    // This is deliberately an update-only contract. It must never be treated
-    // as a lead-creation request by the Odoo controller.
-    operation: "update_chat_transcript",
-    lead_id: payload.leadId,
-    match_email: payload.email,
-    chat_session_id: payload.sessionId,
-    email: payload.email,
-    chat_summary: payload.summary,
-    chat_transcript: recentTranscript,
-    chat_payload: {
+  return submitToOdoo(
+    {
+      // This is deliberately an update-only contract. It must never be treated
+      // as a lead-creation request by the Odoo controller.
+      operation: "update_chat_transcript",
       lead_id: payload.leadId,
+      match_email: payload.email,
+      chat_session_id: payload.sessionId,
       email: payload.email,
-      session_id: payload.sessionId,
-      summary: payload.summary,
-      transcript: recentTranscript,
-      updated_at: new Date().toISOString(),
+      chat_summary: payload.summary,
+      chat_transcript: recentTranscript,
+      chat_payload: {
+        lead_id: payload.leadId,
+        email: payload.email,
+        session_id: payload.sessionId,
+        summary: payload.summary,
+        transcript: recentTranscript,
+        updated_at: new Date().toISOString(),
+      },
     },
-  }, { requireSubmissionId: false });
+    { requireSubmissionId: false },
+  );
 }
