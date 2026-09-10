@@ -82,7 +82,7 @@ export default function FAQPage() {
   return (
     <main className="min-h-screen bg-background" dir={dir}>
       <SeoHead
-        title="Frequently Asked Questions | Zavior Technologies"
+        title="FAQ | Odoo ERP & AI Automation Dubai | Zavior Tech"
         description="Find answers about Zavior Technologies services for Dubai and UAE businesses, including Odoo ERP, AI automation, web development, IT support, process."
         path="/faq"
         structuredData={structuredData}
