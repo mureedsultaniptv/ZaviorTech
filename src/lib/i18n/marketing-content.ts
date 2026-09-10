@@ -168,7 +168,7 @@ export const marketingContent: Record<Language, MarketingContent> = {
         heading: [
           "Odoo ERP, Zoho CRM &",
           "AI Automation Solutions",
-          "for Growing Businesses",
+          "Software Development Company in Dubai",
         ],
         description:
           "Helping businesses across Dubai, UAE and the GCC streamline operations with Odoo ERP Implementation, Zoho CRM, Custom Software Development, AI Automation and Business Process Optimization.",
