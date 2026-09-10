@@ -118,7 +118,7 @@ export default function ServicesPage() {
     webPageJsonLd({
       path: "/services",
       name: "Complete IT, ERP & AI Services for Business Growth",
-      description: "Explore Dubai-focused Odoo ERP, Zoho, AI automation, software development, digital products, and IT infrastructure services.",
+      description: "Explore Dubai-focused Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, cybersecurity, and core infrastructure services.",
       speakableSelectors: ["h1", "#service-categories p"],
     }),
     breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }]),
@@ -130,7 +130,7 @@ export default function ServicesPage() {
     <>
       <SeoHead
         title="Complete IT, ERP & AI Services for Business Growth"
-        description="Explore Dubai-focused Odoo ERP, Zoho, AI automation, software development, digital products, and IT infrastructure services."
+        description="Explore Dubai-focused Odoo ERP implementation, AI automation, web development, mobile apps, IT solutions, cybersecurity, and core infrastructure services."
         path="/services"
         structuredData={structuredData}
         structuredDataId="services-index-structured-data"
