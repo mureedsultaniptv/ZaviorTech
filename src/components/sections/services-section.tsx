@@ -21,7 +21,7 @@ const iconMap = {
 
 const serviceLinks = {
   ai: "/services/ai-automation-dubai",
-  erp: "/services/erp-odoo-dubai",
+  erp: "/services/odoo-erp-implementation-dubai",
   web: "/services/web-development-dubai",
   mobile: "/services/mobile-apps-dubai",
   it: "/services/it-solutions-dubai",

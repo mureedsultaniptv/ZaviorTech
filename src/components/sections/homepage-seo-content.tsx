@@ -25,7 +25,7 @@ export function HomepageSeoContent() {
               </p>
               <p>
                 Our {" "}
-                <Link href="/services/erp-odoo-dubai" className={linkClass}>
+                <Link href="/services/odoo-erp-implementation-dubai" className={linkClass}>
                   Odoo ERP implementation services in Dubai
                 </Link>{" "}
                 connect functions such as CRM, sales, accounting, purchasing,

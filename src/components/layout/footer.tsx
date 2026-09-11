@@ -20,7 +20,7 @@ import { getMarketingContent } from "@/lib/i18n/marketing-content";
 const companyLinkPaths = ["/", "/about", "/companies", "/portfolio", "/blog", "/contact"];
 
 const solutionLinkPaths = [
-  "/services/erp-odoo-dubai",
+  "/services/odoo-erp-implementation-dubai",
   "/services/zoho-solutions-dubai",
   "/services/ai-automation-dubai",
   "/services/web-development-dubai",

@@ -86,7 +86,7 @@ const solutionDefinitions = {
   odoo: {
     logo: "/brands/odoo-logo.svg",
     image: "/services/odoo-erp.webp",
-    href: "/services/erp-odoo-dubai",
+    href: "/services/odoo-erp-implementation-dubai",
   },
   zoho: {
     logo: "/brands/zoho-logo.svg",

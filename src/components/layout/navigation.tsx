@@ -193,7 +193,7 @@ export function Navigation() {
       href: "/services",
       label: t.nav.services,
       children: [
-        { href: "/services/erp-odoo-dubai", label: navCopy.odoo, description: navCopy.odooDescription },
+        { href: "/services/odoo-erp-implementation-dubai", label: navCopy.odoo, description: navCopy.odooDescription },
         { href: "/services/zoho-solutions-dubai", label: navCopy.zoho, description: navCopy.zohoDescription },
         { href: "/services/ai-automation-dubai", label: navCopy.ai, description: navCopy.aiDescription },
         { href: "/services/web-development-dubai", label: navCopy.web, description: navCopy.webDescription },
