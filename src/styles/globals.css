@@ -253,6 +253,138 @@ body {
   font-weight: 700;
 }
 
+.service-rich-content--themed-document {
+  width: 100%;
+  max-width: none;
+}
+
+.service-rich-content--themed-document p {
+  max-width: none;
+}
+
+.service-rich-content--themed-document > p:first-of-type {
+  margin: 0;
+  padding: 1.4rem 1.5rem 0.35rem;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 1.15rem 1.15rem 0 0;
+  background: var(--card);
+  color: var(--foreground);
+  font-size: clamp(1.12rem, 1.5vw, 1.3rem);
+  line-height: 1.75;
+}
+
+.service-rich-content--themed-document > p:first-of-type + p,
+.service-rich-content--themed-document > p:first-of-type + p + p {
+  margin: 0;
+  padding: 0.5rem 1.5rem;
+  border-inline: 1px solid var(--border);
+  background: var(--card);
+}
+
+.service-rich-content--themed-document > p:first-of-type + p + p {
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 0 1.15rem 1.15rem;
+}
+
+.service-rich-content--themed-document h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 3.5rem 0 1.25rem;
+  padding: 1.15rem 1.35rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+  border-inline-start: 4px solid var(--primary);
+  border-radius: 1.1rem;
+  background: linear-gradient(105deg, color-mix(in srgb, var(--primary) 8%, var(--card)), var(--card) 58%);
+  box-shadow: 0 14px 36px -30px rgb(20 24 32 / 60%);
+}
+
+.service-rich-content--themed-document h2::before {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.75rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  content: counter(service-document-section, decimal-leading-zero);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.service-rich-content--themed-document {
+  counter-reset: service-document-section;
+}
+
+.service-rich-content--themed-document h2::before {
+  counter-increment: service-document-section;
+}
+
+.service-rich-content--themed-document h3 {
+  position: relative;
+  margin-top: 2.4rem;
+  padding: 0 1.15rem 0.7rem 0;
+  padding-inline-start: 1.15rem;
+  padding-inline-end: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.service-rich-content--themed-document h3::before {
+  position: absolute;
+  top: 0.35rem;
+  inset-inline-start: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--primary);
+  box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary) 12%, transparent);
+  content: "";
+}
+
+.service-rich-content--themed-document ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  padding: 0;
+  list-style: none;
+}
+
+.service-rich-content--themed-document li {
+  position: relative;
+  margin: 0;
+  min-height: 3.25rem;
+  padding: 0.95rem 1rem;
+  padding-inline-start: 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  background: var(--card);
+  box-shadow: 0 8px 24px -20px rgb(20 24 32 / 45%);
+}
+
+.service-rich-content--themed-document li::before {
+  position: absolute;
+  top: 1.35rem;
+  inset-inline-start: 1rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  background: var(--primary);
+  content: "";
+}
+
+.service-rich-content--themed-document li::marker {
+  content: "";
+}
+
+@media (max-width: 767px) {
+  .service-rich-content--themed-document ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .service-rich-content strong {
   color: var(--foreground);
   font-weight: 650;
@@ -268,6 +400,50 @@ body {
 
 .service-rich-content a:hover {
   text-decoration-color: currentColor;
+}
+
+.service-rich-content--themed-document h3:has(+ p) {
+  margin: 1.75rem 0 0;
+  padding: 1.05rem 1.2rem 0.65rem;
+  padding-inline-start: 2.15rem;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 1rem 1rem 0 0;
+  background: var(--card);
+}
+
+.service-rich-content--themed-document h3:has(+ p)::before {
+  top: 1.4rem;
+  inset-inline-start: 1.2rem;
+}
+
+.service-rich-content--themed-document h3:has(+ p) + p {
+  margin: 0 0 1.4rem;
+  padding: 0 1.2rem 1.1rem;
+  border: 1px solid var(--border);
+  border-top: 0;
+  border-radius: 0 0 1rem 1rem;
+  background: var(--card);
+}
+
+.service-rich-content--themed-document p:has(> a[href^="/contact"]) {
+  margin: 1.5rem 0 2.5rem;
+  padding: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--border));
+  border-radius: 1.1rem;
+  background: linear-gradient(110deg, color-mix(in srgb, var(--primary) 9%, var(--card)), var(--card));
+}
+
+.service-rich-content--themed-document p > a[href^="/contact"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.2rem;
+  border-radius: 9999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  text-decoration: none;
 }
 
 @media (max-width: 767px) {
