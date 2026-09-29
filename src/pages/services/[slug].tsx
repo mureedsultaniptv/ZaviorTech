@@ -7,8 +7,6 @@ import {
   ArrowRight,
   Blocks,
   Bot,
-  Boxes,
-  CreditCard,
   Check,
   CheckCircle2,
   ChevronRight,
@@ -16,17 +14,10 @@ import {
   CloudCog,
   Code2,
   Compass,
-  Globe2,
   Headphones,
-  Landmark,
-  MessageCircle,
   MessageSquare,
   Network,
-  ShoppingCart,
   ShieldCheck,
-  Sparkles,
-  Truck,
-  UsersRound,
 } from "lucide-react";
 
 import { motion } from "@/lib/light-motion";
@@ -84,7 +75,6 @@ const categoryProfiles = {
     icon: Blocks,
     brand: "/brands/odoo-logo.svg",
     heroImage: "/images/odoo-19-leads-dashboard.png",
-    softClass: "from-violet-50 via-white to-red-50/70 dark:from-violet-950/20 dark:via-background dark:to-red-950/15",
   },
   zoho: {
     category: "Zoho Solutions",
@@ -92,7 +82,6 @@ const categoryProfiles = {
     icon: CloudCog,
     brand: "/brands/zoho-logo.svg",
     heroImage: "/images/zoho-crm-kanban-pipeline.png",
-    softClass: "from-sky-50 via-white to-amber-50/70 dark:from-sky-950/20 dark:via-background dark:to-amber-950/15",
   },
   automation: {
     category: "AI & Automation",
@@ -100,7 +89,6 @@ const categoryProfiles = {
     icon: Bot,
     brand: undefined,
     heroImage: "/services/ai-automation.webp",
-    softClass: "from-cyan-50 via-white to-red-50/70 dark:from-cyan-950/20 dark:via-background dark:to-red-950/15",
   },
   digital: {
     category: "Digital Products",
@@ -108,7 +96,6 @@ const categoryProfiles = {
     icon: Code2,
     brand: undefined,
     heroImage: "/services/website-dev.webp",
-    softClass: "from-indigo-50 via-white to-rose-50/70 dark:from-indigo-950/20 dark:via-background dark:to-rose-950/15",
   },
   infrastructure: {
     category: "IT & Infrastructure",
@@ -116,7 +103,6 @@ const categoryProfiles = {
     icon: Network,
     brand: undefined,
     heroImage: "/services/core-it.webp",
-    softClass: "from-slate-100 via-white to-red-50/60 dark:from-slate-900 dark:via-background dark:to-red-950/15",
   },
 };
 
@@ -141,18 +127,6 @@ const trustPoints = [
   { title: "Support after launch", icon: Headphones },
 ];
 
-const integrationNodes = [
-  { title: "Ecommerce", icon: ShoppingCart },
-  { title: "CRM & marketing", icon: UsersRound },
-  { title: "Payments", icon: CreditCard },
-  { title: "Finance", icon: Landmark },
-  { title: "Odoo", icon: Blocks, center: true },
-  { title: "Logistics", icon: Truck },
-  { title: "Marketplaces", icon: Globe2 },
-  { title: "Communication", icon: MessageCircle },
-  { title: "Custom systems", icon: Boxes },
-];
-
 function compactItems(items: ServiceContentItem[], fallback: string[]) {
   if (items.length) return items;
   return fallback.map((title) => ({ title, description: "Configured and delivered around your operational requirements." }));
@@ -174,7 +148,6 @@ export default function ServiceDetailPage({ service }: Props) {
 
   const profile = getProfile(service);
   const ProfileIcon = profile.icon;
-  const isOdooIntegrationService = service.slug === "odoo-integration-dubai";
   const contentSections = parseServiceContent(service.longDescription);
   const challengeSection = findServiceSection(contentSections, [
     /business challenges we solve/i,
@@ -186,14 +159,6 @@ export default function ServiceDetailPage({ service }: Props) {
     /^our .+ development services$/i,
   ]);
   const processSection = findServiceSection(contentSections, [/\bprocess\b/i]);
-  const ecosystemSection = findServiceSection(contentSections, [
-    /modules we (?:implement|evaluate|integrate)/i,
-    /applications we (?:implement|integrate|optimize)/i,
-    /types of .+ we (?:develop|build)/i,
-    /technolog(?:y|ies)/i,
-    /integrations we support/i,
-    /business processes/i,
-  ]);
   const challenges = challengeSection?.items.length ? challengeSection.items : fallbackChallenges;
   const capabilities = compactItems(deliverySection?.items ?? [], service.features);
   const process = compactItems(processSection?.items ?? [], ["Discovery", "Solution design", "Implementation", "Testing", "Launch", "Support"]);
@@ -238,7 +203,7 @@ export default function ServiceDetailPage({ service }: Props) {
       />
 
       <div className="service-detail-page bg-background">
-        <section className={`relative isolate overflow-hidden bg-gradient-to-br ${profile.softClass} pb-20 pt-28 lg:pb-28 lg:pt-36`}>
+        <section className="relative isolate overflow-hidden bg-gradient-to-br from-red-50 via-white to-slate-50 pb-20 pt-28 dark:from-red-950/20 dark:via-background dark:to-slate-950/20 lg:pb-28 lg:pt-36">
           <div className="absolute -right-40 top-0 -z-10 size-[38rem] rounded-full border-[5rem] border-primary/[0.035]" aria-hidden="true" />
           <div className="container mx-auto px-4 lg:px-8">
             <div className="mb-9 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
@@ -282,13 +247,15 @@ export default function ServiceDetailPage({ service }: Props) {
         </section>
 
         <nav className="sticky top-[4.8rem] z-30 hidden border-y border-border bg-background/90 backdrop-blur-lg lg:block" aria-label="Service page sections">
-          <div className="container mx-auto flex items-center justify-between px-4 lg:px-8">
-            <div className="flex items-center gap-8 text-sm font-semibold">
+          <div className="container mx-auto flex items-center justify-between overflow-x-auto px-4 lg:px-8">
+            <div className="flex min-w-max items-center gap-6 text-sm font-semibold lg:gap-8">
               <a href="#overview" className="py-5 transition hover:text-primary">Overview</a>
-              {isOdooIntegrationService ? <a href="#full-service-scope" className="py-5 transition hover:text-primary">Service details</a> : <><a href="#challenges" className="py-5 transition hover:text-primary">Challenges</a><a href="#capabilities" className="py-5 transition hover:text-primary">Capabilities</a><a href="#process" className="py-5 transition hover:text-primary">Process</a></>}
+              <a href="#challenges" className="py-5 transition hover:text-primary">Challenges</a>
+              <a href="#capabilities" className="py-5 transition hover:text-primary">Capabilities</a>
+              <a href="#process" className="py-5 transition hover:text-primary">Process</a>
               <a href="#faq" className="py-5 transition hover:text-primary">FAQs</a>
             </div>
-            <Link href="/contact" className="inline-flex items-center gap-2 text-sm font-bold text-primary">Start a conversation <ArrowRight className="size-4" /></Link>
+            <Link href="/contact" className="hidden shrink-0 items-center gap-2 text-sm font-bold text-primary lg:inline-flex">Start a conversation <ArrowRight className="size-4" /></Link>
           </div>
         </nav>
 
@@ -307,40 +274,7 @@ export default function ServiceDetailPage({ service }: Props) {
           </div>
         </section>
 
-        {isOdooIntegrationService ? (
-          <section className="odoo-integration-visual overflow-hidden bg-[#15171c] py-16 text-white lg:py-20">
-            <div className="container mx-auto grid items-center gap-10 px-4 lg:grid-cols-[.78fr_1.22fr] lg:gap-16 lg:px-8">
-              <div className="max-w-xl">
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[.06] px-4 py-2 text-xs font-bold uppercase tracking-[.16em] text-red-300"><Network className="size-4" />Connected business systems</span>
-                <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">Bring your business tools into one connected flow.</h2>
-                <p className="mt-5 text-base leading-relaxed text-white/65 sm:text-lg">Connect Odoo with ecommerce, finance, customer, payment, logistics, communication, and custom applications your teams already use.</p>
-                <div className="mt-7 flex flex-wrap gap-2"><span className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/75">APIs</span><span className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/75">Webhooks</span><span className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/75">Scheduled sync</span><span className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/75">Custom connectors</span></div>
-              </div>
-              <div className="integration-network-card relative mx-auto w-full max-w-[38rem] overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_50%_48%,rgba(239,68,68,.2),transparent_48%),linear-gradient(145deg,#20232b,#17191f)] p-4 shadow-[0_30px_90px_-45px_rgba(0,0,0,.9)] sm:p-7">
-                <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 360 360" fill="none" aria-hidden="true"><path d="M180 180 60 60M180 180 180 60M180 180 300 60M180 180 60 180M180 180 300 180M180 180 60 300M180 180 180 300M180 180 300 300" stroke="rgba(248,113,113,.42)" strokeWidth="1.5" strokeDasharray="5 7" /></svg>
-                <div className="relative grid grid-cols-3 gap-2.5 sm:gap-3">
-                  {integrationNodes.map((node) => {
-                    const Icon = node.icon;
-                    return node.center ? (
-                      <div key={node.title} className="integration-network-hub flex min-h-24 flex-col items-center justify-center rounded-2xl border border-white/70 bg-white px-2 py-3 text-center shadow-[0_15px_45px_-18px_rgba(239,68,68,.65)] sm:min-h-28 sm:rounded-3xl">
-                        <Image src="/brands/odoo-logo.svg" alt="Odoo" width={100} height={38} className="h-7 w-auto sm:h-9" />
-                        <span className="mt-1 text-[10px] font-bold uppercase tracking-[.15em] text-slate-500">Core platform</span>
-                      </div>
-                    ) : (
-                      <div key={node.title} className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[.055] px-1.5 py-3 text-center shadow-inner transition hover:border-red-300/40 hover:bg-white/[.09] sm:min-h-28 sm:rounded-3xl">
-                        <span className="grid size-9 place-items-center rounded-xl bg-red-400/10 text-red-300 sm:size-10"><Icon className="size-4 sm:size-[1.15rem]" /></span>
-                        <span className="text-[10px] font-semibold leading-tight text-white/75 sm:text-xs">{node.title}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="mt-4 flex items-center justify-center gap-2 text-[10px] font-semibold uppercase tracking-[.16em] text-white/35"><span className="size-1.5 rounded-full bg-emerald-400" /> One coordinated data environment</div>
-              </div>
-            </div>
-          </section>
-        ) : null}
 
-        {!isOdooIntegrationService && (
         <section id="challenges" className="border-y border-border bg-muted/30 py-20 lg:py-28">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-3xl"><p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">{challengeSection?.title || "Problems we help solve"}</p><h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Turn operational friction into a clearer way of working.</h2>{challengeSection?.introduction ? <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{challengeSection.introduction}</p> : null}</div>
@@ -355,9 +289,7 @@ export default function ServiceDetailPage({ service }: Props) {
             </div>
           </div>
         </section>
-        )}
 
-        {!isOdooIntegrationService && (
         <section id="capabilities" className="py-20 lg:py-28">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
@@ -375,18 +307,7 @@ export default function ServiceDetailPage({ service }: Props) {
             </div>
           </div>
         </section>
-        )}
 
-        {!isOdooIntegrationService && ecosystemSection?.items.length ? (
-          <section className="overflow-hidden bg-[#15171c] py-20 text-white lg:py-24">
-            <div className="container mx-auto grid items-center gap-12 px-4 lg:grid-cols-[.72fr_1.28fr] lg:gap-16 lg:px-8">
-              <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-red-400">Connected capability</p><h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">{ecosystemSection.title}</h2>{ecosystemSection.introduction ? <p className="mt-4 leading-relaxed text-white/60">{ecosystemSection.introduction}</p> : null}</div>
-              <div className="flex flex-wrap gap-3">{ecosystemSection.items.slice(0, 14).map((item) => <span key={item.title} className="rounded-full border border-white/12 bg-white/[.06] px-4 py-2.5 text-sm font-medium text-white/80"><Sparkles className="mr-2 inline size-3.5 text-red-400" />{item.title}</span>)}</div>
-            </div>
-          </section>
-        ) : null}
-
-        {!isOdooIntegrationService && (
         <section id="process" className="py-20 lg:py-28">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="mx-auto max-w-3xl text-center"><p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">{processSection?.title || "Our delivery process"}</p><h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">A visible path from first workshop to confident launch.</h2></div>
@@ -399,11 +320,10 @@ export default function ServiceDetailPage({ service }: Props) {
             </div>
           </div>
         </section>
-        )}
 
         <section id="full-service-scope" className="border-y border-border bg-muted/25 py-16 lg:py-20">
           <div className="container mx-auto px-4 lg:px-8">
-            <SafeRichText className={`service-rich-content mx-auto ${isOdooIntegrationService ? "max-w-none service-rich-content--themed-document" : "max-w-4xl"}`} html={service.longDescription} />
+            <SafeRichText className="service-rich-content service-rich-content--themed-document mx-auto max-w-4xl" html={service.longDescription} />
           </div>
         </section>
 

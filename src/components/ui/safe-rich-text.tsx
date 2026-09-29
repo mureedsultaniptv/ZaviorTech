@@ -66,6 +66,7 @@ export function SafeRichText({ className, html }: SafeRichTextProps) {
     ],
     allowedAttributes: {
       a: ["href", "target", "rel"],
+      h2: ["id"],
     },
     allowedSchemes: ["http", "https", "mailto", "tel"],
     transformTags: {
