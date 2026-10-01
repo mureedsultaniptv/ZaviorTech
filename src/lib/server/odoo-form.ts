@@ -233,7 +233,7 @@ async function submitToOdoo(
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
-        "X-Odoo-Database": database,
+        "ODOO_DATABASE": database,
       },
       body: JSON.stringify(body),
       redirect: "error",
