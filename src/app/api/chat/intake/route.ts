@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
         source: "website_chat_intake",
         sourcePage: conversation.sourcePage,
       });
-      submissionId = submission.id;
+      submissionId = String(submission.id);
       delivery = submission.delivery;
       conversation.odooLeadId = submissionId;
     }
