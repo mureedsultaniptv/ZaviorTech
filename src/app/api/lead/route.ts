@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ApiError } from "@/lib/server/api-errors";
-import { sendFallbackSubmissionEmail } from "@/lib/server/fallback-email";
+import { submitLeadFormToOdoo } from "@/lib/server/odoo-form";
 import {
-  createLeadCreatedPayload,
   createLeadSession,
   getRequestMeta,
   isRecord,
-  sendToOdoo,
   validateLeadChatPayload,
 } from "@/lib/server/lead-chat";
 
@@ -32,34 +30,34 @@ export async function POST(request: NextRequest) {
 
     const lead = validateLeadChatPayload(body);
     const session = createLeadSession(lead, getRequestMeta(request));
-
-    const odooDelivered = await sendToOdoo(createLeadCreatedPayload(session));
-    let delivery: "odoo" | "email" = "odoo";
-    if (!odooDelivered) {
-      await sendFallbackSubmissionEmail({
-        subject: "Website chat lead (Odoo fallback)",
-        replyTo: session.lead.email || undefined,
-        text: [
-          `Name: ${session.lead.name || "Not provided"}`,
-          `Email: ${session.lead.email || "Not provided"}`,
-          `Phone: ${session.lead.phone || "Not provided"}`,
-          `Service: ${session.lead.serviceRequired || "Not provided"}`,
-          `Page: ${session.sourcePage}`,
-          `Chat session: ${session.sessionId}`,
-          "",
-          "Conversation:",
-          ...session.messages.map((message) => `[${message.role}] ${message.content}`),
-        ].join("\n"),
-      });
-      delivery = "email";
-    }
+    const [firstName, ...lastNameParts] = session.lead.name.trim().split(/\s+/);
+    const submission = await submitLeadFormToOdoo({
+      firstName,
+      lastName: lastNameParts.join(" ") || "-",
+      email: session.lead.email,
+      phone: session.lead.phone,
+      company: "",
+      service: session.lead.serviceRequired,
+      message: [
+        `Chat session: ${session.sessionId}`,
+        `Page: ${session.sourcePage}`,
+        "",
+        "Conversation:",
+        ...session.messages.map((message) => `[${message.role}] ${message.content}`),
+      ].join("\n"),
+      utmSource: "Website",
+      utmMedium: "chat",
+      utmCampaign: "",
+    });
 
     return jsonResponse({
       success: true,
+      id: submission.id,
+      submissionId: submission.submissionId || submission.id,
       sessionId: session.sessionId,
       lead: session.lead,
-      delivery,
-    });
+      delivery: submission.delivery,
+    }, 201);
   } catch (error) {
     if (error instanceof ApiError) {
       return jsonResponse(

@@ -66,6 +66,7 @@ export function ChatIntakeForm({
           ...data,
           serviceRequired: service === otherServiceValue ? otherService : service,
           odooLeadId: consultation.submissionId,
+          odooDelivery: consultation.delivery,
           sessionId: createSessionId(),
           sourcePage: window.location.pathname,
         }),

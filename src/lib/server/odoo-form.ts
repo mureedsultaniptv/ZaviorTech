@@ -9,6 +9,9 @@ type LeadFormPayload = {
   company: string;
   service: string;
   message: string;
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
 };
 
 type ConsultationPayload = {
@@ -25,6 +28,7 @@ type ConsultationPayload = {
 
 type ChatTranscriptPayload = {
   leadId: string;
+  email: string;
   sessionId: string;
   summary: string;
   messages: Array<{
@@ -79,7 +83,6 @@ function getOdooFormEndpoint(configuredEndpointOverride?: string) {
   const configuredEndpoint =
     configuredEndpointOverride?.trim() ||
     process.env.ODOO_FORM_API_URL?.trim() ||
-    process.env.ODOO_LEAD_API_URL?.trim() ||
     (process.env.NODE_ENV !== "production" ? LOCAL_ODOO_FORM_ENDPOINT : "");
 
   if (!configuredEndpoint) {
@@ -93,11 +96,7 @@ function getOdooFormEndpoint(configuredEndpointOverride?: string) {
     throw new ApiError(503, "The form delivery service is not configured.");
   }
 
-  const database =
-    process.env.ODOO_DATABASE?.trim() || endpoint.searchParams.get("db")?.trim();
-  if (!database) {
-    throw new ApiError(503, "The Odoo database is not configured.");
-  }
+  const database = getOdooDatabase(endpoint);
   endpoint.searchParams.set("db", database);
 
   const usesSecureTransport = endpoint.protocol === "https:";
@@ -120,10 +119,19 @@ function getOdooFormEndpoint(configuredEndpointOverride?: string) {
   return endpoint.toString();
 }
 
+function getOdooDatabase(endpoint?: URL) {
+  const database =
+    process.env.ODOO_DATABASE?.trim() || endpoint?.searchParams.get("db")?.trim();
+  if (!database) {
+    throw new ApiError(503, "The Odoo database is not configured.");
+  }
+  return database;
+}
+
 function getOdooFormToken() {
   const token =
-    process.env.ODOO_LEAD_API_TOKEN?.trim() ||
-    process.env.ODOO_FORM_API_TOKEN?.trim();
+    process.env.ODOO_FORM_API_TOKEN?.trim() ||
+    process.env.ODOO_LEAD_API_TOKEN?.trim();
 
   if (!token) {
     throw new ApiError(503, "The form delivery service is not configured.");
@@ -222,6 +230,7 @@ async function submitToOdoo(
   } = {},
 ) {
   const endpoint = getOdooFormEndpoint(options.endpoint);
+  const database = getOdooDatabase(new URL(endpoint));
   const token = getOdooFormToken();
   const controller = new AbortController();
   const timeout = setTimeout(
@@ -236,6 +245,7 @@ async function submitToOdoo(
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
+        "X-Odoo-Database": database,
       },
       body: JSON.stringify(body),
       redirect: "error",
@@ -262,7 +272,8 @@ async function submitToOdoo(
     }
 
     return {
-      id: submissionId || "",
+      id: result.id ?? submissionId ?? "",
+      submissionId: result.submissionId ?? submissionId ?? "",
       message: result.message,
     };
   } catch (error) {
@@ -285,7 +296,6 @@ async function submitToOdoo(
 export async function submitLeadFormToOdoo(payload: LeadFormPayload) {
   const { result, delivery } = await withEmailFallback({
     type: "contact form",
-    email: payload.email,
     text: [
       `Name: ${payload.firstName} ${payload.lastName}`,
       `Email: ${payload.email}`,
@@ -304,36 +314,34 @@ export async function submitLeadFormToOdoo(payload: LeadFormPayload) {
       message: payload.message,
       phone: payload.phone,
       service: payload.service,
-      source: "website",
-      utm_source: "website",
-      utm_medium: "contact_form",
+      source: payload.utmSource || "Website",
+      utm_source: payload.utmSource || "Website",
+      utm_medium: payload.utmMedium,
+      utm_campaign: payload.utmCampaign,
     }),
   });
 
   return result
     ? { ...result, delivery }
-    : { id: "email-fallback", message: "Your message was received by email.", delivery };
+    : { id: "email-fallback", submissionId: "email-fallback", message: "Your message was received.", delivery };
 }
 
 export async function submitConsultationToOdoo(payload: ConsultationPayload) {
   const [firstName, ...lastNameParts] = payload.name.trim().split(/\s+/);
   const lastName = lastNameParts.join(" ") || "-";
-  const consultationPayload = {
-    name: payload.name,
-    email: payload.email,
-    phone: payload.phone,
-    service: payload.service,
-    other_service: payload.otherService,
-    project_description: payload.projectDescription,
-    service_questions: payload.serviceQuestions,
-    source: payload.source,
-    page: payload.sourcePage,
-    submitted_at: new Date().toISOString(),
-  };
+  const message = [
+    `Requested service: ${payload.service}${payload.otherService ? ` (${payload.otherService})` : ""}`,
+    `Source page: ${payload.sourcePage || "Not provided"}`,
+    "",
+    "Project details:",
+    payload.projectDescription,
+    ...(Object.keys(payload.serviceQuestions).length
+      ? ["", "Consultation answers:", ...Object.entries(payload.serviceQuestions).map(([key, value]) => `${key}: ${value}`)]
+      : []),
+  ].join("\n").slice(0, 2_000);
 
   const { result, delivery } = await withEmailFallback({
     type: "consultation",
-    email: payload.email,
     text: [
       `Name: ${payload.name}`,
       `Email: ${payload.email}`,
@@ -355,22 +363,17 @@ export async function submitConsultationToOdoo(payload: ConsultationPayload) {
       company: "",
       email: payload.email,
       phone: payload.phone,
-      service: payload.service,
-      message: payload.projectDescription,
-      name: payload.name,
-      other_service: payload.otherService,
-      project_description: payload.projectDescription,
-      service_questions: payload.serviceQuestions,
-      source: payload.source,
-      page: payload.sourcePage,
-      submitted_at: consultationPayload.submitted_at,
-      consultation_payload: consultationPayload,
+      service: "Consultation",
+      message,
+      source: payload.source || "Website",
+      utm_source: payload.source || "Website",
+      utm_medium: "consultation",
     }),
   });
 
   return result
     ? { ...result, delivery }
-    : { id: "email-fallback", message: "Your consultation request was received by email.", delivery };
+    : { id: "email-fallback", submissionId: "email-fallback", message: "Your consultation request was received.", delivery };
 }
 
 export async function submitJobApplicationToOdoo(
@@ -378,25 +381,8 @@ export async function submitJobApplicationToOdoo(
 ) {
   const [firstName, ...lastNameParts] = payload.name.trim().split(/\s+/);
   const lastName = lastNameParts.join(" ") || "-";
-  const application = {
-    job_id: payload.jobId,
-    name: payload.name,
-    email: payload.email,
-    phone: payload.phone,
-    linkedin: payload.linkedin,
-    portfolio: payload.portfolio,
-    cover_letter: payload.coverLetter,
-    submitted_at: payload.submittedAt,
-    resume: {
-      filename: payload.resume.filename,
-      mime_type: payload.resume.mimeType,
-      content_base64: payload.resume.contentBase64,
-    },
-  };
-
   const { result, delivery } = await withEmailFallback({
     type: "job application",
-    email: payload.email,
     text: [
       `Name: ${payload.name}`,
       `Email: ${payload.email}`,
@@ -417,26 +403,24 @@ export async function submitJobApplicationToOdoo(
     }],
     submitToOdoo: () => submitToOdoo(
       {
-        operation: "job_application",
-        form_type: "job_application",
-        source: "website",
         firstName,
         lastName,
-        name: payload.name,
         company: "",
         email: payload.email,
         phone: payload.phone,
         service: "Career Application",
-        message: payload.coverLetter,
-        job_id: payload.jobId,
-        linkedin: payload.linkedin,
-        portfolio: payload.portfolio,
-        cover_letter: payload.coverLetter,
-        submitted_at: payload.submittedAt,
-        resume_filename: payload.resume.filename,
-        resume_mime_type: payload.resume.mimeType,
-        resume_content_base64: payload.resume.contentBase64,
-        job_application_payload: application,
+        message: [
+          `Job: ${payload.jobId}`,
+          `LinkedIn: ${payload.linkedin || "Not provided"}`,
+          `Portfolio: ${payload.portfolio || "Not provided"}`,
+          `Resume: ${payload.resume.filename}`,
+          "",
+          "Cover letter:",
+          payload.coverLetter || "Not provided",
+        ].join("\n").slice(0, 2_000),
+        source: "Website",
+        utm_source: "Website",
+        utm_medium: "job_application",
       },
       { timeoutMs: ODOO_FILE_UPLOAD_TIMEOUT_MS },
     ),
@@ -444,35 +428,36 @@ export async function submitJobApplicationToOdoo(
 
   return result
     ? { ...result, delivery }
-    : { id: "email-fallback", message: "Your application was received by email.", delivery };
+    : { id: "email-fallback", submissionId: "email-fallback", message: "Your application was received.", delivery };
 }
 
 export async function syncChatTranscriptToOdoo(payload: ChatTranscriptPayload) {
-  if (!payload.leadId) return;
+  if (!payload.leadId && !payload.email) return;
 
   const numericLeadId = Number(payload.leadId);
-  const leadId = Number.isSafeInteger(numericLeadId) && numericLeadId > 0
-    ? numericLeadId
-    : payload.leadId;
+  const hasNumericLeadId = Number.isSafeInteger(numericLeadId) && numericLeadId > 0;
 
-  const recentTranscript = payload.messages.slice(-12).map((message) => ({
+  const transcript = payload.messages.map((message) => ({
     role: message.role,
     content: message.content,
     timestamp: message.timestamp,
   }));
+  let boundedTranscript = transcript;
+  while (boundedTranscript.length && JSON.stringify(boundedTranscript).length > 190_000) {
+    boundedTranscript = boundedTranscript.slice(1);
+  }
   return submitToOdoo(
     {
       // This is deliberately an update-only contract. It must never be treated
       // as a lead-creation request by the Odoo controller.
       operation: "update_chat_transcript",
-      lead_id: leadId,
+      ...(hasNumericLeadId ? { lead_id: numericLeadId } : { match_email: payload.email }),
       chat_session_id: payload.sessionId,
-      chat_summary: payload.summary,
-      chat_transcript: recentTranscript,
+      chat_summary: payload.summary.slice(0, 10_000),
+      chat_transcript: boundedTranscript,
     },
     {
       requireSubmissionId: false,
-      endpoint: process.env.ODOO_CHAT_API_URL?.trim(),
     },
   );
 }

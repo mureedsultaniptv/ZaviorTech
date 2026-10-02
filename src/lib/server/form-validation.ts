@@ -76,13 +76,27 @@ export function validateLeadPayload(input: Record<string, unknown>) {
     throw new ApiError(400, "Invalid form submission.");
   }
 
-  const firstName = readRequiredText(input.firstName, "First name", 80);
-  const lastName = readRequiredText(input.lastName, "Last name", 80);
-  const email = readRequiredText(input.email, "Email", 160).toLowerCase();
-  const phone = readOptionalText(input.phone, 30);
-  const company = readOptionalText(input.company, 120);
-  const service = readOptionalText(input.service, 80);
-  const message = readRequiredText(input.message, "Message", 2000);
+  const readFormText = (value: unknown, label: string, maxLength: number, required = false) => {
+    if (value === undefined) {
+      if (required) throw new ApiError(400, `${label} is required.`);
+      return "";
+    }
+    if (typeof value !== "string") throw new ApiError(400, `${label} must be text.`);
+    const normalized = removeControlCharacters(value).trim();
+    if (required && !normalized) throw new ApiError(400, `${label} is required.`);
+    if (normalized.length > maxLength) throw new ApiError(400, `${label} is too long.`);
+    return normalized;
+  };
+  const firstName = readFormText(input.firstName ?? input.first_name, "First name", 80, true);
+  const lastName = readFormText(input.lastName ?? input.last_name, "Last name", 80, true);
+  const email = readFormText(input.email, "Email", 160, true).toLowerCase();
+  const phone = readFormText(input.phone, "Phone", 30);
+  const company = readFormText(input.company ?? input.companyName ?? input.company_name, "Company", 120);
+  const service = readFormText(input.service, "Service", 80);
+  const message = readFormText(input.message, "Message", 2000, true);
+  const utmSource = readFormText(input.utm_source ?? input.utmSource ?? input.source, "UTM source", 100);
+  const utmMedium = readFormText(input.utm_medium ?? input.utmMedium ?? input.medium, "UTM medium", 100);
+  const utmCampaign = readFormText(input.utm_campaign ?? input.utmCampaign ?? input.campaign, "UTM campaign", 100);
 
   if (!EMAIL_PATTERN.test(email)) {
     throw new ApiError(400, "Email is invalid.");
@@ -100,6 +114,9 @@ export function validateLeadPayload(input: Record<string, unknown>) {
     company,
     service,
     message,
+    utmSource: utmSource || "Website",
+    utmMedium,
+    utmCampaign,
   };
 }
 

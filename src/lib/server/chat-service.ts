@@ -1106,6 +1106,7 @@ async function syncConversationToOdoo(conversation: ChatConversation) {
   try {
     await syncChatTranscriptToOdoo({
       leadId: conversation.odooLeadId,
+      email: conversation.contact.email,
       sessionId: conversation.sessionId,
       summary: conversation.leadSummary,
       messages: conversation.messages,

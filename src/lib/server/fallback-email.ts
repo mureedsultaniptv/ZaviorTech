@@ -2,8 +2,8 @@ import nodemailer from "nodemailer";
 
 const FALLBACK_RECIPIENTS = [
   "mureedsultangeni@gmail.com",
-  "istallena@gmail.com",
-  "mubeenbahoo11@gmail.com",
+  // "istallena@gmail.com",
+  // "mubeenbahoo11@gmail.com",
 ];
 
 type EmailAttachment = {
@@ -15,7 +15,6 @@ type EmailAttachment = {
 export async function sendFallbackSubmissionEmail(input: {
   subject: string;
   text: string;
-  replyTo?: string;
   attachments?: EmailAttachment[];
 }) {
   const host = process.env.EMAIL_SERVER_HOST?.trim();
@@ -41,7 +40,6 @@ export async function sendFallbackSubmissionEmail(input: {
   await transporter.sendMail({
     from,
     to: FALLBACK_RECIPIENTS,
-    replyTo: input.replyTo || process.env.EMAIL_REPLY_TO?.trim() || undefined,
     subject: input.subject,
     text: input.text,
     attachments: input.attachments,
@@ -50,7 +48,6 @@ export async function sendFallbackSubmissionEmail(input: {
 
 export async function withEmailFallback<T>(input: {
   type: string;
-  email: string;
   text: string;
   attachments?: EmailAttachment[];
   submitToOdoo: () => Promise<T>;
@@ -71,7 +68,6 @@ export async function withEmailFallback<T>(input: {
           "",
           input.text,
         ].join("\n"),
-        replyTo: input.email,
         attachments: input.attachments,
       });
       return { result: null, delivery: "email" as const };

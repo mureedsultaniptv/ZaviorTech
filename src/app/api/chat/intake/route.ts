@@ -38,25 +38,33 @@ export async function POST(request: NextRequest) {
       payload.sourcePage,
     );
     const result = await submitChatIntake(conversation, payload);
-    const submission = await submitConsultationToOdoo({
-      name: result.customer.name,
-      email: result.customer.email,
-      phone: result.customer.phone,
-      service: result.customer.serviceRequired,
-      otherService: "",
-      projectDescription: result.customer.description,
-      serviceQuestions: {},
-      source: "website_chat_intake",
-      sourcePage: conversation.sourcePage,
-    });
+    let submissionId = conversation.odooLeadId;
+    let delivery = payload.odooDelivery === "email" ? "email" : "odoo";
+    if (!submissionId) {
+      const submission = await submitConsultationToOdoo({
+        name: result.customer.name,
+        email: result.customer.email,
+        phone: result.customer.phone,
+        service: result.customer.serviceRequired,
+        otherService: "",
+        projectDescription: result.customer.description,
+        serviceQuestions: {},
+        source: "website_chat_intake",
+        sourcePage: conversation.sourcePage,
+      });
+      submissionId = submission.id;
+      delivery = submission.delivery;
+      conversation.odooLeadId = submissionId;
+    }
     const aiAvailable = await isAiProviderAvailable();
     const whatsappUrl = aiAvailable ? null : getChatWhatsappUrl(conversation);
 
     return response({
       success: true,
       ...result,
-      submissionId: submission.id,
-      delivery: submission.delivery,
+      id: submissionId,
+      submissionId,
+      delivery,
       route: aiAvailable ? "ai" : "whatsapp",
       whatsappUrl,
     }, 201);

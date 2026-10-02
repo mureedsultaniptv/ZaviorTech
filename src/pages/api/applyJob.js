@@ -142,9 +142,10 @@ export default async function handler(req, res) {
       submittedAt: new Date().toISOString(),
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      submissionId: submission.id,
+      id: submission.id,
+      submissionId: submission.submissionId || submission.id,
       message: submission.message || "Application received successfully.",
       delivery: submission.delivery,
     });

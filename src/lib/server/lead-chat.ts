@@ -12,9 +12,6 @@ const MAX_STORED_TRANSCRIPT_ITEMS = 80;
 const DEFAULT_DAILY_LIMIT = 30;
 const DEFAULT_SESSION_MESSAGE_LIMIT = 12;
 const DEFAULT_COOLDOWN_SECONDS = 10;
-const ODOO_QUEUE_LIMIT = 100;
-const ODOO_RETRY_BATCH_SIZE = 3;
-const ODOO_TIMEOUT_MS = 4500;
 const GEMINI_TIMEOUT_MS = 12000;
 const DEFAULT_GEMINI_MODELS = [
   "gemini-2.5-flash",
@@ -179,20 +176,6 @@ export type LeadSession = {
   lastMessageAt: number;
 };
 
-export type OdooPayload = {
-  event: "lead_created" | "chat_message";
-  sessionId: string;
-  timestamp: string;
-  lead: LeadInfo;
-  ipAddress: string;
-  userAgent: string;
-  sourcePage: string;
-  customerMessage?: string;
-  botReply?: string;
-  transcript?: StoredChatMessage[];
-  metadata?: Record<string, unknown>;
-};
-
 type DailyRateRecord = {
   count: number;
   resetAt: number;
@@ -216,9 +199,6 @@ type GeminiRequestResult =
 type GlobalChatState = typeof globalThis & {
   __zaviorLeadSessions?: Map<string, LeadSession>;
   __zaviorDailyChatLimits?: Map<string, DailyRateRecord>;
-  __zaviorFailedOdooPayloads?: OdooPayload[];
-  __zaviorOdooFlushActive?: boolean;
-  __zaviorOdooDisabledLogged?: boolean;
 };
 
 const globalChatState = globalThis as GlobalChatState;
@@ -226,12 +206,9 @@ const leadSessions =
   globalChatState.__zaviorLeadSessions ?? new Map<string, LeadSession>();
 const dailyChatLimits =
   globalChatState.__zaviorDailyChatLimits ?? new Map<string, DailyRateRecord>();
-const failedOdooPayloads =
-  globalChatState.__zaviorFailedOdooPayloads ?? [];
 
 globalChatState.__zaviorLeadSessions = leadSessions;
 globalChatState.__zaviorDailyChatLimits = dailyChatLimits;
-globalChatState.__zaviorFailedOdooPayloads = failedOdooPayloads;
 
 export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -822,175 +799,6 @@ export function appendChatExchange(
   }
 
   leadSessions.set(session.sessionId, session);
-}
-
-export function createLeadCreatedPayload(
-  session: LeadSession,
-  metadata: Record<string, unknown> = {},
-): OdooPayload {
-  const qualification = getSessionQualification(session);
-
-  return {
-    event: "lead_created",
-    sessionId: session.sessionId,
-    timestamp: session.createdAt,
-    lead: session.lead,
-    ipAddress: session.ipAddress,
-    userAgent: session.userAgent,
-    sourcePage: session.sourcePage,
-    transcript: session.messages,
-    metadata: {
-      source: "website_chatbot",
-      qualificationStage: qualification.stage,
-      nextQuestionFocus: getNextQuestionFocus(qualification),
-      qualification,
-      ...metadata,
-    },
-  };
-}
-
-export function createChatMessagePayload(
-  session: LeadSession,
-  customerMessage: string,
-  botReply: string,
-  metadata: Record<string, unknown> = {},
-): OdooPayload {
-  const qualification = getSessionQualification(session);
-
-  return {
-    event: "chat_message",
-    sessionId: session.sessionId,
-    timestamp: new Date().toISOString(),
-    lead: session.lead,
-    ipAddress: session.ipAddress,
-    userAgent: session.userAgent,
-    sourcePage: session.sourcePage,
-    customerMessage,
-    botReply,
-    transcript: session.messages,
-    metadata: {
-      messageCount: session.messageCount,
-      qualificationStage: qualification.stage,
-      nextQuestionFocus: getNextQuestionFocus(qualification),
-      qualification,
-      ...metadata,
-    },
-  };
-}
-
-function getOdooDisabledReason() {
-  if (!process.env.ODOO_LEAD_API_URL) {
-    return "missing ODOO_LEAD_API_URL";
-  }
-
-  if (!process.env.ODOO_LEAD_API_TOKEN) {
-    return "missing ODOO_LEAD_API_TOKEN";
-  }
-
-  return "";
-}
-
-function shouldUseOdoo() {
-  return !getOdooDisabledReason();
-}
-
-function enqueueOdooPayload(payload: OdooPayload) {
-  failedOdooPayloads.push(payload);
-  if (failedOdooPayloads.length > ODOO_QUEUE_LIMIT) {
-    failedOdooPayloads.splice(0, failedOdooPayloads.length - ODOO_QUEUE_LIMIT);
-  }
-}
-
-async function postOdooPayload(payload: OdooPayload) {
-  const endpoint = process.env.ODOO_LEAD_API_URL;
-  const token = process.env.ODOO_LEAD_API_TOKEN;
-  if (!endpoint) {
-    throw new Error("Odoo endpoint is not configured.");
-  }
-
-  if (!token) {
-    throw new Error("Odoo token is not configured.");
-  }
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), ODOO_TIMEOUT_MS);
-
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-
-    if (!response.ok) {
-      throw new Error(`Odoo API returned ${response.status}`);
-    }
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-async function retryFailedOdooPayloads() {
-  if (
-    !shouldUseOdoo() ||
-    globalChatState.__zaviorOdooFlushActive ||
-    failedOdooPayloads.length === 0
-  ) {
-    return;
-  }
-
-  globalChatState.__zaviorOdooFlushActive = true;
-
-  try {
-    const retryBatch = failedOdooPayloads.splice(0, ODOO_RETRY_BATCH_SIZE);
-
-    for (const payload of retryBatch) {
-      try {
-        await postOdooPayload(payload);
-      } catch (error) {
-        failedOdooPayloads.unshift(payload);
-        console.warn("Odoo retry failed", {
-          event: payload.event,
-          sessionId: payload.sessionId,
-          message: error instanceof Error ? error.message : "Unknown error",
-        });
-        break;
-      }
-    }
-  } finally {
-    globalChatState.__zaviorOdooFlushActive = false;
-  }
-}
-
-export async function sendToOdoo(payload: OdooPayload): Promise<boolean> {
-  const disabledReason = getOdooDisabledReason();
-
-  if (disabledReason) {
-    if (!globalChatState.__zaviorOdooDisabledLogged) {
-      console.warn(`Odoo lead delivery disabled: ${disabledReason}`);
-      globalChatState.__zaviorOdooDisabledLogged = true;
-    }
-    return false;
-  }
-
-  await retryFailedOdooPayloads();
-
-  try {
-    await postOdooPayload(payload);
-    return true;
-  } catch (error) {
-    enqueueOdooPayload(payload);
-    console.warn("Odoo delivery queued", {
-      event: payload.event,
-      sessionId: payload.sessionId,
-      message: error instanceof Error ? error.message : "Unknown error",
-    });
-    return false;
-  }
 }
 
 function cleanGeminiKey(key: unknown) {

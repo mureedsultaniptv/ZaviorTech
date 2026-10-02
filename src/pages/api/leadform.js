@@ -30,9 +30,10 @@ export default async function handler(req, res) {
     const data = validateLeadPayload(req.body || {});
     const submission = await submitLeadFormToOdoo(data);
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      submissionId: submission.id,
+      id: submission.id,
+      submissionId: submission.submissionId || submission.id,
       message: submission.message || "Message received successfully.",
       delivery: submission.delivery,
     });

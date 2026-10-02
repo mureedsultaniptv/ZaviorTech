@@ -147,14 +147,30 @@ export function ConsultationModal({ open, onOpenChange }: ConsultationModalProps
     setStatus("submitting");
     setMessage("");
     try {
-      const response = await fetch("/api/consultation", {
+      const [firstName, ...lastNameParts] = details.name.trim().split(/\s+/);
+      const lastName = lastNameParts.join(" ") || "-";
+      const response = await fetch("/zavior/formsubmit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-zavior-form": "consultation" },
+        headers: { "Content-Type": "application/json", "x-zavior-form": "leadform" },
         body: JSON.stringify({
-          ...details,
-          serviceQuestions: answers,
-          source: "website_consultation",
-          sourcePage: window.location.pathname,
+          firstName,
+          lastName,
+          email: details.email,
+          phone: details.phone,
+          company: "",
+          service: "Consultation",
+          message: [
+            `Requested service: ${details.service}${details.service === "other" && details.otherService ? ` (${details.otherService})` : ""}`,
+            `Source page: ${window.location.pathname}`,
+            "",
+            "Project details:",
+            details.projectDescription,
+            ...(Object.keys(answers).length
+              ? ["", "Consultation answers:", ...Object.entries(answers).map(([key, value]) => `${key}: ${value}`)]
+              : []),
+          ].join("\n").slice(0, 2_000),
+          source: "Website",
+          utm_medium: "consultation",
           website: "",
         }),
       });

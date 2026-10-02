@@ -22,9 +22,10 @@ export default async function handler(req, res) {
     if (!applyRateLimit(req, res, "consultation", { max: 20, windowMs: 10 * 60 * 1000 })) return;
     const submission = await submitConsultationToOdoo(consultation);
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      submissionId: submission.id,
+      id: submission.id,
+      submissionId: submission.submissionId || submission.id,
       message: submission.message || "Your consultation request has been received.",
       delivery: submission.delivery,
     });
