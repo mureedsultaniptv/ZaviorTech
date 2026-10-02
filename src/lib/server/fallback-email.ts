@@ -2,8 +2,9 @@ import nodemailer from "nodemailer";
 
 const FALLBACK_RECIPIENTS = [
   "mureedsultangeni@gmail.com",
-  // "istallena@gmail.com",
-  // "mubeenbahoo11@gmail.com",
+  "istallena@gmail.com",
+  "mubeenbahoo11@gmail.com",
+  "adminzavior@gmail.com"
 ];
 
 type EmailAttachment = {
