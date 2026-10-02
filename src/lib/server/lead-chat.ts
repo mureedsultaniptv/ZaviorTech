@@ -966,7 +966,7 @@ async function retryFailedOdooPayloads() {
   }
 }
 
-export async function sendToOdoo(payload: OdooPayload) {
+export async function sendToOdoo(payload: OdooPayload): Promise<boolean> {
   const disabledReason = getOdooDisabledReason();
 
   if (disabledReason) {
@@ -974,13 +974,14 @@ export async function sendToOdoo(payload: OdooPayload) {
       console.warn(`Odoo lead delivery disabled: ${disabledReason}`);
       globalChatState.__zaviorOdooDisabledLogged = true;
     }
-    return;
+    return false;
   }
 
   await retryFailedOdooPayloads();
 
   try {
     await postOdooPayload(payload);
+    return true;
   } catch (error) {
     enqueueOdooPayload(payload);
     console.warn("Odoo delivery queued", {
@@ -988,6 +989,7 @@ export async function sendToOdoo(payload: OdooPayload) {
       sessionId: payload.sessionId,
       message: error instanceof Error ? error.message : "Unknown error",
     });
+    return false;
   }
 }
 

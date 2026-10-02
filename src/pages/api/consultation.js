@@ -26,6 +26,7 @@ export default async function handler(req, res) {
       success: true,
       submissionId: submission.id,
       message: submission.message || "Your consultation request has been received.",
+      delivery: submission.delivery,
     });
   } catch (error) {
     const statusCode = error instanceof ApiError ? error.statusCode : 500;
