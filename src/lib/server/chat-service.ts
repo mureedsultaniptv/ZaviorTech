@@ -1101,13 +1101,12 @@ function validateAssistantReply(
 }
 
 async function syncConversationToOdoo(conversation: ChatConversation) {
-  if (!conversation.odooLeadId || !conversation.contact.email) return;
+  if (!conversation.odooLeadId) return;
 
   try {
     await syncChatTranscriptToOdoo({
       leadId: conversation.odooLeadId,
       sessionId: conversation.sessionId,
-      email: conversation.contact.email,
       summary: conversation.leadSummary,
       messages: conversation.messages,
     });

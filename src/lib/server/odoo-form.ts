@@ -26,7 +26,6 @@ type ConsultationPayload = {
 type ChatTranscriptPayload = {
   leadId: string;
   sessionId: string;
-  email: string;
   summary: string;
   messages: Array<{
     role: "user" | "assistant";
@@ -76,8 +75,9 @@ function getAllowedInsecureHttpHosts() {
   );
 }
 
-function getOdooFormEndpoint() {
+function getOdooFormEndpoint(configuredEndpointOverride?: string) {
   const configuredEndpoint =
+    configuredEndpointOverride?.trim() ||
     process.env.ODOO_FORM_API_URL?.trim() ||
     process.env.ODOO_LEAD_API_URL?.trim() ||
     (process.env.NODE_ENV !== "production" ? LOCAL_ODOO_FORM_ENDPOINT : "");
@@ -92,6 +92,13 @@ function getOdooFormEndpoint() {
   } catch {
     throw new ApiError(503, "The form delivery service is not configured.");
   }
+
+  const database =
+    process.env.ODOO_DATABASE?.trim() || endpoint.searchParams.get("db")?.trim();
+  if (!database) {
+    throw new ApiError(503, "The Odoo database is not configured.");
+  }
+  endpoint.searchParams.set("db", database);
 
   const usesSecureTransport = endpoint.protocol === "https:";
   const isLocalDevelopmentEndpoint =
@@ -115,24 +122,14 @@ function getOdooFormEndpoint() {
 
 function getOdooFormToken() {
   const token =
-    process.env.ODOO_FORM_API_TOKEN?.trim() ||
-    process.env.ODOO_LEAD_API_TOKEN?.trim();
+    process.env.ODOO_LEAD_API_TOKEN?.trim() ||
+    process.env.ODOO_FORM_API_TOKEN?.trim();
 
   if (!token) {
     throw new ApiError(503, "The form delivery service is not configured.");
   }
 
   return token;
-}
-
-function getOdooDatabase() {
-  const database = process.env.ODOO_DATABASE?.trim();
-
-  if (!database) {
-    throw new ApiError(503, "The Odoo database is not configured.");
-  }
-
-  return database;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -180,7 +177,9 @@ async function parseOdooResponse(
       errorDetail:
         typeof payload.error === "string"
           ? payload.error.slice(0, 240)
-          : "Odoo did not confirm the request.",
+          : typeof payload.message === "string"
+            ? payload.message.slice(0, 240)
+            : "Odoo did not confirm the request.",
     };
   }
 
@@ -216,11 +215,14 @@ function getSubmissionId(result: OdooFormResponse | null) {
 
 async function submitToOdoo(
   body: Record<string, unknown>,
-  options: { requireSubmissionId?: boolean; timeoutMs?: number } = {},
+  options: {
+    requireSubmissionId?: boolean;
+    timeoutMs?: number;
+    endpoint?: string;
+  } = {},
 ) {
-  const endpoint = getOdooFormEndpoint();
+  const endpoint = getOdooFormEndpoint(options.endpoint);
   const token = getOdooFormToken();
-  const database = getOdooDatabase();
   const controller = new AbortController();
   const timeout = setTimeout(
     () => controller.abort(),
@@ -234,7 +236,6 @@ async function submitToOdoo(
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
-        "ODOO_DATABASE": database,
       },
       body: JSON.stringify(body),
       redirect: "error",
@@ -304,6 +305,8 @@ export async function submitLeadFormToOdoo(payload: LeadFormPayload) {
       phone: payload.phone,
       service: payload.service,
       source: "website",
+      utm_source: "website",
+      utm_medium: "contact_form",
     }),
   });
 
@@ -445,7 +448,12 @@ export async function submitJobApplicationToOdoo(
 }
 
 export async function syncChatTranscriptToOdoo(payload: ChatTranscriptPayload) {
-  if (!payload.leadId || !payload.email) return;
+  if (!payload.leadId) return;
+
+  const numericLeadId = Number(payload.leadId);
+  const leadId = Number.isSafeInteger(numericLeadId) && numericLeadId > 0
+    ? numericLeadId
+    : payload.leadId;
 
   const recentTranscript = payload.messages.slice(-12).map((message) => ({
     role: message.role,
@@ -457,21 +465,14 @@ export async function syncChatTranscriptToOdoo(payload: ChatTranscriptPayload) {
       // This is deliberately an update-only contract. It must never be treated
       // as a lead-creation request by the Odoo controller.
       operation: "update_chat_transcript",
-      lead_id: payload.leadId,
-      match_email: payload.email,
+      lead_id: leadId,
       chat_session_id: payload.sessionId,
-      email: payload.email,
       chat_summary: payload.summary,
       chat_transcript: recentTranscript,
-      chat_payload: {
-        lead_id: payload.leadId,
-        email: payload.email,
-        session_id: payload.sessionId,
-        summary: payload.summary,
-        transcript: recentTranscript,
-        updated_at: new Date().toISOString(),
-      },
     },
-    { requireSubmissionId: false },
+    {
+      requireSubmissionId: false,
+      endpoint: process.env.ODOO_CHAT_API_URL?.trim(),
+    },
   );
 }
