@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ApiError } from "@/lib/server/api-errors";
+import { sendFallbackSubmissionEmail } from "@/lib/server/fallback-email";
 import {
   createLeadCreatedPayload,
   createLeadSession,
@@ -32,12 +33,32 @@ export async function POST(request: NextRequest) {
     const lead = validateLeadChatPayload(body);
     const session = createLeadSession(lead, getRequestMeta(request));
 
-    await sendToOdoo(createLeadCreatedPayload(session));
+    const odooDelivered = await sendToOdoo(createLeadCreatedPayload(session));
+    let delivery: "odoo" | "email" = "odoo";
+    if (!odooDelivered) {
+      await sendFallbackSubmissionEmail({
+        subject: "Website chat lead (Odoo fallback)",
+        replyTo: session.lead.email || undefined,
+        text: [
+          `Name: ${session.lead.name || "Not provided"}`,
+          `Email: ${session.lead.email || "Not provided"}`,
+          `Phone: ${session.lead.phone || "Not provided"}`,
+          `Service: ${session.lead.serviceRequired || "Not provided"}`,
+          `Page: ${session.sourcePage}`,
+          `Chat session: ${session.sessionId}`,
+          "",
+          "Conversation:",
+          ...session.messages.map((message) => `[${message.role}] ${message.content}`),
+        ].join("\n"),
+      });
+      delivery = "email";
+    }
 
     return jsonResponse({
       success: true,
       sessionId: session.sessionId,
       lead: session.lead,
+      delivery,
     });
   } catch (error) {
     if (error instanceof ApiError) {

@@ -1,4 +1,5 @@
 import { ApiError } from "@/lib/server/api-errors";
+import { withEmailFallback } from "@/lib/server/fallback-email";
 
 type LeadFormPayload = {
   firstName: string;
@@ -281,16 +282,34 @@ async function submitToOdoo(
 }
 
 export async function submitLeadFormToOdoo(payload: LeadFormPayload) {
-  return submitToOdoo({
-    company: payload.company,
+  const { result, delivery } = await withEmailFallback({
+    type: "contact form",
     email: payload.email,
-    firstName: payload.firstName,
-    lastName: payload.lastName,
-    message: payload.message,
-    phone: payload.phone,
-    service: payload.service,
-    source: "website",
+    text: [
+      `Name: ${payload.firstName} ${payload.lastName}`,
+      `Email: ${payload.email}`,
+      `Phone: ${payload.phone || "Not provided"}`,
+      `Company: ${payload.company || "Not provided"}`,
+      `Service: ${payload.service || "Not provided"}`,
+      "",
+      "Message:",
+      payload.message,
+    ].join("\n"),
+    submitToOdoo: () => submitToOdoo({
+      company: payload.company,
+      email: payload.email,
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      message: payload.message,
+      phone: payload.phone,
+      service: payload.service,
+      source: "website",
+    }),
   });
+
+  return result
+    ? { ...result, delivery }
+    : { id: "email-fallback", message: "Your message was received by email.", delivery };
 }
 
 export async function submitConsultationToOdoo(payload: ConsultationPayload) {
@@ -309,25 +328,46 @@ export async function submitConsultationToOdoo(payload: ConsultationPayload) {
     submitted_at: new Date().toISOString(),
   };
 
-  return submitToOdoo({
-    // The existing Odoo controller already accepts this lead-form shape.
-    // Keep it for reliable lead creation while forwarding the full JSON below.
-    firstName,
-    lastName,
-    company: "",
+  const { result, delivery } = await withEmailFallback({
+    type: "consultation",
     email: payload.email,
-    phone: payload.phone,
-    service: payload.service,
-    message: payload.projectDescription,
-    name: payload.name,
-    other_service: payload.otherService,
-    project_description: payload.projectDescription,
-    service_questions: payload.serviceQuestions,
-    source: payload.source,
-    page: payload.sourcePage,
-    submitted_at: consultationPayload.submitted_at,
-    consultation_payload: consultationPayload,
+    text: [
+      `Name: ${payload.name}`,
+      `Email: ${payload.email}`,
+      `Phone: ${payload.phone}`,
+      `Service: ${payload.service}${payload.otherService ? ` (${payload.otherService})` : ""}`,
+      `Source: ${payload.source}`,
+      `Page: ${payload.sourcePage}`,
+      "",
+      "Project description:",
+      payload.projectDescription,
+      "",
+      "Service answers:",
+      ...Object.entries(payload.serviceQuestions).map(([key, value]) => `${key}: ${value}`),
+    ].join("\n"),
+    submitToOdoo: () => submitToOdoo({
+      // Keep the existing lead-form shape while forwarding the full payload.
+      firstName,
+      lastName,
+      company: "",
+      email: payload.email,
+      phone: payload.phone,
+      service: payload.service,
+      message: payload.projectDescription,
+      name: payload.name,
+      other_service: payload.otherService,
+      project_description: payload.projectDescription,
+      service_questions: payload.serviceQuestions,
+      source: payload.source,
+      page: payload.sourcePage,
+      submitted_at: consultationPayload.submitted_at,
+      consultation_payload: consultationPayload,
+    }),
   });
+
+  return result
+    ? { ...result, delivery }
+    : { id: "email-fallback", message: "Your consultation request was received by email.", delivery };
 }
 
 export async function submitJobApplicationToOdoo(
@@ -351,31 +391,57 @@ export async function submitJobApplicationToOdoo(
     },
   };
 
-  return submitToOdoo(
-    {
-      operation: "job_application",
-      form_type: "job_application",
-      source: "website",
-      firstName,
-      lastName,
-      name: payload.name,
-      company: "",
-      email: payload.email,
-      phone: payload.phone,
-      service: "Career Application",
-      message: payload.coverLetter,
-      job_id: payload.jobId,
-      linkedin: payload.linkedin,
-      portfolio: payload.portfolio,
-      cover_letter: payload.coverLetter,
-      submitted_at: payload.submittedAt,
-      resume_filename: payload.resume.filename,
-      resume_mime_type: payload.resume.mimeType,
-      resume_content_base64: payload.resume.contentBase64,
-      job_application_payload: application,
-    },
-    { timeoutMs: ODOO_FILE_UPLOAD_TIMEOUT_MS },
-  );
+  const { result, delivery } = await withEmailFallback({
+    type: "job application",
+    email: payload.email,
+    text: [
+      `Name: ${payload.name}`,
+      `Email: ${payload.email}`,
+      `Phone: ${payload.phone || "Not provided"}`,
+      `Job ID: ${payload.jobId}`,
+      `LinkedIn: ${payload.linkedin || "Not provided"}`,
+      `Portfolio: ${payload.portfolio || "Not provided"}`,
+      "",
+      "Cover letter:",
+      payload.coverLetter || "Not provided",
+      "",
+      `Resume attached: ${payload.resume.filename}`,
+    ].join("\n"),
+    attachments: [{
+      filename: payload.resume.filename,
+      content: Buffer.from(payload.resume.contentBase64, "base64"),
+      contentType: payload.resume.mimeType,
+    }],
+    submitToOdoo: () => submitToOdoo(
+      {
+        operation: "job_application",
+        form_type: "job_application",
+        source: "website",
+        firstName,
+        lastName,
+        name: payload.name,
+        company: "",
+        email: payload.email,
+        phone: payload.phone,
+        service: "Career Application",
+        message: payload.coverLetter,
+        job_id: payload.jobId,
+        linkedin: payload.linkedin,
+        portfolio: payload.portfolio,
+        cover_letter: payload.coverLetter,
+        submitted_at: payload.submittedAt,
+        resume_filename: payload.resume.filename,
+        resume_mime_type: payload.resume.mimeType,
+        resume_content_base64: payload.resume.contentBase64,
+        job_application_payload: application,
+      },
+      { timeoutMs: ODOO_FILE_UPLOAD_TIMEOUT_MS },
+    ),
+  });
+
+  return result
+    ? { ...result, delivery }
+    : { id: "email-fallback", message: "Your application was received by email.", delivery };
 }
 
 export async function syncChatTranscriptToOdoo(payload: ChatTranscriptPayload) {

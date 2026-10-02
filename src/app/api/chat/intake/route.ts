@@ -7,6 +7,7 @@ import {
   isAiProviderAvailable,
   submitChatIntake,
 } from "@/lib/server/chat-service";
+import { submitConsultationToOdoo } from "@/lib/server/odoo-form";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -37,12 +38,25 @@ export async function POST(request: NextRequest) {
       payload.sourcePage,
     );
     const result = await submitChatIntake(conversation, payload);
+    const submission = await submitConsultationToOdoo({
+      name: result.customer.name,
+      email: result.customer.email,
+      phone: result.customer.phone,
+      service: result.customer.serviceRequired,
+      otherService: "",
+      projectDescription: result.customer.description,
+      serviceQuestions: {},
+      source: "website_chat_intake",
+      sourcePage: conversation.sourcePage,
+    });
     const aiAvailable = await isAiProviderAvailable();
     const whatsappUrl = aiAvailable ? null : getChatWhatsappUrl(conversation);
 
     return response({
       success: true,
       ...result,
+      submissionId: submission.id,
+      delivery: submission.delivery,
       route: aiAvailable ? "ai" : "whatsapp",
       whatsappUrl,
     }, 201);

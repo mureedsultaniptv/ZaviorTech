@@ -34,6 +34,7 @@ export default async function handler(req, res) {
       success: true,
       submissionId: submission.id,
       message: submission.message || "Message received successfully.",
+      delivery: submission.delivery,
     });
   } catch (error) {
     const statusCode =
